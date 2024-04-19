@@ -8,6 +8,7 @@ import 'package:kalam_news_publication/app/api/api_res_modals/user_data_modal.da
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/db/data_base_constant/data_base_constant.dart';
 import 'package:kalam_news_publication/app/db/data_base_helper/data_base_helper.dart';
+import 'package:kalam_news_publication/app/modules/bottom_bar/views/bottom_bar_view.dart';
 import 'package:kalam_news_publication/app/routes/app_pages.dart';
 import 'package:http/http.dart' as http;
 
@@ -74,6 +75,7 @@ class LogInController extends GetxController {
       userDataModal.value = await ApiIntrigation.loginApi(bodyParams: bodyParamsLogin);
       if(userDataModal.value != null){
         await DataBaseHelper().insertInDataBase(data: {DataBaseConstant.userDetail: json.encode(userDataModal.value)}, tableName: DataBaseConstant.tableNameForUserDetail);
+        selectedBottomNavigationIndex.value = 0;
         Get.offAllNamed(Routes.BOTTOM_BAR);
         loginButtonValue.value = false;
       }

@@ -14,6 +14,8 @@ class HomeController extends GetxController {
   final count = 0.obs;
   final apiResValue = true.obs;
 
+  final packageClickValue = false.obs;
+
   final bannerIndex = 0.obs;
   final bannerList = [
     'https://dfstudio-d420.kxcdn.com/wordpress/wp-content/uploads/2019/06/digital_camera_photo-1080x675.jpg',
@@ -47,54 +49,62 @@ class HomeController extends GetxController {
   void increment() => count.value++;
 
   Future<void> clickOnPackage({required int index}) async {
-    await callingPackageDetailApi(packageId: '${packageList?[index].packageId}');
-    await CBS.commonDraggableBottomSheet(
-      isDismissible: false,
-      enableDrag: false,
-      isDragOn: false,
-      minChildSize: 1,
-      initialChildSize: 1,
-      maxChildSize: 1,
-      children: [
-        KNPWidgets.commonNetworkImageView(
-          path: '${ApiUrls.baseUrlForImage}${packageDetailModal.value?.packageImage}',
-          isAssetImage: false,
-          height: 200.px,
-        ),
-        SizedBox(height: 10.px),
-        Text(
-          '${packageDetailModal.value?.packageName}',
-          style: Theme.of(Get.context!).textTheme.labelLarge?.copyWith(fontSize: 20.px),
-        ),
-        if(packageDetails != null && packageDetails!.isNotEmpty)
-        SizedBox(height: 10.px),
-        if(packageDetails != null && packageDetails!.isNotEmpty)
-        KNPWidgets.commonContainerView(
-          child: Column(
-            children: [
-              commonRowForBottomSheet(titleValue: true,text1: 'Stage', text2: 'Member', text3: 'Commission'),
-              SizedBox(height: 10.px),
-              KNPWidgets.commonDividerView(),
-              SizedBox(height: 10.px),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: packageDetails?.length,
-                itemBuilder: (context, index) {
-                 return commonRowForBottomSheet(
-                     text1 : '${packageDetails?[index].stageNumber}',
-                     text2 : '${packageDetails?[index].numberOfMembers}',
-                     text3 : '${packageDetails?[index].commission}');
-                },
-              ),
-            ],
+    packageClickValue.value = true;
+    count.value++;
+    try{
+      await callingPackageDetailApi(packageId: '${packageList?[index].packageId}');
+      await CBS.commonDraggableBottomSheet(
+        isDismissible: false,
+        enableDrag: false,
+        isDragOn: false,
+        minChildSize: 1,
+        initialChildSize: 1,
+        maxChildSize: 1,
+        children: [
+          KNPWidgets.commonNetworkImageView(
+            path: '${ApiUrls.baseUrlForImage}${packageDetailModal.value?.packageImage}',
+            isAssetImage: false,
+            height: 200.px,
           ),
-        ),
-        SizedBox(height: 10.px),
-        KNPWidgets.commonElevatedButton(onPressed: (){},buttonText: 'Purchase now'),
-        SizedBox(height: 20.px),
-      ],
-    );
+          SizedBox(height: 10.px),
+          Text(
+            '${packageDetailModal.value?.packageName}',
+            style: Theme.of(Get.context!).textTheme.labelLarge?.copyWith(fontSize: 20.px),
+          ),
+          if(packageDetails != null && packageDetails!.isNotEmpty)
+            SizedBox(height: 10.px),
+          if(packageDetails != null && packageDetails!.isNotEmpty)
+            KNPWidgets.commonContainerView(
+              child: Column(
+                children: [
+                  commonRowForBottomSheet(titleValue: true,text1: 'Stage', text2: 'Member', text3: 'Commission'),
+                  SizedBox(height: 10.px),
+                  KNPWidgets.commonDividerView(),
+                  SizedBox(height: 10.px),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: packageDetails?.length,
+                    itemBuilder: (context, index) {
+                      return commonRowForBottomSheet(
+                          text1 : '${packageDetails?[index].stageNumber}',
+                          text2 : '${packageDetails?[index].numberOfMembers}',
+                          text3 : '${packageDetails?[index].commission}');
+                    },
+                  ),
+                ],
+              ),
+            ),
+          SizedBox(height: 10.px),
+          KNPWidgets.commonElevatedButton(onPressed: (){},buttonText: 'Purchase now'),
+          SizedBox(height: 20.px),
+        ],
+      );
+    }catch(e){
+      packageClickValue.value = false;
+    }
+    packageClickValue.value = false;
+    count.value++;
   }
 
   Widget commonTitleTextView({required String text,TextAlign? textAlign}) => Expanded(

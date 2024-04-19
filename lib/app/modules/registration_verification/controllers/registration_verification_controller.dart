@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/routes/app_pages.dart';
 
 class RegistrationVerificationController extends GetxController {
@@ -8,6 +9,8 @@ class RegistrationVerificationController extends GetxController {
 
   final referralCodeController = TextEditingController();
   FocusNode referralCodeFocusNode = FocusNode();
+
+  final selectRadioValue = '' .obs;
 
   @override
   void onInit() {
@@ -28,6 +31,11 @@ class RegistrationVerificationController extends GetxController {
   void increment() => count.value++;
 
   void clickOnProceedButtonView() {
-    Get.toNamed(Routes.PERSONAL_DETAILS);
+    if(selectRadioValue.value == ""){
+      KNPMethods.showSnackBar(message: 'Please select which way do you want to go?');
+    }
+    else{
+      Get.toNamed(Routes.PERSONAL_DETAILS,arguments: [selectRadioValue.value,referralCodeController.text.trim().toString()]);
+    }
   }
 }

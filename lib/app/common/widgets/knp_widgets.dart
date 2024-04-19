@@ -67,7 +67,8 @@ class KNPWidgets {
     String? userShortName,
     Color? userShortNameColor,
     Color? userShortNameBackgroundColor,
-  }) => InkWell(
+  }) =>
+      InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(radius ?? 0.px),
         child: ClipRRect(
@@ -80,28 +81,27 @@ class KNPWidgets {
                   color: color,
                   fit: fit,
                 )
-              : Image.network(
-                  path,
+              : Image.network(path,
                   height: height,
                   width: width,
                   color: color,
                   fit: fit,
-                  loadingBuilder: loadingBuilder ?? (BuildContext context, Widget child,
-                      ImageChunkEvent? loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return SizedBox(
-                      height: height,
-                      child: Center(
-                        child: commonProgressBarView(
-                          value: loadingProgress.expectedTotalBytes != null
-                        ? loadingProgress.cumulativeBytesLoaded /
-                          loadingProgress.expectedTotalBytes!
-                          : null,
-                        ),
-                      ),
-                    );
-                  },
-                  errorBuilder: (context, error, stackTrace) {
+                  loadingBuilder: loadingBuilder ??
+                      (BuildContext context, Widget child,
+                          ImageChunkEvent? loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return SizedBox(
+                          height: height,
+                          child: Center(
+                            child: commonProgressBarView(
+                              value: loadingProgress.expectedTotalBytes != null
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                      loadingProgress.expectedTotalBytes!
+                                  : null,
+                            ),
+                          ),
+                        );
+                      }, errorBuilder: (context, error, stackTrace) {
                   return Image.asset(
                     errorImage ?? 'assets/image/default_image.jpg',
                     height: height,
@@ -113,26 +113,32 @@ class KNPWidgets {
         ),
       );
 
-  static commonContainerView({EdgeInsetsGeometry? padding,required Widget child,double? width, double? height,Color? color,Color? borderColor}) => Container(
-    height: height,
-    width: width,
-    padding: padding ?? EdgeInsets.all(16.px),
-    decoration: BoxDecoration(
-        color: color ?? Theme.of(Get.context!).colorScheme.surface,
-        borderRadius: BorderRadius.circular(8.px),
-        boxShadow: [
-          BoxShadow(
-              color: Theme.of(Get.context!).colorScheme.surface.withOpacity(.2),
-              spreadRadius: 2.px,
-              blurRadius: 1.px
-          )
-        ],
-      border: Border.all(
-        color: borderColor ?? Theme.of(Get.context!).colorScheme.onSecondary,
-      )
-    ),
-    child: child,
-  );
+  static commonContainerView(
+          {EdgeInsetsGeometry? padding,
+          required Widget child,
+          double? width,
+          double? height,
+          Color? color,
+          Color? borderColor}) =>
+      Container(
+        height: height,
+        width: width,
+        padding: padding ?? EdgeInsets.all(16.px),
+        decoration: BoxDecoration(
+            color: color ?? Theme.of(Get.context!).colorScheme.inversePrimary,
+            borderRadius: BorderRadius.circular(8.px),
+            boxShadow: [
+              BoxShadow(
+                  color: Theme.of(Get.context!).colorScheme.surface.withOpacity(.2),
+                  spreadRadius: 2.px,
+                  blurRadius: 1.px)
+            ],
+            border: Border.all(
+              color: borderColor ?? Theme.of(Get.context!).colorScheme.onSecondary,
+            ),
+        ),
+        child: child,
+      );
 
   static Widget scaffoldBackgroundImageView({required Widget child}) {
     return SingleChildScrollView(
@@ -160,9 +166,10 @@ class KNPWidgets {
     String? appBarTitle,
     Widget? child1,
   }) {
-    const SystemUiOverlayStyle(
+     const SystemUiOverlayStyle(
       statusBarBrightness: Brightness.light, // For iOS: (dark icons)
       statusBarIconBrightness: Brightness.light, // For Android(M and greater): (dark icons)
+      systemNavigationBarIconBrightness: Brightness.light
     );
     return SingleChildScrollView(
       physics: const NeverScrollableScrollPhysics(),
@@ -180,19 +187,23 @@ class KNPWidgets {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if(appBarValue)
-                  isHomeAppBarValue
-                      ? Padding(
-                         padding: EdgeInsets.symmetric(vertical: 20.px,horizontal: 12.px),
-                         child: commonNetworkImageView(path: 'assets/image/logoipsum_image.png',height: 24.px,width: 115.px,isAssetImage: true),
-                      )
-                      : appBarView(title: appBarTitle),
-                  if(child1 != null)
-                  SizedBox(height: appBarValue ? 3.h : 10.h),
-                  if(child1 != null)
-                  child1,
-                  if(child1 != null)
-                  SizedBox(height: appBarValue ? 9.h : 12.h),
+                  if (appBarValue)
+                    isHomeAppBarValue
+                        ? Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 20.px, horizontal: 12.px),
+                            child: commonNetworkImageView(
+                                path: 'assets/image/logoipsum_image.png',
+                                height: 24.px,
+                                width: 115.px,
+                                isAssetImage: true),
+                          )
+                        : appBarView(title: appBarTitle),
+                  if (child1 != null)
+                    SizedBox(height: appBarValue ? 3.h : 10.h),
+                  if (child1 != null) child1,
+                  if (child1 != null)
+                    SizedBox(height: appBarValue ? 9.h : 12.h),
                   Expanded(
                     child: Container(
                       width: double.infinity,
@@ -202,7 +213,8 @@ class KNPWidgets {
                           topRight: Radius.circular(16.px),
                           topLeft: Radius.circular(16.px),
                         ),
-                        color: Theme.of(Get.context!).colorScheme.inversePrimary,
+                        color:
+                            Theme.of(Get.context!).colorScheme.inversePrimary,
                       ),
                       child: child2,
                     ),
@@ -269,7 +281,8 @@ class KNPWidgets {
                     : inputFormatters,
                 onChanged: keyboardType == TextInputType.number
                     ? (value) {}
-                    : onChanged ?? (value) {
+                    : onChanged ??
+                        (value) {
                           value = value.trim();
                           if (value.isEmpty ||
                               value.replaceAll(" ", "").isEmpty) {
@@ -291,8 +304,7 @@ class KNPWidgets {
                       ? Theme.of(Get.context!).colorScheme.primary.withOpacity(.1)
                       : Theme.of(Get.context!).colorScheme.surface,
                   filled: filled,
-                  contentPadding:
-                      contentPadding ?? EdgeInsets.symmetric(horizontal: 20.px),
+                  contentPadding: contentPadding ?? EdgeInsets.symmetric(horizontal: 12.px),
                   hintStyle: Theme.of(Get.context!).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w400, color: Theme.of(Get.context!).colorScheme.onSurface),
                   suffixIcon: suffixIcon != null
                       ? Padding(
@@ -358,17 +370,21 @@ class KNPWidgets {
           Color? activeFillColor,
           Color? checkColor,
           Color? borderColor,
-          VisualDensity? visualDensity}) => Checkbox(
+          VisualDensity? visualDensity}) =>
+      Checkbox(
         visualDensity: visualDensity,
         value: changeValue,
         onChanged: onChanged,
-        activeColor: activeFillColor ?? Theme.of(Get.context!).colorScheme.primary,
-        checkColor: checkColor ?? Theme.of(Get.context!).colorScheme.inversePrimary,
+        activeColor:
+            activeFillColor ?? Theme.of(Get.context!).colorScheme.primary,
+        checkColor:
+            checkColor ?? Theme.of(Get.context!).colorScheme.inversePrimary,
         splashRadius: 24.px,
         side: BorderSide(
             color: borderColor ?? Theme.of(Get.context!).colorScheme.onSurface,
             width: 1.px),
-        shape: shape ?? RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.px)),
+        shape: shape ??
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.px)),
       );
 
   static Widget commonDividerView({
@@ -377,7 +393,8 @@ class KNPWidgets {
     double? wight,
     double? leftPadding,
     double? rightPadding,
-  }) => Divider(
+  }) =>
+      Divider(
         color: color ?? Theme.of(Get.context!).colorScheme.onSecondary,
         height: height ?? 10.px,
         thickness: wight ?? .5.px,
@@ -469,9 +486,11 @@ class KNPWidgets {
           {Color? color,
           Color? backgroundColor,
           double? value,
-          double? strokeWidth}) => Center(
+          double? strokeWidth}) =>
+      Center(
         child: CircularProgressIndicator(
-          backgroundColor: backgroundColor ?? Theme.of(Get.context!).colorScheme.primary.withOpacity(.2),
+          backgroundColor: backgroundColor ??
+              Theme.of(Get.context!).colorScheme.primary.withOpacity(.2),
           color: color ?? Theme.of(Get.context!).colorScheme.primary,
           value: value,
           strokeWidth: strokeWidth ?? 3,
@@ -479,15 +498,22 @@ class KNPWidgets {
         ),
       );
 
-  static Widget commonLinearProgressBar({required double value, double? height,Color? color,Color? backgroundColor,}) => ClipRRect(
-    borderRadius: BorderRadius.circular(20.px),
-    child: LinearProgressIndicator(
-      color: color ?? Theme.of(Get.context!).colorScheme.primary,
-      backgroundColor: backgroundColor ?? Theme.of(Get.context!).colorScheme.primary.withOpacity(.2),
-      value: value,
-      minHeight: height ?? 10.px,
-    ),
-  );
+  static Widget commonLinearProgressBar({
+    required double value,
+    double? height,
+    Color? color,
+    Color? backgroundColor,
+  }) =>
+      ClipRRect(
+        borderRadius: BorderRadius.circular(20.px),
+        child: LinearProgressIndicator(
+          color: color ?? Theme.of(Get.context!).colorScheme.primary,
+          backgroundColor: backgroundColor ??
+              Theme.of(Get.context!).colorScheme.primary.withOpacity(.2),
+          value: value,
+          minHeight: height ?? 10.px,
+        ),
+      );
 
   /* --------------------------Buttons View--------------------------*/
   static Widget commonElevatedButton(
@@ -622,7 +648,6 @@ class KNPWidgets {
         ));
   }
 
-
   /* --------------------------Banner View--------------------------*/
 
   ///flutter pub add carousel_slider :- For Banner
@@ -630,7 +655,8 @@ class KNPWidgets {
     required List<String> imageList,
     required int selectedIndex,
     EdgeInsetsGeometry? padding,
-    required Function(int index, CarouselPageChangedReason reason)?onPageChanged,
+    required Function(int index, CarouselPageChangedReason reason)?
+        onPageChanged,
     CarouselController? carouselController,
     double? height,
     double? borderRadius,
@@ -644,53 +670,54 @@ class KNPWidgets {
     Color? indicatorActiveColor,
     Color? indicatorInactiveColor,
     int indicatorAnimationDuration = 300,
-  }) => Stack(
-    alignment: Alignment.bottomCenter,
-    children: [
-      ClipRRect(
-        borderRadius: BorderRadius.circular(12.px),
-        child: CarouselSlider(
-          items: imageList.isNotEmpty
-              ? imageList.map((image) {
-            return ClipRRect(
-              borderRadius:
-              BorderRadius.circular(borderRadius ?? 12.px),
-              child: Material(
-                color: Theme.of(Get.context!).colorScheme.surface,
-                child: commonNetworkImageView(
-                    path: image,
-                    isAssetImage: false,
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                    height: height ?? 150.px),
+  }) =>
+      Stack(
+        alignment: Alignment.bottomCenter,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12.px),
+            child: CarouselSlider(
+              items: imageList.isNotEmpty
+                  ? imageList.map((image) {
+                      return ClipRRect(
+                        borderRadius:
+                            BorderRadius.circular(borderRadius ?? 12.px),
+                        child: Material(
+                          color: Theme.of(Get.context!).colorScheme.surface,
+                          child: commonNetworkImageView(
+                              path: image,
+                              isAssetImage: false,
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                              height: height ?? 150.px),
+                        ),
+                      );
+                    }).toList()
+                  : [],
+              carouselController: carouselController,
+              options: CarouselOptions(
+                autoPlay: autoPlay,
+                height: height ?? 150.px,
+                // enlargeCenterPage: true,
+                viewportFraction: 1,
+                onPageChanged: onPageChanged,
               ),
-            );
-          }).toList()
-              : [],
-          carouselController: carouselController,
-          options: CarouselOptions(
-            autoPlay: autoPlay,
-            height: height ?? 150.px,
-            // enlargeCenterPage: true,
-            viewportFraction: 1,
-            onPageChanged: onPageChanged,
+            ),
           ),
-        ),
-      ),
-      if (isIndicator)
-        commonBannerIndicatorView(
-            selectedIndex: selectedIndex,
-            length: imageList.length,
-            height: indicatorHeight,
-            width: indicatorWidth,
-            activeColor: indicatorActiveColor,
-            inactiveColor: indicatorInactiveColor,
-            bottomPadding: indicatorBottomPadding,
-            animationDuration: indicatorAnimationDuration,
-            cornerRadius: indicatorCornerRadius,
-            space: indicatorSpace),
-    ],
-  );
+          if (isIndicator)
+            commonBannerIndicatorView(
+                selectedIndex: selectedIndex,
+                length: imageList.length,
+                height: indicatorHeight,
+                width: indicatorWidth,
+                activeColor: indicatorActiveColor,
+                inactiveColor: indicatorInactiveColor,
+                bottomPadding: indicatorBottomPadding,
+                animationDuration: indicatorAnimationDuration,
+                cornerRadius: indicatorCornerRadius,
+                space: indicatorSpace),
+        ],
+      );
 
   /* --------------------------Banner Indicator View--------------------------*/
 
@@ -706,19 +733,62 @@ class KNPWidgets {
     double? cornerRadius,
     Color? activeColor,
     Color? inactiveColor,
-  }) => Padding(
-    padding: EdgeInsets.only(bottom: bottomPadding ?? 12.px),
-    child: CarouselIndicator(
-      count: length,
-      index: selectedIndex,
-      height: height ?? 6.px,
-      color: inactiveColor ?? Theme.of(Get.context!).colorScheme.inversePrimary,
-      width: width ?? 20.px,
-      activeColor: activeColor ?? Theme.of(Get.context!).colorScheme.primary,
-      cornerRadius: cornerRadius ?? 6.px,
-      space: space ?? 4.px,
-      animationDuration: animationDuration,
-    ),
-  );
+  }) =>
+      Padding(
+        padding: EdgeInsets.only(bottom: bottomPadding ?? 12.px),
+        child: CarouselIndicator(
+          count: length,
+          index: selectedIndex,
+          height: height ?? 6.px,
+          color: inactiveColor ??
+              Theme.of(Get.context!).colorScheme.inversePrimary,
+          width: width ?? 20.px,
+          activeColor:
+              activeColor ?? Theme.of(Get.context!).colorScheme.primary,
+          cornerRadius: cornerRadius ?? 6.px,
+          space: space ?? 4.px,
+          animationDuration: animationDuration,
+        ),
+      );
 
+/* --------------------------Radio Button View--------------------------*/
+
+  static Widget commonRadioButtonWithTitle({
+    required String title,
+    required String value,
+    GestureTapCallback? onTap
+  }) {
+    return InkWell(
+      onTap: onTap,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Container(
+            height: 16.px,
+            width: 16.px,
+            margin: EdgeInsets.only(right: 4.px),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(
+                width: value == title
+                    ? 5.px
+                    : 2.px,
+                color: value == title
+                    ? Theme.of(Get.context!).colorScheme.primary
+                    : Theme.of(Get.context!).colorScheme.onInverseSurface,
+              ),
+            ),
+          ),
+          Text(
+            title,
+            style: Theme.of(Get.context!).textTheme.labelMedium?.copyWith(
+                color: value == title
+                    ? Theme.of(Get.context!).colorScheme.primary
+                    : Theme.of(Get.context!).colorScheme.onInverseSurface),
+          )
+        ],
+      ),
+    );
+  }
 }

@@ -40,51 +40,51 @@ class PersonalDetailsView extends GetView<PersonalDetailsController> {
                   child: controller.apiResValue.value
                       ? KNPWidgets.commonProgressBarView()
                       : ListView(
-                    padding: EdgeInsets.symmetric(horizontal: 12.px, vertical: 26.px),
-                    shrinkWrap: true,
-                    children: [
-                      mrAndMrsTextFieldView(),
-                      SizedBox(height: 20.px),
-                      firstNameTextFieldView(),
-                      SizedBox(height: 20.px),
-                      lastNameTextFieldView(),
-                      SizedBox(height: 20.px),
-                      middleNameTextFieldView(),
-                      SizedBox(height: 20.px),
-                      dobTextFieldView(),
-                      SizedBox(height: 20.px),
-                      emailTextFieldView(),
-                      SizedBox(height: 20.px),
-                      phoneNumberFieldView(),
-                      SizedBox(height: 20.px),
-                      whatsappNumberFieldView(),
-                      SizedBox(height: 10.px),
-                      Row(
-                        children: [
-                          checkBoxView(),
-                          sameAsMobileNumberTextView(text: 'Same as phone number')
-                        ],
-                      ),
-                      SizedBox(height: 10.px),
-                      completeAddressTextFieldView(),
-                      SizedBox(height: 20.px),
-                      stateTextFieldView(),
-                      SizedBox(height: 20.px),
-                      if(controller.stateController.text.isNotEmpty)
-                        cityTextFieldView(),
-                      if(controller.stateController.text.isNotEmpty)
-                        SizedBox(height: 20.px),
-                      pinCodeTextFieldView(),
-                      SizedBox(height: 20.px),
-                      passwordTextFieldView(),
-                      SizedBox(height: 20.px),
-                      confirmPasswordTextFieldView(),
-                      SizedBox(height: 20.px),
-                      continueButtonView(),
-                    ],
-                  ),
-                ),
-              )
+                         padding: EdgeInsets.symmetric(horizontal: 12.px, vertical: 26.px),
+                         shrinkWrap: true,
+                         children: [
+                           mrAndMrsTextFieldView(),
+                           SizedBox(height: 20.px),
+                           firstNameTextFieldView(),
+                           SizedBox(height: 20.px),
+                           middleNameTextFieldView(),
+                           SizedBox(height: 20.px),
+                           lastNameTextFieldView(),
+                           SizedBox(height: 20.px),
+                           dobTextFieldView(),
+                           SizedBox(height: 20.px),
+                           emailTextFieldView(),
+                           SizedBox(height: 20.px),
+                           phoneNumberFieldView(),
+                           SizedBox(height: 20.px),
+                           whatsappNumberFieldView(),
+                           SizedBox(height: 10.px),
+                           Row(
+                             children: [
+                               checkBoxView(),
+                               sameAsMobileNumberTextView(text: 'Same as phone number')
+                             ],
+                           ),
+                           SizedBox(height: 10.px),
+                           completeAddressTextFieldView(),
+                           SizedBox(height: 20.px),
+                           stateTextFieldView(),
+                           SizedBox(height: 20.px),
+                           if(controller.stateController.text.isNotEmpty)
+                             cityTextFieldView(),
+                           if(controller.stateController.text.isNotEmpty)
+                             SizedBox(height: 20.px),
+                           pinCodeTextFieldView(),
+                           SizedBox(height: 20.px),
+                           passwordTextFieldView(),
+                           SizedBox(height: 20.px),
+                           confirmPasswordTextFieldView(),
+                           SizedBox(height: 20.px),
+                           continueButtonView(),
+                         ],
+                       ),
+                     ),
+                   )
             ),
           );
         }),

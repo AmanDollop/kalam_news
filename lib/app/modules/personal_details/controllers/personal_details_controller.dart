@@ -12,7 +12,6 @@ import 'package:kalam_news_publication/app/common/packages/cbs.dart';
 import 'package:kalam_news_publication/app/common/packages/cdt.dart';
 import 'package:kalam_news_publication/app/common/packages/common_methods_for_date_time.dart';
 import 'package:kalam_news_publication/app/common/packages/lm.dart';
-import 'package:kalam_news_publication/app/common/packages/scroll_behavior.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
 import 'package:kalam_news_publication/app/routes/app_pages.dart';
 import 'package:http/http.dart' as http;
@@ -24,6 +23,9 @@ class PersonalDetailsController extends GetxController {
   final apiResValue = true.obs;
 
   final key = GlobalKey<FormState>();
+
+  final rightLeftValue = '' .obs;
+  final referralCode = '' .obs;
 
   final initialsController = TextEditingController();
   FocusNode initialsFocusNode = FocusNode();
@@ -110,6 +112,8 @@ class PersonalDetailsController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
     apiResValue.value = true;
+    rightLeftValue.value = Get.arguments[0];
+    referralCode.value = Get.arguments[1];
     await callingGetStateApi();
   }
 
@@ -138,8 +142,9 @@ class PersonalDetailsController extends GetxController {
       context: Get.context!,
       dateController: dobController,
       initialDate: dobController.text.isNotEmpty
-          ? DateFormat('dd MMM yyyy').parse(dobController.text)
-          : DateTime.now(),
+          ? DateFormat('dd MMM yyyy').parse(dobController.text).subtract(const Duration(days: 365*18))
+          : DateTime.now().subtract(const Duration(days: 365*18)),
+      lastDate: DateTime.now().subtract(const Duration(days: 365*18))
     );
   }
 
@@ -431,8 +436,8 @@ class PersonalDetailsController extends GetxController {
         ApiConstantVar.stateId: stateId,
         ApiConstantVar.cityId: cityId,
         ApiConstantVar.pinCode: pinCodeController.text.trim().toString(),
-        ApiConstantVar.referredBy: 'AMALMF4E',
-        ApiConstantVar.branch: 'left',
+        ApiConstantVar.referredBy: 'AMALMF4E'/*referralCode.value*/,
+        ApiConstantVar.branch: rightLeftValue.value.toLowerCase(),
       };
       http.Response? res = await ApiIntrigation.registrationApi(bodyParams: bodyParamsRegister);
       if (res != null && res.statusCode == 200) {

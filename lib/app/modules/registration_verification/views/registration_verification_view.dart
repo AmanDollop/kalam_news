@@ -8,7 +8,8 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../controllers/registration_verification_controller.dart';
 
-class RegistrationVerificationView extends GetView<RegistrationVerificationController> {
+class RegistrationVerificationView
+    extends GetView<RegistrationVerificationController> {
   const RegistrationVerificationView({Key? key}) : super(key: key);
 
   @override
@@ -24,16 +25,19 @@ class RegistrationVerificationView extends GetView<RegistrationVerificationContr
               KNPWidgets.scaffoldBackgroundImageViewWithAppBar(
                 appBarTitle: 'Verify Registered',
                 child2: ListView(
-                  padding: EdgeInsets.symmetric(horizontal: 12.px, vertical: 26.px),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 12.px, vertical: 26.px),
                   shrinkWrap: true,
                   children: [
                     referralCodeTextFieldView(),
                     SizedBox(height: 20.px),
-                    youAreRegisteringTextView(),
+                    youAreRegisteringTextView(
+                        text: 'You are registering a new member under'),
                     SizedBox(height: 20.px),
                     commonRowView(
                       text1: 'Reference Code',
-                      text2: 'AB1234567980AB123456798 0AB123456798 0AB12345679 80AB1 234567980AB123 4567980',
+                      text2:
+                          'AB1234567980AB123456798 0AB123456798 0AB12345679 80AB1 234567980AB123 4567980',
                     ),
                     SizedBox(height: 10.px),
                     commonRowView(
@@ -47,9 +51,32 @@ class RegistrationVerificationView extends GetView<RegistrationVerificationContr
                     ),
                     SizedBox(height: 10.px),
                     commonRowView(
-                        text1: 'City',
-                        text2: 'Indore',
-                        isDivider: false
+                        text1: 'City', text2: 'Indore', isDivider: false),
+                    SizedBox(height: 20.px),
+                    youAreRegisteringTextView(
+                        text: 'Please select which way do you want to go?',
+                    ),
+                    SizedBox(height: 20.px),
+                    Row(
+                      children: [
+                        KNPWidgets.commonRadioButtonWithTitle(
+                          title: 'Left',
+                          value: controller.selectRadioValue.value,
+                          onTap: () {
+                            controller.selectRadioValue.value = "Left";
+                            controller.count.value++;
+                          },
+                        ),
+                        SizedBox(width: 16.px),
+                        KNPWidgets.commonRadioButtonWithTitle(
+                          title: 'Right',
+                          value: controller.selectRadioValue.value,
+                          onTap: () {
+                            controller.selectRadioValue.value = "Right";
+                            controller.count.value++;
+                          },
+                        ),
+                      ],
                     ),
                     SizedBox(height: 20.px),
                     proceedButtonView(),
@@ -71,8 +98,8 @@ class RegistrationVerificationView extends GetView<RegistrationVerificationContr
         readOnly: true,
       );
 
-  Widget youAreRegisteringTextView() => Text(
-        'You are registering a new member under',
+  Widget youAreRegisteringTextView({required String text}) => Text(
+        text,
         style: Theme.of(Get.context!).textTheme.labelLarge,
       );
 
@@ -105,8 +132,7 @@ class RegistrationVerificationView extends GetView<RegistrationVerificationContr
       );
 
   Widget proceedButtonView() => KNPWidgets.commonElevatedButton(
-    onPressed: () => controller.clickOnProceedButtonView(),
-    buttonText: 'Proceed',
-  );
-
+        onPressed: () => controller.clickOnProceedButtonView(),
+        buttonText: 'Proceed',
+      );
 }

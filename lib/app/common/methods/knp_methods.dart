@@ -41,6 +41,7 @@ class KNPMethods{
         duration: duration ?? const Duration(seconds: 2),
       );
       ScaffoldMessenger.of(Get.context!).showSnackBar(snackBar);*/
+      Fluttertoast.cancel();
       Fluttertoast.showToast(
           msg: message,
           toastLength: Toast.LENGTH_LONG,
@@ -64,6 +65,7 @@ class KNPMethods{
         duration: duration ?? const Duration(seconds: 2),
       );
       ScaffoldMessenger.of(Get.context!).showSnackBar(snackBar);*/
+      Fluttertoast.cancel();
       Fluttertoast.showToast(
           msg: message,
           toastLength: Toast.LENGTH_LONG,

@@ -12,7 +12,11 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import 'app/routes/app_pages.dart';
 
 void main() {
-
+   const SystemUiOverlayStyle(
+      statusBarBrightness: Brightness.dark, // For iOS: (dark icons)
+      statusBarIconBrightness: Brightness.dark, // For Android(M and greater): (dark icons)
+      systemNavigationBarIconBrightness: Brightness.dark
+  );
   WidgetsFlutterBinding.ensureInitialized();
 
   late StreamSubscription streamSubscription;
