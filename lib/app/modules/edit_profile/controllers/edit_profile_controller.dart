@@ -94,7 +94,6 @@ class EditProfileController extends GetxController {
 
   void clickOnCamera() {
     CD.commonIosPickImageDialog(
-      isDismiss: false,
       clickOnCamera: () async {
         Get.back();
         image.value = await KNPImagePicker.pickImage(isCropper: true);
