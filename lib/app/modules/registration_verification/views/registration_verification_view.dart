@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
 import 'package:get/get.dart';
+import 'package:kalam_news_publication/app/common/common_padding_size/common_padding_size.dart';
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../controllers/registration_verification_controller.dart';
 
-class RegistrationVerificationView
-    extends GetView<RegistrationVerificationController> {
+class RegistrationVerificationView extends GetView<RegistrationVerificationController> {
   const RegistrationVerificationView({Key? key}) : super(key: key);
 
   @override
@@ -25,38 +23,32 @@ class RegistrationVerificationView
               KNPWidgets.scaffoldBackgroundImageViewWithAppBar(
                 appBarTitle: 'Verify Registered',
                 child2: ListView(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 12.px, vertical: 26.px),
+                  padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
                   shrinkWrap: true,
                   children: [
                     referralCodeTextFieldView(),
-                    SizedBox(height: 20.px),
-                    youAreRegisteringTextView(
-                        text: 'You are registering a new member under'),
-                    SizedBox(height: 20.px),
+                    SizedBox(height: CommonPaddingAndSize.size20()),
+                    youAreRegisteringTextView(text: 'You are registering a new member under'),
+                    SizedBox(height: CommonPaddingAndSize.size20()),
                     commonRowView(
                       text1: 'Reference Code',
-                      text2:
-                          'AB1234567980AB123456798 0AB123456798 0AB12345679 80AB1 234567980AB123 4567980',
+                      text2: 'AB1234567980AB123456798 0AB123456798 0AB12345679 80AB1 234567980AB123 4567980',
                     ),
-                    SizedBox(height: 10.px),
+                    SizedBox(height: CommonPaddingAndSize.size10()),
                     commonRowView(
                       text1: 'Name',
                       text2: 'Dollop Infotech PVT.LTD',
                     ),
-                    SizedBox(height: 10.px),
+                    SizedBox(height: CommonPaddingAndSize.size10()),
                     commonRowView(
                       text1: 'Mobile',
                       text2: '1234567890',
                     ),
-                    SizedBox(height: 10.px),
-                    commonRowView(
-                        text1: 'City', text2: 'Indore', isDivider: false),
-                    SizedBox(height: 20.px),
-                    youAreRegisteringTextView(
-                        text: 'Please select which way do you want to go?',
-                    ),
-                    SizedBox(height: 20.px),
+                    SizedBox(height: CommonPaddingAndSize.size10()),
+                    commonRowView(text1: 'City', text2: 'Indore', isDivider: false),
+                    SizedBox(height: CommonPaddingAndSize.size20()),
+                    youAreRegisteringTextView(text: 'Please select which way do you want to go?'),
+                    SizedBox(height: CommonPaddingAndSize.size20()),
                     Row(
                       children: [
                         KNPWidgets.commonRadioButtonWithTitle(
@@ -67,7 +59,7 @@ class RegistrationVerificationView
                             controller.count.value++;
                           },
                         ),
-                        SizedBox(width: 16.px),
+                        SizedBox(width: CommonPaddingAndSize.size16()),
                         KNPWidgets.commonRadioButtonWithTitle(
                           title: 'Right',
                           value: controller.selectRadioValue.value,
@@ -78,7 +70,7 @@ class RegistrationVerificationView
                         ),
                       ],
                     ),
-                    SizedBox(height: 20.px),
+                    SizedBox(height: CommonPaddingAndSize.size20()),
                     proceedButtonView(),
                   ],
                 ),

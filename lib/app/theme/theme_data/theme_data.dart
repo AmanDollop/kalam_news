@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kalam_news_publication/app/theme/color/Colors.dart';
+import 'package:kalam_news_publication/app/theme/color/colors.dart';
 import 'package:kalam_news_publication/app/theme/text_style/text_style.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 

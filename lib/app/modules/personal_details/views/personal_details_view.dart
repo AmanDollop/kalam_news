@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
+import 'package:kalam_news_publication/app/common/common_padding_size/common_padding_size.dart';
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/common/packages/model_progress_bar.dart';
 import 'package:kalam_news_publication/app/common/packages/my_drop_down.dart';
@@ -40,46 +41,46 @@ class PersonalDetailsView extends GetView<PersonalDetailsController> {
                   child: controller.apiResValue.value
                       ? KNPWidgets.commonProgressBarView()
                       : ListView(
-                         padding: EdgeInsets.symmetric(horizontal: 12.px, vertical: 26.px),
+                         padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
                          shrinkWrap: true,
                          children: [
                            mrAndMrsTextFieldView(),
-                           SizedBox(height: 20.px),
+                           SizedBox(height: CommonPaddingAndSize.size20()),
                            firstNameTextFieldView(),
-                           SizedBox(height: 20.px),
+                           SizedBox(height: CommonPaddingAndSize.size20()),
                            middleNameTextFieldView(),
-                           SizedBox(height: 20.px),
+                           SizedBox(height: CommonPaddingAndSize.size20()),
                            lastNameTextFieldView(),
-                           SizedBox(height: 20.px),
+                           SizedBox(height: CommonPaddingAndSize.size20()),
                            dobTextFieldView(),
-                           SizedBox(height: 20.px),
+                           SizedBox(height: CommonPaddingAndSize.size20()),
                            emailTextFieldView(),
-                           SizedBox(height: 20.px),
+                           SizedBox(height: CommonPaddingAndSize.size20()),
                            phoneNumberFieldView(),
-                           SizedBox(height: 20.px),
+                           SizedBox(height: CommonPaddingAndSize.size20()),
                            whatsappNumberFieldView(),
-                           SizedBox(height: 10.px),
+                           SizedBox(height: CommonPaddingAndSize.size10()),
                            Row(
                              children: [
                                checkBoxView(),
                                sameAsMobileNumberTextView(text: 'Same as phone number')
                              ],
                            ),
-                           SizedBox(height: 10.px),
+                           SizedBox(height: CommonPaddingAndSize.size10()),
                            completeAddressTextFieldView(),
-                           SizedBox(height: 20.px),
+                           SizedBox(height: CommonPaddingAndSize.size20()),
                            stateTextFieldView(),
-                           SizedBox(height: 20.px),
+                           SizedBox(height: CommonPaddingAndSize.size20()),
                            if(controller.stateController.text.isNotEmpty)
                              cityTextFieldView(),
                            if(controller.stateController.text.isNotEmpty)
-                             SizedBox(height: 20.px),
+                             SizedBox(height: CommonPaddingAndSize.size20()),
                            pinCodeTextFieldView(),
-                           SizedBox(height: 20.px),
+                           SizedBox(height: CommonPaddingAndSize.size20()),
                            passwordTextFieldView(),
-                           SizedBox(height: 20.px),
+                           SizedBox(height: CommonPaddingAndSize.size20()),
                            confirmPasswordTextFieldView(),
-                           SizedBox(height: 20.px),
+                           SizedBox(height: CommonPaddingAndSize.size20()),
                            continueButtonView(),
                          ],
                        ),
@@ -115,7 +116,7 @@ class PersonalDetailsView extends GetView<PersonalDetailsController> {
         hintText: 'First name',
         controller: controller.firstNameController,
         focusNode: controller.firstNameFocusNode,
-        validator: (value) => V.isValid(value: value, title: 'Please first name'),
+        validator: (value) => V.isValid(value: value, title: 'Please enter first name'),
       );
 
   Widget lastNameTextFieldView() => KNPWidgets.commonTextFormField(

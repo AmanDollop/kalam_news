@@ -3,12 +3,13 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:kalam_news_publication/app/common/common_padding_size/common_padding_size.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class KNPWidgets {
   /* --------------------------Normal Widgets View--------------------------*/
-  static Widget appBarView({String? title}) {
+  static Widget appBarView({String? title, GestureTapCallback? onTap}) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 20.px),
       child: Row(
@@ -16,16 +17,17 @@ class KNPWidgets {
         children: [
           InkWell(
             borderRadius: BorderRadius.circular(18.px),
-            onTap: () => Get.back(),
+            onTap: onTap ?? () => Get.back(),
             child: Container(
               width: 36.px,
               height: 36.px,
               margin: EdgeInsets.symmetric(horizontal: 12.px),
               decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                      color: Theme.of(Get.context!).colorScheme.primary,
-                      width: 1.px)),
+                shape: BoxShape.circle,
+                border: Border.all(
+                    color: Theme.of(Get.context!).colorScheme.primary,
+                    width: 1.px),
+              ),
               child: Center(
                 child: Icon(
                   Icons.arrow_back,
@@ -81,7 +83,8 @@ class KNPWidgets {
                   color: color,
                   fit: fit,
                 )
-              : Image.network(path,
+              : Image.network(
+                  path,
                   height: height,
                   width: width,
                   color: color,
@@ -101,15 +104,17 @@ class KNPWidgets {
                             ),
                           ),
                         );
-                      }, errorBuilder: (context, error, stackTrace) {
-                  return Image.asset(
-                    errorImage ?? 'assets/image/default_image.jpg',
-                    height: height,
-                    width: width,
-                    color: color,
-                    fit: fit,
-                  );
-                }),
+                      },
+                  errorBuilder: (context, error, stackTrace) {
+                    return Image.asset(
+                      errorImage ?? 'assets/image/default_image.jpg',
+                      height: height,
+                      width: width,
+                      color: color,
+                      fit: fit,
+                    );
+                  },
+                ),
         ),
       );
 
@@ -125,17 +130,19 @@ class KNPWidgets {
         width: width,
         padding: padding ?? EdgeInsets.all(16.px),
         decoration: BoxDecoration(
-            color: color ?? Theme.of(Get.context!).colorScheme.inversePrimary,
-            borderRadius: BorderRadius.circular(8.px),
-            boxShadow: [
-              BoxShadow(
-                  color: Theme.of(Get.context!).colorScheme.surface.withOpacity(.2),
-                  spreadRadius: 2.px,
-                  blurRadius: 1.px)
-            ],
-            border: Border.all(
-              color: borderColor ?? Theme.of(Get.context!).colorScheme.onSecondary,
-            ),
+          color: color ?? Theme.of(Get.context!).colorScheme.inversePrimary,
+          borderRadius: BorderRadius.circular(8.px),
+          boxShadow: [
+            BoxShadow(
+                color:
+                    Theme.of(Get.context!).colorScheme.surface.withOpacity(.2),
+                spreadRadius: 2.px,
+                blurRadius: 1.px)
+          ],
+          border: Border.all(
+            color:
+                borderColor ?? Theme.of(Get.context!).colorScheme.onSecondary,
+          ),
         ),
         child: child,
       );
@@ -165,12 +172,14 @@ class KNPWidgets {
     bool isHomeAppBarValue = false,
     String? appBarTitle,
     Widget? child1,
+    GestureTapCallback? onTapForBackButton
   }) {
-     const SystemUiOverlayStyle(
-      statusBarBrightness: Brightness.light, // For iOS: (dark icons)
-      statusBarIconBrightness: Brightness.light, // For Android(M and greater): (dark icons)
-      systemNavigationBarIconBrightness: Brightness.light
-    );
+    const SystemUiOverlayStyle(
+        statusBarBrightness: Brightness.light,
+        // For iOS: (dark icons)
+        statusBarIconBrightness: Brightness.light,
+        // For Android(M and greater): (dark icons)
+        systemNavigationBarIconBrightness: Brightness.light);
     return SingleChildScrollView(
       physics: const NeverScrollableScrollPhysics(),
       child: SizedBox(
@@ -190,15 +199,17 @@ class KNPWidgets {
                   if (appBarValue)
                     isHomeAppBarValue
                         ? Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 20.px, horizontal: 12.px),
+                            padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
                             child: commonNetworkImageView(
                                 path: 'assets/image/logoipsum_image.png',
                                 height: 24.px,
                                 width: 115.px,
                                 isAssetImage: true),
                           )
-                        : appBarView(title: appBarTitle),
+                        : appBarView(
+                            title: appBarTitle,
+                            onTap: onTapForBackButton
+                          ),
                   if (child1 != null)
                     SizedBox(height: appBarValue ? 3.h : 10.h),
                   if (child1 != null) child1,
@@ -301,11 +312,20 @@ class KNPWidgets {
                   counterText: '',
                   hintText: hintText,
                   fillColor: focusNode?.hasFocus == true
-                      ? Theme.of(Get.context!).colorScheme.primary.withOpacity(.1)
+                      ? Theme.of(Get.context!)
+                          .colorScheme
+                          .primary
+                          .withOpacity(.1)
                       : Theme.of(Get.context!).colorScheme.surface,
                   filled: filled,
-                  contentPadding: contentPadding ?? EdgeInsets.symmetric(horizontal: 12.px),
-                  hintStyle: Theme.of(Get.context!).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w400, color: Theme.of(Get.context!).colorScheme.onSurface),
+                  contentPadding:
+                      contentPadding ?? EdgeInsets.symmetric(horizontal: 12.px),
+                  hintStyle: Theme.of(Get.context!)
+                      .textTheme
+                      .titleMedium
+                      ?.copyWith(
+                          fontWeight: FontWeight.w400,
+                          color: Theme.of(Get.context!).colorScheme.onSurface),
                   suffixIcon: suffixIcon != null
                       ? Padding(
                           padding: suffixPadding ?? EdgeInsets.zero,
@@ -544,7 +564,7 @@ class KNPWidgets {
           borderRadius: BorderRadius.circular(borderRadius ?? 32.px),
         ),
         minimumSize: Size(
-          width ?? 312.px,
+          width ?? /*312.px*/ double.infinity,
           height ?? 52.px,
         ),
         shadowColor: Colors.transparent,
@@ -635,17 +655,19 @@ class KNPWidgets {
     Color? buttonTextColor,
   }) {
     return TextButton(
-        onPressed: onPressed,
-        style: TextButton.styleFrom(
-            visualDensity: VisualDensity(vertical: -4.px, horizontal: -4.px),
-            padding: EdgeInsets.zero),
-        child: Text(
-          buttonText,
-          style: Theme.of(Get.context!)
-              .textTheme
-              .labelSmall
-              ?.copyWith(fontSize: fontSize, color: buttonTextColor),
-        ));
+      onPressed: onPressed,
+      style: TextButton.styleFrom(
+        visualDensity: VisualDensity(vertical: -4.px, horizontal: -4.px),
+        padding: EdgeInsets.zero,
+      ),
+      child: Text(
+        buttonText,
+        style: Theme.of(Get.context!)
+            .textTheme
+            .labelSmall
+            ?.copyWith(fontSize: fontSize, color: buttonTextColor),
+      ),
+    );
   }
 
   /* --------------------------Banner View--------------------------*/
@@ -753,11 +775,10 @@ class KNPWidgets {
 
 /* --------------------------Radio Button View--------------------------*/
 
-  static Widget commonRadioButtonWithTitle({
-    required String title,
-    required String value,
-    GestureTapCallback? onTap
-  }) {
+  static Widget commonRadioButtonWithTitle(
+      {required String title,
+      required String value,
+      GestureTapCallback? onTap}) {
     return InkWell(
       onTap: onTap,
       child: Row(
@@ -771,9 +792,7 @@ class KNPWidgets {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(
-                width: value == title
-                    ? 5.px
-                    : 2.px,
+                width: value == title ? 5.px : 2.px,
                 color: value == title
                     ? Theme.of(Get.context!).colorScheme.primary
                     : Theme.of(Get.context!).colorScheme.onInverseSurface,
@@ -782,7 +801,7 @@ class KNPWidgets {
           ),
           Text(
             title,
-            style: Theme.of(Get.context!).textTheme.labelMedium?.copyWith(
+            style: Theme.of(Get.context!).textTheme.titleLarge?.copyWith(
                 color: value == title
                     ? Theme.of(Get.context!).colorScheme.primary
                     : Theme.of(Get.context!).colorScheme.onInverseSurface),

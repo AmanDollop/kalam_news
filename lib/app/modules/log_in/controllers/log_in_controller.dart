@@ -10,7 +10,6 @@ import 'package:kalam_news_publication/app/db/data_base_constant/data_base_const
 import 'package:kalam_news_publication/app/db/data_base_helper/data_base_helper.dart';
 import 'package:kalam_news_publication/app/modules/bottom_bar/views/bottom_bar_view.dart';
 import 'package:kalam_news_publication/app/routes/app_pages.dart';
-import 'package:http/http.dart' as http;
 
 class LogInController extends GetxController {
 
@@ -55,7 +54,7 @@ class LogInController extends GetxController {
 
   Future<void> clickOnLogInButtonView() async {
     KNPMethods.unFocsKeyBoard();
-    if(key.currentState!.validate()){
+    if(key.currentState!.validate() && rememberMeValue.value){
       await callingLoginApi();
     }
   }

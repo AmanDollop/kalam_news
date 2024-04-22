@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:kalam_news_publication/app/common/common_padding_size/common_padding_size.dart';
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
 import 'package:kalam_news_publication/app/validation/v.dart';
@@ -41,11 +42,11 @@ class OtpView extends GetView<OtpController> {
                         ],
                       ),
                       child2: ListView(
-                        padding: EdgeInsets.symmetric(horizontal: 12.px, vertical: 26.px),
+                        padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
                         shrinkWrap: true,
                         children: [
                           verificationCodeTextView(),
-                          SizedBox(height: 20.px),
+                          SizedBox(height: CommonPaddingAndSize.size20()),
                           otpView(),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -85,7 +86,7 @@ class OtpView extends GetView<OtpController> {
                                   : const SizedBox(),
                             ],
                           ),
-                          SizedBox(height: 20.px),
+                          SizedBox(height: CommonPaddingAndSize.size20()),
                           verifyButtonView(),
                         ],
                       )

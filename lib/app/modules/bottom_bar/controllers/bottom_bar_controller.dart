@@ -8,9 +8,7 @@ import 'package:kalam_news_publication/app/modules/profile/controllers/profile_c
 import 'package:kalam_news_publication/app/modules/profile/views/profile_view.dart';
 
 class BottomBarController extends GetxController {
-
   final count = 0.obs;
-
 
   @override
   void onInit() {
@@ -29,39 +27,44 @@ class BottomBarController extends GetxController {
 
   void increment() => count.value++;
 
-  Widget pageCalling({int? selectedIndex}){
+  Widget pageCalling({int? selectedIndex}) {
     switch (selectedIndex) {
       case 0:
+        Get.delete<HomeController>();
         Get.lazyPut<HomeController>(
-              () => HomeController(),
+          () => HomeController(),
         );
         HomeController homeController = Get.find();
         return const HomeView();
 
       case 1:
+        Get.delete<ProfileController>();
         Get.lazyPut<ProfileController>(
-              () => ProfileController(),
+          () => ProfileController(),
         );
         ProfileController profileController = Get.find();
         return const ProfileView();
 
-        case 2:
+      case 2:
+        Get.delete<HomeController>();
         Get.lazyPut<HomeController>(
-              () => HomeController(),
+          () => HomeController(),
         );
         HomeController homeController = Get.find();
         return const HomeView();
 
-        case 3:
+      case 3:
+        Get.delete<HomeController>();
         Get.lazyPut<HomeController>(
-              () => HomeController(),
+          () => HomeController(),
         );
         HomeController homeController = Get.find();
         return const HomeView();
 
-        case 4:
+      case 4:
+        Get.delete<HomeController>();
         Get.lazyPut<HomeController>(
-              () => HomeController(),
+          () => HomeController(),
         );
         HomeController homeController = Get.find();
         return const HomeView();
@@ -69,5 +72,4 @@ class BottomBarController extends GetxController {
         return const SizedBox();
     }
   }
-
 }

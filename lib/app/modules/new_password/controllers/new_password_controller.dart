@@ -9,13 +9,20 @@ import 'package:http/http.dart' as http;
 class NewPasswordController extends GetxController {
 
   final count = 0.obs;
+  final pageName = ''.obs;
   final mobileNumber = ''.obs;
 
   final key = GlobalKey<FormState>();
 
+  final oldPasswordVisible = false.obs;
+  final oldPasswordController = TextEditingController();
+  FocusNode oldPasswordFocusNode = FocusNode();
+
+  final newPasswordVisible = false.obs;
   final newPasswordController = TextEditingController();
   FocusNode newPasswordFocusNode = FocusNode();
 
+  final confirmPasswordVisible = false.obs;
   final confirmPasswordController = TextEditingController();
   FocusNode confirmPasswordFocusNode = FocusNode();
 
@@ -25,7 +32,10 @@ class NewPasswordController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    mobileNumber.value = Get.arguments[0];
+    pageName.value = Get.arguments[0];
+    if(pageName.value == "Set new password") {
+      mobileNumber.value = Get.arguments[1];
+    }
   }
 
   @override
@@ -43,7 +53,11 @@ class NewPasswordController extends GetxController {
   Future<void> clickOnUpDateButtonView() async {
     KNPMethods.unFocsKeyBoard();
     if(key.currentState!.validate()){
-      await callingResetPassword();
+      if(pageName.value == "Set new password"){
+        await callingResetPassword();
+      }else{
+
+      }
     }
   }
 

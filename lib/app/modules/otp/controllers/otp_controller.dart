@@ -84,7 +84,7 @@ class OtpController extends GetxController {
           Get.offAllNamed(Routes.BOTTOM_BAR);
         }
         else{
-          Get.toNamed(Routes.NEW_PASSWORD,arguments: [mobileNumber.value]);
+          Get.toNamed(Routes.NEW_PASSWORD,arguments: ['Set new password',mobileNumber.value]);
         }
         verifyButtonValue.value = false;
       }

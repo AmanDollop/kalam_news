@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:kalam_news_publication/app/common/common_padding_size/common_padding_size.dart';
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
 import 'package:kalam_news_publication/app/validation/v.dart';
@@ -32,13 +32,13 @@ class LogInView extends GetView<LogInController> {
             child2: Form(
               key: controller.key,
               child: ListView(
-                padding: EdgeInsets.symmetric(horizontal: 12.px, vertical: 26.px),
+                padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
                 shrinkWrap: true,
                 children: [
                   emailAndMobileNumberTextFieldView(),
-                  SizedBox(height: 20.px),
+                  SizedBox(height: CommonPaddingAndSize.size20()),
                   passwordTextFieldView(),
-                  SizedBox(height: 20.px),
+                  SizedBox(height: CommonPaddingAndSize.size20()),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -51,9 +51,9 @@ class LogInView extends GetView<LogInController> {
                       forgetPasswordTextButtonView()
                     ],
                   ),
-                  SizedBox(height: 20.px),
+                  SizedBox(height: CommonPaddingAndSize.size20()),
                   loginButtonView(),
-                  SizedBox(height: 20.px),
+                  SizedBox(height: CommonPaddingAndSize.size20()),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -97,7 +97,7 @@ class LogInView extends GetView<LogInController> {
                 ? Icons.remove_red_eye_outlined
                 : Icons.visibility_off_outlined,
             color: Theme.of(Get.context!).colorScheme.onSurface,
-            size: 20.px,
+            size: CommonPaddingAndSize.size20(),
           ),
           splashRadius: 20,
           onPressed: () {

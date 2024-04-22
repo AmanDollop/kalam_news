@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/api/api_constant_var/api_constant_var.dart';
+import 'package:kalam_news_publication/app/common/common_padding_size/common_padding_size.dart';
+import 'package:kalam_news_publication/app/common/packages/model_progress_bar.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import '../controllers/home_controller.dart';
@@ -10,65 +12,78 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Obx(() {
-        controller.count.value;
-        return KNPWidgets.scaffoldBackgroundImageViewWithAppBar(
-          isHomeAppBarValue: true,
-          child2: ListView(
-            padding: EdgeInsets.symmetric(horizontal: 12.px, vertical: 26.px),
-            shrinkWrap: true,
-            children: [
-              welcomeTextView(),
-              SizedBox(height: 12.px),
-              bannerView(),
-              SizedBox(height: 12.px),
-              profileProgressContainerView(),
-              SizedBox(height: 12.px),
-              /* KNPWidgets.commonContainerView(
-                borderColor: Theme.of(Get.context!).colorScheme.primary.withOpacity(.2),
-                padding: EdgeInsets.zero,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 18.px, vertical: 10.px),
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Theme.of(Get.context!).colorScheme.primary.withOpacity(.1),
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(8.px),
-                          topRight: Radius.circular(8.px),
-                        ),
-                      ),
-                      child: cardTitleTextView(text: 'Packages'),
-                    ),
-                    KNPWidgets.commonDividerView(height: 0, wight: 1.px,color: Theme.of(Get.context!).colorScheme.primary.withOpacity(.2),),
-                    SizedBox(height: 10.px),
-                    packagesListView(),
-                    SizedBox(height: 10.px),
-                  ],
-                ),
-              ),*/
-              cardTitleTextView(text: 'Packages'),
-              SizedBox(height: 10.px),
-              packagesListView(),
-              SizedBox(height: 12.px),
-              bvCountView(),
-              SizedBox(height: 12.px),
-              groupMatchingCommissionView(),
-              SizedBox(height: 12.px),
-              yourSalesView(),
-              SizedBox(height: 80.px)
-            ],
-          ),
-        );
-      }),
+    return WillPopScope(
+      onWillPop: () => controller.onWillPop(),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Obx(() {
+          controller.count.value;
+          return KNPWidgets.scaffoldBackgroundImageViewWithAppBar(
+            isHomeAppBarValue: true,
+            child2: ModalProgress(
+              inAsyncCall: controller.apiResValue.value,
+              child: controller.apiResValue.value
+                  ? KNPWidgets.commonProgressBarView()
+                  : ListView(
+                      padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
+                      shrinkWrap: true,
+                      children: [
+                        welcomeTextView(),
+                        SizedBox(height: CommonPaddingAndSize.size12()),
+                        bannerView(),
+                        SizedBox(height: CommonPaddingAndSize.size12()),
+                        profileProgressContainerView(),
+                        SizedBox(height: CommonPaddingAndSize.size12()),
+                        /* KNPWidgets.commonContainerView(
+                           borderColor: Theme.of(Get.context!).colorScheme.primary.withOpacity(.2),
+                           padding: EdgeInsets.zero,
+                           child: Column(
+                             crossAxisAlignment: CrossAxisAlignment.start,
+                             children: [
+                               Container(
+                                 padding: EdgeInsets.symmetric(horizontal: 18.px, vertical: CommonPaddingAndSize.size10()),
+                                 width: double.infinity,
+                                 decoration: BoxDecoration(
+                                   color: Theme.of(Get.context!).colorScheme.primary.withOpacity(.1),
+                                   borderRadius: BorderRadius.only(
+                                     topLeft: Radius.circular(8.px),
+                                     topRight: Radius.circular(8.px),
+                                   ),
+                                 ),
+                                 child: cardTitleTextView(text: 'Packages'),
+                               ),
+                               KNPWidgets.commonDividerView(height: 0, wight: 1.px,color: Theme.of(Get.context!).colorScheme.primary.withOpacity(.2),),
+                               SizedBox(height: CommonPaddingAndSize.size10()),
+                               packagesListView(),
+                               SizedBox(height: CommonPaddingAndSize.size10()),
+                             ],
+                           ),
+                         ),*/
+                        cardTitleTextView(text: 'Packages'),
+                        SizedBox(height: CommonPaddingAndSize.size10()),
+                        packagesListView(),
+                        SizedBox(height: CommonPaddingAndSize.size12()),
+                        bvCountView(),
+                        SizedBox(height: CommonPaddingAndSize.size12()),
+                        groupMatchingCommissionView(),
+                        SizedBox(height: CommonPaddingAndSize.size12()),
+                        yourSalesView(),
+                        SizedBox(height: CommonPaddingAndSize.size20() * 4)
+                ],
+              ),
+            ),
+          );
+        }),
+      ),
     );
   }
 
-  Widget welcomeTextView() => Text('Welcome, Name xyz', style: Theme.of(Get.context!).textTheme.displayLarge);
+  Widget welcomeTextView() => Text(
+        'Welcome, ${controller.userData?.userDetails?.initials}. ${controller.userData?.userDetails?.firstName} ${controller.userData?.userDetails?.lastName}',
+        style: Theme.of(Get.context!).textTheme.displayLarge,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+      );
 
   Widget bannerView() => KNPWidgets.commonBannerView(
       imageList: controller.bannerList,
@@ -86,13 +101,13 @@ class HomeView extends GetView<HomeController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             cardSubTitleTextView(text: 'Your profile progress (2/4)'),
-            SizedBox(height: 10.px),
+            SizedBox(height: CommonPaddingAndSize.size10()),
             Row(
               children: [
                 Expanded(
                   child: KNPWidgets.commonLinearProgressBar(value: .5),
                 ),
-                SizedBox(width: 10.px),
+                SizedBox(width: CommonPaddingAndSize.size10()),
                 cardSubTitleTextView(text: '50%'),
               ],
             )
@@ -101,15 +116,18 @@ class HomeView extends GetView<HomeController> {
       );
 
   Widget cardTitleTextView({required String text}) => Text(
-    text,
-    style: Theme.of(Get.context!).textTheme.displaySmall,
-    overflow: TextOverflow.ellipsis,
-    maxLines: 1,
-  );
+        text,
+        style: Theme.of(Get.context!).textTheme.displaySmall,
+        overflow: TextOverflow.ellipsis,
+        maxLines: 1,
+      );
 
   Widget cardSubTitleTextView({required String text}) => Text(
         text,
-        style: Theme.of(Get.context!).textTheme.labelMedium?.copyWith(fontWeight: FontWeight.w500),
+        style: Theme.of(Get.context!)
+            .textTheme
+            .labelMedium
+            ?.copyWith(fontWeight: FontWeight.w500),
         overflow: TextOverflow.ellipsis,
         maxLines: 1,
       );
@@ -123,16 +141,17 @@ class HomeView extends GetView<HomeController> {
 
   Widget packagesListView() {
     if (controller.packageModal.value != null) {
-      if (controller.packageList != null && controller.packageList!.isNotEmpty) {
+      if (controller.packageList != null &&
+          controller.packageList!.isNotEmpty) {
         return SizedBox(
           height: 172.px,
           child: ListView.builder(
             itemCount: controller.packageList?.length,
             scrollDirection: Axis.horizontal,
-            // padding: EdgeInsets.symmetric(horizontal: 10.px),
             itemBuilder: (context, index) {
               return Padding(
-                padding: EdgeInsets.only(right: 8.px, top: 2.px, bottom: 2.px, left: 2.px),
+                padding: EdgeInsets.only(
+                    right: 8.px, top: 2.px, bottom: 2.px, left: 2.px),
                 child: InkWell(
                   onTap: controller.packageClickValue.value
                       ? () => null
@@ -147,8 +166,9 @@ class HomeView extends GetView<HomeController> {
                             path:
                                 '${ApiUrls.baseUrlForImage}${controller.packageList?[index].packageImage}',
                             isAssetImage: false,
-                            width: 116.px,
-                            height: 108.px),
+                            width: 124.px,
+                            height: 108.px,
+                            radius: 4.px),
                         SizedBox(height: 8.px),
                         cardSubTitleTextView(
                             text:
@@ -192,50 +212,76 @@ class HomeView extends GetView<HomeController> {
         ),
       );
 
-  Widget commonCard({required String title,required String text1,required String text2,required String text3,required String text4,}) => KNPWidgets.commonContainerView(
-    borderColor: Theme.of(Get.context!).colorScheme.primary.withOpacity(.2),
-    padding: EdgeInsets.zero,
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 18.px, vertical: 10.px),
-          width: double.infinity,
-          decoration: BoxDecoration(
-              color: Theme.of(Get.context!).colorScheme.primary.withOpacity(.05),
-              borderRadius: BorderRadius.only(
+  Widget commonCard({required String title, required String text1, required String text2, required String text3, required String text4}) => KNPWidgets.commonContainerView(
+        borderColor: Theme.of(Get.context!).colorScheme.primary.withOpacity(.2),
+        padding: EdgeInsets.zero,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(
+                  horizontal: 18.px, vertical: CommonPaddingAndSize.size10()),
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color:
+                    Theme.of(Get.context!).colorScheme.primary.withOpacity(.05),
+                borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(8.px),
                   topRight: Radius.circular(8.px),
-              ),
-          ),
-          child: cardTitleTextView(text: title),
-        ),
-        KNPWidgets.commonDividerView(height: 0, wight: 1.px,color: Theme.of(Get.context!).colorScheme.primary.withOpacity(.2),),
-        Padding(
-          padding: EdgeInsets.all(10.px),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              commonColumnForCardView(text1: text1, text2: text2),
-              SizedBox(
-                height: 46.px,
-                child: VerticalDivider(
-                  color: Theme.of(Get.context!).colorScheme.primary.withOpacity(.2),
-                  width: 10.px,
                 ),
               ),
-              commonColumnForCardView(text1: text3, text2: text4)
-            ],
-          ),
+              child: cardTitleTextView(text: title),
+            ),
+            KNPWidgets.commonDividerView(
+              height: 0,
+              wight: 1.px,
+              color: Theme.of(Get.context!).colorScheme.primary.withOpacity(.2),
+            ),
+            Padding(
+              padding: EdgeInsets.all(CommonPaddingAndSize.size10()),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  commonColumnForCardView(text1: text1, text2: text2),
+                  SizedBox(
+                    height: 46.px,
+                    child: VerticalDivider(
+                      color: Theme.of(Get.context!)
+                          .colorScheme
+                          .primary
+                          .withOpacity(.2),
+                      width: CommonPaddingAndSize.size10(),
+                    ),
+                  ),
+                  commonColumnForCardView(text1: text3, text2: text4)
+                ],
+              ),
+            ),
+          ],
         ),
-      ],
-    ),
+      );
+
+  Widget bvCountView() => commonCard(
+      title: 'BV count',
+      text1: '02',
+      text2: 'Left Bv',
+      text3: '03',
+      text4: 'Right Bv');
+
+  Widget groupMatchingCommissionView() => commonCard(
+      title: 'Group matching commission',
+      text1: '01',
+      text2: 'Left Bv',
+      text3: '06',
+      text4: 'Right Bv',
   );
 
-  Widget bvCountView() => commonCard(title: 'BV count', text1: '02', text2: 'Left Bv', text3: '03', text4: 'Right Bv');
-
-  Widget groupMatchingCommissionView() => commonCard(title: 'Group matching commission', text1: '01', text2: 'Left Bv', text3: '06', text4: 'Right Bv');
-
-  Widget yourSalesView() => commonCard(title: 'Your sales', text1: '₹6', text2: 'Current wallet balance', text3: '₹10', text4: 'Current wallet balance');
+  Widget yourSalesView() => commonCard(
+      title: 'Your sales',
+      text1: '₹6',
+      text2: 'Current wallet balance',
+      text3: '₹10',
+      text4: 'Current wallet balance',
+  );
 
 }

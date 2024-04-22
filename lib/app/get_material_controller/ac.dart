@@ -59,5 +59,4 @@ class AC extends GetxController {
     }
   }
 
-
 }

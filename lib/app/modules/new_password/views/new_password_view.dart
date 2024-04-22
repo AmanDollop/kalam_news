@@ -1,23 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
 import 'package:get/get.dart';
+import 'package:kalam_news_publication/app/common/common_padding_size/common_padding_size.dart';
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
 import 'package:kalam_news_publication/app/validation/v.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
-
 import '../controllers/new_password_controller.dart';
 
 class NewPasswordView extends GetView<NewPasswordController> {
   const NewPasswordView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    const SystemUiOverlayStyle(
-      statusBarBrightness: Brightness.light, // For iOS: (dark icons)
-      statusBarIconBrightness:
-      Brightness.light, // For Android(M and greater): (dark icons)
-    );
     return GestureDetector(
       onTap: () => KNPMethods.unFocsKeyBoard(),
       child: Scaffold(
@@ -27,19 +19,23 @@ class NewPasswordView extends GetView<NewPasswordController> {
           return Stack(
             children: [
               KNPWidgets.scaffoldBackgroundImageViewWithAppBar(
-                appBarTitle: 'Set new password',
+                appBarTitle: controller.pageName.value,
                 child2: Form(
                   key: controller.key,
                   child: ListView(
-                    padding: EdgeInsets.symmetric(horizontal: 12.px, vertical: 26.px),
+                    padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
                     shrinkWrap: true,
                     children: [
                       setNewPasswordTextView(),
-                      SizedBox(height: 20.px),
+                      if(controller.pageName.value == "Change password")
+                      SizedBox(height: CommonPaddingAndSize.size20()),
+                      if(controller.pageName.value == "Change password")
+                      oldPasswordTextFieldView(),
+                      SizedBox(height: CommonPaddingAndSize.size20()),
                       newPasswordTextFieldView(),
-                      SizedBox(height: 20.px),
+                      SizedBox(height: CommonPaddingAndSize.size20()),
                       confirmPasswordTextFieldView(),
-                      SizedBox(height: 20.px),
+                      SizedBox(height: CommonPaddingAndSize.size20()),
                       upDateButtonView(),
                     ],
                   ),
@@ -53,8 +49,30 @@ class NewPasswordView extends GetView<NewPasswordController> {
   }
 
   Widget setNewPasswordTextView() => Text(
-    'Set new password',
+    controller.pageName.value,
     style: Theme.of(Get.context!).textTheme.labelLarge,
+  );
+
+  Widget suffixIconButtonView({required bool visible,required VoidCallback onPressed}) => IconButton(
+      icon: Icon(
+        visible
+            ? Icons.remove_red_eye_outlined
+            : Icons.visibility_off_outlined,
+        color: Theme.of(Get.context!).colorScheme.onSurface,
+        size: CommonPaddingAndSize.size20(),
+      ),
+      splashRadius: 20,
+      onPressed: onPressed
+  );
+
+  Widget oldPasswordTextFieldView() => KNPWidgets.commonTextFormField(
+    title: 'Old password',
+    hintText: 'Old password',
+    controller: controller.oldPasswordController,
+    focusNode: controller.oldPasswordFocusNode,
+    obscureText: !controller.oldPasswordVisible.value,
+    suffixIcon: suffixIconButtonView(visible: controller.oldPasswordVisible.value,onPressed: () => controller.oldPasswordVisible.value = !controller.oldPasswordVisible.value,),
+    validator: (value) => V.isPasswordValid(value: value),
   );
 
   Widget newPasswordTextFieldView() => KNPWidgets.commonTextFormField(
@@ -62,6 +80,8 @@ class NewPasswordView extends GetView<NewPasswordController> {
     hintText: 'New password',
     controller: controller.newPasswordController,
     focusNode: controller.newPasswordFocusNode,
+    obscureText: !controller.newPasswordVisible.value,
+    suffixIcon: suffixIconButtonView(visible: controller.newPasswordVisible.value,onPressed: () => controller.newPasswordVisible.value = !controller.newPasswordVisible.value,),
     validator: (value) => V.isPasswordValid(value: value),
   );
 
@@ -70,6 +90,8 @@ class NewPasswordView extends GetView<NewPasswordController> {
     hintText: 'Confirm password',
     controller: controller.confirmPasswordController,
     focusNode: controller.confirmPasswordFocusNode,
+    obscureText: !controller.confirmPasswordVisible.value,
+    suffixIcon: suffixIconButtonView(visible: controller.confirmPasswordVisible.value,onPressed: () => controller.confirmPasswordVisible.value = !controller.confirmPasswordVisible.value,),
     validator: (value) => V.isConfirmPasswordValid(value: value,password: controller.newPasswordController.text),
   );
 

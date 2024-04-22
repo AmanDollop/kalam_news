@@ -44,8 +44,6 @@ abstract class KNPColors{
 
 }
 
-
-
 class KNPLightThemeColor extends KNPColors{
 
   @override
@@ -95,6 +93,5 @@ class KNPLightThemeColor extends KNPColors{
 
   @override
   Color get bottomBarColor => const Color(0xff0F172A);
-
 
 }
