@@ -1,22 +1,44 @@
+import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kalam_news_publication/app/api/api_constant_var/api_constant_var.dart';
+import 'package:kalam_news_publication/app/api/api_intrigation/api_intrigation.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/user_data_modal.dart';
+import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/common/packages/cd.dart';
 import 'package:kalam_news_publication/app/common/packages/common_methods_for_date_time.dart';
 import 'package:kalam_news_publication/app/common/packages/image_picker.dart';
+import 'package:http/http.dart' as http;
+import 'package:kalam_news_publication/app/db/data_base_constant/data_base_constant.dart';
+import 'package:kalam_news_publication/app/db/data_base_helper/data_base_helper.dart';
 
 class EditProfileController extends GetxController {
   final count = 0.obs;
+
+  final key = GlobalKey<FormState>();
+
   final apiResValue = true.obs;
 
-  UserDataModal? userData;
+  final saveButtonValue = false.obs;
+
+  final userData = Rxn<UserDataModal>();
+  UserDetails? userDetails;
 
   final image = Rxn<File?>();
 
+  final userPic = ''.obs;
+
   final initialsController = TextEditingController();
   FocusNode initialsFocusNode = FocusNode();
+  final isInitialsDropDownValue = false.obs;
+  final selectedInitialsValue = ''.obs;
+  List<String> initialsList = [
+    'Mr',
+    'Mrs',
+    'Ms',
+    'Mst',
+  ];
 
   final firstNameController = TextEditingController();
   FocusNode firstNameFocusNode = FocusNode();
@@ -53,11 +75,16 @@ class EditProfileController extends GetxController {
   final pinCodeController = TextEditingController();
   FocusNode pinCodeFocusNode = FocusNode();
 
+  Map<String, dynamic> bodyParamsForUpdateProfile = {};
+
   @override
   void onInit() {
     super.onInit();
-    userData = Get.arguments[0];
-    setDefaultData();
+    userData.value = Get.arguments[0];
+    if(userData.value != null){
+      userDetails = userData.value?.userDetails;
+      setDefaultData();
+    }
     apiResValue.value = false;
   }
 
@@ -74,26 +101,24 @@ class EditProfileController extends GetxController {
   void increment() => count.value++;
 
   void setDefaultData() {
-    if (userData != null) {
-      initialsController.text = userData?.userDetails?.initials ?? '';
-      firstNameController.text = userData?.userDetails?.firstName ?? '';
-      middleNameController.text = userData?.userDetails?.middleName ?? '';
-      lastNameController.text = userData?.userDetails?.lastName ?? '';
-      dobController.text = CMForDateTime.dateFormatForDateMonthYear(
-          date: '${userData?.userDetails?.dob}');
-      emailController.text = userData?.userDetails?.email ?? '';
-      mobileNumberController.text = userData?.userDetails?.mobileNumber ?? '';
-      whatsappNumberController.text =
-          userData?.userDetails?.whatsappNumber ?? '';
-      completeAddressController.text = userData?.userDetails?.address ?? '';
-      stateController.text = userData?.userDetails?.stateId.toString() ?? '';
-      cityController.text = userData?.userDetails?.cityId.toString() ?? '';
-      pinCodeController.text = userData?.userDetails?.pincode ?? '';
-    }
+      userPic.value = userDetails?.profile ?? '';
+      initialsController.text = userDetails?.initials ?? '';
+      selectedInitialsValue.value = userDetails?.initials ?? '';
+      firstNameController.text = userDetails?.firstName ?? '';
+      middleNameController.text = userDetails?.middleName ?? '';
+      lastNameController.text = userDetails?.lastName ?? '';
+      dobController.text = CMForDateTime.dateFormatForDateMonthYear(date: '${userDetails?.dob}');
+      emailController.text = userDetails?.email ?? '';
+      mobileNumberController.text = userDetails?.mobileNumber ?? '';
+      whatsappNumberController.text = userDetails?.whatsappNumber ?? '';
+      completeAddressController.text = userDetails?.address ?? '';
+      stateController.text = userDetails?.stateName.toString() ?? '';
+      cityController.text = userDetails?.cityName.toString() ?? '';
+      pinCodeController.text = userDetails?.pincode ?? '';
   }
 
-  void clickOnCamera() {
-    CD.commonIosPickImageDialog(
+  Future<void> clickOnCamera() async {
+    await CD.commonIosPickImageDialog(
       clickOnCamera: () async {
         Get.back();
         image.value = await KNPImagePicker.pickImage(isCropper: true);
@@ -105,7 +130,73 @@ class EditProfileController extends GetxController {
     );
   }
 
-  void clickOnUpdateButton() {
-    Get.back();
+  Future<void> clickOnInitialsListOfDropDown({required value}) async {
+    KNPMethods.unFocsKeyBoard();
+    isInitialsDropDownValue.value = false;
+    selectedInitialsValue.value = value ?? '';
+    initialsController.text = value ?? '';
   }
+
+  Future<void> clickOnUpdateButton() async {
+    if(key.currentState!.validate()){
+      await callingUpDateProfileApi();
+    }
+  }
+
+  Future<void> callingUpDateProfileApi() async {
+    try {
+      saveButtonValue.value = true;
+      bodyParamsForUpdateProfile = {
+        ApiConstantVar.initials: initialsController.text.trim().toString(),
+        ApiConstantVar.firstName: firstNameController.text.trim().toString(),
+        ApiConstantVar.lastName: lastNameController.text.trim().toString(),
+        ApiConstantVar.middleName: middleNameController.text.trim().toString(),
+        // ApiConstantVar.dob: CMForDateTime.dateTimeFormatForApi(dateTime: dobController.text.trim().toString()),
+        // ApiConstantVar.mobileNumber: mobileNumberController.text.trim().toString(),
+        ApiConstantVar.whatsappNumber: whatsappNumberController.text.trim().toString(),
+        // ApiConstantVar.email: emailController.text.trim().toString(),
+        ApiConstantVar.address: completeAddressController.text.trim().toString(),
+        ApiConstantVar.stateId: userDetails?.stateId.toString(),
+        ApiConstantVar.cityId: userDetails?.cityId.toString(),
+        ApiConstantVar.pinCode: pinCodeController.text.trim().toString(),
+      };
+      http.Response? response = await ApiIntrigation.updateProfileApi(
+        bodyParams: bodyParamsForUpdateProfile,
+        image: image.value,
+      );
+      if (response != null) {
+        if (response.statusCode == 200) {
+          Map<String, dynamic> mapRes = {};
+          mapRes = jsonDecode(response.body);
+          KNPMethods.showSnackBar(message: mapRes[ApiConstantVar.message]);
+          await callingGetUserDataApi();
+          Get.back();
+        }
+      } else {
+        apiResValue.value = false;
+        saveButtonValue.value = false;
+      }
+    } catch (e) {
+      apiResValue.value = false;
+      saveButtonValue.value = false;
+      KNPMethods.error();
+    }
+  }
+
+  Future<void> callingGetUserDataApi() async {
+    final userDataFromLocalDataBase = ''.obs;
+    try {
+      userData.value = await ApiIntrigation.getUserDataApi();
+      if (userData.value != null) {
+        userDetails = userData.value?.userDetails;
+        userDataFromLocalDataBase.value = await DataBaseHelper().getParticularData(key: DataBaseConstant.userDetail, tableName: DataBaseConstant.tableNameForUserDetail);
+        userData.value = UserDataModal.fromJson(jsonDecode(userDataFromLocalDataBase.value));
+        userData.value?.accessToken = userData.value?.accessToken;
+        await DataBaseHelper().upDateDataBase(data: {DataBaseConstant.userDetail: json.encode(userData.value)}, tableName: DataBaseConstant.tableNameForUserDetail);
+      }
+    } catch (e) {
+      KNPMethods.error();
+    }
+  }
+
 }

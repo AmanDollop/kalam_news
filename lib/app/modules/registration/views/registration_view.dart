@@ -39,7 +39,7 @@ class RegistrationView extends GetView<RegistrationController> {
   }
 
   Widget referralCodeTextFieldView() => KNPWidgets.commonTextFormField(
-      title: 'Referral code',
+      title: 'Referral code*',
       hintText: 'Referral code',
       controller: controller.referralCodeController,
       focusNode: controller.referralCodeFocusNode,

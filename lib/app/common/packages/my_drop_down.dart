@@ -61,7 +61,14 @@ class MyDropdown<T> extends StatelessWidget {
               curve: Curves.fastOutSlowIn,
               margin: EdgeInsets.only(top: isOpen ? 10.px:0),
               decoration: BoxDecoration(
-                color: Theme.of(Get.context!).colorScheme.onSurface.withOpacity(.4),
+                boxShadow: [
+                  BoxShadow(
+                    color: Theme.of(Get.context!).colorScheme.onSurface.withOpacity(.5),
+                    blurRadius: 10,
+                    spreadRadius: 1
+                  )
+                ],
+                color: Theme.of(Get.context!).colorScheme.inversePrimary,
                 borderRadius: BorderRadius.circular(12.px),
               ),
               child: ListView.builder(
@@ -82,7 +89,7 @@ class MyDropdown<T> extends StatelessWidget {
                         color: selectedItem == nameList[index]
                             ? Theme.of(Get.context!).colorScheme.primary.withOpacity(.1)
                             : null,
-                        borderRadius: BorderRadius.circular(4.px),
+                        borderRadius: BorderRadius.circular(8.px),
                       ),
                       child: Row(
                         children: [

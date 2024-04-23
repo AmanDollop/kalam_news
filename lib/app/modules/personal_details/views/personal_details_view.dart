@@ -105,6 +105,9 @@ class PersonalDetailsView extends GetView<PersonalDetailsController> {
         isOpenValue: controller.isInitialsDropDownValue.value,
         onTapForTextFiled: () {
           controller.isInitialsDropDownValue.value = !controller.isInitialsDropDownValue.value;
+          if(!controller.isInitialsDropDownValue.value){
+            KNPMethods.unFocsKeyBoard();
+          }
           controller.count.value++;
         },
         clickOnListOfDropDown: (value) => controller.clickOnInitialsListOfDropDown(value: value),

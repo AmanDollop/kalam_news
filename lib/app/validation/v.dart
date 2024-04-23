@@ -28,11 +28,13 @@ class V {
       return "Please enter number";
     } else if (value.trim().length < 10 || value.trim().length > 12) {
       return "Please enter valid number";
-    } else if (countryCodeValue) {
+    }
+    else if (countryCodeValue) {
       if(countyCode == null || countyCode.isEmpty) {
         return "Please enter country code";
       }
-    } else {
+    }
+    else {
       return null;
     }
   }
@@ -63,8 +65,7 @@ class V {
     }
   }
 
-  static String? isConfirmPasswordValid(
-      {required String? value, String? password = "Not"}) {
+  static String? isConfirmPasswordValid({required String? value, String? password = "Not"}) {
     if (value == null || value.trim().toString().isEmpty) {
       return "Please enter confirm password".tr;
     } else if ((password?.trim().toString() != "Not")) {
@@ -108,6 +109,36 @@ class V {
       return 'Please Enter valid IFSC';
     }
     return "";
+  }
+
+
+
+  static String? isValidateAadhar({required String? value}) {
+
+    // Regular expression for Aadhar card number (12 digits)
+    RegExp aadharRegExp = RegExp(r'^\d{12}$');
+
+    if (value == null  || value.isEmpty) {
+      return 'Please enter Aadhar card number';
+    } else if (!aadharRegExp.hasMatch(value)) {
+      return 'Invalid Aadhar card number';
+    }else {
+      return null;
+    }
+  }
+
+  static String? isValidatePAN({required String? value}) {
+
+    // Regular expression for PAN card number (AAAAA1234A format)
+    RegExp panRegExp = RegExp(r'^[A-Z]{5}[0-9]{4}[A-Z]{1}$');
+
+    if (value == null ||value.isEmpty) {
+      return 'Please enter PAN card number';
+    } else if (!panRegExp.hasMatch(value)) {
+      return 'Invalid PAN card number';
+    }else {
+      return null;
+    }
   }
 
 }

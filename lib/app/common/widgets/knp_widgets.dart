@@ -565,7 +565,7 @@ class KNPWidgets {
         ),
         minimumSize: Size(
           width ?? /*312.px*/ double.infinity,
-          height ?? 52.px,
+          height ?? 50.px,
         ),
         shadowColor: Colors.transparent,
       ),
@@ -578,13 +578,9 @@ class KNPWidgets {
                     color: Theme.of(Get.context!).colorScheme.inversePrimary),
               ),
             )
-          : child ??
-              Text(
+          : child ?? Text(
                 buttonText ?? '',
-                style: Theme.of(Get.context!)
-                    .textTheme
-                    .headlineSmall
-                    ?.copyWith(fontSize: fontSize, color: buttonTextColor),
+                style: Theme.of(Get.context!).textTheme.headlineSmall?.copyWith(fontSize: fontSize, color: buttonTextColor),
               ),
     );
   }

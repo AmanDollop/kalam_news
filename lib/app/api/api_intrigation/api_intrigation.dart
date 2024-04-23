@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:kalam_news_publication/app/api/api_constant_var/api_constant_var.dart';
@@ -228,6 +229,32 @@ class ApiIntrigation{
       if (await KNPMethods.checkResponse(response: response, wantInternetFailResponse: true, wantShowFailResponse: true)) {
         packageDetailModal = PackageDetailModal.fromJson(jsonDecode(response.body));
         return packageDetailModal;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  }
+
+  static Future<http.Response?> updateProfileApi({
+    required Map<String, dynamic> bodyParams,
+    File? image
+  }) async {
+    String? token = await userToken(stringToken: true);
+
+    http.Response? response = await MyHttp.multipartRequest(
+        url: '${ApiUrls.baseUrl}${ApiUrls.apiEndPointUpdateProfile}',
+        bodyParams: bodyParams,
+        context: Get.context!,
+        userProfileImageKey: ApiConstantVar.profile,
+        image: image,
+        multipartRequestType: 'POST',
+        token: '$token'
+    );
+    if (response != null) {
+      if (await KNPMethods.checkResponse(response: response, wantInternetFailResponse: true, wantShowFailResponse: true)) {
+        return response;
       } else {
         return null;
       }

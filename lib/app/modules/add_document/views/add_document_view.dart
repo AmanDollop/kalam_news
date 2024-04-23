@@ -30,21 +30,19 @@ class AddDocumentView extends GetView<AddDocumentController> {
                     padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
                     shrinkWrap: true,
                     children: [
-                      cardNumberTextFieldView(),
+                      controller.pageName.value == "Aadhar Card"
+                          ? aadharCardNumberTextFieldView()
+                          : panCardNumberTextFieldView(),
                       SizedBox(height: CommonPaddingAndSize.size20()),
                       addFileFrontSideDocumentTextFieldView(),
                       if (controller.frontSideImage.value?.path != null && controller.frontSideImage.value!.path.isNotEmpty)
-                      SizedBox(height: CommonPaddingAndSize.size10()),
-                      if (controller.frontSideImage.value?.path != null && controller.frontSideImage.value!.path.isNotEmpty)
-                      commonImageView(filePath: controller.frontSideImage.value?.path ?? ''),
+                      commonImageView(filePath: controller.frontSideImage.value?.path ?? '').paddingOnly(top: CommonPaddingAndSize.size10()),
                         SizedBox(height: CommonPaddingAndSize.size20()),
                       if (controller.pageName.value == "Aadhar Card")
                         addFileBackSideDocumentTextFieldView(),
                       if (controller.pageName.value == "Aadhar Card")
-                        SizedBox(height: CommonPaddingAndSize.size10()),
-                      if (controller.pageName.value == "Aadhar Card")
                       if (controller.backSideImage.value?.path != null && controller.backSideImage.value!.path.isNotEmpty)
-                        commonImageView(filePath: controller.backSideImage.value?.path ?? ''),
+                        commonImageView(filePath: controller.backSideImage.value?.path ?? '').paddingOnly(top: CommonPaddingAndSize.size10()),
 
 
                       SizedBox(height: CommonPaddingAndSize.size20()),
@@ -60,16 +58,24 @@ class AddDocumentView extends GetView<AddDocumentController> {
     );
   }
 
-  Widget cardNumberTextFieldView() => KNPWidgets.commonTextFormField(
-        title: controller.pageName.value == "Aadhar Card"
-            ? 'Aadhar card number'
-            : 'Pan card number',
-        hintText: controller.pageName.value == "Aadhar Card"
-            ? 'Aadhar card number'
-            : 'Pan card number',
+  Widget aadharCardNumberTextFieldView() => KNPWidgets.commonTextFormField(
+        title: 'Aadhar card number*',
+        hintText: 'Aadhar card number',
         controller: controller.aadharAndPanCardNumberController,
         focusNode: controller.aadharAndPanCardNumberFocusNode,
-        validator: (value) => V.isValid(value: value,title: 'This field is required'),
+        validator: (value) => V.isValidateAadhar(value: value),
+       maxLength: 12,
+       keyboardType: TextInputType.number
+      );
+
+  Widget panCardNumberTextFieldView() => KNPWidgets.commonTextFormField(
+        title: 'Pan card number*',
+        hintText: 'Pan card number',
+        controller: controller.aadharAndPanCardNumberController,
+        focusNode: controller.aadharAndPanCardNumberFocusNode,
+        validator: (value) =>  V.isValidatePAN(value: value),
+        textCapitalization: TextCapitalization.characters,
+        maxLength: 10
       );
 
   Widget commonImageView({required String filePath}) => KNPWidgets.commonContainerView(
@@ -96,26 +102,28 @@ class AddDocumentView extends GetView<AddDocumentController> {
   );
 
   Widget addFileFrontSideDocumentTextFieldView() => KNPWidgets.commonTextFormField(
-          title: 'Add file',
+          title: controller.pageName.value == "Aadhar Card"
+              ? 'Aadhar card photo (Front side)*'
+              : 'Pan card photo*',
           hintText: 'Add file',
           controller: controller.aadharAndPanCardFrontImageController,
           focusNode: controller.aadharAndPanCardFrontImageFocusNode,
           validator: (value) => V.isValid(value: value, title: 'Add file'),
           readOnly: true,
-          // onTap: () => controller.clickOnFrontSideDocumentTextField(),
+          onTap: () => controller.clickOnFrontSideDocumentTextField(),
           suffixIcon: commonSuffixButtonView(
             onPressed: () => controller.clickOnFrontSideDocumentTextField(),
           ),
       );
 
   Widget addFileBackSideDocumentTextFieldView() => KNPWidgets.commonTextFormField(
-        title: 'Add file',
+        title: 'Aadhar card photo (Back side)*',
         hintText: 'Add file',
         controller: controller.aadharBackImageController,
         focusNode: controller.aadharBackImageFocusNode,
         validator: (value) => V.isValid(value: value, title: 'Add file'),
         readOnly: true,
-        // onTap: () => controller.clickOnBackSideDocumentTextField(),
+        onTap: () => controller.clickOnBackSideDocumentTextField(),
         suffixIcon: commonSuffixButtonView(onPressed: () => controller.clickOnBackSideDocumentTextField(),)
       );
 
@@ -125,4 +133,5 @@ class AddDocumentView extends GetView<AddDocumentController> {
           : () => controller.clickOnUpDateButtonView(),
       buttonText: 'Update',
       isLoading: controller.upDateButtonValue.value);
+
 }

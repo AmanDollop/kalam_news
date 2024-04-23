@@ -31,7 +31,7 @@ class RegistrationVerificationView extends GetView<RegistrationVerificationContr
                     youAreRegisteringTextView(text: 'You are registering a new member under'),
                     SizedBox(height: CommonPaddingAndSize.size20()),
                     commonRowView(
-                      text1: 'Reference Code',
+                      text1: 'Reference Code*',
                       text2: 'AB1234567980AB123456798 0AB123456798 0AB12345679 80AB1 234567980AB123 4567980',
                     ),
                     SizedBox(height: CommonPaddingAndSize.size10()),

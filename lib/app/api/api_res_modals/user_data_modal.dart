@@ -37,17 +37,20 @@ class UserDetails {
   String? whatsappNumber;
   String? email;
   String? pincode;
-  String? address;
-  int? stateId;
   int? cityId;
+  int? stateId;
+  String? address;
   String? profile;
-  int? status;
   String? otp;
+  String? referredBy;
+  int? rUserId;
+  int? lUserId;
   int? isMobileVerify;
   int? isEmailVerify;
-  String? referredBy;
   String? createdAt;
   String? updatedAt;
+  String? cityName;
+  String? stateName;
 
   UserDetails(
       {this.userId,
@@ -62,17 +65,20 @@ class UserDetails {
         this.whatsappNumber,
         this.email,
         this.pincode,
-        this.address,
-        this.stateId,
         this.cityId,
+        this.stateId,
+        this.address,
         this.profile,
-        this.status,
         this.otp,
+        this.referredBy,
+        this.rUserId,
+        this.lUserId,
         this.isMobileVerify,
         this.isEmailVerify,
-        this.referredBy,
         this.createdAt,
-        this.updatedAt});
+        this.updatedAt,
+        this.cityName,
+        this.stateName});
 
   UserDetails.fromJson(Map<String, dynamic> json) {
     userId = json['user_id'];
@@ -87,17 +93,20 @@ class UserDetails {
     whatsappNumber = json['whatsapp_number'];
     email = json['email'];
     pincode = json['pincode'];
-    address = json['address'];
-    stateId = json['state_id'];
     cityId = json['city_id'];
+    stateId = json['state_id'];
+    address = json['address'];
     profile = json['profile'];
-    status = json['status'];
     otp = json['otp'];
+    referredBy = json['referred_by'];
+    rUserId = json['r_user_id'];
+    lUserId = json['l_user_id'];
     isMobileVerify = json['is_mobile_verify'];
     isEmailVerify = json['is_email_verify'];
-    referredBy = json['referred_by'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+    cityName = json['city_name'];
+    stateName = json['state_name'];
   }
 
   Map<String, dynamic> toJson() {
@@ -114,17 +123,20 @@ class UserDetails {
     data['whatsapp_number'] = whatsappNumber;
     data['email'] = email;
     data['pincode'] = pincode;
-    data['address'] = address;
-    data['state_id'] = stateId;
     data['city_id'] = cityId;
+    data['state_id'] = stateId;
+    data['address'] = address;
     data['profile'] = profile;
-    data['status'] = status;
     data['otp'] = otp;
+    data['referred_by'] = referredBy;
+    data['r_user_id'] = rUserId;
+    data['l_user_id'] = lUserId;
     data['is_mobile_verify'] = isMobileVerify;
     data['is_email_verify'] = isEmailVerify;
-    data['referred_by'] = referredBy;
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
+    data['city_name'] = cityName;
+    data['state_name'] = stateName;
     return data;
   }
 }

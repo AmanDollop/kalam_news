@@ -52,6 +52,8 @@ class ApiConstantVar{
 
   static const packageId = "package_id";
 
+  static const profile = "profile";
+
 
 }
 
@@ -83,6 +85,8 @@ class ApiUrls{
   static const apiEndPointGetProfile = "getProfile";
 
   static const apiEndPointGetPackage = "getPackage";
+
+  static const apiEndPointUpdateProfile = "updateProfile";
 
   static const apiEndPointGetPackageDetail = "/api/getPackageDetail";
 

@@ -66,7 +66,7 @@ class NewPasswordView extends GetView<NewPasswordController> {
   );
 
   Widget oldPasswordTextFieldView() => KNPWidgets.commonTextFormField(
-    title: 'Old password',
+    title: 'Old password*',
     hintText: 'Old password',
     controller: controller.oldPasswordController,
     focusNode: controller.oldPasswordFocusNode,
@@ -76,7 +76,7 @@ class NewPasswordView extends GetView<NewPasswordController> {
   );
 
   Widget newPasswordTextFieldView() => KNPWidgets.commonTextFormField(
-    title: 'New password',
+    title: 'New password*',
     hintText: 'New password',
     controller: controller.newPasswordController,
     focusNode: controller.newPasswordFocusNode,
@@ -86,7 +86,7 @@ class NewPasswordView extends GetView<NewPasswordController> {
   );
 
   Widget confirmPasswordTextFieldView() => KNPWidgets.commonTextFormField(
-    title: 'Confirm password',
+    title: 'Confirm password*',
     hintText: 'Confirm password',
     controller: controller.confirmPasswordController,
     focusNode: controller.confirmPasswordFocusNode,

@@ -78,7 +78,7 @@ class LogInView extends GetView<LogInController> {
       );
 
   Widget emailAndMobileNumberTextFieldView() => KNPWidgets.commonTextFormField(
-      title: 'Email / Phone',
+      title: 'Email / Phone*',
       hintText: 'Email / Phone',
       controller: controller.emailAndMobileNumberController,
       focusNode: controller.emailMobileNumberFocusNode,
@@ -86,7 +86,7 @@ class LogInView extends GetView<LogInController> {
   );
 
   Widget passwordTextFieldView() => KNPWidgets.commonTextFormField(
-      title: 'Password',
+      title: 'Password*',
       hintText: 'Password',
       controller: controller.passwordController,
       focusNode: controller.passwordFocusNode,

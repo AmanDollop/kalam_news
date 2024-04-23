@@ -54,7 +54,7 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
   );
 
   Widget emailAndMobileNumberTextFieldView() => KNPWidgets.commonTextFormField(
-      title: 'Email / Phone',
+      title: 'Email / Phone*',
       hintText: 'Email / Phone',
       controller: controller.emailAndMobileNumberController,
       focusNode: controller.emailMobileNumberFocusNode,

@@ -30,7 +30,7 @@ class BottomBarController extends GetxController {
   Widget pageCalling({int? selectedIndex}) {
     switch (selectedIndex) {
       case 0:
-        Get.delete<HomeController>();
+        // Get.delete<HomeController>();
         Get.lazyPut<HomeController>(
           () => HomeController(),
         );
@@ -38,7 +38,7 @@ class BottomBarController extends GetxController {
         return const HomeView();
 
       case 1:
-        Get.delete<ProfileController>();
+        // Get.delete<ProfileController>();
         Get.lazyPut<ProfileController>(
           () => ProfileController(),
         );
@@ -46,7 +46,7 @@ class BottomBarController extends GetxController {
         return const ProfileView();
 
       case 2:
-        Get.delete<HomeController>();
+        // Get.delete<HomeController>();
         Get.lazyPut<HomeController>(
           () => HomeController(),
         );
@@ -54,7 +54,7 @@ class BottomBarController extends GetxController {
         return const HomeView();
 
       case 3:
-        Get.delete<HomeController>();
+        // Get.delete<HomeController>();
         Get.lazyPut<HomeController>(
           () => HomeController(),
         );
@@ -62,7 +62,7 @@ class BottomBarController extends GetxController {
         return const HomeView();
 
       case 4:
-        Get.delete<HomeController>();
+        // Get.delete<HomeController>();
         Get.lazyPut<HomeController>(
           () => HomeController(),
         );

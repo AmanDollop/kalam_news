@@ -49,8 +49,9 @@ class ProfileController extends GetxController {
 
   void clickOnManageBankAccount() {}
 
-  void clickOnEditProfile() {
-    Get.toNamed(Routes.EDIT_PROFILE, arguments: [userData]);
+  Future<void> clickOnEditProfile() async {
+    await Get.toNamed(Routes.EDIT_PROFILE, arguments: [userData]);
+    onInit();
   }
 
   void clickOnChangePassword() {
@@ -62,16 +63,11 @@ class ProfileController extends GetxController {
   Future<void> dataBaseCalling() async {
     try {
       userDataFromLocalDataBaseValue.value =
-      await DataBaseHelper().isDatabaseHaveData(
-          db: DataBaseHelper.dataBaseHelper,
-          tableName: DataBaseConstant.tableNameForUserDetail);
+      await DataBaseHelper().isDatabaseHaveData(db: DataBaseHelper.dataBaseHelper, tableName: DataBaseConstant.tableNameForUserDetail);
       if (!userDataFromLocalDataBaseValue.value) {
         userDataFromLocalDataBase.value =
-        await DataBaseHelper().getParticularData(
-            key: DataBaseConstant.userDetail,
-            tableName: DataBaseConstant.tableNameForUserDetail);
-        userData =
-            UserDataModal.fromJson(jsonDecode(userDataFromLocalDataBase.value));
+        await DataBaseHelper().getParticularData(key: DataBaseConstant.userDetail, tableName: DataBaseConstant.tableNameForUserDetail);
+        userData = UserDataModal.fromJson(jsonDecode(userDataFromLocalDataBase.value));
       }
     } catch (e) {
       print('dataBaseCalling:::: ERROR::::::  $e');
