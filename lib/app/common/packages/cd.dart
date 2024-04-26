@@ -22,7 +22,7 @@ class C {
   static double textFieldRadius = 10.px;
 
   /*  Common String or Image constants    */
-  static const iNoInternetDialog = "assets/images/no_internet_dialog.png";
+  static const iNoInternetDialog = "assets/image/no_network_connecting.png";
   static const tWellCome = "Well-Come";
   static const textNext = "Next";
   static const textReadMore = " Read More";

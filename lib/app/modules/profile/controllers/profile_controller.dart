@@ -39,27 +39,6 @@ class ProfileController extends GetxController {
     selectedBottomNavigationIndex.value = 0;
   }
 
-  void clickOnAadharCard() {
-    Get.toNamed(Routes.ADD_DOCUMENT, arguments: ['Aadhar Card']);
-  }
-
-  void clickOnPanCard() {
-    Get.toNamed(Routes.ADD_DOCUMENT, arguments: ['Pan Card']);
-  }
-
-  void clickOnManageBankAccount() {}
-
-  Future<void> clickOnEditProfile() async {
-    await Get.toNamed(Routes.EDIT_PROFILE, arguments: [userData]);
-    onInit();
-  }
-
-  void clickOnChangePassword() {
-    Get.toNamed(Routes.NEW_PASSWORD, arguments: ['Change password']);
-  }
-
-  void clickOnUpdateBankDetails() {}
-
   Future<void> dataBaseCalling() async {
     try {
       userDataFromLocalDataBaseValue.value =
@@ -74,6 +53,39 @@ class ProfileController extends GetxController {
       apiResValue.value = false;
     }
     apiResValue.value = false;
+  }
+
+  /*void clickOnAadharCard() {
+    Get.toNamed(Routes.ADD_DOCUMENT, arguments: ['Aadhar Card']);
+  }
+
+  void clickOnPanCard() {
+    Get.toNamed(Routes.ADD_DOCUMENT, arguments: ['Pan Card']);
+  }
+
+  void clickOnManageBankAccount() {
+
+  }*/
+
+  void clickOnWelcomeMessage() {
+    Get.toNamed(Routes.WELCOME_MASSAGE);
+  }
+
+  void clickOnKYCApplication() {
+    Get.toNamed(Routes.KYC_APPLICATION,arguments: [userData]);
+  }
+
+  Future<void> clickOnEditProfile() async {
+    await Get.toNamed(Routes.EDIT_PROFILE, arguments: [userData]);
+    onInit();
+  }
+
+  void clickOnChangePassword() {
+    Get.toNamed(Routes.NEW_PASSWORD, arguments: ['Change password']);
+  }
+
+  void clickOnManageBankDetails() {
+    Get.toNamed(Routes.MANAGE_BANK_DETAIL);
   }
 
   Future<void> clickOnLogOutButton() async {

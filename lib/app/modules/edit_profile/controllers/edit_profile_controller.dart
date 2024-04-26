@@ -189,9 +189,12 @@ class EditProfileController extends GetxController {
       userData.value = await ApiIntrigation.getUserDataApi();
       if (userData.value != null) {
         userDetails = userData.value?.userDetails;
+
         userDataFromLocalDataBase.value = await DataBaseHelper().getParticularData(key: DataBaseConstant.userDetail, tableName: DataBaseConstant.tableNameForUserDetail);
-        userData.value = UserDataModal.fromJson(jsonDecode(userDataFromLocalDataBase.value));
-        userData.value?.accessToken = userData.value?.accessToken;
+
+        String? token = UserDataModal.fromJson(jsonDecode(userDataFromLocalDataBase.value)).accessToken;
+        userData.value?.accessToken = token;
+
         await DataBaseHelper().upDateDataBase(data: {DataBaseConstant.userDetail: json.encode(userData.value)}, tableName: DataBaseConstant.tableNameForUserDetail);
       }
     } catch (e) {

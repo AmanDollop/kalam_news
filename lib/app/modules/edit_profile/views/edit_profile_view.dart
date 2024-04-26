@@ -33,48 +33,43 @@ class EditProfileView extends GetView<EditProfileController> {
                   inAsyncCall: controller.apiResValue.value,
                   child: controller.apiResValue.value
                       ? KNPWidgets.commonProgressBarView()
-                      : ListView(
-                          padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
-                          shrinkWrap: true,
+                      : Padding(
+                        padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
+                        child: Column(
                           children: [
-                            Center(
-                              child: userProfileView(),
+                            Expanded(
+                              child: ListView(
+                                  padding: EdgeInsets.zero,
+                                  shrinkWrap: true,
+                                  children: [
+                                    Center(
+                                      child: userProfileView(),
+                                    ),
+                                    mrAndMrsTextFieldView().paddingSymmetric(vertical: CommonPaddingAndSize.size20()),
+                                    firstNameTextFieldView(),
+                                    middleNameTextFieldView().paddingSymmetric(vertical: CommonPaddingAndSize.size20()),
+                                    lastNameTextFieldView(),
+                                    dobTextFieldView().paddingSymmetric(vertical: CommonPaddingAndSize.size20()),
+                                    emailTextFieldView(),
+                                    phoneNumberFieldView().paddingSymmetric(vertical: CommonPaddingAndSize.size20()),
+                                    whatsappNumberFieldView(),
+                                    Row(
+                                      children: [
+                                        checkBoxView(),
+                                        sameAsMobileNumberTextView(text: 'Same as phone number')
+                                      ],
+                                    ).paddingSymmetric(vertical: CommonPaddingAndSize.size10()),
+                                    completeAddressTextFieldView(),
+                                    stateTextFieldView().paddingSymmetric(vertical: CommonPaddingAndSize.size20()),
+                                    cityTextFieldView(),
+                                    pinCodeTextFieldView().paddingSymmetric(vertical: CommonPaddingAndSize.size20()),
+                                  ],
+                                ),
                             ),
-                            SizedBox(height: CommonPaddingAndSize.size20()),
-                            mrAndMrsTextFieldView(),
-                            SizedBox(height: CommonPaddingAndSize.size20()),
-                            firstNameTextFieldView(),
-                            SizedBox(height: CommonPaddingAndSize.size20()),
-                            middleNameTextFieldView(),
-                            SizedBox(height: CommonPaddingAndSize.size20()),
-                            lastNameTextFieldView(),
-                            SizedBox(height: CommonPaddingAndSize.size20()),
-                            dobTextFieldView(),
-                            SizedBox(height: CommonPaddingAndSize.size20()),
-                            emailTextFieldView(),
-                            SizedBox(height: CommonPaddingAndSize.size20()),
-                            phoneNumberFieldView(),
-                            SizedBox(height: CommonPaddingAndSize.size20()),
-                            whatsappNumberFieldView(),
-                            SizedBox(height: CommonPaddingAndSize.size10()),
-                            Row(
-                              children: [
-                                checkBoxView(),
-                                sameAsMobileNumberTextView(text: 'Same as phone number')
-                              ],
-                            ),
-                            SizedBox(height: CommonPaddingAndSize.size10()),
-                            completeAddressTextFieldView(),
-                            SizedBox(height: CommonPaddingAndSize.size20()),
-                            stateTextFieldView(),
-                            SizedBox(height: CommonPaddingAndSize.size20()),
-                            cityTextFieldView(),
-                            SizedBox(height: CommonPaddingAndSize.size20()),
-                            pinCodeTextFieldView(),
-                            SizedBox(height: CommonPaddingAndSize.size20()),
                             upDateButtonView(),
                           ],
                         ),
+                      ),
                 ),
               ),
             ),
@@ -110,7 +105,7 @@ class EditProfileView extends GetView<EditProfileController> {
                       ),
                     )
                     : KNPWidgets.commonNetworkImageView(
-                       path: '${ApiUrls.baseUrlForImage}${controller.userPic.value}',
+                       path: KNPMethods.baseUrlForNetworkImage(imagePath: controller.userPic.value),
                        isAssetImage: false,
                        radius: 55.px,
                        height: 110.px,
@@ -172,7 +167,7 @@ class EditProfileView extends GetView<EditProfileController> {
         hintText: 'First name',
         controller: controller.firstNameController,
         focusNode: controller.firstNameFocusNode,
-        validator: (value) => V.isValid(value: value, title: 'Please first name'),
+        validator: (value) => V.isValid(value: value, title: 'Please enter first name'),
       );
 
   Widget lastNameTextFieldView() => KNPWidgets.commonTextFormField(
@@ -290,7 +285,6 @@ class EditProfileView extends GetView<EditProfileController> {
       keyboardType: TextInputType.number,
       maxLength: 6,
       validator: (value) => V.isValid(value: value, title: 'Please enter pin code'),
-      readOnly: true,
   );
 
   Widget upDateButtonView() => KNPWidgets.commonElevatedButton(

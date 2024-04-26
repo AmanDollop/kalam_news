@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/add_bank_detail/bindings/add_bank_detail_binding.dart';
+import '../modules/add_bank_detail/views/add_bank_detail_view.dart';
 import '../modules/add_document/bindings/add_document_binding.dart';
 import '../modules/add_document/views/add_document_view.dart';
 import '../modules/bottom_bar/bindings/bottom_bar_binding.dart';
@@ -10,8 +12,12 @@ import '../modules/forgot_password/bindings/forgot_password_binding.dart';
 import '../modules/forgot_password/views/forgot_password_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/kyc_application/bindings/kyc_application_binding.dart';
+import '../modules/kyc_application/views/kyc_application_view.dart';
 import '../modules/log_in/bindings/log_in_binding.dart';
 import '../modules/log_in/views/log_in_view.dart';
+import '../modules/manage_bank_detail/bindings/manage_bank_detail_binding.dart';
+import '../modules/manage_bank_detail/views/manage_bank_detail_view.dart';
 import '../modules/new_password/bindings/new_password_binding.dart';
 import '../modules/new_password/views/new_password_view.dart';
 import '../modules/otp/bindings/otp_binding.dart';
@@ -30,6 +36,8 @@ import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
 import '../modules/wallet/bindings/wallet_binding.dart';
 import '../modules/wallet/views/wallet_view.dart';
+import '../modules/welcome_massage/bindings/welcome_massage_binding.dart';
+import '../modules/welcome_massage/views/welcome_massage_view.dart';
 
 part 'app_routes.dart';
 
@@ -113,6 +121,26 @@ class AppPages {
       name: _Paths.EDIT_PROFILE,
       page: () => const EditProfileView(),
       binding: EditProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.WELCOME_MASSAGE,
+      page: () => const WelcomeMassageView(),
+      binding: WelcomeMassageBinding(),
+    ),
+    GetPage(
+      name: _Paths.KYC_APPLICATION,
+      page: () => const KycApplicationView(),
+      binding: KycApplicationBinding(),
+    ),
+    GetPage(
+      name: _Paths.MANAGE_BANK_DETAIL,
+      page: () => const ManageBankDetailView(),
+      binding: ManageBankDetailBinding(),
+    ),
+    GetPage(
+      name: _Paths.ADD_BANK_DETAIL,
+      page: () => const AddBankDetailView(),
+      binding: AddBankDetailBinding(),
     ),
   ];
 }

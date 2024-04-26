@@ -20,22 +20,30 @@ class NewPasswordView extends GetView<NewPasswordController> {
             children: [
               KNPWidgets.scaffoldBackgroundImageViewWithAppBar(
                 appBarTitle: controller.pageName.value,
-                child2: Form(
-                  key: controller.key,
-                  child: ListView(
-                    padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
-                    shrinkWrap: true,
+                child2: Padding(
+                  padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
+                  child: Column(
                     children: [
-                      setNewPasswordTextView(),
-                      if(controller.pageName.value == "Change password")
-                      SizedBox(height: CommonPaddingAndSize.size20()),
-                      if(controller.pageName.value == "Change password")
-                      oldPasswordTextFieldView(),
-                      SizedBox(height: CommonPaddingAndSize.size20()),
-                      newPasswordTextFieldView(),
-                      SizedBox(height: CommonPaddingAndSize.size20()),
-                      confirmPasswordTextFieldView(),
-                      SizedBox(height: CommonPaddingAndSize.size20()),
+                      Expanded(
+                        child: Form(
+                          key: controller.key,
+                          child: ListView(
+                            padding: EdgeInsets.zero,
+                            shrinkWrap: true,
+                            children: [
+                              setNewPasswordTextView(),
+                              if(controller.pageName.value == "Change password")
+                              SizedBox(height: CommonPaddingAndSize.size20()),
+                              if(controller.pageName.value == "Change password")
+                              oldPasswordTextFieldView(),
+                              SizedBox(height: CommonPaddingAndSize.size20()),
+                              newPasswordTextFieldView(),
+                              SizedBox(height: CommonPaddingAndSize.size20()),
+                              confirmPasswordTextFieldView(),
+                            ],
+                          ),
+                        ),
+                      ),
                       upDateButtonView(),
                     ],
                   ),

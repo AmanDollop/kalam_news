@@ -15,13 +15,7 @@ class KNPMethods{
     FocusManager.instance.primaryFocus?.unfocus();
   }
 
-  static void showSnackBar(
-      {required String message,
-        Duration? duration,
-        bool isFloating = true,
-        Color? backgroundColor,
-        bool showCloseIcon = false}) {
-       backgroundColor = Theme.of(Get.context!).colorScheme.primary;
+  static void showSnackBar({required String message, Duration? duration, bool isFloating = true, Color? backgroundColor, bool showCloseIcon = false}) {backgroundColor = Theme.of(Get.context!).colorScheme.primary;
     // Vibration.vibrate(duration: 500);
     if (isFloating) {
       /*var snackBar = SnackBar(
@@ -154,6 +148,16 @@ class KNPMethods{
     };
 
     return MaterialColor(color.value, shades);
+  }
+
+  static String baseUrlForNetworkImage({required String imagePath}){
+    Uri convertUrl = Uri.parse(imagePath);
+    String convertMainUrl = convertUrl.toString();
+    if (convertMainUrl.contains('https://')) {
+      return convertMainUrl;
+    } else {
+      return ApiUrls.baseUrlForImage + convertMainUrl;
+    }
   }
 
 }

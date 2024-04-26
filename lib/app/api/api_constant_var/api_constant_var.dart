@@ -32,6 +32,8 @@ class ApiConstantVar{
 
   static const email = "email";
 
+  static const oldPassword = "old_password";
+
   static const password = "password";
 
   static const address = "address";
@@ -55,6 +57,21 @@ class ApiConstantVar{
   static const profile = "profile";
 
 
+  static const bankName = "bank_name";
+
+  static const bankBranch = "bank_branch";
+
+  static const accountNo = "account_no";
+
+  static const customerName = "customer_name";
+
+  static const accountType = "account_type";
+
+  static const ifscCode = "ifsc_code";
+
+  static const bankId = "bank_id";
+
+
 }
 
 class ApiUrls{
@@ -64,7 +81,7 @@ class ApiUrls{
   // static const baseUrlForGet = "192.168.1.172:8000";
 
   static const baseUrl = "http://192.168.1.229:8000/api/";
-  static const baseUrlForImage = "http://192.168.1.229:8000/images/packageImages/";
+  static const baseUrlForImage = "http://192.168.1.229:8000/images/";
 
   static const baseUrlForGet = "192.168.1.229:8000";
 
@@ -80,6 +97,8 @@ class ApiUrls{
 
   static const apiEndPointResetPassword = "resetPassword";
 
+  static const apiEndPointChangePassword = "changePassword";
+
   static const apiEndPointMatchOtp = "matchOtp";
 
   static const apiEndPointGetProfile = "getProfile";
@@ -89,5 +108,16 @@ class ApiUrls{
   static const apiEndPointUpdateProfile = "updateProfile";
 
   static const apiEndPointGetPackageDetail = "/api/getPackageDetail";
+
+  static const apiEndPointAddBankAccount = "addBankAccount";
+
+  static const apiEndPointGetBankAccount = "getBankAccounts";
+
+  static const apiEndPointUpdateBankAccounts = "updateBankAccounts";
+
+  static const apiEndPointChangePrimaryBankAccount = "changePrimaryBankAccount";
+
+  static const apiEndPointDeleteBankAccount = "deleteBankAccounts";
+
 
 }

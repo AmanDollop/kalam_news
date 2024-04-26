@@ -56,7 +56,7 @@ class NewPasswordController extends GetxController {
       if(pageName.value == "Set new password"){
         await callingResetPassword();
       }else{
-
+        await callingChangePasswordApi();
       }
     }
   }
@@ -79,6 +79,28 @@ class NewPasswordController extends GetxController {
     }catch(e){
       KNPMethods.error();
       print('callingResetPassword:::: ERROR::::  $e');
+      upDateButtonValue.value = false;
+    }
+  }
+
+  Future<void> callingChangePasswordApi() async {
+    try{
+      upDateButtonValue.value = true;
+      bodyParamsResetPassword = {
+        ApiConstantVar.oldPassword : oldPasswordController.text.trim().toString(),
+        ApiConstantVar.password : confirmPasswordController.text.trim().toString(),
+      };
+      http.Response? res = await ApiIntrigation.changePassword(bodyParams: bodyParamsResetPassword);
+      if(res != null && res.statusCode == 200){
+        Get.back();
+        upDateButtonValue.value = false;
+      }
+      else{
+        upDateButtonValue.value = false;
+      }
+    }catch(e){
+      KNPMethods.error();
+      print('callingChangePasswordApi:::: ERROR::::  $e');
       upDateButtonValue.value = false;
     }
   }

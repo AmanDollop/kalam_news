@@ -52,7 +52,6 @@ class AppThemeData{
         color: KNPLightThemeColor().primary,
         circularTrackColor: KNPLightThemeColor().darkGreyColor,
       ),
-
     );
 
   }

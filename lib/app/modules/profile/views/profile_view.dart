@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kalam_news_publication/app/api/api_constant_var/api_constant_var.dart';
 import 'package:kalam_news_publication/app/common/common_padding_size/common_padding_size.dart';
+import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/common/packages/common_methods_for_date_time.dart';
 import 'package:kalam_news_publication/app/common/packages/model_progress_bar.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
-import 'package:kalam_news_publication/app/db/data_base_constant/data_base_constant.dart';
-import 'package:kalam_news_publication/app/db/data_base_helper/data_base_helper.dart';
-import 'package:kalam_news_publication/app/routes/app_pages.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import '../controllers/profile_controller.dart';
 
@@ -24,24 +21,24 @@ class ProfileView extends GetView<ProfileController> {
           child: KNPWidgets.scaffoldBackgroundImageViewWithAppBar(
             appBarTitle: 'Profile',
             onTapForBackButton: () => controller.onWillPop(),
-            child2: ModalProgress(
-              inAsyncCall: controller.apiResValue.value,
-              child: controller.apiResValue.value
-                  ? KNPWidgets.commonProgressBarView()
-                  : ListView(
-                      padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
-                      children: [
-                        userProfileView(),
-                        KNPWidgets.commonDividerView(height: 0).paddingSymmetric(vertical: CommonPaddingAndSize.size20()),
-                        cardHeadlineTextView(text: 'Personal information').paddingOnly(bottom: CommonPaddingAndSize.size10()),
-                        personalInformationCardView().paddingOnly(bottom: CommonPaddingAndSize.size20()),
-                        cardHeadlineTextView(text: 'Documents').paddingOnly(bottom: CommonPaddingAndSize.size10()),
-                        documentsCardView().paddingOnly(bottom: CommonPaddingAndSize.size20()),
-                        cardHeadlineTextView(text: 'Account Setting').paddingOnly(bottom: CommonPaddingAndSize.size10()),
-                        accountSettingCardView().paddingOnly(bottom: CommonPaddingAndSize.size20()),
-                        logoutButtonView().paddingOnly(bottom: CommonPaddingAndSize.size20() * 4),
-                      ],
-                    ),
+            child2: KNPWidgets.commonRefreshIndicator(
+              onRefresh: () async => await controller.onInit(),
+              child: ModalProgress(
+                inAsyncCall: controller.apiResValue.value,
+                child: controller.apiResValue.value
+                    ? KNPWidgets.commonProgressBarView()
+                    : ListView(
+                        padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
+                        children: [
+                          userProfileView(),
+                          KNPWidgets.commonDividerView(height: 0).paddingSymmetric(vertical: CommonPaddingAndSize.size20()),
+                          cardHeadlineTextView(text: 'Welcome').paddingOnly(bottom: CommonPaddingAndSize.size10()),
+                          welcomeCardView().paddingOnly(bottom: CommonPaddingAndSize.size20()),
+                          cardHeadlineTextView(text: 'Account Setting').paddingOnly(bottom: CommonPaddingAndSize.size10()),
+                          accountSettingCardView().paddingOnly(bottom: CommonPaddingAndSize.size20()),
+                        ],
+                      ),
+              ),
             ),
           ),
         );
@@ -91,7 +88,7 @@ class ProfileView extends GetView<ProfileController> {
         ),
         child: Center(
           child: KNPWidgets.commonNetworkImageView(
-            path: '${ApiUrls.baseUrlForImage}${controller.userData?.userDetails?.profile}',
+            path: KNPMethods.baseUrlForNetworkImage(imagePath: '${controller.userData?.userDetails?.profile}'),
             isAssetImage: false,
             radius: 55.px,
             height: 110.px,
@@ -109,10 +106,10 @@ class ProfileView extends GetView<ProfileController> {
           height: 24.px,
           width: 24.px,
           decoration: BoxDecoration(
-              color: Theme.of(Get.context!).colorScheme.inversePrimary,
-              shape: BoxShape.circle),
-          child: KNPWidgets.commonNetworkImageView(
-              path: 'assets/icon/edit_icon.png', isAssetImage: true),
+            color: Theme.of(Get.context!).colorScheme.inversePrimary,
+            shape: BoxShape.circle,
+          ),
+          child: KNPWidgets.commonNetworkImageView(path: 'assets/icon/edit_icon.png', isAssetImage: true),
         ),
       );
 
@@ -125,10 +122,7 @@ class ProfileView extends GetView<ProfileController> {
 
   Widget cardHeadlineTextView({required String text}) => Text(
         text,
-        style: Theme.of(Get.context!)
-            .textTheme
-            .bodyMedium
-            ?.copyWith(fontWeight: FontWeight.w700),
+        style: Theme.of(Get.context!).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w700),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       );
@@ -150,9 +144,7 @@ class ProfileView extends GetView<ProfileController> {
       );
 
   Widget commonRowForCard({required String text1, String? text2, bool buttonValue = true, GestureTapCallback? onTap}) => Padding(
-        padding: EdgeInsets.symmetric(
-            horizontal: CommonPaddingAndSize.size20(),
-            vertical: CommonPaddingAndSize.size14()),
+        padding: EdgeInsets.symmetric(horizontal: CommonPaddingAndSize.size20(), vertical: CommonPaddingAndSize.size14()),
         child: InkWell(
           onTap: onTap,
           child: Row(
@@ -167,7 +159,7 @@ class ProfileView extends GetView<ProfileController> {
               buttonValue
                   ? Icon(
                       Icons.arrow_forward_ios_rounded,
-                      color: Colors.black,
+                      color: Theme.of(Get.context!).colorScheme.inverseSurface,
                       size: 14.px,
                     )
                   : text2 != null && text2.isNotEmpty
@@ -182,7 +174,24 @@ class ProfileView extends GetView<ProfileController> {
         ),
       );
 
-  Widget personalInformationCardView() => KNPWidgets.commonContainerView(
+  Widget welcomeCardView() => KNPWidgets.commonContainerView(
+    padding: EdgeInsets.zero,
+    child: Column(
+      children: [
+        commonRowForCard(
+            text1: 'Welcome message',
+            onTap: () => controller.clickOnWelcomeMessage(),
+        ),
+        KNPWidgets.commonDividerView(height: 0),
+        commonRowForCard(
+            text1: 'KYC application',
+            onTap: () => controller.clickOnKYCApplication(),
+        ),
+      ],
+    ),
+  );
+
+  /*Widget personalInformationCardView() => KNPWidgets.commonContainerView(
         padding: EdgeInsets.zero,
         child: Column(
           children: [
@@ -220,9 +229,9 @@ class ProfileView extends GetView<ProfileController> {
                 buttonValue: false),
           ],
         ),
-      );
+      );*/
 
-  Widget documentsCardView() => KNPWidgets.commonContainerView(
+  /*Widget documentsCardView() => KNPWidgets.commonContainerView(
         padding: EdgeInsets.zero,
         child: Column(
           children: [
@@ -242,7 +251,7 @@ class ProfileView extends GetView<ProfileController> {
             ),
           ],
         ),
-      );
+      );*/
 
   Widget accountSettingCardView() => KNPWidgets.commonContainerView(
         padding: EdgeInsets.zero,
@@ -259,8 +268,13 @@ class ProfileView extends GetView<ProfileController> {
             ),
             KNPWidgets.commonDividerView(height: 0),
             commonRowForCard(
-              text1: 'Update bank details',
-              onTap: () => controller.clickOnUpdateBankDetails(),
+              text1: 'Manage bank detail',
+              onTap: () => controller.clickOnManageBankDetails(),
+            ),
+            KNPWidgets.commonDividerView(height: 0),
+            commonRowForCard(
+              text1: 'Log out',
+              onTap: () => controller.clickOnLogOutButton(),
             ),
           ],
         ),

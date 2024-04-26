@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:kalam_news_publication/app/api/api_constant_var/api_constant_var.dart';
+import 'package:kalam_news_publication/app/api/api_res_modals/bank_account_modal.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/citys_modal.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/package_detail.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/package_modal.dart';
@@ -148,6 +149,25 @@ class ApiIntrigation{
     }
   }
 
+  static Future<http.Response?> changePassword({required Map<String, dynamic> bodyParams}) async {
+    Map<String, String> authorization = await userToken();
+    http.Response? response = await MyHttp.postMethod(
+      url: '${ApiUrls.baseUrl}${ApiUrls.apiEndPointChangePassword}',
+      bodyParams: bodyParams,
+      context: Get.context!,
+      token: authorization
+    );
+    if (response != null) {
+      if (await KNPMethods.checkResponse(response: response, wantInternetFailResponse: true, wantShowFailResponse: true)) {
+        return response;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  }
+
   static Future<UserDataModal?> matchOtp({required Map<String, dynamic> bodyParams}) async {
     UserDataModal? userDataModal;
     http.Response? response = await MyHttp.postMethod(
@@ -255,6 +275,76 @@ class ApiIntrigation{
     if (response != null) {
       if (await KNPMethods.checkResponse(response: response, wantInternetFailResponse: true, wantShowFailResponse: true)) {
         return response;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  }
+
+  static Future<http.Response?> addBankDetailApi({
+    required Map<String, dynamic> bodyParams,
+    required String endPoint
+  }) async {
+
+    Map<String, String> authorization = await userToken();
+
+    http.Response? response = await MyHttp.postMethod(
+        url: '${ApiUrls.baseUrl}$endPoint',
+        bodyParams: bodyParams,
+        context: Get.context!,
+        token: authorization,
+        showSnackBar: true
+    );
+    if (response != null) {
+      if (await KNPMethods.checkResponse(response: response, wantInternetFailResponse: true, wantShowFailResponse: true)) {
+        return response;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  }
+
+  static Future<http.Response?> deleteBankAccountApi({
+    required Map<String, dynamic> bodyParams,
+  }) async {
+
+    Map<String, String> authorization = await userToken();
+
+    http.Response? response = await MyHttp.deleteMethod(
+        url: '${ApiUrls.baseUrl}${ApiUrls.apiEndPointDeleteBankAccount}',
+        bodyParams: bodyParams,
+        context: Get.context!,
+        token: authorization
+    );
+    if (response != null) {
+      if (await KNPMethods.checkResponse(response: response, wantInternetFailResponse: true, wantShowFailResponse: true)) {
+        return response;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  }
+
+  static Future<BankAccountsModal?> getBankAccountsApi() async {
+
+    Map<String, String> authorization = await userToken();
+
+    BankAccountsModal? bankAccountsModal;
+    http.Response? response = await MyHttp.getMethod(
+      url: '${ApiUrls.baseUrl}${ApiUrls.apiEndPointGetBankAccount}',
+      token: authorization,
+      context: Get.context!,
+    );
+    if (response != null) {
+      if (await KNPMethods.checkResponse(response: response, wantInternetFailResponse: true, wantShowFailResponse: true)) {
+        bankAccountsModal = BankAccountsModal.fromJson(jsonDecode(response.body));
+        return bankAccountsModal;
       } else {
         return null;
       }

@@ -18,6 +18,10 @@ abstract class Routes {
   static const WALLET = _Paths.WALLET;
   static const ADD_DOCUMENT = _Paths.ADD_DOCUMENT;
   static const EDIT_PROFILE = _Paths.EDIT_PROFILE;
+  static const WELCOME_MASSAGE = _Paths.WELCOME_MASSAGE;
+  static const KYC_APPLICATION = _Paths.KYC_APPLICATION;
+  static const MANAGE_BANK_DETAIL = _Paths.MANAGE_BANK_DETAIL;
+  static const ADD_BANK_DETAIL = _Paths.ADD_BANK_DETAIL;
 }
 
 abstract class _Paths {
@@ -37,4 +41,8 @@ abstract class _Paths {
   static const WALLET = '/wallet';
   static const ADD_DOCUMENT = '/add-document';
   static const EDIT_PROFILE = '/edit-profile';
+  static const WELCOME_MASSAGE = '/welcome-massage';
+  static const KYC_APPLICATION = '/kyc-application';
+  static const MANAGE_BANK_DETAIL = '/manage-bank-detail';
+  static const ADD_BANK_DETAIL = '/add-bank-detail';
 }

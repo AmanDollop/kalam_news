@@ -4,6 +4,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
+import 'package:kalam_news_publication/app/common/packages/cd.dart';
 
 class AC extends GetxController {
 
@@ -35,7 +36,7 @@ class AC extends GetxController {
       } else {
         isConnect.value = false;
         isDialogShow = 1;
-       // CD.commonAndroidNoInternetDialog();
+        // CD.commonAndroidNoInternetDialog();
         KNPMethods.noInternet();
       }
       return updateConnectionState(event);

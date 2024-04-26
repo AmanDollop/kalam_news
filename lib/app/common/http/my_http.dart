@@ -92,6 +92,7 @@ class MyHttp {
           bodyParams.forEach((key, value) {
             multipartRequest.fields[key] = value;
           });
+          print('token:::::: $token');
           multipartRequest.headers['Authorization'] = token;
           multipartRequest.files.add(getUserProfileImageFile(image: image, userProfileImageKey: userProfileImageKey));
           http.StreamedResponse response = await multipartRequest.send();

@@ -61,7 +61,10 @@ class HomeController extends GetxController {
   void increment() => count.value++;
 
   onWillPop() {
-    CD.commonIosExitAppDialog(clickOnCancel: () => Get.back(), clickOnExit: () => exit(0),);
+    CD.commonIosExitAppDialog(
+      clickOnCancel: () => Get.back(),
+      clickOnExit: () => exit(0),
+    );
   }
 
   Future<void> dataBaseCalling() async {
@@ -81,7 +84,8 @@ class HomeController extends GetxController {
     packageClickValue.value = true;
     count.value++;
     try {
-      await callingPackageDetailApi(packageId: '${packageList?[index].packageId}');
+      await callingPackageDetailApi(
+          packageId: '${packageList?[index].packageId}');
       await CBS.commonDraggableBottomSheet(
         isDismissible: false,
         enableDrag: false,
@@ -93,11 +97,13 @@ class HomeController extends GetxController {
           Container(
             height: 200.px,
             decoration: BoxDecoration(
-                color: Theme.of(Get.context!).colorScheme.primary.withOpacity(.05),
-                borderRadius: BorderRadius.circular(8.px),
+              color:
+                  Theme.of(Get.context!).colorScheme.primary.withOpacity(.05),
+              borderRadius: BorderRadius.circular(8.px),
             ),
             child: KNPWidgets.commonNetworkImageView(
-                path: '${ApiUrls.baseUrlForImage}${packageDetailModal.value?.packageImage}',
+                path: KNPMethods.baseUrlForNetworkImage(
+                    imagePath: '${packageDetailModal.value?.packageImage}'),
                 isAssetImage: false,
                 height: 200.px,
                 fit: BoxFit.contain,
@@ -106,7 +112,10 @@ class HomeController extends GetxController {
           SizedBox(height: CommonPaddingAndSize.size10()),
           Text(
             '${packageDetailModal.value?.packageName}',
-            style: Theme.of(Get.context!).textTheme.labelLarge?.copyWith(fontSize: 20.px),
+            style: Theme.of(Get.context!)
+                .textTheme
+                .labelLarge
+                ?.copyWith(fontSize: 20.px),
           ),
           if (packageDetails != null && packageDetails!.isNotEmpty)
             SizedBox(height: CommonPaddingAndSize.size10()),
@@ -149,8 +158,7 @@ class HomeController extends GetxController {
     count.value++;
   }
 
-  Widget commonTitleTextView({required String text, TextAlign? textAlign}) =>
-      Expanded(
+  Widget commonTitleTextView({required String text, TextAlign? textAlign}) => Expanded(
         child: Text(
           text,
           style: Theme.of(Get.context!).textTheme.bodySmall,
@@ -170,25 +178,22 @@ class HomeController extends GetxController {
         ),
       );
 
-  Widget commonRowForBottomSheet(
-          {bool titleValue = false,
-          required String text1,
-          required String text2,
-          required String text3}) => Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          titleValue
-              ? commonTitleTextView(text: text1)
-              : commonSubTitleTextView(text: text1),
-          titleValue
-              ? commonTitleTextView(text: text2, textAlign: TextAlign.center)
-              : commonSubTitleTextView(
-                  text: text2, textAlign: TextAlign.center),
-          titleValue
-              ? commonTitleTextView(text: text3, textAlign: TextAlign.end)
-              : commonSubTitleTextView(text: text3, textAlign: TextAlign.end),
-        ],
-      );
+  Widget commonRowForBottomSheet({bool titleValue = false, required String text1, required String text2, required String text3}) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        titleValue
+            ? commonTitleTextView(text: text1)
+            : commonSubTitleTextView(text: text1),
+        titleValue
+            ? commonTitleTextView(text: text2, textAlign: TextAlign.center)
+            : commonSubTitleTextView(text: text2, textAlign: TextAlign.center),
+        titleValue
+            ? commonTitleTextView(text: text3, textAlign: TextAlign.end)
+            : commonSubTitleTextView(text: text3, textAlign: TextAlign.end),
+      ],
+    );
+  }
 
   Future<void> callingPackageApi() async {
     apiResValue.value = true;
@@ -208,8 +213,7 @@ class HomeController extends GetxController {
   Future<void> callingPackageDetailApi({required String packageId}) async {
     try {
       bodyParamsForPackageDetailApi = {ApiConstantVar.packageId: packageId};
-      packageDetailModal.value = await ApiIntrigation.getPackageDetailApi(
-          bodyParams: bodyParamsForPackageDetailApi);
+      packageDetailModal.value = await ApiIntrigation.getPackageDetailApi(bodyParams: bodyParamsForPackageDetailApi);
       if (packageDetailModal.value != null) {
         packageDetails = packageDetailModal.value?.packageDetails;
       }
@@ -219,4 +223,5 @@ class HomeController extends GetxController {
       KNPMethods.error();
     }
   }
+
 }

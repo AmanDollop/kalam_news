@@ -36,7 +36,7 @@ void main() {
               theme: AppThemeData.kNPThemeData(fontFamily: 'HelveticaNeue'),
               initialRoute: AppPages.INITIAL,
               getPages: AppPages.routes,
-              defaultTransition: Transition.zoom,
+              defaultTransition: Transition.rightToLeft,
               debugShowCheckedModeBanner: false,
               scrollBehavior: ListScrollBehavior(),
             ),

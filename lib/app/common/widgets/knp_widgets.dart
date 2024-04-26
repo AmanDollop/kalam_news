@@ -166,14 +166,13 @@ class KNPWidgets {
     );
   }
 
-  static Widget scaffoldBackgroundImageViewWithAppBar({
-    required Widget child2,
-    bool appBarValue = true,
-    bool isHomeAppBarValue = false,
-    String? appBarTitle,
-    Widget? child1,
-    GestureTapCallback? onTapForBackButton
-  }) {
+  static Widget scaffoldBackgroundImageViewWithAppBar(
+      {required Widget child2,
+      bool appBarValue = true,
+      bool isHomeAppBarValue = false,
+      String? appBarTitle,
+      Widget? child1,
+      GestureTapCallback? onTapForBackButton}) {
     const SystemUiOverlayStyle(
         statusBarBrightness: Brightness.light,
         // For iOS: (dark icons)
@@ -199,7 +198,8 @@ class KNPWidgets {
                   if (appBarValue)
                     isHomeAppBarValue
                         ? Padding(
-                            padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
+                            padding: CommonPaddingAndSize
+                                .commonScaffoldBodyPadding(),
                             child: commonNetworkImageView(
                                 path: 'assets/image/logoipsum_image.png',
                                 height: 24.px,
@@ -207,9 +207,7 @@ class KNPWidgets {
                                 isAssetImage: true),
                           )
                         : appBarView(
-                            title: appBarTitle,
-                            onTap: onTapForBackButton
-                          ),
+                            title: appBarTitle, onTap: onTapForBackButton),
                   if (child1 != null)
                     SizedBox(height: appBarValue ? 3.h : 10.h),
                   if (child1 != null) child1,
@@ -501,6 +499,45 @@ class KNPWidgets {
     );
   }
 
+  static Widget noNetworkConnectionView() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          KNPWidgets.commonNetworkImageView(
+              path: 'assets/image/no_network_connecting.png',
+              isAssetImage: true,
+              width: 280.px,
+              height: 190.px),
+          Text(
+            'Lost connection',
+            style: Theme.of(Get.context!).textTheme.displayLarge,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ).paddingOnly(
+              top: CommonPaddingAndSize.size20(),
+              bottom: CommonPaddingAndSize.size10()),
+          Text(
+            'Looks like we lost connection.',
+            style: Theme.of(Get.context!).textTheme.titleMedium,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
+      ),
+    );
+  }
+
+  static Widget noDataFoundView() {
+    return Center(
+      child: KNPWidgets.commonNetworkImageView(
+          path: 'assets/image/empty_image.png',
+          isAssetImage: true,
+          width: 280.px,
+          height: 280.px),
+    );
+  }
+
   /* --------------------------Progress Bar View--------------------------*/
   static commonProgressBarView(
           {Color? color,
@@ -578,9 +615,13 @@ class KNPWidgets {
                     color: Theme.of(Get.context!).colorScheme.inversePrimary),
               ),
             )
-          : child ?? Text(
+          : child ??
+              Text(
                 buttonText ?? '',
-                style: Theme.of(Get.context!).textTheme.headlineSmall?.copyWith(fontSize: fontSize, color: buttonTextColor),
+                style: Theme.of(Get.context!)
+                    .textTheme
+                    .headlineSmall
+                    ?.copyWith(fontSize: fontSize, color: buttonTextColor),
               ),
     );
   }
@@ -665,6 +706,38 @@ class KNPWidgets {
       ),
     );
   }
+
+  static Widget commonIconButton({
+    required VoidCallback onPressed,
+    required bool isAssetImage,
+    double? size,
+    double? width,
+    EdgeInsetsGeometry padding = EdgeInsets.zero,
+    String? imagePath,
+    IconData? icon,
+    Color? color,
+    Color? splashColor,
+  }) =>
+      IconButton(
+        onPressed: onPressed,
+        splashRadius: size != null ? size + 4.px : 24.px,
+        icon: imagePath != null && imagePath.isNotEmpty
+            ? commonNetworkImageView(
+                path: imagePath,
+                isAssetImage: isAssetImage,
+                color: color,
+                width: width ?? 20.px,
+                height: size ?? 20.px,
+              )
+            : Icon(
+                icon,
+                size: size ?? 20.px,
+                color: color ?? Theme.of(Get.context!).colorScheme.surface,
+              ),
+        padding: padding,
+        // constraints: BoxConstraints(maxHeight: size ?? 20.px, minWidth: width ?? size ?? 20.px),
+        splashColor: splashColor,
+      );
 
   /* --------------------------Banner View--------------------------*/
 
@@ -804,6 +877,15 @@ class KNPWidgets {
           )
         ],
       ),
+    );
+  }
+
+  static commonRefreshIndicator({required RefreshCallback onRefresh, required Widget child}) {
+    return RefreshIndicator(
+      backgroundColor: Theme.of(Get.context!).colorScheme.inversePrimary,
+      color: Theme.of(Get.context!).colorScheme.primary,
+      onRefresh: onRefresh,
+      child: child,
     );
   }
 }
