@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/achievements/bindings/achievements_binding.dart';
+import '../modules/achievements/views/achievements_view.dart';
 import '../modules/add_bank_detail/bindings/add_bank_detail_binding.dart';
 import '../modules/add_bank_detail/views/add_bank_detail_view.dart';
 import '../modules/add_document/bindings/add_document_binding.dart';
@@ -10,6 +12,8 @@ import '../modules/edit_profile/bindings/edit_profile_binding.dart';
 import '../modules/edit_profile/views/edit_profile_view.dart';
 import '../modules/forgot_password/bindings/forgot_password_binding.dart';
 import '../modules/forgot_password/views/forgot_password_view.dart';
+import '../modules/genealogy/bindings/genealogy_binding.dart';
+import '../modules/genealogy/views/genealogy_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/kyc_application/bindings/kyc_application_binding.dart';
@@ -141,6 +145,16 @@ class AppPages {
       name: _Paths.ADD_BANK_DETAIL,
       page: () => const AddBankDetailView(),
       binding: AddBankDetailBinding(),
+    ),
+    GetPage(
+      name: _Paths.GENEALOGY,
+      page: () => const GenealogyView(),
+      binding: GenealogyBinding(),
+    ),
+    GetPage(
+      name: _Paths.ACHIEVEMENTS,
+      page: () => const AchievementsView(),
+      binding: AchievementsBinding(),
     ),
   ];
 }

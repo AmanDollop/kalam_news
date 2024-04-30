@@ -3,10 +3,10 @@ import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/common/common_padding_size/common_padding_size.dart';
 import 'package:kalam_news_publication/app/common/packages/model_progress_bar.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
-import '../controllers/wallet_controller.dart';
+import '../controllers/achievements_controller.dart';
 
-class WalletView extends GetView<WalletController> {
-  const WalletView({Key? key}) : super(key: key);
+class AchievementsView extends GetView<AchievementsController> {
+  const AchievementsView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class WalletView extends GetView<WalletController> {
         return WillPopScope(
           onWillPop: () => controller.onWillPop(),
           child: KNPWidgets.scaffoldBackgroundImageViewWithAppBar(
-            appBarTitle: 'Wallet',
+            appBarTitle: 'Achievements',
             onTapForBackButton: () => controller.onWillPop(),
             child2: KNPWidgets.commonRefreshIndicator(
               onRefresh: () async => controller.onInit(),
@@ -25,7 +25,8 @@ class WalletView extends GetView<WalletController> {
                 child: controller.apiResValue.value
                     ? KNPWidgets.commonProgressBarView()
                     : ListView(
-                        padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
+                        padding:
+                            CommonPaddingAndSize.commonScaffoldBodyPadding(),
                         children: [],
                       ),
               ),

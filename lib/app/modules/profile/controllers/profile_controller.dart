@@ -37,6 +37,7 @@ class ProfileController extends GetxController {
 
   onWillPop() {
     selectedBottomNavigationIndex.value = 0;
+    count.value++;
   }
 
   Future<void> dataBaseCalling() async {

@@ -22,6 +22,8 @@ abstract class Routes {
   static const KYC_APPLICATION = _Paths.KYC_APPLICATION;
   static const MANAGE_BANK_DETAIL = _Paths.MANAGE_BANK_DETAIL;
   static const ADD_BANK_DETAIL = _Paths.ADD_BANK_DETAIL;
+  static const GENEALOGY = _Paths.GENEALOGY;
+  static const ACHIEVEMENTS = _Paths.ACHIEVEMENTS;
 }
 
 abstract class _Paths {
@@ -45,4 +47,6 @@ abstract class _Paths {
   static const KYC_APPLICATION = '/kyc-application';
   static const MANAGE_BANK_DETAIL = '/manage-bank-detail';
   static const ADD_BANK_DETAIL = '/add-bank-detail';
+  static const GENEALOGY = '/genealogy';
+  static const ACHIEVEMENTS = '/achievements';
 }

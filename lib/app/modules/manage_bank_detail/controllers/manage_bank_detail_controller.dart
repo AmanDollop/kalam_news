@@ -54,7 +54,8 @@ class ManageBankDetailController extends GetxController with GetTickerProviderSt
   void clickOnDropDownButton({required int index}) {
     if (downAndUpValue.value != index.toString()) {
       downAndUpValue.value = index.toString();
-    } else {
+    }
+    else {
       downAndUpValue.value = '-1';
     }
     count.value++;
@@ -129,7 +130,8 @@ class ManageBankDetailController extends GetxController with GetTickerProviderSt
               path: imagePath,
               isAssetImage: true,
               width: 20.px,
-              height: 20.px),
+              height: 20.px,
+          ),
           SizedBox(width: 12.px),
           Text(text, style: Theme.of(Get.context!).textTheme.displaySmall?.copyWith(fontSize: 14.px)),
         ],

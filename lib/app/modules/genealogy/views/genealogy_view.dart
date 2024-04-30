@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/common/common_padding_size/common_padding_size.dart';
 import 'package:kalam_news_publication/app/common/packages/model_progress_bar.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
-import '../controllers/wallet_controller.dart';
 
-class WalletView extends GetView<WalletController> {
-  const WalletView({Key? key}) : super(key: key);
+import '../controllers/genealogy_controller.dart';
 
+class GenealogyView extends GetView<GenealogyController> {
+  const GenealogyView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +17,7 @@ class WalletView extends GetView<WalletController> {
         return WillPopScope(
           onWillPop: () => controller.onWillPop(),
           child: KNPWidgets.scaffoldBackgroundImageViewWithAppBar(
-            appBarTitle: 'Wallet',
+            appBarTitle: 'Genealogy',
             onTapForBackButton: () => controller.onWillPop(),
             child2: KNPWidgets.commonRefreshIndicator(
               onRefresh: () async => controller.onInit(),
@@ -25,9 +26,11 @@ class WalletView extends GetView<WalletController> {
                 child: controller.apiResValue.value
                     ? KNPWidgets.commonProgressBarView()
                     : ListView(
-                        padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
-                        children: [],
-                      ),
+                  padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
+                  children: [
+
+                  ],
+                ),
               ),
             ),
           ),

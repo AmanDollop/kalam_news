@@ -35,8 +35,9 @@ class AddBankDetailView extends GetView<AddBankDetailController> {
                                   bankNameTextFieldView(),
                                   bankBranchNameTextFieldView().paddingSymmetric(vertical: CommonPaddingAndSize.size20()),
                                   accountNumberTextFieldView(),
-                                  customerNameTextFieldView().paddingSymmetric(vertical: CommonPaddingAndSize.size20()),
-                                  ifscCodeTextFieldView(),
+                                  reAccountNumberTextFieldView().paddingSymmetric(vertical: CommonPaddingAndSize.size20()),
+                                  customerNameTextFieldView(),
+                                  ifscCodeTextFieldView().paddingSymmetric(vertical: CommonPaddingAndSize.size20()),
                                   Row(
                                     children: [
                                       KNPWidgets.commonRadioButtonWithTitle(
@@ -57,7 +58,7 @@ class AddBankDetailView extends GetView<AddBankDetailController> {
                                         },
                                       ),
                                     ],
-                                  ).paddingSymmetric(vertical: CommonPaddingAndSize.size20()),
+                                  ).paddingOnly(bottom: CommonPaddingAndSize.size20()),
                                 ],
                               ),
                             ),
@@ -96,6 +97,15 @@ class AddBankDetailView extends GetView<AddBankDetailController> {
     focusNode: controller.accountNumberFocusNode,
     keyboardType: TextInputType.number,
     validator: (value) => V.isValid(value: value, title: 'Please enter account number'),
+  );
+
+  Widget reAccountNumberTextFieldView() => KNPWidgets.commonTextFormField(
+    title: 'Re-account number*',
+    hintText: 'Re-account number',
+    controller: controller.reAccountNumberController,
+    focusNode: controller.reAccountNumberFocusNode,
+    keyboardType: TextInputType.number,
+    validator: (value) => V.isAccountNumberValid(value: value,accountNumber: controller.accountNumberController.text),
   );
 
   Widget customerNameTextFieldView() => KNPWidgets.commonTextFormField(

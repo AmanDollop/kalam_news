@@ -24,6 +24,9 @@ class AddBankDetailController extends GetxController {
   final accountNumberController = TextEditingController();
   FocusNode accountNumberFocusNode = FocusNode();
 
+  final reAccountNumberController = TextEditingController();
+  FocusNode reAccountNumberFocusNode = FocusNode();
+
   final customerNameController = TextEditingController();
   FocusNode customerNameFocusNode = FocusNode();
 
@@ -63,6 +66,7 @@ class AddBankDetailController extends GetxController {
     bankNameController.text = bankAccounts?.bankName ?? '';
     bankBranchController.text = bankAccounts?.bankBranch ?? '';
     accountNumberController.text = bankAccounts?.accountNo ?? '';
+    reAccountNumberController.text = bankAccounts?.accountNo ?? '';
     customerNameController.text = bankAccounts?.customerName ?? '';
     if(bankAccounts?.accountType == 'saving' || bankAccounts?.accountType == "Saving"){
       accountType.value = 'Saving';
@@ -71,7 +75,6 @@ class AddBankDetailController extends GetxController {
     }
     ifscCodeController.text = bankAccounts?.ifscCode ?? '';
   }
-
 
   Future<void> clickOnAddBankButton() async {
     if(key.currentState!.validate()){
@@ -85,7 +88,7 @@ class AddBankDetailController extends GetxController {
       bodyParamsForAddAndUpdateBankAccount = {
        ApiConstantVar.bankName : bankNameController.text.trim().toString(),
        ApiConstantVar.bankBranch : bankBranchController.text.trim().toString(),
-       ApiConstantVar.accountNo : accountNumberController.text.trim().toString(),
+       ApiConstantVar.accountNo : reAccountNumberController.text.trim().toString(),
        ApiConstantVar.customerName : customerNameController.text.trim().toString(),
        ApiConstantVar.accountType : accountType.value.toLowerCase(),
        ApiConstantVar.ifscCode : ifscCodeController.text.trim().toString(),

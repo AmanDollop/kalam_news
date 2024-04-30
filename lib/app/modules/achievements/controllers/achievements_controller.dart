@@ -1,10 +1,9 @@
 import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/modules/bottom_bar/views/bottom_bar_view.dart';
 
-class WalletController extends GetxController {
+class AchievementsController extends GetxController {
 
   final count = 0.obs;
-
 
   final apiResValue = true.obs;
 
@@ -25,6 +24,7 @@ class WalletController extends GetxController {
   }
 
   void increment() => count.value++;
+
 
   onWillPop() {
     selectedBottomNavigationIndex.value = 0;

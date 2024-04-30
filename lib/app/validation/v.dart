@@ -68,11 +68,25 @@ class V {
   static String? isConfirmPasswordValid({required String? value, String? password = "Not"}) {
     if (value == null || value.trim().toString().isEmpty) {
       return "Please enter confirm password".tr;
-    } else if ((password?.trim().toString() != "Not")) {
+    } else if (password?.trim().toString() != "Not") {
       if (password?.trim().toString() == value.trim().toString()) {
         return null;
       } else {
         return "Confirm password not match".tr;
+      }
+    } else {
+      return null;
+    }
+  }
+
+  static String? isAccountNumberValid({required String? value, String? accountNumber = "Not"}) {
+    if (value == null || value.trim().toString().isEmpty) {
+      return "Please enter re-account number".tr;
+    } else if (accountNumber?.trim().toString() != "Not") {
+      if (accountNumber?.trim().toString() == value.trim().toString()) {
+        return null;
+      } else {
+        return "Account number not match".tr;
       }
     } else {
       return null;

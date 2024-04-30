@@ -86,25 +86,35 @@ class ManageBankDetailView extends GetView<ManageBankDetailController> {
                                                       Column(
                                                         crossAxisAlignment: CrossAxisAlignment.start,
                                                         children: [
-                                                          commonRowForDetailView(text1: 'Account Holder Name', text2: controller.bankAccountsList?[index].customerName != null && controller.bankAccountsList![index].customerName!.isNotEmpty
+                                                          commonRowForDetailView(
+                                                              text1: 'Account Holder Name', text2: controller.bankAccountsList?[index].customerName != null && controller.bankAccountsList![index].customerName!.isNotEmpty
                                                               ? '${controller.bankAccountsList?[index].customerName}'
-                                                              : '?'),
+                                                              : '?',
+                                                          ),
                                                           SizedBox(height: 5.px),
-                                                          commonRowForDetailView(text1: 'Account Number', text2: controller.bankAccountsList?[index].accountNo != null && controller.bankAccountsList![index].accountNo!.isNotEmpty
+                                                          commonRowForDetailView(
+                                                              text1: 'Account Number', text2: controller.bankAccountsList?[index].accountNo != null && controller.bankAccountsList![index].accountNo!.isNotEmpty
                                                               ? '${controller.bankAccountsList?[index].accountNo}'
-                                                              : '?'),
+                                                              : '?',
+                                                          ),
                                                           SizedBox(height: 5.px),
-                                                          commonRowForDetailView(text1: 'Account Type', text2: controller.bankAccountsList?[index].accountType != null && controller.bankAccountsList![index].accountType!.isNotEmpty
+                                                          commonRowForDetailView(
+                                                              text1: 'Account Type', text2: controller.bankAccountsList?[index].accountType != null && controller.bankAccountsList![index].accountType!.isNotEmpty
                                                               ? '${controller.bankAccountsList?[index].accountType}'
-                                                              : '?'),
+                                                              : '?',
+                                                          ),
                                                           SizedBox(height: 5.px),
-                                                          commonRowForDetailView(text1: 'IFSC Code', text2: controller.bankAccountsList?[index].ifscCode != null && controller.bankAccountsList![index].ifscCode!.isNotEmpty
+                                                          commonRowForDetailView(
+                                                              text1: 'IFSC Code', text2: controller.bankAccountsList?[index].ifscCode != null && controller.bankAccountsList![index].ifscCode!.isNotEmpty
                                                               ? '${controller.bankAccountsList?[index].ifscCode}'
-                                                              : '?'),
+                                                              : '?',
+                                                          ),
                                                           SizedBox(height: 5.px),
-                                                          commonRowForDetailView(text1: 'Branch', text2: controller.bankAccountsList?[index].bankBranch != null && controller.bankAccountsList![index].bankBranch!.isNotEmpty
+                                                          commonRowForDetailView(
+                                                              text1: 'Branch', text2: controller.bankAccountsList?[index].bankBranch != null && controller.bankAccountsList![index].bankBranch!.isNotEmpty
                                                               ? '${controller.bankAccountsList?[index].bankBranch}'
-                                                              : '?'),
+                                                              : '?',
+                                                          ),
                                                         ],
                                                       ).paddingOnly(
                                                         right: CommonPaddingAndSize.size12(),
@@ -217,7 +227,8 @@ class ManageBankDetailView extends GetView<ManageBankDetailController> {
             child: cardSubTitleTextView(
                 text: text2,
                 textAlign: TextAlign.end,
-                fontWeight: FontWeight.w700),
+                fontWeight: FontWeight.w700,
+            ),
           ),
         ],
       );
