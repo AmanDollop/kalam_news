@@ -331,7 +331,7 @@ class GenealogyView extends GetView<GenealogyController> {
                   shape: BoxShape.circle,
                 ),
               ),
-              SizedBox(height: 2.px),
+              SizedBox(height: 3.px),
               Text(
                 userName,
                 style: Theme.of(Get.context!).textTheme.titleSmall?.copyWith(
@@ -339,7 +339,7 @@ class GenealogyView extends GetView<GenealogyController> {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              KNPWidgets.commonDividerView(color: darkColor,height: 6.px),
+              KNPWidgets.commonDividerView(color: darkColor,height: 4.px),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -373,7 +373,7 @@ class GenealogyView extends GetView<GenealogyController> {
       Text(
         text2,
         style: Theme.of(Get.context!).textTheme.titleSmall?.copyWith(
-            color: textColor,
+            color: Theme.of(Get.context!).colorScheme.secondary,//textColor,
             fontSize: 8.px
         ),
       ),
@@ -388,7 +388,7 @@ class GenealogyView extends GetView<GenealogyController> {
     ],
   );
 
-  Widget commonRowForPaidAndUnPaidView({required String text, required Color color}) =>Row(
+  Widget commonRowForPaidAndUnPaidView({required String text, required Color color}) => Row(
     children: [
       Container(
         height: 12.px,
