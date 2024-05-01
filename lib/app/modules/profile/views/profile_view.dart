@@ -191,68 +191,6 @@ class ProfileView extends GetView<ProfileController> {
     ),
   );
 
-  /*Widget personalInformationCardView() => KNPWidgets.commonContainerView(
-        padding: EdgeInsets.zero,
-        child: Column(
-          children: [
-            commonRowForCard(
-                text1: 'User id',
-                text2: controller.userData?.userDetails?.userId != null
-                    ? '${controller.userData?.userDetails?.userId}'
-                    : '?',
-                buttonValue: false),
-            KNPWidgets.commonDividerView(height: 0),
-            commonRowForCard(
-                text1: 'Referral code',
-                text2: controller.userData?.userDetails?.referralCode != null &&
-                        controller
-                            .userData!.userDetails!.referralCode!.isNotEmpty
-                    ? '${controller.userData?.userDetails?.referralCode}'
-                    : '?',
-                buttonValue: false),
-            KNPWidgets.commonDividerView(height: 0),
-            commonRowForCard(
-                text1: 'City',
-                text2: controller.userData?.userDetails?.cityName != null &&
-                        controller.userData!.userDetails!.cityName!.isNotEmpty
-                    ? '${controller.userData?.userDetails?.cityName}'
-                    : '?',
-                buttonValue: false),
-            KNPWidgets.commonDividerView(height: 0),
-            commonRowForCard(
-                text1: 'Date of birth',
-                text2: controller.userData?.userDetails?.dob != null &&
-                        controller.userData!.userDetails!.dob!.isNotEmpty
-                    ? CMForDateTime.dateFormatForDateMonthYear(
-                        date: '${controller.userData?.userDetails?.dob}')
-                    : '?',
-                buttonValue: false),
-          ],
-        ),
-      );*/
-
-  /*Widget documentsCardView() => KNPWidgets.commonContainerView(
-        padding: EdgeInsets.zero,
-        child: Column(
-          children: [
-            commonRowForCard(
-              text1: 'Aadhar card',
-              onTap: () => controller.clickOnAadharCard(),
-            ),
-            KNPWidgets.commonDividerView(height: 0),
-            commonRowForCard(
-              text1: 'Pan card',
-              onTap: () => controller.clickOnPanCard(),
-            ),
-            KNPWidgets.commonDividerView(height: 0),
-            commonRowForCard(
-              text1: 'Manage bank account',
-              onTap: () => controller.clickOnManageBankAccount(),
-            ),
-          ],
-        ),
-      );*/
-
   Widget accountSettingCardView() => KNPWidgets.commonContainerView(
         padding: EdgeInsets.zero,
         child: Column(
@@ -270,6 +208,11 @@ class ProfileView extends GetView<ProfileController> {
             commonRowForCard(
               text1: 'Manage bank detail',
               onTap: () => controller.clickOnManageBankDetails(),
+            ),
+            KNPWidgets.commonDividerView(height: 0),
+            commonRowForCard(
+              text1: 'Referral a friends',
+              onTap: () => controller.clickOnReferralAFriends(),
             ),
             KNPWidgets.commonDividerView(height: 0),
             commonRowForCard(

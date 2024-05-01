@@ -47,10 +47,10 @@ abstract class KNPColors{
 class KNPLightThemeColor extends KNPColors{
 
   @override
-  Color get error => const Color(0xffDA1414);
+  Color get error => const Color(0xffFF2929);
 
   @override
-  Color get errorColor => throw UnimplementedError();
+  Color get errorColor => const Color(0xffFFF0F0);
 
   @override
   Color get onSuccess => throw UnimplementedError();
@@ -71,7 +71,7 @@ class KNPLightThemeColor extends KNPColors{
   Color get secondaryColor => const Color(0xffD1D1D1);
 
   @override
-  Color get success => throw UnimplementedError();
+  Color get success => const Color(0xff6EEA53);
 
   @override
   Color get text => const Color(0xff262626);

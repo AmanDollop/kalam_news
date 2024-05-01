@@ -205,8 +205,7 @@ class HomeView extends GetView<HomeController> {
     }
   }
 
-  Widget commonColumnForCardView(
-          {required String text1, required String text2}) =>
+  Widget commonColumnForCardView({required String text1, required String text2}) =>
       Expanded(
         child: Column(
           children: [
@@ -227,14 +226,8 @@ class HomeView extends GetView<HomeController> {
         ),
       );
 
-  Widget commonCard(
-          {required String title,
-          required String text1,
-          required String text2,
-          required String text3,
-          required String text4}) =>
-      KNPWidgets.commonContainerView(
-        borderColor: Theme.of(Get.context!).colorScheme.primary.withOpacity(.2),
+  Widget commonCard({required String title, required String text1, required String text2, required String text3, required String text4}) => KNPWidgets.commonContainerView(
+    borderColor: Theme.of(Get.context!).colorScheme.primary.withOpacity(.2),
         padding: EdgeInsets.zero,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

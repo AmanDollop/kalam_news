@@ -19,7 +19,7 @@ class AppThemeData{
           secondary: KNPLightThemeColor().secondary,
           onSecondary: KNPLightThemeColor().secondaryColor,
           error: KNPLightThemeColor().error,
-          onError: KNPLightThemeColor().error,
+          onError: KNPLightThemeColor().errorColor,
           background: KNPLightThemeColor().primary,
           onBackground: KNPLightThemeColor().primary,
           surface: KNPLightThemeColor().lightGreyColor,
@@ -27,7 +27,8 @@ class AppThemeData{
           inversePrimary: KNPLightThemeColor().whiteColor,
           inverseSurface: KNPLightThemeColor().blackColor,
           onInverseSurface: KNPLightThemeColor().textGrayColor,
-          tertiary: KNPLightThemeColor().bottomBarColor
+          tertiary: KNPLightThemeColor().bottomBarColor,
+          onTertiary: KNPLightThemeColor().success
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(

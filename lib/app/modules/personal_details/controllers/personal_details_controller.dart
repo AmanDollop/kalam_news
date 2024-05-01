@@ -436,7 +436,7 @@ class PersonalDetailsController extends GetxController {
         ApiConstantVar.stateId: stateId,
         ApiConstantVar.cityId: cityId,
         ApiConstantVar.pinCode: pinCodeController.text.trim().toString(),
-        ApiConstantVar.referredBy: 'AMALMF4E'/*referralCode.value*/,
+        ApiConstantVar.referredBy: 'AYU81YQO'/*referralCode.value*/,
         ApiConstantVar.branch: rightLeftValue.value.toLowerCase(),
       };
       http.Response? res = await ApiIntrigation.registrationApi(bodyParams: bodyParamsRegister);

@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/api/api_constant_var/api_constant_var.dart';
 import 'package:kalam_news_publication/app/api/api_intrigation/api_intrigation.dart';
@@ -10,6 +12,7 @@ import 'package:kalam_news_publication/app/common/common_padding_size/common_pad
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/common/packages/cbs.dart';
 import 'package:kalam_news_publication/app/common/packages/cd.dart';
+import 'package:kalam_news_publication/app/common/packages/razorpay.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
 import 'package:kalam_news_publication/app/db/data_base_constant/data_base_constant.dart';
 import 'package:kalam_news_publication/app/db/data_base_helper/data_base_helper.dart';
@@ -19,6 +22,7 @@ import '../../../api/api_res_modals/user_data_modal.dart';
 class HomeController extends GetxController {
   final count = 0.obs;
   final apiResValue = true.obs;
+  final termsAndConditionsValue = false.obs;
 
   final userDataFromLocalDataBaseValue = false.obs;
   final userDataFromLocalDataBase = ''.obs;
@@ -63,16 +67,23 @@ class HomeController extends GetxController {
   onWillPop() {
     CD.commonIosExitAppDialog(
       clickOnCancel: () => Get.back(),
-      clickOnExit: () => exit(0),
+      clickOnExit: () => /*exit(0)*/ SystemNavigator.pop(),
     );
   }
 
   Future<void> dataBaseCalling() async {
     try {
-      userDataFromLocalDataBaseValue.value = await DataBaseHelper().isDatabaseHaveData(db: DataBaseHelper.dataBaseHelper, tableName: DataBaseConstant.tableNameForUserDetail);
+      userDataFromLocalDataBaseValue.value = await DataBaseHelper()
+          .isDatabaseHaveData(
+              db: DataBaseHelper.dataBaseHelper,
+              tableName: DataBaseConstant.tableNameForUserDetail);
       if (!userDataFromLocalDataBaseValue.value) {
-        userDataFromLocalDataBase.value = await DataBaseHelper().getParticularData(key: DataBaseConstant.userDetail, tableName: DataBaseConstant.tableNameForUserDetail);
-        userData = UserDataModal.fromJson(jsonDecode(userDataFromLocalDataBase.value));
+        userDataFromLocalDataBase.value = await DataBaseHelper()
+            .getParticularData(
+                key: DataBaseConstant.userDetail,
+                tableName: DataBaseConstant.tableNameForUserDetail);
+        userData =
+            UserDataModal.fromJson(jsonDecode(userDataFromLocalDataBase.value));
       }
     } catch (e) {
       print('dataBaseCalling:::: ERROR::::::  $e');
@@ -94,63 +105,83 @@ class HomeController extends GetxController {
         initialChildSize: 1,
         maxChildSize: 1,
         children: [
-          Container(
-            height: 200.px,
-            decoration: BoxDecoration(
-              color:
-                  Theme.of(Get.context!).colorScheme.primary.withOpacity(.05),
-              borderRadius: BorderRadius.circular(8.px),
-            ),
-            child: KNPWidgets.commonNetworkImageView(
-                path: KNPMethods.baseUrlForNetworkImage(
-                    imagePath: '${packageDetailModal.value?.packageImage}'),
-                isAssetImage: false,
-                height: 200.px,
-                fit: BoxFit.contain,
-                radius: 8.px),
-          ),
-          SizedBox(height: CommonPaddingAndSize.size10()),
-          Text(
-            '${packageDetailModal.value?.packageName}',
-            style: Theme.of(Get.context!)
-                .textTheme
-                .labelLarge
-                ?.copyWith(fontSize: 20.px),
-          ),
-          if (packageDetails != null && packageDetails!.isNotEmpty)
-            SizedBox(height: CommonPaddingAndSize.size10()),
-          if (packageDetails != null && packageDetails!.isNotEmpty)
-            KNPWidgets.commonContainerView(
-              child: Column(
-                children: [
-                  commonRowForBottomSheet(
-                      titleValue: true,
-                      text1: 'Stage',
-                      text2: 'Member',
-                      text3: 'Commission'),
-                  SizedBox(height: CommonPaddingAndSize.size10()),
-                  KNPWidgets.commonDividerView(),
-                  SizedBox(height: CommonPaddingAndSize.size10()),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: packageDetails?.length,
-                    itemBuilder: (context, index) {
-                      return commonRowForBottomSheet(
-                          text1: '${packageDetails?[index].stageNumber}',
-                          text2: '${packageDetails?[index].numberOfMembers}',
-                          text3: '${packageDetails?[index].commission}');
-                    },
+          Obx(() {
+            count.value;
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  height: 200.px,
+                  decoration: BoxDecoration(
+                    color: Theme.of(Get.context!)
+                        .colorScheme
+                        .primary
+                        .withOpacity(.05),
+                    borderRadius: BorderRadius.circular(8.px),
                   ),
-                ],
-              ),
-            ),
-          SizedBox(height: CommonPaddingAndSize.size10()),
-          KNPWidgets.commonElevatedButton(
-              onPressed: () {}, buttonText: 'Purchase now'),
-          SizedBox(height: CommonPaddingAndSize.size20()),
+                  child: KNPWidgets.commonNetworkImageView(
+                      path: KNPMethods.baseUrlForNetworkImage(
+                          imagePath:
+                              '${packageDetailModal.value?.packageImage}'),
+                      isAssetImage: false,
+                      height: 200.px,
+                      fit: BoxFit.contain,
+                      radius: 8.px),
+                ),
+                SizedBox(height: CommonPaddingAndSize.size10()),
+                Text(
+                  '${packageDetailModal.value?.packageName}',
+                  style: Theme.of(Get.context!)
+                      .textTheme
+                      .labelLarge
+                      ?.copyWith(fontSize: 20.px),
+                ),
+                if (packageDetails != null && packageDetails!.isNotEmpty)
+                  SizedBox(height: CommonPaddingAndSize.size10()),
+                if (packageDetails != null && packageDetails!.isNotEmpty)
+                  KNPWidgets.commonContainerView(
+                    child: Column(
+                      children: [
+                        commonRowForBottomSheet(
+                            titleValue: true,
+                            text1: 'Stage',
+                            text2: 'Member',
+                            text3: 'Commission'),
+                        SizedBox(height: CommonPaddingAndSize.size10()),
+                        KNPWidgets.commonDividerView(),
+                        SizedBox(height: CommonPaddingAndSize.size10()),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: packageDetails?.length,
+                          itemBuilder: (context, index) {
+                            return commonRowForBottomSheet(
+                                text1: '${packageDetails?[index].stageNumber}',
+                                text2:
+                                    '${packageDetails?[index].numberOfMembers}',
+                                text3: '${packageDetails?[index].commission}');
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                SizedBox(height: CommonPaddingAndSize.size10()),
+                commonRowForTermsAndConditions(),
+                if (termsAndConditionsValue.value)
+                  SizedBox(height: CommonPaddingAndSize.size10()),
+                if (termsAndConditionsValue.value)
+                  KNPWidgets.commonElevatedButton(
+                      onPressed: () => clickOnPurchaseNow(index: index),
+                      buttonText: 'Purchase now'),
+                SizedBox(height: CommonPaddingAndSize.size20()),
+              ],
+            );
+          })
         ],
-      );
+      ).whenComplete(() {
+        packageClickValue.value = false;
+        termsAndConditionsValue.value = false;
+      });
     } catch (e) {
       packageClickValue.value = false;
     }
@@ -158,7 +189,8 @@ class HomeController extends GetxController {
     count.value++;
   }
 
-  Widget commonTitleTextView({required String text, TextAlign? textAlign}) => Expanded(
+  Widget commonTitleTextView({required String text, TextAlign? textAlign}) =>
+      Expanded(
         child: Text(
           text,
           style: Theme.of(Get.context!).textTheme.bodySmall,
@@ -168,7 +200,8 @@ class HomeController extends GetxController {
         ),
       );
 
-  Widget commonSubTitleTextView({required String text, TextAlign? textAlign}) => Expanded(
+  Widget commonSubTitleTextView({required String text, TextAlign? textAlign}) =>
+      Expanded(
         child: Text(
           text,
           style: Theme.of(Get.context!).textTheme.titleMedium,
@@ -178,7 +211,11 @@ class HomeController extends GetxController {
         ),
       );
 
-  Widget commonRowForBottomSheet({bool titleValue = false, required String text1, required String text2, required String text3}) {
+  Widget commonRowForBottomSheet(
+      {bool titleValue = false,
+      required String text1,
+      required String text2,
+      required String text3}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -193,6 +230,42 @@ class HomeController extends GetxController {
             : commonSubTitleTextView(text: text3, textAlign: TextAlign.end),
       ],
     );
+  }
+
+  Widget commonRowForTermsAndConditions() {
+    return Obx(() {
+      count.value;
+      return Row(
+        children: [
+          KNPWidgets.commonCheckBoxView(
+              changeValue: termsAndConditionsValue.value,
+              onChanged: (value) {
+                termsAndConditionsValue.value = !termsAndConditionsValue.value;
+                count.value++;
+              },
+              visualDensity: VisualDensity(horizontal: -4.px, vertical: -4.px),
+          ),
+          Text(
+            'I accept Term & Conditions ',
+            style: termsAndConditionsValue.value
+                ? Theme.of(Get.context!).textTheme.labelSmall
+                : Theme.of(Get.context!).textTheme.titleMedium,
+          ),
+        ],
+      );
+    });
+  }
+
+  Future<void> clickOnPurchaseNow({required int index}) async {
+    try {
+      await KNPRazorpayMethods.clickOnMakePaymentButton(
+        purchaseAmount: '1',
+        walletAmount: '1',
+        traTypeValue: 'Online',
+      ).whenComplete(() => Get.back());
+    } catch (e) {
+      print('clickOnPurchaseNow:::: ERROR::::::: $e');
+    }
   }
 
   Future<void> callingPackageApi() async {
@@ -213,7 +286,8 @@ class HomeController extends GetxController {
   Future<void> callingPackageDetailApi({required String packageId}) async {
     try {
       bodyParamsForPackageDetailApi = {ApiConstantVar.packageId: packageId};
-      packageDetailModal.value = await ApiIntrigation.getPackageDetailApi(bodyParams: bodyParamsForPackageDetailApi);
+      packageDetailModal.value = await ApiIntrigation.getPackageDetailApi(
+          bodyParams: bodyParamsForPackageDetailApi);
       if (packageDetailModal.value != null) {
         packageDetails = packageDetailModal.value?.packageDetails;
       }
@@ -223,5 +297,4 @@ class HomeController extends GetxController {
       KNPMethods.error();
     }
   }
-
 }
