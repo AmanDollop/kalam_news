@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/modules/bottom_bar/views/bottom_bar_view.dart';
 
@@ -7,6 +8,10 @@ class WalletController extends GetxController {
 
 
   final apiResValue = true.obs;
+
+  final withdrawAmountController = TextEditingController();
+  FocusNode withdrawAmountFocusNode = FocusNode();
+  final withdrawNowButtonValue = false.obs;
 
   @override
   void onInit() {
@@ -30,5 +35,7 @@ class WalletController extends GetxController {
     selectedBottomNavigationIndex.value = 0;
     count.value++;
   }
+
+  void clickOnWithdrawNowButton() {}
 
 }

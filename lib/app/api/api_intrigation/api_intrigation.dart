@@ -4,7 +4,9 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:kalam_news_publication/app/api/api_constant_var/api_constant_var.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/bank_account_modal.dart';
+import 'package:kalam_news_publication/app/api/api_res_modals/banner_modal.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/citys_modal.dart';
+import 'package:kalam_news_publication/app/api/api_res_modals/contacts_and_social_url_modal.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/package_detail.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/package_modal.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/states_modal.dart';
@@ -257,10 +259,7 @@ class ApiIntrigation{
     }
   }
 
-  static Future<http.Response?> updateProfileApi({
-    required Map<String, dynamic> bodyParams,
-    File? image
-  }) async {
+  static Future<http.Response?> updateProfileApi({required Map<String, dynamic> bodyParams, File? image}) async {
     String? token = await userToken(stringToken: true);
 
     http.Response? response = await MyHttp.multipartRequest(
@@ -283,10 +282,7 @@ class ApiIntrigation{
     }
   }
 
-  static Future<http.Response?> addBankDetailApi({
-    required Map<String, dynamic> bodyParams,
-    required String endPoint
-  }) async {
+  static Future<http.Response?> addBankDetailApi({required Map<String, dynamic> bodyParams, required String endPoint}) async {
 
     Map<String, String> authorization = await userToken();
 
@@ -308,9 +304,7 @@ class ApiIntrigation{
     }
   }
 
-  static Future<http.Response?> deleteBankAccountApi({
-    required Map<String, dynamic> bodyParams,
-  }) async {
+  static Future<http.Response?> deleteBankAccountApi({required Map<String, dynamic> bodyParams}) async {
 
     Map<String, String> authorization = await userToken();
 
@@ -353,5 +347,68 @@ class ApiIntrigation{
     }
   }
 
+  static Future<BannerModal?> getBannerApi() async {
 
+    Map<String, String> authorization = await userToken();
+
+    BannerModal? bannerModal;
+    http.Response? response = await MyHttp.getMethod(
+      url: '${ApiUrls.baseUrl}${ApiUrls.apiEndPointGetBannerList}',
+      token: authorization,
+      context: Get.context!,
+    );
+    if (response != null) {
+      if (await KNPMethods.checkResponse(response: response, wantInternetFailResponse: true, wantShowFailResponse: true)) {
+        bannerModal = BannerModal.fromJson(jsonDecode(response.body));
+        return bannerModal;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  }
+
+  static Future<http.Response?> purchasePackageApi({required Map<String, dynamic> bodyParams}) async {
+
+    Map<String, String> authorization = await userToken();
+
+    http.Response? response = await MyHttp.postMethod(
+        url: '${ApiUrls.baseUrl}${ApiUrls.apiEndPointPurchasePackage}',
+        bodyParams: bodyParams,
+        context: Get.context!,
+        token: authorization
+    );
+    if (response != null) {
+      if (await KNPMethods.checkResponse(response: response, wantInternetFailResponse: true, wantShowFailResponse: true)) {
+        return response;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  }
+
+  static Future<ContactsAndFollowSocialLinksModal?> getAchievementApi() async {
+
+    Map<String, String> authorization = await userToken();
+
+    ContactsAndFollowSocialLinksModal? contactsAndFollowSocialLinksModal;
+    http.Response? response = await MyHttp.getMethod(
+      url: '${ApiUrls.baseUrl}${ApiUrls.apiEndPointGetAchievement}',
+      token: authorization,
+      context: Get.context!,
+    );
+    if (response != null) {
+      if (await KNPMethods.checkResponse(response: response, wantInternetFailResponse: true, wantShowFailResponse: true)) {
+        contactsAndFollowSocialLinksModal = ContactsAndFollowSocialLinksModal.fromJson(jsonDecode(response.body));
+        return contactsAndFollowSocialLinksModal;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  }
 }

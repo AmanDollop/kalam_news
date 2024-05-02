@@ -4,6 +4,8 @@ import 'package:kalam_news_publication/app/common/common_padding_size/common_pad
 import 'package:kalam_news_publication/app/common/packages/model_progress_bar.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
 import 'package:kalam_news_publication/app/get_material_controller/ac.dart';
+import 'package:kalam_news_publication/app/validation/v.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import '../controllers/wallet_controller.dart';
 
 class WalletView extends GetView<WalletController> {
@@ -26,15 +28,21 @@ class WalletView extends GetView<WalletController> {
                   inAsyncCall: controller.apiResValue.value,
                   child: controller.apiResValue.value
                       ? KNPWidgets.commonProgressBarView()
-                      : Padding(
-                    padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        KNPWidgets.noDataFoundView(),
-                      ],
-                    ),
-                  ),
+                      : ListView(
+                          padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
+                          children: [
+                            totalIncomeView(),
+                            SizedBox(height: CommonPaddingAndSize.size16()),
+                            textFiledTitleTextView(text: 'Withdrawal amount'),
+                            SizedBox(height: CommonPaddingAndSize.size10()),
+                            withdrawAmountTextFieldView(),
+                            SizedBox(height: CommonPaddingAndSize.size16()),
+                            withdrawNowButtonView(),
+                            KNPWidgets.commonDividerView(height: CommonPaddingAndSize.size12()*2),
+                            historyView(),
+                            SizedBox(height: CommonPaddingAndSize.size20() * 4)
+                          ],
+                        ),
                 ),
               ),
             ),
@@ -45,4 +53,134 @@ class WalletView extends GetView<WalletController> {
       }),
     );
   }
+
+  Widget totalIncomeTextView({required String text,int? flex}) => Flexible(
+    flex: flex ?? 4,
+    child: Text(
+      text,
+      style: Theme.of(Get.context!).textTheme.labelLarge,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+    ),
+  );
+
+  Widget totalIncomeView() => KNPWidgets.commonContainerView(
+      padding: EdgeInsets.all(12.px),
+      color: Theme.of(Get.context!).colorScheme.primary.withOpacity(.05),
+      borderColor: Theme.of(Get.context!).colorScheme.primary,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          totalIncomeTextView(text: 'Total income',flex: 3),
+          totalIncomeTextView(text: '₹20000'),
+        ],
+      ),
+  );
+
+  Widget textFiledTitleTextView({required String text,double? fontSize,Color? textColor}) => Text(
+    text,
+    style: Theme.of(Get.context!).textTheme.displaySmall?.copyWith(fontSize: fontSize,color:textColor),
+    maxLines: 1,
+    overflow: TextOverflow.ellipsis,
+  );
+
+  Widget withdrawAmountTextFieldView() => KNPWidgets.commonTextFormField(
+    title: '',
+    hintText: '₹ Enter amount',
+    controller: controller.withdrawAmountController,
+    focusNode: controller.withdrawAmountFocusNode,
+    keyboardType: TextInputType.number,
+    maxLength: 7,
+    validator: (value) => V.isValid(value: value, title: 'Please enter withdraw amount'),
+  );
+
+  Widget withdrawNowButtonView() => KNPWidgets.commonElevatedButton(
+      onPressed: controller.withdrawNowButtonValue.value
+          ? () => null
+          : () => controller.clickOnWithdrawNowButton(),
+      buttonText: 'Withdraw now',
+      isLoading: controller.withdrawNowButtonValue.value,
+  );
+
+  Widget cardHeadlineTextView({required String text}) => Text(
+    text,
+    style: Theme.of(Get.context!).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w700),
+    maxLines: 1,
+    overflow: TextOverflow.ellipsis,
+  );
+
+  Widget cardSubTitleTextView({required String text, TextAlign? textAlign}) => Text(
+    text,
+    style: Theme.of(Get.context!).textTheme.titleMedium,
+    maxLines: 1,
+    overflow: TextOverflow.ellipsis,
+    textAlign: textAlign,
+  );
+
+  Widget historyView() => KNPWidgets.commonContainerView(
+    borderColor: Theme.of(Get.context!).colorScheme.primary.withOpacity(.2),
+    padding: EdgeInsets.zero,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 18.px, vertical: CommonPaddingAndSize.size10()),
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: Theme.of(Get.context!).colorScheme.primary.withOpacity(.05),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(8.px),
+              topRight: Radius.circular(8.px),
+            ),
+          ),
+          child: cardHeadlineTextView(text: 'History'),
+        ),
+        KNPWidgets.commonDividerView(
+          height: 0,
+          wight: 1.px,
+          color: Theme.of(Get.context!).colorScheme.primary.withOpacity(.2),
+        ),
+        Padding(
+          padding: EdgeInsets.all(CommonPaddingAndSize.size16()),
+          child: withdrawHistoryListView(),
+        ),
+      ],
+    ),
+  );
+
+  Widget withdrawHistoryListView() => ListView.builder(
+    shrinkWrap: true,
+    physics: const NeverScrollableScrollPhysics(),
+    itemCount: 10,
+    itemBuilder: (context, index) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(
+                flex: 5,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    textFiledTitleTextView(text: 'Kotak mahindra  bank',fontSize: 12.px),
+                    cardSubTitleTextView(text: 'Credit on 14 Apr 2024, 8:24 PM'),
+                  ],
+                ),
+              ),
+              SizedBox(width: CommonPaddingAndSize.size10()),
+              Flexible(
+                flex: 2,
+                child: textFiledTitleTextView(text: '+ ₹200'),
+              ),
+            ],
+          ),
+          if(index != 9)
+          KNPWidgets.commonDividerView(height: CommonPaddingAndSize.size12()*2,leftPadding: 0, rightPadding: 0),
+        ],
+      );
+    },
+  );
+
 }

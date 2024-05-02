@@ -1,11 +1,9 @@
-import 'dart:convert';
-import 'dart:io';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/api/api_constant_var/api_constant_var.dart';
 import 'package:kalam_news_publication/app/api/api_intrigation/api_intrigation.dart';
+import 'package:kalam_news_publication/app/api/api_res_modals/banner_modal.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/package_detail.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/package_modal.dart';
 import 'package:kalam_news_publication/app/common/common_padding_size/common_padding_size.dart';
@@ -14,8 +12,6 @@ import 'package:kalam_news_publication/app/common/packages/cbs.dart';
 import 'package:kalam_news_publication/app/common/packages/cd.dart';
 import 'package:kalam_news_publication/app/common/packages/razorpay.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
-import 'package:kalam_news_publication/app/db/data_base_constant/data_base_constant.dart';
-import 'package:kalam_news_publication/app/db/data_base_helper/data_base_helper.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import '../../../api/api_res_modals/user_data_modal.dart';
 
@@ -31,13 +27,6 @@ class HomeController extends GetxController {
 
   final packageClickValue = false.obs;
 
-  final bannerIndex = 0.obs;
-  final bannerList = [
-    'https://dfstudio-d420.kxcdn.com/wordpress/wp-content/uploads/2019/06/digital_camera_photo-1080x675.jpg',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYRNamIIDEJN4sHp3UuQVpYfwhrsNUZEld0aTCqAs4qMG-X9Wb3IGmvN3CbeSnvDzl_4c&usqp=CAU',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6g3P5972LeN4_5J9Dua6oCYn3cBzjSUGys5dhj4qerMbHQY5-TRyMzrmuRe3m6SPz4WU&usqp=CAU'
-  ];
-
   final packageModal = Rxn<PackageModal>();
   List<PackageList>? packageList;
 
@@ -45,11 +34,18 @@ class HomeController extends GetxController {
   List<PackageDetails>? packageDetails;
   Map<String, dynamic> bodyParamsForPackageDetailApi = {};
 
+  final bannerIndex = 0.obs;
+  final bannerModal = Rxn<BannerModal>();
+  List<BannerList>? banner;
+  List<String> bannerList = [];
+
+
   @override
   Future<void> onInit() async {
     super.onInit();
     await dataBaseCalling();
     await callingPackageApi();
+    await callingBannerApi();
   }
 
   @override
@@ -73,18 +69,7 @@ class HomeController extends GetxController {
 
   Future<void> dataBaseCalling() async {
     try {
-      userDataFromLocalDataBaseValue.value = await DataBaseHelper()
-          .isDatabaseHaveData(
-              db: DataBaseHelper.dataBaseHelper,
-              tableName: DataBaseConstant.tableNameForUserDetail);
-      if (!userDataFromLocalDataBaseValue.value) {
-        userDataFromLocalDataBase.value = await DataBaseHelper()
-            .getParticularData(
-                key: DataBaseConstant.userDetail,
-                tableName: DataBaseConstant.tableNameForUserDetail);
-        userData =
-            UserDataModal.fromJson(jsonDecode(userDataFromLocalDataBase.value));
-      }
+      userData = await KNPRazorpayMethods.getUserDataDataBaseCalling();
     } catch (e) {
       print('dataBaseCalling:::: ERROR::::::  $e');
       apiResValue.value = false;
@@ -95,8 +80,7 @@ class HomeController extends GetxController {
     packageClickValue.value = true;
     count.value++;
     try {
-      await callingPackageDetailApi(
-          packageId: '${packageList?[index].packageId}');
+      await callingPackageDetailApi(packageId: '${packageList?[index].packageId}');
       await CBS.commonDraggableBottomSheet(
         isDismissible: false,
         enableDrag: false,
@@ -113,28 +97,21 @@ class HomeController extends GetxController {
                 Container(
                   height: 200.px,
                   decoration: BoxDecoration(
-                    color: Theme.of(Get.context!)
-                        .colorScheme
-                        .primary
-                        .withOpacity(.05),
+                    color: Theme.of(Get.context!).colorScheme.primary.withOpacity(.05),
                     borderRadius: BorderRadius.circular(8.px),
                   ),
                   child: KNPWidgets.commonNetworkImageView(
-                      path: KNPMethods.baseUrlForNetworkImage(
-                          imagePath:
-                              '${packageDetailModal.value?.packageImage}'),
+                      path: KNPMethods.baseUrlForNetworkImage(imagePath: '${packageDetailModal.value?.packageImage}'),
                       isAssetImage: false,
                       height: 200.px,
                       fit: BoxFit.contain,
-                      radius: 8.px),
+                      radius: 8.px,
+                  ),
                 ),
                 SizedBox(height: CommonPaddingAndSize.size10()),
                 Text(
                   '${packageDetailModal.value?.packageName}',
-                  style: Theme.of(Get.context!)
-                      .textTheme
-                      .labelLarge
-                      ?.copyWith(fontSize: 20.px),
+                  style: Theme.of(Get.context!).textTheme.labelLarge?.copyWith(fontSize: 20.px),
                 ),
                 if (packageDetails != null && packageDetails!.isNotEmpty)
                   SizedBox(height: CommonPaddingAndSize.size10()),
@@ -146,7 +123,8 @@ class HomeController extends GetxController {
                             titleValue: true,
                             text1: 'Stage',
                             text2: 'Member',
-                            text3: 'Commission'),
+                            text3: 'Commission',
+                        ),
                         SizedBox(height: CommonPaddingAndSize.size10()),
                         KNPWidgets.commonDividerView(),
                         SizedBox(height: CommonPaddingAndSize.size10()),
@@ -157,9 +135,9 @@ class HomeController extends GetxController {
                           itemBuilder: (context, index) {
                             return commonRowForBottomSheet(
                                 text1: '${packageDetails?[index].stageNumber}',
-                                text2:
-                                    '${packageDetails?[index].numberOfMembers}',
-                                text3: '${packageDetails?[index].commission}');
+                                text2: '${packageDetails?[index].numberOfMembers}',
+                                text3: '${packageDetails?[index].commission}',
+                            );
                           },
                         ),
                       ],
@@ -172,7 +150,8 @@ class HomeController extends GetxController {
                 if (termsAndConditionsValue.value)
                   KNPWidgets.commonElevatedButton(
                       onPressed: () => clickOnPurchaseNow(index: index),
-                      buttonText: 'Purchase now'),
+                      buttonText: 'Purchase now',
+                  ),
                 SizedBox(height: CommonPaddingAndSize.size20()),
               ],
             );
@@ -189,8 +168,7 @@ class HomeController extends GetxController {
     count.value++;
   }
 
-  Widget commonTitleTextView({required String text, TextAlign? textAlign}) =>
-      Expanded(
+  Widget commonTitleTextView({required String text, TextAlign? textAlign}) => Expanded(
         child: Text(
           text,
           style: Theme.of(Get.context!).textTheme.bodySmall,
@@ -200,8 +178,7 @@ class HomeController extends GetxController {
         ),
       );
 
-  Widget commonSubTitleTextView({required String text, TextAlign? textAlign}) =>
-      Expanded(
+  Widget commonSubTitleTextView({required String text, TextAlign? textAlign}) => Expanded(
         child: Text(
           text,
           style: Theme.of(Get.context!).textTheme.titleMedium,
@@ -211,11 +188,7 @@ class HomeController extends GetxController {
         ),
       );
 
-  Widget commonRowForBottomSheet(
-      {bool titleValue = false,
-      required String text1,
-      required String text2,
-      required String text3}) {
+  Widget commonRowForBottomSheet({bool titleValue = false, required String text1, required String text2, required String text3}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -259,9 +232,9 @@ class HomeController extends GetxController {
   Future<void> clickOnPurchaseNow({required int index}) async {
     try {
       await KNPRazorpayMethods.clickOnMakePaymentButton(
-        purchaseAmount: '1',
-        walletAmount: '1',
+        purchaseAmount: double.parse('${packageList?[index].packagePrice}').toInt(),
         traTypeValue: 'Online',
+        packageDetails: packageDetails ?? []
       ).whenComplete(() => Get.back());
     } catch (e) {
       print('clickOnPurchaseNow:::: ERROR::::::: $e');
@@ -297,4 +270,24 @@ class HomeController extends GetxController {
       KNPMethods.error();
     }
   }
+
+  Future<void> callingBannerApi() async {
+    apiResValue.value = true;
+    bannerList.clear();
+    try {
+      bannerModal.value = await ApiIntrigation.getBannerApi();
+      if (bannerModal.value != null) {
+        banner = bannerModal.value?.banner;
+        banner?.forEach((element) {
+          bannerList.add('${element.bannerImage}');
+        });
+      }
+    } catch (e) {
+      print('callingBannerApi::::  ERROR::::: $e');
+      apiResValue.value = false;
+      KNPMethods.error();
+    }
+    apiResValue.value = false;
+  }
+
 }

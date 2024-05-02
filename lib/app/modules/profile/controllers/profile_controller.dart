@@ -1,7 +1,7 @@
-import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/user_data_modal.dart';
 import 'package:kalam_news_publication/app/common/packages/cd.dart';
+import 'package:kalam_news_publication/app/common/packages/razorpay.dart';
 import 'package:kalam_news_publication/app/db/data_base_constant/data_base_constant.dart';
 import 'package:kalam_news_publication/app/db/data_base_helper/data_base_helper.dart';
 import 'package:kalam_news_publication/app/modules/bottom_bar/views/bottom_bar_view.dart';
@@ -42,36 +42,13 @@ class ProfileController extends GetxController {
 
   Future<void> dataBaseCalling() async {
     try {
-      userDataFromLocalDataBaseValue.value = await DataBaseHelper()
-          .isDatabaseHaveData(
-              db: DataBaseHelper.dataBaseHelper,
-              tableName: DataBaseConstant.tableNameForUserDetail);
-      if (!userDataFromLocalDataBaseValue.value) {
-        userDataFromLocalDataBase.value = await DataBaseHelper()
-            .getParticularData(
-                key: DataBaseConstant.userDetail,
-                tableName: DataBaseConstant.tableNameForUserDetail);
-        userData =
-            UserDataModal.fromJson(jsonDecode(userDataFromLocalDataBase.value));
-      }
+      userData = await KNPRazorpayMethods.getUserDataDataBaseCalling();
     } catch (e) {
       print('dataBaseCalling:::: ERROR::::::  $e');
       apiResValue.value = false;
     }
     apiResValue.value = false;
   }
-
-  /*void clickOnAadharCard() {
-    Get.toNamed(Routes.ADD_DOCUMENT, arguments: ['Aadhar Card']);
-  }
-
-  void clickOnPanCard() {
-    Get.toNamed(Routes.ADD_DOCUMENT, arguments: ['Pan Card']);
-  }
-
-  void clickOnManageBankAccount() {
-
-  }*/
 
   void clickOnWelcomeMessage() {
     Get.toNamed(Routes.WELCOME_MASSAGE);
@@ -95,10 +72,8 @@ class ProfileController extends GetxController {
   }
 
   void clickOnReferralAFriends() {
-    Share.share(
-        'Give your friend up to 50% off when they sign up with your link \nReferral Code -: "${userData?.userDetails?.referralCode}"',
-        subject:
-            'Give your friend up to 50% off when they sign up with your link. Receive 2 Wish Cash for each referral after their first order ships. Earn up to 20 per month.',);
+    Share.share('Give your friend up to 50% off when they sign up with your link \nReferral Code -: "${userData?.userDetails?.referralCode}"',
+        subject: 'Give your friend up to 50% off when they sign up with your link. Receive 2 Wish Cash for each referral after their first order ships. Earn up to 20 per month.',);
   }
 
   Future<void> clickOnLogOutButton() async {

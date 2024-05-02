@@ -89,17 +89,15 @@ class KNPWidgets {
                   width: width,
                   color: color,
                   fit: fit,
-                  loadingBuilder: loadingBuilder ??
-                      (BuildContext context, Widget child,
-                          ImageChunkEvent? loadingProgress) {
+                  loadingBuilder: loadingBuilder ?? (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
                         if (loadingProgress == null) return child;
                         return SizedBox(
                           height: height,
+                          width: width,
                           child: Center(
                             child: commonProgressBarView(
                               value: loadingProgress.expectedTotalBytes != null
-                                  ? loadingProgress.cumulativeBytesLoaded /
-                                      loadingProgress.expectedTotalBytes!
+                                  ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
                                   : null,
                             ),
                           ),
@@ -134,14 +132,14 @@ class KNPWidgets {
           borderRadius: BorderRadius.circular(8.px),
           boxShadow: [
             BoxShadow(
-                color:
-                    Theme.of(Get.context!).colorScheme.surface.withOpacity(.2),
+                color: Theme.of(Get.context!).colorScheme.surface.withOpacity(.2),
                 spreadRadius: 2.px,
-                blurRadius: 1.px)
+                blurRadius: 1.px,
+            )
           ],
           border: Border.all(
-            color:
-                borderColor ?? Theme.of(Get.context!).colorScheme.onSecondary,
+            color: borderColor ?? Theme.of(Get.context!).colorScheme.onSecondary,
+            width: 1.px
           ),
         ),
         child: child,
@@ -269,6 +267,7 @@ class KNPWidgets {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              if(title.isNotEmpty)
               Text(
                 title,
                 style: Theme.of(Get.context!).textTheme.titleSmall?.copyWith(
@@ -290,8 +289,7 @@ class KNPWidgets {
                     : inputFormatters,
                 onChanged: keyboardType == TextInputType.number
                     ? (value) {}
-                    : onChanged ??
-                        (value) {
+                    : onChanged ?? (value) {
                           value = value.trim();
                           if (value.isEmpty ||
                               value.replaceAll(" ", "").isEmpty) {
@@ -310,20 +308,11 @@ class KNPWidgets {
                   counterText: '',
                   hintText: hintText,
                   fillColor: focusNode?.hasFocus == true
-                      ? Theme.of(Get.context!)
-                          .colorScheme
-                          .primary
-                          .withOpacity(.1)
+                      ? Theme.of(Get.context!).colorScheme.primary.withOpacity(.05)
                       : Theme.of(Get.context!).colorScheme.surface,
                   filled: filled,
-                  contentPadding:
-                      contentPadding ?? EdgeInsets.symmetric(horizontal: 12.px),
-                  hintStyle: Theme.of(Get.context!)
-                      .textTheme
-                      .titleMedium
-                      ?.copyWith(
-                          fontWeight: FontWeight.w400,
-                          color: Theme.of(Get.context!).colorScheme.onSurface),
+                  contentPadding: contentPadding ?? EdgeInsets.symmetric(horizontal: 12.px),
+                  hintStyle: Theme.of(Get.context!).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w400, color: Theme.of(Get.context!).colorScheme.onSurface),
                   suffixIcon: suffixIcon != null
                       ? Padding(
                           padding: suffixPadding ?? EdgeInsets.zero,
@@ -339,37 +328,37 @@ class KNPWidgets {
                   disabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                         color: Theme.of(Get.context!).colorScheme.onSecondary,
-                        width: 1.5.px),
+                        width: 1.px),
                     borderRadius: BorderRadius.circular(8.px),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                         color: Theme.of(Get.context!).colorScheme.primary,
-                        width: 1.5.px),
+                        width: 1.px),
                     borderRadius: BorderRadius.circular(8.px),
                   ),
                   focusedErrorBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                         color: Theme.of(Get.context!).colorScheme.error,
-                        width: 1.5.px),
+                        width: 1.px),
                     borderRadius: BorderRadius.circular(8.px),
                   ),
                   border: OutlineInputBorder(
                     borderSide: BorderSide(
                         color: Theme.of(Get.context!).colorScheme.primary,
-                        width: 1.5.px),
+                        width: 1.px),
                     borderRadius: BorderRadius.circular(8.px),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                         color: Theme.of(Get.context!).colorScheme.onSecondary,
-                        width: 1.5.px),
+                        width: 1.px),
                     borderRadius: BorderRadius.circular(8.px),
                   ),
                   errorBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                         color: Theme.of(Get.context!).colorScheme.error,
-                        width: 1.5.px),
+                        width: 1.px),
                     borderRadius: BorderRadius.circular(8.px),
                   ),
                 ),
@@ -831,11 +820,9 @@ class KNPWidgets {
           count: length,
           index: selectedIndex,
           height: height ?? 6.px,
-          color: inactiveColor ??
-              Theme.of(Get.context!).colorScheme.inversePrimary,
+          color: inactiveColor ?? Theme.of(Get.context!).colorScheme.inversePrimary,
           width: width ?? 20.px,
-          activeColor:
-              activeColor ?? Theme.of(Get.context!).colorScheme.primary,
+          activeColor: activeColor ?? Theme.of(Get.context!).colorScheme.primary,
           cornerRadius: cornerRadius ?? 6.px,
           space: space ?? 4.px,
           animationDuration: animationDuration,

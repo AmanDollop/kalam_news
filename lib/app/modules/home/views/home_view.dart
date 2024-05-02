@@ -294,8 +294,11 @@ class HomeView extends GetView<HomeController> {
   Widget yourSalesView() => commonCard(
         title: 'Your sales',
         text1: '₹6',
-        text2: 'Current wallet balance',
+        text2: 'Wallet balance',
         text3: '₹10',
-        text4: 'Current wallet balance',
+        text4: 'Total commission',
       );
+
+
+
 }

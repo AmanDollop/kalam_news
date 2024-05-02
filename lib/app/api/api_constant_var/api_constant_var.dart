@@ -53,6 +53,10 @@ class ApiConstantVar{
   static const branch = "branch";
 
   static const packageId = "package_id";
+  static const isTcAccept = "is_tc_accept";
+  static const transactionType = "transaction_type";
+  static const transactionId = "transaction_id";
+  static const paymentStatus = "payment_status";
 
   static const profile = "profile";
 
@@ -117,7 +121,13 @@ class ApiUrls{
 
   static const apiEndPointChangePrimaryBankAccount = "changePrimaryBankAccount";
 
-  static const apiEndPointDeleteBankAccount = "deleteBankAccounts";
+  static const apiEndPointDeleteBankAccount = "deleteBankAccount";
+
+  static const apiEndPointGetBannerList = "getBannerList";
+
+  static const apiEndPointPurchasePackage = "purchasePackage";
+
+  static const apiEndPointGetAchievement = "getAchievement";
 
 
 }
