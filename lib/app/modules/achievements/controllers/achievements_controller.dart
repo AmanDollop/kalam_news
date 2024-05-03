@@ -1,8 +1,8 @@
 import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/api/api_intrigation/api_intrigation.dart';
+import 'package:kalam_news_publication/app/api/api_res_modals/app_setting_modal.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/banner_modal.dart';
-import 'package:kalam_news_publication/app/api/api_res_modals/contacts_and_social_url_modal.dart';
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/modules/bottom_bar/views/bottom_bar_view.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -17,8 +17,7 @@ class AchievementsController extends GetxController {
   List<BannerList>? banner;
   List<String> bannerList = [];
 
-  final contactsAndFollowSocialLinksModal =
-      Rxn<ContactsAndFollowSocialLinksModal>();
+  final appSettingModal = Rxn<AppSettingModal>();
   Contacts? contacts;
   List<FollowUs>? followUsList;
 
@@ -26,7 +25,7 @@ class AchievementsController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
     await callingBannerApi();
-    await callingGetAchievementApi();
+    await callingGetAppSettingApi();
     apiResValue.value = false;
   }
 
@@ -59,10 +58,8 @@ class AchievementsController extends GetxController {
   }
 
   Future<void> clickOnPhoneNumber() async {
-    if (contacts?.callingNumber != null &&
-        contacts!.callingNumber!.isNotEmpty) {
-      Uri url = Uri.parse(
-          'tel: ${checkCountryCodeInNumber(number: contacts?.callingNumber ?? '')}');
+    if (contacts?.callingNumber != null && contacts!.callingNumber!.isNotEmpty) {
+      Uri url = Uri.parse('tel: ${checkCountryCodeInNumber(number: contacts?.callingNumber ?? '')}');
       if (!await launchUrl(url)) {
         throw 'Could not launch $url';
       }
@@ -83,7 +80,8 @@ class AchievementsController extends GetxController {
 
   Future<void> clickOnTelegram() async {
     if (contacts?.telegram != null && contacts!.telegram!.isNotEmpty) {
-      Uri url = Uri.parse('tg://resolve?domain=+${Uri.encodeComponent(checkCountryCodeInNumber(number: contacts?.telegram ?? ''))}');
+      // Uri url = Uri.parse('tg://resolve?domain=+${Uri.encodeComponent(checkCountryCodeInNumber(number: contacts?.telegram ?? ''))}');
+      Uri url = Uri.parse('https://t.me/${contacts?.telegram}');
       if (!await launchUrl(url)) {
         throw 'Could not launch $url';
       }
@@ -92,9 +90,9 @@ class AchievementsController extends GetxController {
   }
 
   Future<void> clickOnEmail() async {
-    if (contacts?.telegram != null && contacts!.telegram!.isNotEmpty) {
+    if (contacts?.email != null && contacts!.email!.isNotEmpty) {
 
-      String email = "recipient@example.com"/*contacts?.telegram*/;
+      String email = contacts?.email ?? '';
       String subject = "Hello";
       String body = "This is a test email.";
 
@@ -124,7 +122,7 @@ class AchievementsController extends GetxController {
       if (bannerModal.value != null) {
         banner = bannerModal.value?.banner;
         banner?.forEach((element) {
-          bannerList.add('${element.bannerImage}');
+          bannerList.add(KNPMethods.baseUrlForNetworkImage(imagePath: '${element.bannerImage}'));
         });
       }
     } catch (e) {
@@ -135,14 +133,13 @@ class AchievementsController extends GetxController {
     apiResValue.value = false;
   }
 
-  Future<void> callingGetAchievementApi() async {
+  Future<void> callingGetAppSettingApi() async {
     apiResValue.value = true;
     try {
-      contactsAndFollowSocialLinksModal.value =
-          await ApiIntrigation.getAchievementApi();
-      if (contactsAndFollowSocialLinksModal.value != null) {
-        contacts = contactsAndFollowSocialLinksModal.value?.contacts?[0];
-        followUsList = contactsAndFollowSocialLinksModal.value?.followUs;
+      appSettingModal.value = await ApiIntrigation.getAppSettingApi();
+      if (appSettingModal.value != null) {
+        contacts = appSettingModal.value?.contacts;
+        followUsList = appSettingModal.value?.followUs;
       }
     } catch (e) {
       print('callingGetAchievementApi::::  ERROR::::: $e');
@@ -151,4 +148,5 @@ class AchievementsController extends GetxController {
     }
     apiResValue.value = false;
   }
+
 }

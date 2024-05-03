@@ -1,5 +1,8 @@
 import 'package:get/get.dart';
+import 'package:kalam_news_publication/app/api/api_intrigation/api_intrigation.dart';
+import 'package:kalam_news_publication/app/api/api_res_modals/app_setting_modal.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/user_data_modal.dart';
+import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/common/packages/cd.dart';
 import 'package:kalam_news_publication/app/common/packages/razorpay.dart';
 import 'package:kalam_news_publication/app/db/data_base_constant/data_base_constant.dart';
@@ -16,11 +19,15 @@ class ProfileController extends GetxController {
   final userDataFromLocalDataBase = ''.obs;
   UserDataModal? userData;
 
+  final appSettingModal = Rxn<AppSettingModal>();
+  final welcomeMessage = ''.obs;
+
   @override
   Future<void> onInit() async {
     super.onInit();
     apiResValue.value = true;
     await dataBaseCalling();
+    await callingGetAppSettingApi();
   }
 
   @override
@@ -51,7 +58,7 @@ class ProfileController extends GetxController {
   }
 
   void clickOnWelcomeMessage() {
-    Get.toNamed(Routes.WELCOME_MASSAGE);
+    Get.toNamed(Routes.WELCOME_MASSAGE,arguments: ['Welcome massage',welcomeMessage.value]);
   }
 
   void clickOnKYCApplication() {
@@ -87,4 +94,20 @@ class ProfileController extends GetxController {
       },
     );
   }
+
+  Future<void> callingGetAppSettingApi() async {
+    apiResValue.value = true;
+    try {
+      appSettingModal.value = await ApiIntrigation.getAppSettingApi();
+      if (appSettingModal.value != null) {
+        welcomeMessage.value = appSettingModal.value?.welcomeMessage ?? '';
+      }
+    } catch (e) {
+      print('callingGetAchievementApi::::  ERROR::::: $e');
+      apiResValue.value = false;
+      KNPMethods.error();
+    }
+    apiResValue.value = false;
+  }
+
 }

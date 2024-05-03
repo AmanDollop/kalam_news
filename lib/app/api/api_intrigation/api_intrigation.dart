@@ -3,14 +3,15 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:kalam_news_publication/app/api/api_constant_var/api_constant_var.dart';
+import 'package:kalam_news_publication/app/api/api_res_modals/app_setting_modal.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/bank_account_modal.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/banner_modal.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/citys_modal.dart';
-import 'package:kalam_news_publication/app/api/api_res_modals/contacts_and_social_url_modal.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/package_detail.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/package_modal.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/states_modal.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/user_data_modal.dart';
+import 'package:kalam_news_publication/app/api/api_res_modals/user_tree_modal.dart';
 import 'package:kalam_news_publication/app/common/http/my_http.dart';
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/db/data_base_constant/data_base_constant.dart';
@@ -390,20 +391,20 @@ class ApiIntrigation{
     }
   }
 
-  static Future<ContactsAndFollowSocialLinksModal?> getAchievementApi() async {
+  static Future<AppSettingModal?> getAppSettingApi() async {
 
     Map<String, String> authorization = await userToken();
 
-    ContactsAndFollowSocialLinksModal? contactsAndFollowSocialLinksModal;
+    AppSettingModal? appSettingModal;
     http.Response? response = await MyHttp.getMethod(
-      url: '${ApiUrls.baseUrl}${ApiUrls.apiEndPointGetAchievement}',
+      url: '${ApiUrls.baseUrl}${ApiUrls.apiEndPointGetAppSetting}',
       token: authorization,
       context: Get.context!,
     );
     if (response != null) {
       if (await KNPMethods.checkResponse(response: response, wantInternetFailResponse: true, wantShowFailResponse: true)) {
-        contactsAndFollowSocialLinksModal = ContactsAndFollowSocialLinksModal.fromJson(jsonDecode(response.body));
-        return contactsAndFollowSocialLinksModal;
+        appSettingModal = AppSettingModal.fromJson(jsonDecode(response.body));
+        return appSettingModal;
       } else {
         return null;
       }
@@ -411,4 +412,29 @@ class ApiIntrigation{
       return null;
     }
   }
+
+  static Future<UserTreeModal?> getUserTreeApi({required Map<String, dynamic> bodyParams}) async {
+
+    Map<String, String> authorization = await userToken();
+
+    UserTreeModal? userTreeModal;
+    http.Response? response = await MyHttp.getMethodForParams(
+        queryParameters: bodyParams,
+        baseUri: ApiUrls.baseUrlForGet,
+        endPointUri: ApiUrls.apiEndPointGetUserTree,
+        context: Get.context!,
+        authorization: authorization
+    );
+    if (response != null) {
+      if (await KNPMethods.checkResponse(response: response, wantInternetFailResponse: true, wantShowFailResponse: true)) {
+        userTreeModal = UserTreeModal.fromJson(jsonDecode(response.body));
+        return userTreeModal;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  }
+
 }

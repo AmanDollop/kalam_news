@@ -16,6 +16,8 @@ class ApiConstantVar{
 
   static const otpType = "otp_type";
 
+  static const userId = "user_id";
+
   static const initials = "initials";
 
   static const firstName = "first_name";
@@ -53,9 +55,13 @@ class ApiConstantVar{
   static const branch = "branch";
 
   static const packageId = "package_id";
+
   static const isTcAccept = "is_tc_accept";
+
   static const transactionType = "transaction_type";
+
   static const transactionId = "transaction_id";
+
   static const paymentStatus = "payment_status";
 
   static const profile = "profile";
@@ -85,7 +91,7 @@ class ApiUrls{
   // static const baseUrlForGet = "192.168.1.172:8000";
 
   static const baseUrl = "http://192.168.1.229:8000/api/";
-  static const baseUrlForImage = "http://192.168.1.229:8000/images/";
+  static const baseUrlForImage = "http://192.168.1.229:8000/";
 
   static const baseUrlForGet = "192.168.1.229:8000";
 
@@ -127,7 +133,9 @@ class ApiUrls{
 
   static const apiEndPointPurchasePackage = "purchasePackage";
 
-  static const apiEndPointGetAchievement = "getAchievement";
+  static const apiEndPointGetAppSetting = "getAppSetting";
+
+  static const apiEndPointGetUserTree = "/api/getUserTree";
 
 
 }

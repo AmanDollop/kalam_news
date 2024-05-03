@@ -153,7 +153,7 @@ class AchievementsView extends GetView<AchievementsController> {
   );
 
   Widget followSocialLinksView(){
-    if(controller.contactsAndFollowSocialLinksModal.value != null){
+    if(controller.appSettingModal.value != null){
       if(controller.followUsList != null && controller.followUsList!.isNotEmpty){
         return  commonContainerView(
           title: 'Follow social links',
@@ -168,7 +168,7 @@ class AchievementsView extends GetView<AchievementsController> {
                   children: [
                     InkWell(
                       onTap: () => controller.clickOnSocialUrlIcons(index:index),
-                      borderRadius: BorderRadius.circular(17.px),
+                      borderRadius: BorderRadius.circular(20.px),
                       child: KNPWidgets.commonNetworkImageView(
                         path: KNPMethods.baseUrlForNetworkImage(imagePath: '${controller.followUsList?[index].icon}'),
                         isAssetImage: false,
@@ -178,7 +178,7 @@ class AchievementsView extends GetView<AchievementsController> {
                       ),
                     ),
                     if(index != controller.followUsList!.length-1)
-                      SizedBox(
+                    SizedBox(
                         height: 50.px,
                         child: VerticalDivider(
                           width: CommonPaddingAndSize.size12()*3,

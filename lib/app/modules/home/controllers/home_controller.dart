@@ -1,8 +1,10 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/api/api_constant_var/api_constant_var.dart';
 import 'package:kalam_news_publication/app/api/api_intrigation/api_intrigation.dart';
+import 'package:kalam_news_publication/app/api/api_res_modals/app_setting_modal.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/banner_modal.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/package_detail.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/package_modal.dart';
@@ -12,6 +14,7 @@ import 'package:kalam_news_publication/app/common/packages/cbs.dart';
 import 'package:kalam_news_publication/app/common/packages/cd.dart';
 import 'package:kalam_news_publication/app/common/packages/razorpay.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
+import 'package:kalam_news_publication/app/routes/app_pages.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import '../../../api/api_res_modals/user_data_modal.dart';
 
@@ -39,6 +42,9 @@ class HomeController extends GetxController {
   List<BannerList>? banner;
   List<String> bannerList = [];
 
+  final appSettingModal = Rxn<AppSettingModal>();
+  final termCondition = ''.obs;
+
 
   @override
   Future<void> onInit() async {
@@ -46,6 +52,7 @@ class HomeController extends GetxController {
     await dataBaseCalling();
     await callingPackageApi();
     await callingBannerApi();
+    await callingGetAppSettingApi();
   }
 
   @override
@@ -81,6 +88,9 @@ class HomeController extends GetxController {
     count.value++;
     try {
       await callingPackageDetailApi(packageId: '${packageList?[index].packageId}');
+      if(packageDetailModal.value?.isUserPackage == 1){
+        termsAndConditionsValue.value = true;
+      }
       await CBS.commonDraggableBottomSheet(
         isDismissible: false,
         enableDrag: false,
@@ -104,6 +114,7 @@ class HomeController extends GetxController {
                       path: KNPMethods.baseUrlForNetworkImage(imagePath: '${packageDetailModal.value?.packageImage}'),
                       isAssetImage: false,
                       height: 200.px,
+                      width: double.infinity,
                       fit: BoxFit.contain,
                       radius: 8.px,
                   ),
@@ -114,9 +125,9 @@ class HomeController extends GetxController {
                   style: Theme.of(Get.context!).textTheme.labelLarge?.copyWith(fontSize: 20.px),
                 ),
                 if (packageDetails != null && packageDetails!.isNotEmpty)
-                  SizedBox(height: CommonPaddingAndSize.size10()),
+                SizedBox(height: CommonPaddingAndSize.size10()),
                 if (packageDetails != null && packageDetails!.isNotEmpty)
-                  KNPWidgets.commonContainerView(
+                KNPWidgets.commonContainerView(
                     child: Column(
                       children: [
                         commonRowForBottomSheet(
@@ -143,14 +154,18 @@ class HomeController extends GetxController {
                       ],
                     ),
                   ),
+                if(packageDetailModal.value?.isUserPackage == 0)
                 SizedBox(height: CommonPaddingAndSize.size10()),
+                if(packageDetailModal.value?.isUserPackage == 0)
                 commonRowForTermsAndConditions(),
                 if (termsAndConditionsValue.value)
-                  SizedBox(height: CommonPaddingAndSize.size10()),
+                SizedBox(height: CommonPaddingAndSize.size10()),
                 if (termsAndConditionsValue.value)
-                  KNPWidgets.commonElevatedButton(
+                KNPWidgets.commonElevatedButton(
                       onPressed: () => clickOnPurchaseNow(index: index),
-                      buttonText: 'Purchase now',
+                      buttonText: packageDetailModal.value?.isUserPackage == 0
+                          ? 'Purchase now'
+                          : 'Already purchased',
                   ),
                 SizedBox(height: CommonPaddingAndSize.size20()),
               ],
@@ -211,34 +226,49 @@ class HomeController extends GetxController {
       return Row(
         children: [
           KNPWidgets.commonCheckBoxView(
-              changeValue: termsAndConditionsValue.value,
-              onChanged: (value) {
-                termsAndConditionsValue.value = !termsAndConditionsValue.value;
-                count.value++;
+            changeValue: termsAndConditionsValue.value,
+            onChanged: (value) {
+               termsAndConditionsValue.value = !termsAndConditionsValue.value;
+               count.value++;
               },
-              visualDensity: VisualDensity(horizontal: -4.px, vertical: -4.px),
+            visualDensity: VisualDensity(horizontal: -4.px, vertical: -4.px),
           ),
-          Text(
-            'I accept Term & Conditions ',
-            style: termsAndConditionsValue.value
-                ? Theme.of(Get.context!).textTheme.labelSmall
-                : Theme.of(Get.context!).textTheme.titleMedium,
-          ),
+          RichText(
+            text: TextSpan(
+              text: 'I accept ',
+              style: Theme.of(Get.context!).textTheme.titleMedium,
+              children: [
+                TextSpan(
+                  text: 'Term & Conditions',
+                  style: Theme.of(Get.context!).textTheme.labelSmall,
+                  recognizer: TapGestureRecognizer()..onTap = () {
+                    Get.toNamed(Routes.WELCOME_MASSAGE,arguments: ['Term & Conditions',termCondition.value]);
+                  },
+                ),
+              ],
+            ),
+          )
         ],
       );
     });
   }
 
   Future<void> clickOnPurchaseNow({required int index}) async {
-    try {
-      await KNPRazorpayMethods.clickOnMakePaymentButton(
-        purchaseAmount: double.parse('${packageList?[index].packagePrice}').toInt(),
-        traTypeValue: 'Online',
-        packageDetails: packageDetails ?? []
-      ).whenComplete(() => Get.back());
-    } catch (e) {
-      print('clickOnPurchaseNow:::: ERROR::::::: $e');
-    }
+   if(packageDetailModal.value?.isUserPackage == 1){
+     KNPMethods.showSnackBar(message: 'Already purchased');
+     Get.back();
+   }
+   else{
+     try {
+       await KNPRazorpayMethods.clickOnMakePaymentButton(
+           purchaseAmount: double.parse('${packageDetailModal.value?.packageAmount}').toInt(),
+           traTypeValue: 'Online',
+           packageDetails: packageDetails ?? []
+       ).whenComplete(() => Get.back());
+     } catch (e) {
+       print('clickOnPurchaseNow:::: ERROR::::::: $e');
+     }
+   }
   }
 
   Future<void> callingPackageApi() async {
@@ -279,11 +309,26 @@ class HomeController extends GetxController {
       if (bannerModal.value != null) {
         banner = bannerModal.value?.banner;
         banner?.forEach((element) {
-          bannerList.add('${element.bannerImage}');
+          bannerList.add(KNPMethods.baseUrlForNetworkImage(imagePath: '${element.bannerImage}'));
         });
       }
     } catch (e) {
       print('callingBannerApi::::  ERROR::::: $e');
+      apiResValue.value = false;
+      KNPMethods.error();
+    }
+    apiResValue.value = false;
+  }
+
+  Future<void> callingGetAppSettingApi() async {
+    apiResValue.value = true;
+    try {
+      appSettingModal.value = await ApiIntrigation.getAppSettingApi();
+      if (appSettingModal.value != null) {
+        termCondition.value = appSettingModal.value?.termCondition ?? '';
+      }
+    } catch (e) {
+      print('callingGetAchievementApi::::  ERROR::::: $e');
       apiResValue.value = false;
       KNPMethods.error();
     }

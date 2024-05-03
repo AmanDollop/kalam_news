@@ -30,14 +30,15 @@ class HomeView extends GetView<HomeController> {
                   child: controller.apiResValue.value
                       ? KNPWidgets.commonProgressBarView()
                       : ListView(
-                          padding:
-                              CommonPaddingAndSize.commonScaffoldBodyPadding(),
+                          padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
                           shrinkWrap: true,
                           children: [
                             welcomeTextView(),
                             SizedBox(height: CommonPaddingAndSize.size12()),
                             bannerView(),
+                            if(controller.userData!.profilePercentage != null)
                             SizedBox(height: CommonPaddingAndSize.size12()),
+                            if(controller.userData!.profilePercentage != null)
                             profileProgressContainerView(),
                             SizedBox(height: CommonPaddingAndSize.size12()),
                             /* KNPWidgets.commonContainerView(
@@ -111,15 +112,18 @@ class HomeView extends GetView<HomeController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            cardSubTitleTextView(text: 'Your profile progress (2/4)'),
+            cardSubTitleTextView(text: 'Your profile progress'),
             SizedBox(height: CommonPaddingAndSize.size10()),
             Row(
               children: [
                 Expanded(
-                  child: KNPWidgets.commonLinearProgressBar(value: .5),
+                  child: KNPWidgets.commonLinearProgressBar(
+                      value: controller.userData!.profilePercentage != null
+                          ? controller.userData!.profilePercentage!.toDouble() / 100
+                          : 0.0),
                 ),
                 SizedBox(width: CommonPaddingAndSize.size10()),
-                cardSubTitleTextView(text: '50%'),
+                cardSubTitleTextView(text: '${controller.userData?.profilePercentage}%'),
               ],
             )
           ],

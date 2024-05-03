@@ -1,6 +1,5 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/common/common_padding_size/common_padding_size.dart';
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
@@ -8,7 +7,6 @@ import 'package:kalam_news_publication/app/common/packages/model_progress_bar.da
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
 import 'package:kalam_news_publication/app/get_material_controller/ac.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-
 import '../controllers/genealogy_controller.dart';
 
 class GenealogyView extends GetView<GenealogyController> {
@@ -54,123 +52,33 @@ class GenealogyView extends GetView<GenealogyController> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Container(
-                                      height: 100.px,
-                                      width: 32.px,
-                                      margin: EdgeInsets.only(top: 30.px),
-                                      decoration: BoxDecoration(
-                                        border: Border(
-                                          top: BorderSide(
-                                            width: 1.5.px,
-                                            color: controller.leftSideLeaveCardValue.value
-                                                ? Theme.of(context).colorScheme.onSecondary
-                                                : Colors.transparent,
-                                          ),
-                                          left: BorderSide(
-                                            width: 1.5.px,
-                                            color: controller.leftSideLeaveCardValue.value
-                                                ? Theme.of(context).colorScheme.onSecondary
-                                                : Colors.transparent,
-                                          ),
-                                        ),
-                                        borderRadius: BorderRadius.only(topLeft: Radius.circular(5.px)),
-                                      ),
-                                    ),
+                                    borderView(),
                                     Column(
                                       children: [
-                                        commonLevelConnection(
-                                          lightColor: Theme.of(context).colorScheme.onTertiary.withOpacity(.2),
-                                          darkColor: Theme.of(context).colorScheme.onTertiary,
-                                          userName: 'Dollop 04',
-                                          leftBVCount: '04',
-                                          rightBVCount: '04',
-                                          profile: KNPMethods.baseUrlForNetworkImage(imagePath: '${controller.userData?.userDetails?.profile}')
-                                        ),
+                                        topUserView(),
+                                        if(controller.userDetailsForUserTree?.userLevel != null && controller.userDetailsForUserTree?.userLevel != 0)
                                         SizedBox(height: 5.px),
-                                        if (!controller.rightSideLeaveCardValue.value || !controller.leftSideLeaveCardValue.value)
-                                          RichText(
-                                            text: TextSpan(
-                                                text: '1 Leave below ',
-                                                style: Theme.of(Get.context!).textTheme.titleSmall,
-                                                children: [
-                                                  TextSpan(
-                                                    text: 'Go back',
-                                                    style: Theme.of(Get.context!).textTheme.titleSmall?.copyWith(
-                                                          decoration: TextDecoration.underline,
-                                                          decorationColor: Theme.of(context).colorScheme.primary,
-                                                          color: Theme.of(context).colorScheme.primary,
-                                                        ),
-                                                    recognizer: TapGestureRecognizer()..onTap = () {
-                                                            controller.rightSideLeaveCardValue.value = true;
-                                                            controller.leftSideLeaveCardValue.value = true;
-                                                          },
-                                                  )
-                                                ],
-                                            ),
-                                          )
+                                        if(controller.userDetailsForUserTree?.userLevel != null && controller.userDetailsForUserTree?.userLevel != 0)
+                                        levelCountAndGoBackView()
                                       ],
                                     ),
-                                    Container(
-                                      height: 100.px,
-                                      width: 30.px,
-                                      margin: EdgeInsets.only(top: 30.px),
-                                      decoration: BoxDecoration(
-                                        border: Border(
-                                          top: BorderSide(
-                                            width: 1.5.px,
-                                            color: controller.rightSideLeaveCardValue.value
-                                                    ? Theme.of(context).colorScheme.onSecondary
-                                                    : Colors.transparent,
-                                          ),
-                                          right: BorderSide(
-                                            width: 1.5.px,
-                                            color: controller.rightSideLeaveCardValue.value
-                                                    ? Theme.of(context).colorScheme.onSecondary
-                                                    : Colors.transparent,
-                                          ),
-                                          left: BorderSide.none,
-                                        ),
-                                        borderRadius: BorderRadius.only(topRight: Radius.circular(5.px)),
-                                      ),
-                                    )
+                                    borderView(isLeftBorder: false)
                                   ],
                                 ),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: controller.lUser?.userId != null
+                                      ? MainAxisAlignment.spaceBetween
+                                      : MainAxisAlignment.end,
                                   children: [
-                                    if (controller.leftSideLeaveCardValue.value)
-                                      commonLevelConnection(
-                                        lightColor: Theme.of(context).colorScheme.onError,
-                                        darkColor: Theme.of(context).colorScheme.error,
-                                        userName: 'Dollop 06',
-                                        leftBVCount: '06',
-                                        rightBVCount: '06',
-                                        onTap: () {
-                                          controller.leftSideLeaveCardValue.value = false;
-                                        },
-                                        profile: 'https://cdn-icons-png.flaticon.com/512/10337/10337609.png'
-                                      )
-                                    else commonEmptyLevel(),
-                                    if(controller.rightSideLeaveCardValue.value)
-                                        commonLevelConnection(
-                                            lightColor: Theme.of(context).colorScheme.onError,
-                                            darkColor: Theme.of(context).colorScheme.error,
-                                            userName: 'Dollop 05',
-                                            leftBVCount: '05',
-                                            rightBVCount: '05',
-                                            onTap: () {
-                                              controller.rightSideLeaveCardValue.value = false;
-                                            },
-                                            profile: 'https://cdn-icons-png.flaticon.com/512/10337/10337609.png'
-                                          )
-                                        else commonEmptyLevel(),
+                                    if(controller.lUser?.userId != null)
+                                      leftUserView(),
+                                    if(controller.rUser?.userId != null )
+                                      rightUserView(),
                                   ],
                                 )
                               ],
                             ),
-                            SizedBox(height: CommonPaddingAndSize.size10() * 3),
-                            KNPWidgets.commonDividerView(height: 20.px),
-                            SizedBox(height: CommonPaddingAndSize.size10()),
+                            KNPWidgets.commonDividerView(height: CommonPaddingAndSize.size20() * 2),
                             paidAndUnPaidView(),
                             SizedBox(height: CommonPaddingAndSize.size20() * 4)
                           ],
@@ -355,14 +263,14 @@ class GenealogyView extends GetView<GenealogyController> {
 
   Widget totalBusinessValueView() => commonCard(
         title: 'Total business value',
-        totalCountText: '1500',
-        text1: '500',
+        totalCountText: controller.userBVCount?.totalBvCount.toString() ?? '00',
+        text1: controller.userBVCount?.lBvCount.toString() ?? '00',
         text2: 'Left Bv',
-        text3: '1000',
+        text3: controller.userBVCount?.rBvCount.toString() ?? '00',
         text4: 'Right Bv',
       );
 
-  Widget commonLevelConnection({required String profile, required Color lightColor, required Color darkColor, required String userName, required String leftBVCount, required String rightBVCount, GestureTapCallback? onTap}) => InkWell(
+  Widget commonLevelConnection({required String profile, required int isPaidUser, required String userName, required String leftBVCount, required String rightBVCount, GestureTapCallback? onTap}) => InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(10.px),
         child: Container(
@@ -370,9 +278,14 @@ class GenealogyView extends GetView<GenealogyController> {
           width: 38.w,
           padding: EdgeInsets.symmetric(horizontal: 14.px, vertical: 6.px),
           decoration: BoxDecoration(
-            color: lightColor,
+            color: isPaidUser == 0
+                ? Theme.of(Get.context!).colorScheme.onError
+                : Theme.of(Get.context!).colorScheme.onTertiary.withOpacity(.2),
             borderRadius: BorderRadius.circular(10.px),
-            border: Border.all(color: darkColor),
+            border: Border.all(color: isPaidUser == 0
+                ? Theme.of(Get.context!).colorScheme.error
+                : Theme.of(Get.context!).colorScheme.onTertiary,
+            ),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -382,7 +295,9 @@ class GenealogyView extends GetView<GenealogyController> {
                 height: 34.px,
                 width: 34.px,
                 decoration: BoxDecoration(
-                  color: darkColor,
+                  color: isPaidUser == 0
+                      ? Theme.of(Get.context!).colorScheme.error
+                      : Theme.of(Get.context!).colorScheme.onTertiary,
                   shape: BoxShape.circle,
                 ),
                 child: Center(
@@ -405,56 +320,33 @@ class GenealogyView extends GetView<GenealogyController> {
                       fontWeight: FontWeight.w700,
                     ),
               ),
-              KNPWidgets.commonDividerView(color: darkColor, height: 4.px),
+              KNPWidgets.commonDividerView(color: isPaidUser == 0
+                  ? Theme.of(Get.context!).colorScheme.error
+                  : Theme.of(Get.context!).colorScheme.onTertiary, height: 4.px),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  commonColumnForLevelCard(text1: leftBVCount, text2: 'Left BV', textColor: darkColor),
+                  commonColumnForLevelCard(text1: leftBVCount, text2: 'Left BV', textColor: isPaidUser == 0
+                      ? Theme.of(Get.context!).colorScheme.error
+                      : Theme.of(Get.context!).colorScheme.onTertiary,),
                   SizedBox(
                     height: 18.px,
                     child: VerticalDivider(
                       thickness: .5.px,
-                      color: darkColor,
+                      color: isPaidUser == 0
+                          ? Theme.of(Get.context!).colorScheme.error
+                          : Theme.of(Get.context!).colorScheme.onTertiary,
                       width: CommonPaddingAndSize.size20(),
                     ),
                   ),
-                  commonColumnForLevelCard(text1: rightBVCount, text2: 'Right BV', textColor: darkColor),
+                  commonColumnForLevelCard(text1: rightBVCount, text2: 'Right BV', textColor: isPaidUser == 0
+                      ? Theme.of(Get.context!).colorScheme.error
+                      : Theme.of(Get.context!).colorScheme.onTertiary,),
                 ],
               )
             ],
           ),
         ),
-      );
-
-  Widget commonEmptyLevel() => SizedBox(
-        height: 12.h,
-        width: 38.w,
-      );
-
-  Widget commonColumnForLevelCard({required String text1, required String text2, required Color textColor}) => Column(
-        children: [
-          Text(
-            text1,
-            style: Theme.of(Get.context!).textTheme.titleSmall?.copyWith(
-                  color: Theme.of(Get.context!).colorScheme.secondary,
-                  fontWeight: FontWeight.w700,
-                ),
-          ),
-          Text(
-            text2,
-            style: Theme.of(Get.context!).textTheme.titleSmall?.copyWith(
-                color: Theme.of(Get.context!).colorScheme.secondary, //textColor,
-                fontSize: 8.px),
-          ),
-        ],
-      );
-
-  Widget paidAndUnPaidView() => Column(
-        children: [
-          commonRowForPaidAndUnPaidView(text: 'Paid users', color: Theme.of(Get.context!).colorScheme.onTertiary),
-          SizedBox(height: CommonPaddingAndSize.size10() - 2),
-          commonRowForPaidAndUnPaidView(text: 'Paid users', color: Theme.of(Get.context!).colorScheme.error)
-        ],
       );
 
   Widget commonRowForPaidAndUnPaidView({required String text, required Color color}) => Row(
@@ -468,4 +360,120 @@ class GenealogyView extends GetView<GenealogyController> {
           cardSubTitleTextView(text: text)
         ],
       );
+
+  Widget borderView({bool isLeftBorder = true}) => Container(
+    height: 100.px,
+    width: isLeftBorder
+        ? 36.px
+        : 34.px,
+    margin: EdgeInsets.only(top: 30.px),
+    decoration: BoxDecoration(
+      border: isLeftBorder
+          ? Border(
+            top: BorderSide(
+              width: 1.5.px,
+              color: controller.lUser?.userId != null
+                  ? Theme.of(Get.context!).colorScheme.onSecondary
+                  : Colors.transparent,
+            ),
+            left: BorderSide(
+              width: 1.5.px,
+              color: controller.lUser?.userId != null
+                  ? Theme.of(Get.context!).colorScheme.onSecondary
+                  : Colors.transparent,
+            ),
+          )
+          : Border(
+            top: BorderSide(
+              width: 1.5.px,
+              color: controller.rUser?.userId != null
+                  ? Theme.of(Get.context!).colorScheme.onSecondary
+                  : Colors.transparent,
+            ),
+            right: BorderSide(
+              width: 1.5.px,
+              color: controller.rUser?.userId != null
+                  ? Theme.of(Get.context!).colorScheme.onSecondary
+                  : Colors.transparent,
+            ),
+            left: BorderSide.none,
+          ),
+      borderRadius: isLeftBorder
+          ? BorderRadius.only(topLeft: Radius.circular(5.px))
+          : BorderRadius.only(topRight: Radius.circular(5.px)),
+    ),
+  );
+
+  Widget topUserView() => commonLevelConnection(
+      isPaidUser: controller.userDetailsForUserTree?.isPaidUser ?? 0,
+      userName: '${controller.userDetailsForUserTree?.firstName} ${controller.userDetailsForUserTree?.lastName}',
+      leftBVCount: '${controller.userDetailsForUserTree?.lBvCount}',
+      rightBVCount: '${controller.userDetailsForUserTree?.rBvCount}',
+      profile: KNPMethods.baseUrlForNetworkImage(imagePath: '${controller.userDetailsForUserTree?.profile}')
+  );
+
+  Widget levelCountAndGoBackView ()=> RichText(
+    text: TextSpan(
+      text: controller.userDetailsForUserTree?.userLevel != null && controller.userDetailsForUserTree?.userLevel != null
+          ? '${controller.userDetailsForUserTree?.userLevel} Leave below '
+          : ' ',
+      style: Theme.of(Get.context!).textTheme.titleSmall,
+      children: [
+        TextSpan(
+          text: 'Go back',
+          style: Theme.of(Get.context!).textTheme.titleSmall?.copyWith(
+            decoration: TextDecoration.underline,
+            decorationColor: Theme.of(Get.context!).colorScheme.primary,
+            color: Theme.of(Get.context!).colorScheme.primary,
+          ),
+          recognizer: TapGestureRecognizer()..onTap = () => controller.clickOnGoBackButton(),
+        )
+      ],
+    ),
+  );
+
+  Widget leftUserView() => commonLevelConnection(
+      isPaidUser: controller.lUser?.isPaidUser ?? 0,
+      userName: '${controller.lUser?.firstName} ${controller.lUser?.lastName}',
+      leftBVCount: '${controller.lUser?.lBvCount}',
+      rightBVCount: '${controller.lUser?.rBvCount}',
+      onTap: () => controller.clickOnLeftUser(),
+      profile: KNPMethods.baseUrlForNetworkImage(imagePath: '${controller.lUser?.profile}')
+  );
+
+  Widget rightUserView() => commonLevelConnection(
+      isPaidUser: controller.rUser?.isPaidUser?? 0,
+      userName: '${controller.rUser?.firstName} ${controller.rUser?.lastName}',
+      leftBVCount: '${controller.rUser?.lBvCount}',
+      rightBVCount: '${controller.rUser?.rBvCount}',
+      onTap: () => controller.clickOnRightUser(),
+      profile: KNPMethods.baseUrlForNetworkImage(imagePath: '${controller.rUser?.profile}')
+  );
+
+  Widget commonColumnForLevelCard({required String text1, required String text2, required Color textColor}) => Column(
+    children: [
+      Text(
+        text1,
+        style: Theme.of(Get.context!).textTheme.titleSmall?.copyWith(
+          color: Theme.of(Get.context!).colorScheme.secondary,
+          fontWeight: FontWeight.w700,
+        ),
+      ),
+      Text(
+        text2,
+        style: Theme.of(Get.context!).textTheme.titleSmall?.copyWith(
+            color: Theme.of(Get.context!).colorScheme.secondary, //textColor,
+            fontSize: 8.px),
+      ),
+    ],
+  );
+
+  Widget paidAndUnPaidView() => Column(
+    children: [
+      commonRowForPaidAndUnPaidView(text: 'Paid users', color: Theme.of(Get.context!).colorScheme.onTertiary),
+      SizedBox(height: CommonPaddingAndSize.size10() - 2),
+      commonRowForPaidAndUnPaidView(text: 'Paid users', color: Theme.of(Get.context!).colorScheme.error)
+    ],
+  );
+
 }

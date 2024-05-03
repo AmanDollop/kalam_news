@@ -1,6 +1,7 @@
 class UserDataModal {
   String? message;
   String? accessToken;
+  int? profilePercentage;
   UserDetails? userDetails;
 
   UserDataModal({this.message, this.accessToken, this.userDetails});
@@ -8,6 +9,7 @@ class UserDataModal {
   UserDataModal.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     accessToken = json['access_token'];
+    profilePercentage = json['profile_percentage'];
     userDetails = json['user_details'] != null
         ? UserDetails.fromJson(json['user_details'])
         : null;
@@ -17,6 +19,7 @@ class UserDataModal {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['message'] = message;
     data['access_token'] = accessToken;
+    data['profile_percentage'] = profilePercentage;
     if (userDetails != null) {
       data['user_details'] = userDetails!.toJson();
     }

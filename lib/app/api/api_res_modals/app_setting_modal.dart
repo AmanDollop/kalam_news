@@ -1,77 +1,68 @@
-class ContactsAndFollowSocialLinksModal {
+class AppSettingModal {
   String? message;
-  List<Contacts>? contacts;
+  Contacts? contacts;
   List<FollowUs>? followUs;
+  String? termCondition;
+  String? welcomeMessage;
 
-  ContactsAndFollowSocialLinksModal(
-      {this.message, this.contacts, this.followUs});
+  AppSettingModal(
+      {this.message,
+        this.contacts,
+        this.followUs,
+        this.termCondition,
+        this.welcomeMessage});
 
-  ContactsAndFollowSocialLinksModal.fromJson(Map<String, dynamic> json) {
+  AppSettingModal.fromJson(Map<String, dynamic> json) {
     message = json['message'];
-    if (json['contacts'] != null) {
-      contacts = <Contacts>[];
-      json['contacts'].forEach((v) {
-        contacts!.add(Contacts.fromJson(v));
-      });
-    }
+    contacts = json['contacts'] != null
+        ? Contacts.fromJson(json['contacts'])
+        : null;
     if (json['followUs'] != null) {
       followUs = <FollowUs>[];
       json['followUs'].forEach((v) {
         followUs!.add(FollowUs.fromJson(v));
       });
     }
+    termCondition = json['termCondition'];
+    welcomeMessage = json['welcomeMessage'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['message'] = message;
     if (contacts != null) {
-      data['contacts'] = contacts!.map((v) => v.toJson()).toList();
+      data['contacts'] = contacts!.toJson();
     }
     if (followUs != null) {
       data['followUs'] = followUs!.map((v) => v.toJson()).toList();
     }
+    data['termCondition'] = termCondition;
+    data['welcomeMessage'] = welcomeMessage;
     return data;
   }
 }
 
 class Contacts {
-  int? contactId;
   String? callingNumber;
   String? whatsapp;
   String? telegram;
   String? email;
-  String? createdAt;
-  String? updatedAt;
 
-  Contacts(
-      {this.contactId,
-        this.callingNumber,
-        this.whatsapp,
-        this.telegram,
-        this.email,
-        this.createdAt,
-        this.updatedAt});
+  Contacts({this.callingNumber, this.whatsapp, this.telegram, this.email});
 
   Contacts.fromJson(Map<String, dynamic> json) {
-    contactId = json['contact_id'];
     callingNumber = json['calling_number'];
     whatsapp = json['whatsapp'];
     telegram = json['telegram'];
     email = json['email'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['contact_id'] = contactId;
     data['calling_number'] = callingNumber;
     data['whatsapp'] = whatsapp;
     data['telegram'] = telegram;
     data['email'] = email;
-    data['created_at'] = createdAt;
-    data['updated_at'] = updatedAt;
     return data;
   }
 }
