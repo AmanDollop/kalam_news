@@ -9,6 +9,7 @@ import 'package:kalam_news_publication/app/api/api_res_modals/banner_modal.dart'
 import 'package:kalam_news_publication/app/api/api_res_modals/citys_modal.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/package_detail.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/package_modal.dart';
+import 'package:kalam_news_publication/app/api/api_res_modals/referral_user_data_modal.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/states_modal.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/user_data_modal.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/user_tree_modal.dart';
@@ -206,6 +207,26 @@ class ApiIntrigation{
       if (await KNPMethods.checkResponse(response: response, wantInternetFailResponse: true, wantShowFailResponse: true)) {
         userDataModal = UserDataModal.fromJson(jsonDecode(response.body));
         return userDataModal;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  }
+
+  static Future<ReferralUserDataModal?> referralUserDataApi({required Map<String, dynamic> bodyParams}) async {
+
+    ReferralUserDataModal? referralUserDataModal;
+    http.Response? response = await MyHttp.postMethod(
+      url: '${ApiUrls.baseUrl}${ApiUrls.apiEndPointCheckReferral}',
+      bodyParams: bodyParams,
+      context: Get.context!,
+    );
+    if (response != null) {
+      if (await KNPMethods.checkResponse(response: response, wantInternetFailResponse: true, wantShowFailResponse: true)) {
+        referralUserDataModal = ReferralUserDataModal.fromJson(jsonDecode(response.body));
+        return referralUserDataModal;
       } else {
         return null;
       }

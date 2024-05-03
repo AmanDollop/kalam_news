@@ -52,6 +52,8 @@ class ApiConstantVar{
 
   static const referredBy = "referred_by";
 
+  static const referralCode = "referral_code";
+
   static const branch = "branch";
 
   static const packageId = "package_id";
@@ -137,5 +139,6 @@ class ApiUrls{
 
   static const apiEndPointGetUserTree = "/api/getUserTree";
 
+  static const apiEndPointCheckReferral = "checkReferral";
 
 }

@@ -37,15 +37,15 @@ class RegistrationVerificationView extends GetView<RegistrationVerificationContr
                     SizedBox(height: CommonPaddingAndSize.size10()),
                     commonRowView(
                       text1: 'Name',
-                      text2: 'Dollop Infotech PVT.LTD',
+                      text2: '${controller.referralUserData?.name}',
                     ),
                     SizedBox(height: CommonPaddingAndSize.size10()),
                     commonRowView(
                       text1: 'Mobile',
-                      text2: '1234567890',
+                      text2: '${controller.referralUserData?.mobileNumber}',
                     ),
                     SizedBox(height: CommonPaddingAndSize.size10()),
-                    commonRowView(text1: 'City', text2: 'Indore', isDivider: false),
+                    commonRowView(text1: 'City', text2: '${controller.referralUserData?.city}', isDivider: false),
                     SizedBox(height: CommonPaddingAndSize.size20()),
                     youAreRegisteringTextView(text: 'Please select which way do you want to go?'),
                     SizedBox(height: CommonPaddingAndSize.size20()),
@@ -55,7 +55,9 @@ class RegistrationVerificationView extends GetView<RegistrationVerificationContr
                           title: 'Left',
                           value: controller.selectRadioValue.value,
                           onTap: () {
-                            controller.selectRadioValue.value = "Left";
+                            if(controller.referralUserData?.left == true) {
+                              controller.selectRadioValue.value = "Left";
+                            }
                             controller.count.value++;
                           },
                         ),
@@ -64,7 +66,9 @@ class RegistrationVerificationView extends GetView<RegistrationVerificationContr
                           title: 'Right',
                           value: controller.selectRadioValue.value,
                           onTap: () {
-                            controller.selectRadioValue.value = "Right";
+                            if(controller.referralUserData?.right == true) {
+                              controller.selectRadioValue.value = "Right";
+                            }
                             controller.count.value++;
                           },
                         ),
