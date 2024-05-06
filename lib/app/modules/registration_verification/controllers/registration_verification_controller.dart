@@ -21,9 +21,11 @@ class RegistrationVerificationController extends GetxController {
     referralCodeController.text = referralUserData?.referralCode ?? '';
     if(referralUserData?.left == true && referralUserData?.right == true){
       selectRadioValue.value = "Left";
-    }else if(referralUserData?.left == false){
+    }
+    else if(referralUserData?.left == false){
       selectRadioValue.value = "Right";
-    }else{
+    }
+    else{
       selectRadioValue.value = "Left";
     }
   }

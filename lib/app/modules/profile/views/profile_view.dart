@@ -89,7 +89,6 @@ class ProfileView extends GetView<ProfileController> {
         child: Center(
           child: KNPWidgets.commonNetworkImageView(
             path: KNPMethods.baseUrlForNetworkImage(imagePath: '${controller.userData?.userDetails?.profile}'),
-            isAssetImage: false,
             radius: 55.px,
             height: 110.px,
             width: 110.px,

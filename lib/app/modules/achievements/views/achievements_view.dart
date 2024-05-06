@@ -171,10 +171,10 @@ class AchievementsView extends GetView<AchievementsController> {
                       borderRadius: BorderRadius.circular(20.px),
                       child: KNPWidgets.commonNetworkImageView(
                         path: KNPMethods.baseUrlForNetworkImage(imagePath: '${controller.followUsList?[index].icon}'),
-                        isAssetImage: false,
+
                         height: 40.px,
                         width: 40.px,
-                        radius: 20.px
+                        // radius: 20.px
                       ),
                     ),
                     if(index != controller.followUsList!.length-1)

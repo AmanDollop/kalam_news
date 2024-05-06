@@ -141,4 +141,8 @@ class ApiUrls{
 
   static const apiEndPointCheckReferral = "checkReferral";
 
+  static const apiEndPointGetUserDashboardBVCount = "getUserDashboardBVCount";
+
+  static const apiEndPointGetWalletHistory = "getWalletHistory";
+
 }

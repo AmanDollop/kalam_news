@@ -173,6 +173,10 @@ class PersonalDetailsController extends GetxController {
 
   Future<void> callingGetCityApi({required String stateId}) async {
     try {
+      offsetForCity.value = 0;
+      cityController.clear();
+      cityList.clear();
+      cityListSearch.clear();
       bodyParamsCity = {
         ApiConstantVar.stateId: stateId,
         ApiConstantVar.limit: limitForCity.toString(),
@@ -272,12 +276,8 @@ class PersonalDetailsController extends GetxController {
        },
       ),
     ).whenComplete(() {
-      offsetForCity.value = 0;
-      cityController.clear();
-      cityList.clear();
       searchStateController.clear();
       statesListSearch.clear();
-      cityListSearch.clear();
     });
   }
 

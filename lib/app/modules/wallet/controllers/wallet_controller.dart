@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kalam_news_publication/app/api/api_intrigation/api_intrigation.dart';
+import 'package:kalam_news_publication/app/api/api_res_modals/withdraw_history_modal.dart';
+import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/modules/bottom_bar/views/bottom_bar_view.dart';
 
 class WalletController extends GetxController {
 
   final count = 0.obs;
-
 
   final apiResValue = true.obs;
 
@@ -13,10 +15,14 @@ class WalletController extends GetxController {
   FocusNode withdrawAmountFocusNode = FocusNode();
   final withdrawNowButtonValue = false.obs;
 
+  final withdrawHistoryModal = Rxn<WithdrawHistoryModal>();
+  List<WalletHistory>? walletHistory;
+
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
-    apiResValue.value = false;
+    apiResValue.value = true;
+    await callingGetWithdrawHistoryApi();
   }
 
   @override
@@ -37,5 +43,19 @@ class WalletController extends GetxController {
   }
 
   void clickOnWithdrawNowButton() {}
+
+  Future<void> callingGetWithdrawHistoryApi() async {
+    try{
+      withdrawHistoryModal.value = await ApiIntrigation.getWithdrawHistoryApi();
+      if(withdrawHistoryModal.value != null){
+        walletHistory = withdrawHistoryModal.value?.walletHistory;
+      }
+    }catch(e){
+      print('callingGetWithdrawHistoryApi:::  ERROR::: $e');
+      KNPMethods.error();
+      apiResValue.value = false;
+    }
+    apiResValue.value = false;
+  }
 
 }

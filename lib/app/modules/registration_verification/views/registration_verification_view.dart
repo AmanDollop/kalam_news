@@ -4,7 +4,6 @@ import 'package:kalam_news_publication/app/common/common_padding_size/common_pad
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-
 import '../controllers/registration_verification_controller.dart';
 
 class RegistrationVerificationView extends GetView<RegistrationVerificationController> {

@@ -11,8 +11,10 @@ import 'package:kalam_news_publication/app/api/api_res_modals/package_detail.dar
 import 'package:kalam_news_publication/app/api/api_res_modals/package_modal.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/referral_user_data_modal.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/states_modal.dart';
+import 'package:kalam_news_publication/app/api/api_res_modals/user_dashboard_bv_count_modal.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/user_data_modal.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/user_tree_modal.dart';
+import 'package:kalam_news_publication/app/api/api_res_modals/withdraw_history_modal.dart';
 import 'package:kalam_news_publication/app/common/http/my_http.dart';
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/db/data_base_constant/data_base_constant.dart';
@@ -222,6 +224,7 @@ class ApiIntrigation{
       url: '${ApiUrls.baseUrl}${ApiUrls.apiEndPointCheckReferral}',
       bodyParams: bodyParams,
       context: Get.context!,
+      showSnackBar: true,
     );
     if (response != null) {
       if (await KNPMethods.checkResponse(response: response, wantInternetFailResponse: true, wantShowFailResponse: true)) {
@@ -450,6 +453,50 @@ class ApiIntrigation{
       if (await KNPMethods.checkResponse(response: response, wantInternetFailResponse: true, wantShowFailResponse: true)) {
         userTreeModal = UserTreeModal.fromJson(jsonDecode(response.body));
         return userTreeModal;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  }
+
+  static Future<UserDashboardBVCountModal?> getUserDashboardBVCountApi() async {
+
+    Map<String, String> authorization = await userToken();
+
+    UserDashboardBVCountModal? userDashboardBVCountModal;
+    http.Response? response = await MyHttp.getMethod(
+      url: '${ApiUrls.baseUrl}${ApiUrls.apiEndPointGetUserDashboardBVCount}',
+      token: authorization,
+      context: Get.context!,
+    );
+    if (response != null) {
+      if (await KNPMethods.checkResponse(response: response, wantInternetFailResponse: true, wantShowFailResponse: true)) {
+        userDashboardBVCountModal = UserDashboardBVCountModal.fromJson(jsonDecode(response.body));
+        return userDashboardBVCountModal;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  }
+
+  static Future<WithdrawHistoryModal?> getWithdrawHistoryApi() async {
+
+    Map<String, String> authorization = await userToken();
+
+    WithdrawHistoryModal? withdrawHistoryModal;
+    http.Response? response = await MyHttp.getMethod(
+      url: '${ApiUrls.baseUrl}${ApiUrls.apiEndPointGetWalletHistory}',
+      token: authorization,
+      context: Get.context!,
+    );
+    if (response != null) {
+      if (await KNPMethods.checkResponse(response: response, wantInternetFailResponse: true, wantShowFailResponse: true)) {
+        withdrawHistoryModal = WithdrawHistoryModal.fromJson(jsonDecode(response.body));
+        return withdrawHistoryModal;
       } else {
         return null;
       }

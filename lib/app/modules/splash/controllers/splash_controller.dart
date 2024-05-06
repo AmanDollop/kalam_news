@@ -61,6 +61,7 @@ class SplashController extends GetxController {
   }
 
   Future<void> callingNextScreen() async {
+    print('userData?.accessToken:::::::: ${userData?.accessToken}');
     if (userData?.accessToken != null && userData!.accessToken!.isNotEmpty) {
       Get.offNamed(Routes.BOTTOM_BAR);
     } else {

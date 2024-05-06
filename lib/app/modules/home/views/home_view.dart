@@ -70,9 +70,9 @@ class HomeView extends GetView<HomeController> {
                             SizedBox(height: CommonPaddingAndSize.size10()),
                             packagesListView(),
                             SizedBox(height: CommonPaddingAndSize.size12()),
-                            bvCountView(),
+                            nodeCountView(),
                             SizedBox(height: CommonPaddingAndSize.size12()),
-                            groupMatchingCommissionView(),
+                            commissionView(),
                             SizedBox(height: CommonPaddingAndSize.size12()),
                             yourSalesView(),
                             SizedBox(height: CommonPaddingAndSize.size20() * 4)
@@ -178,10 +178,7 @@ class HomeView extends GetView<HomeController> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         KNPWidgets.commonNetworkImageView(
-                          path: KNPMethods.baseUrlForNetworkImage(
-                              imagePath:
-                                  '${controller.packageList?[index].packageImage}'),
-                          isAssetImage: false,
+                          path: KNPMethods.baseUrlForNetworkImage(imagePath: '${controller.packageList?[index].packageImage}'),
                           width: 124.px,
                           height: 108.px,
                           radius: 4.px,
@@ -209,8 +206,7 @@ class HomeView extends GetView<HomeController> {
     }
   }
 
-  Widget commonColumnForCardView({required String text1, required String text2}) =>
-      Expanded(
+  Widget commonColumnForCardView({required String text1, required String text2}) => Expanded(
         child: Column(
           children: [
             Text(
@@ -279,28 +275,28 @@ class HomeView extends GetView<HomeController> {
         ),
       );
 
-  Widget bvCountView() => commonCard(
-        title: 'BV count',
-        text1: '02',
+  Widget nodeCountView() => commonCard(
+        title: 'Node count',
+        text1: '${controller.userDashboardBVCount?.lUserNodeCount}',
         text2: 'Left Bv',
-        text3: '03',
+        text3: '${controller.userDashboardBVCount?.rUserNodeCount}',
         text4: 'Right Bv',
       );
 
-  Widget groupMatchingCommissionView() => commonCard(
-        title: 'Group matching commission',
-        text1: '01',
+  Widget commissionView() => commonCard(
+        title: 'Commission',
+        text1: '${controller.userDashboardBVCount?.leftCommission}',
         text2: 'Left Bv',
-        text3: '06',
+        text3: '${controller.userDashboardBVCount?.rightCommission}',
         text4: 'Right Bv',
       );
 
   Widget yourSalesView() => commonCard(
         title: 'Your sales',
-        text1: '₹6',
+        text1: '₹${controller.userDashboardBVCount?.totalWalletBalance}',
         text2: 'Wallet balance',
-        text3: '₹10',
-        text4: 'Total commission',
+        text3: '₹${controller.userDashboardBVCount?.totalWithdrawal}',
+        text4: 'Withdrawal balance',
       );
 
 

@@ -106,7 +106,6 @@ class EditProfileView extends GetView<EditProfileController> {
                     )
                     : KNPWidgets.commonNetworkImageView(
                        path: KNPMethods.baseUrlForNetworkImage(imagePath: controller.userPic.value),
-                       isAssetImage: false,
                        radius: 55.px,
                        height: 110.px,
                        width: 110.px,

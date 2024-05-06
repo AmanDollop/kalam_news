@@ -8,6 +8,7 @@ import 'package:kalam_news_publication/app/api/api_res_modals/app_setting_modal.
 import 'package:kalam_news_publication/app/api/api_res_modals/banner_modal.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/package_detail.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/package_modal.dart';
+import 'package:kalam_news_publication/app/api/api_res_modals/user_dashboard_bv_count_modal.dart';
 import 'package:kalam_news_publication/app/common/common_padding_size/common_padding_size.dart';
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/common/packages/cbs.dart';
@@ -45,14 +46,13 @@ class HomeController extends GetxController {
   final appSettingModal = Rxn<AppSettingModal>();
   final termCondition = ''.obs;
 
+  final userDashboardBVCountModal = Rxn<UserDashboardBVCountModal>();
+  UserDashboardBVCount? userDashboardBVCount;
 
   @override
   Future<void> onInit() async {
     super.onInit();
-    await dataBaseCalling();
-    await callingPackageApi();
-    await callingBannerApi();
-    await callingGetAppSettingApi();
+    await apisCallingMethod();
   }
 
   @override
@@ -66,6 +66,14 @@ class HomeController extends GetxController {
   }
 
   void increment() => count.value++;
+
+  Future<void> apisCallingMethod() async {
+    await dataBaseCalling();
+    await callingPackageApi();
+    await callingBannerApi();
+    await callingGetAppSettingApi();
+    await callingGetDaseboardBVCountApi();
+  }
 
   onWillPop() {
     CD.commonIosExitAppDialog(
@@ -112,7 +120,6 @@ class HomeController extends GetxController {
                   ),
                   child: KNPWidgets.commonNetworkImageView(
                       path: KNPMethods.baseUrlForNetworkImage(imagePath: '${packageDetailModal.value?.packageImage}'),
-                      isAssetImage: false,
                       height: 200.px,
                       width: double.infinity,
                       fit: BoxFit.contain,
@@ -329,6 +336,21 @@ class HomeController extends GetxController {
       }
     } catch (e) {
       print('callingGetAchievementApi::::  ERROR::::: $e');
+      apiResValue.value = false;
+      KNPMethods.error();
+    }
+    apiResValue.value = false;
+  }
+
+  Future<void> callingGetDaseboardBVCountApi() async {
+    apiResValue.value = true;
+    try {
+      userDashboardBVCountModal.value = await ApiIntrigation.getUserDashboardBVCountApi();
+      if (userDashboardBVCountModal.value != null) {
+        userDashboardBVCount = userDashboardBVCountModal.value?.userDashboardBVCount;
+      }
+    } catch (e) {
+      print('callingGetDaseboardBVCountApi::::  ERROR::::: $e');
       apiResValue.value = false;
       KNPMethods.error();
     }

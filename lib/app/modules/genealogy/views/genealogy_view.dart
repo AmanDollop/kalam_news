@@ -131,7 +131,6 @@ class GenealogyView extends GetView<GenealogyController> {
         child: Center(
           child: KNPWidgets.commonNetworkImageView(
             path: KNPMethods.baseUrlForNetworkImage(imagePath: '${controller.userData?.userDetails?.profile}'),
-            isAssetImage: false,
             radius: 55.px,
             height: 110.px,
             width: 110.px,
@@ -303,7 +302,6 @@ class GenealogyView extends GetView<GenealogyController> {
                 child: Center(
                   child: KNPWidgets.commonNetworkImageView(
                     path: profile,
-                    isAssetImage: false,
                     radius: 16.px,
                     height: 32.px,
                     width: 32.px,

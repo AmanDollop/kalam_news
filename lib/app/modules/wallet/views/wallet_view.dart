@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/common/common_padding_size/common_padding_size.dart';
+import 'package:kalam_news_publication/app/common/packages/common_methods_for_date_time.dart';
 import 'package:kalam_news_publication/app/common/packages/model_progress_bar.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
 import 'package:kalam_news_publication/app/get_material_controller/ac.dart';
@@ -72,7 +73,9 @@ class WalletView extends GetView<WalletController> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           totalIncomeTextView(text: 'Total income',flex: 3),
-          totalIncomeTextView(text: '₹20000'),
+          totalIncomeTextView(text: controller.withdrawHistoryModal.value?.totalCommission != null
+              ? '₹${controller.withdrawHistoryModal.value?.totalCommission}'
+              : '₹00'),
         ],
       ),
   );
@@ -148,39 +151,56 @@ class WalletView extends GetView<WalletController> {
     ),
   );
 
-  Widget withdrawHistoryListView() => ListView.builder(
-    shrinkWrap: true,
-    physics: const NeverScrollableScrollPhysics(),
-    itemCount: 10,
-    itemBuilder: (context, index) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  Widget withdrawHistoryListView(){
+    if(controller.walletHistory != null && controller.walletHistory!.isNotEmpty){
+      return ListView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        itemCount: controller.walletHistory?.length,
+        itemBuilder: (context, index) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Flexible(
-                flex: 5,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    textFiledTitleTextView(text: 'Kotak mahindra  bank',fontSize: 12.px),
-                    cardSubTitleTextView(text: 'Credit on 14 Apr 2024, 8:24 PM'),
-                  ],
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                    flex: 5,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        textFiledTitleTextView(text: 'Kotak mahindra  bank',fontSize: 12.px),
+                        cardSubTitleTextView(
+                          text:
+                          controller.walletHistory?[index].transactionType == 'income'
+                          ? 'Credit on ${CMForDateTime.dateFormatForDateMonthYearHourMinSec(dateAndTime: '${controller.walletHistory?[index].createdAt}')}'
+                          : 'Deposit on ${CMForDateTime.dateFormatForDateMonthYearHourMinSec(dateAndTime: '${controller.walletHistory?[index].createdAt}')}',
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(width: CommonPaddingAndSize.size10()),
+                  Flexible(
+                    flex: 2,
+                    child: textFiledTitleTextView(text: controller.walletHistory?[index].transactionType == 'income'
+                        ? '+ ₹${controller.walletHistory?[index].amount}'
+                        : '- ₹${controller.walletHistory?[index].amount}',
+                        textColor: controller.walletHistory?[index].transactionType == 'income'
+                            ? Theme.of(context).colorScheme.primary
+                            : Theme.of(context).colorScheme.error),
+                  ),
+                ],
               ),
-              SizedBox(width: CommonPaddingAndSize.size10()),
-              Flexible(
-                flex: 2,
-                child: textFiledTitleTextView(text: '+ ₹200'),
-              ),
+              if(index != controller.walletHistory!.length-1)
+                KNPWidgets.commonDividerView(height: CommonPaddingAndSize.size12()*2,leftPadding: 0, rightPadding: 0),
             ],
-          ),
-          if(index != 9)
-          KNPWidgets.commonDividerView(height: CommonPaddingAndSize.size12()*2,leftPadding: 0, rightPadding: 0),
-        ],
+          );
+        },
       );
-    },
-  );
+    }
+    else{
+      return KNPWidgets.noDataFoundView();
+    }
+  }
 
 }

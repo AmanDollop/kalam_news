@@ -67,7 +67,7 @@ class AchievementsController extends GetxController {
     }
   }
 
-  Future<void> clickOnWhatsappNumber() async {
+  Future<void> clickOnWhatsappNumber() async      {
     if (contacts?.whatsapp != null && contacts!.whatsapp!.isNotEmpty) {
        Uri url = Uri.parse("https://wa.me/${checkCountryCodeInNumber(number: contacts?.whatsapp ?? '')}");
       if (await launchUrl(url)) {

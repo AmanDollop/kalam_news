@@ -54,7 +54,7 @@ class LogInController extends GetxController {
 
   Future<void> clickOnLogInButtonView() async {
     KNPMethods.unFocsKeyBoard();
-    if(key.currentState!.validate() && rememberMeValue.value){
+    if(key.currentState!.validate()){
       await callingLoginApi();
     }
   }

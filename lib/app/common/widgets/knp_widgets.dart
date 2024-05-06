@@ -62,13 +62,7 @@ class KNPWidgets {
     BoxFit fit = BoxFit.fill,
     GestureTapCallback? onTap,
     ImageLoadingBuilder? loadingBuilder,
-    Duration? shimmerDuration,
-    Color? shimmerBackgroundColor,
-    Color? shimmerMovementColor,
     String? errorImage,
-    String? userShortName,
-    Color? userShortNameColor,
-    Color? userShortNameBackgroundColor,
   }) =>
       InkWell(
         onTap: onTap,
@@ -766,7 +760,6 @@ class KNPWidgets {
                           color: Theme.of(Get.context!).colorScheme.surface,
                           child: commonNetworkImageView(
                               path: image,
-                              isAssetImage: false,
                               fit: BoxFit.cover,
                               width: double.infinity,
                               height: height ?? 150.px),
