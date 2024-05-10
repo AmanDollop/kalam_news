@@ -92,10 +92,18 @@ class ApiUrls{
 
   // static const baseUrlForGet = "192.168.1.172:8000";
 
-  static const baseUrl = "http://192.168.1.229:8000/api/";
-  static const baseUrlForImage = "http://192.168.1.229:8000/";
+  /* static const baseUrl = "http://192.168.1.229:8000/api/";
 
-  static const baseUrlForGet = "192.168.1.229:8000";
+     static const baseUrlForImage = "http://192.168.1.229:8000/";
+
+     static const baseUrlForGet = "192.168.1.229:8000";
+  */
+
+  static const baseUrl = "https://kalamnewspublication.in/api/";
+
+  static const baseUrlForImage = "https://kalamnewspublication.in/public/";
+
+  static const baseUrlForGet = "kalamnewspublication.in";
 
   static const apiEndPointRegister = "register";
 

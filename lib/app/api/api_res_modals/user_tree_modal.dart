@@ -72,8 +72,8 @@ class UserDetailsForUserTree {
   int? isEmailVerify;
   String? createdAt;
   String? updatedAt;
-  int? lBvCount;
-  int? rBvCount;
+  String? lBvCount;
+  String? rBvCount;
   int? userLevel;
   int? isPaidUser;
 
@@ -198,8 +198,8 @@ class RUser {
   String? createdAt;
   String? updatedAt;
   int? userLevel;
-  int? lBvCount;
-  int? rBvCount;
+  String? lBvCount;
+  String? rBvCount;
   int? isPaidUser;
 
   RUser(
@@ -323,8 +323,8 @@ class LUser {
   String? createdAt;
   String? updatedAt;
   int? userLevel;
-  int? lBvCount;
-  int? rBvCount;
+  String? lBvCount;
+  String? rBvCount;
   int? isPaidUser;
 
   LUser(
@@ -423,9 +423,9 @@ class LUser {
 }
 
 class UserBVCount {
-  int? totalBvCount;
-  int? lBvCount;
-  int? rBvCount;
+  String? totalBvCount;
+  String? lBvCount;
+  String? rBvCount;
 
   UserBVCount({this.totalBvCount, this.lBvCount, this.rBvCount});
 
@@ -436,10 +436,10 @@ class UserBVCount {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['total_bv_count'] = this.totalBvCount;
-    data['l_bv_count'] = this.lBvCount;
-    data['r_bv_count'] = this.rBvCount;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['total_bv_count'] = totalBvCount;
+    data['l_bv_count'] = lBvCount;
+    data['r_bv_count'] = rBvCount;
     return data;
   }
 }

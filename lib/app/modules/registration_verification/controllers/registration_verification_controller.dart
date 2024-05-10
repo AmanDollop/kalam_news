@@ -12,22 +12,13 @@ class RegistrationVerificationController extends GetxController {
   FocusNode referralCodeFocusNode = FocusNode();
   ReferralUserData? referralUserData;
 
-  final selectRadioValue = '' .obs;
+  final selectRadioValue = 'Left' .obs;
 
   @override
   void onInit() {
     super.onInit();
     referralUserData = Get.arguments[0];
     referralCodeController.text = referralUserData?.referralCode ?? '';
-    if(referralUserData?.left == true && referralUserData?.right == true){
-      selectRadioValue.value = "Left";
-    }
-    else if(referralUserData?.left == false){
-      selectRadioValue.value = "Right";
-    }
-    else{
-      selectRadioValue.value = "Left";
-    }
   }
 
   @override

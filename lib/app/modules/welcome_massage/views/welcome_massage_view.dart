@@ -24,7 +24,7 @@ class WelcomeMassageView extends GetView<WelcomeMassageController> {
                 : ListView(
                     padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
                     children: [
-                      removeHtmlTagsProductAndSellerDescription(string: controller.welcomeMessage.value),
+                      KNPWidgets.removeHtmlTagsProductAndSellerDescription(string: controller.welcomeMessage.value),
                     ],
                   ),
           ),
@@ -33,21 +33,4 @@ class WelcomeMassageView extends GetView<WelcomeMassageController> {
     );
   }
 
-  Widget removeHtmlTagsProductAndSellerDescription({required String string}) {
-    return Html(
-      data: string.trim(),
-      // shrinkWrap: false,
-      style: {
-        "body": Style(
-            fontSize: FontSize(12.px),
-            fontWeight: FontWeight.w500,
-            color: Theme.of(Get.context!).colorScheme.secondary,margin: Margins.zero, padding: HtmlPaddings.zero,),
-        "li": Style(
-          listStyleType: ListStyleType.circle,
-          margin: Margins.zero,
-          padding: HtmlPaddings.zero
-        ),
-      },
-    ).paddingZero;
-  }
 }

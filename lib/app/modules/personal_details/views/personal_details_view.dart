@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/common/common_padding_size/common_padding_size.dart';
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
@@ -9,7 +8,6 @@ import 'package:kalam_news_publication/app/common/packages/my_drop_down.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
 import 'package:kalam_news_publication/app/validation/v.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-
 import '../controllers/personal_details_controller.dart';
 
 class PersonalDetailsView extends GetView<PersonalDetailsController> {
@@ -19,8 +17,7 @@ class PersonalDetailsView extends GetView<PersonalDetailsController> {
   Widget build(BuildContext context) {
     const SystemUiOverlayStyle(
       statusBarBrightness: Brightness.light, // For iOS: (dark icons)
-      statusBarIconBrightness:
-          Brightness.light, // For Android(M and greater): (dark icons)
+      statusBarIconBrightness: Brightness.light, // For Android(M and greater): (dark icons)
     );
     return GestureDetector(
       onTap: () {
@@ -179,7 +176,7 @@ class PersonalDetailsView extends GetView<PersonalDetailsController> {
   Widget checkBoxView() => KNPWidgets.commonCheckBoxView(
         changeValue: controller.sameAsMobileNumberValue.value,
         onChanged: (value) {
-           if(controller.mobileNumberController.text.isNotEmpty){
+          if(controller.mobileNumberController.text.isNotEmpty){
              controller.sameAsMobileNumberValue.value = !controller.sameAsMobileNumberValue.value;
              if(controller.sameAsMobileNumberValue.value){
                controller.whatsappNumberController.text = controller.mobileNumberController.text;
@@ -266,4 +263,5 @@ class PersonalDetailsView extends GetView<PersonalDetailsController> {
             : () => controller.clickOnContinueButtonView(),
         buttonText: 'Continue',
       );
+
 }

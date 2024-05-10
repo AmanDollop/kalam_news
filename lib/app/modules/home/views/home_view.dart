@@ -35,10 +35,11 @@ class HomeView extends GetView<HomeController> {
                           children: [
                             welcomeTextView(),
                             SizedBox(height: CommonPaddingAndSize.size12()),
+                            if(controller.bannerList.isNotEmpty)
                             bannerView(),
-                            if(controller.userData!.profilePercentage != null)
+                            if(controller.userData?.profilePercentage != null)
                             SizedBox(height: CommonPaddingAndSize.size12()),
-                            if(controller.userData!.profilePercentage != null)
+                            if(controller.userData?.profilePercentage != null)
                             profileProgressContainerView(),
                             SizedBox(height: CommonPaddingAndSize.size12()),
                             /* KNPWidgets.commonContainerView(
@@ -156,8 +157,7 @@ class HomeView extends GetView<HomeController> {
 
   Widget packagesListView() {
     if (controller.packageModal.value != null) {
-      if (controller.packageList != null &&
-          controller.packageList!.isNotEmpty) {
+      if (controller.packageList != null && controller.packageList!.isNotEmpty) {
         return SizedBox(
           height: 172.px,
           child: ListView.builder(
@@ -165,8 +165,7 @@ class HomeView extends GetView<HomeController> {
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
               return Padding(
-                padding: EdgeInsets.only(
-                    right: 8.px, top: 2.px, bottom: 2.px, left: 2.px),
+                padding: EdgeInsets.only(right: 8.px, top: 2.px, bottom: 2.px, left: 2.px),
                 child: InkWell(
                   onTap: controller.packageClickValue.value
                       ? () => null
@@ -184,12 +183,8 @@ class HomeView extends GetView<HomeController> {
                           radius: 4.px,
                         ),
                         SizedBox(height: 8.px),
-                        cardSubTitleTextView(
-                            text:
-                                '${controller.packageList?[index].packageName}'),
-                        cardDescriptionTextView(
-                            text:
-                                '${controller.packageList?[index].packagePrice}'),
+                        cardSubTitleTextView(text: '${controller.packageList?[index].packageName}'),
+                        cardDescriptionTextView(text: '${controller.packageList?[index].packagePrice}'),
                       ],
                     ),
                   ),
@@ -233,12 +228,10 @@ class HomeView extends GetView<HomeController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              padding: EdgeInsets.symmetric(
-                  horizontal: 18.px, vertical: CommonPaddingAndSize.size10()),
+              padding: EdgeInsets.symmetric(horizontal: 18.px, vertical: CommonPaddingAndSize.size10()),
               width: double.infinity,
               decoration: BoxDecoration(
-                color:
-                    Theme.of(Get.context!).colorScheme.primary.withOpacity(.05),
+                color: Theme.of(Get.context!).colorScheme.primary.withOpacity(.05),
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(8.px),
                   topRight: Radius.circular(8.px),
@@ -260,10 +253,7 @@ class HomeView extends GetView<HomeController> {
                   SizedBox(
                     height: 46.px,
                     child: VerticalDivider(
-                      color: Theme.of(Get.context!)
-                          .colorScheme
-                          .primary
-                          .withOpacity(.2),
+                      color: Theme.of(Get.context!).colorScheme.primary.withOpacity(.2),
                       width: CommonPaddingAndSize.size10(),
                     ),
                   ),
@@ -277,28 +267,26 @@ class HomeView extends GetView<HomeController> {
 
   Widget nodeCountView() => commonCard(
         title: 'Node count',
-        text1: '${controller.userDashboardBVCount?.lUserNodeCount}',
+        text1: KNPMethods.checkStringIsNullOrEmpty(string: controller.userDashboardBVCount?.lUserNodeCount),
         text2: 'Left Bv',
-        text3: '${controller.userDashboardBVCount?.rUserNodeCount}',
+        text3:  KNPMethods.checkStringIsNullOrEmpty(string: controller.userDashboardBVCount?.rUserNodeCount),
         text4: 'Right Bv',
       );
 
   Widget commissionView() => commonCard(
         title: 'Commission',
-        text1: '${controller.userDashboardBVCount?.leftCommission}',
+        text1:  KNPMethods.checkStringIsNullOrEmpty(string: controller.userDashboardBVCount?.leftCommission),
         text2: 'Left Bv',
-        text3: '${controller.userDashboardBVCount?.rightCommission}',
+        text3:  KNPMethods.checkStringIsNullOrEmpty(string: controller.userDashboardBVCount?.rightCommission),
         text4: 'Right Bv',
       );
 
   Widget yourSalesView() => commonCard(
         title: 'Your sales',
-        text1: '₹${controller.userDashboardBVCount?.totalWalletBalance}',
+        text1:  '₹${KNPMethods.checkStringIsNullOrEmpty(string: controller.userDashboardBVCount?.totalWalletBalance)}',
         text2: 'Wallet balance',
-        text3: '₹${controller.userDashboardBVCount?.totalWithdrawal}',
+        text3:  '₹${KNPMethods.checkStringIsNullOrEmpty(string: controller.userDashboardBVCount?.totalWithdrawal)}',
         text4: 'Withdrawal balance',
       );
-
-
 
 }

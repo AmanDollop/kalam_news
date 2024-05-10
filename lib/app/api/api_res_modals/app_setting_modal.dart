@@ -4,13 +4,16 @@ class AppSettingModal {
   List<FollowUs>? followUs;
   String? termCondition;
   String? welcomeMessage;
+  String? inviteMessage;
 
   AppSettingModal(
       {this.message,
         this.contacts,
         this.followUs,
         this.termCondition,
-        this.welcomeMessage});
+        this.welcomeMessage,
+        this.inviteMessage,
+      });
 
   AppSettingModal.fromJson(Map<String, dynamic> json) {
     message = json['message'];
@@ -25,6 +28,7 @@ class AppSettingModal {
     }
     termCondition = json['termCondition'];
     welcomeMessage = json['welcomeMessage'];
+    inviteMessage = json['inviteMessage'];
   }
 
   Map<String, dynamic> toJson() {
@@ -38,6 +42,7 @@ class AppSettingModal {
     }
     data['termCondition'] = termCondition;
     data['welcomeMessage'] = welcomeMessage;
+    data['inviteMessage'] = inviteMessage;
     return data;
   }
 }

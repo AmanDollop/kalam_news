@@ -22,12 +22,12 @@ class UserDashboardBVCountModal {
 }
 
 class UserDashboardBVCount {
-  int? leftCommission;
-  int? rightCommission;
-  int? totalWithdrawal;
-  int? totalWalletBalance;
-  int? lUserNodeCount;
-  int? rUserNodeCount;
+  String? leftCommission;
+  String? rightCommission;
+  String? totalWithdrawal;
+  String? totalWalletBalance;
+  String? lUserNodeCount;
+  String? rUserNodeCount;
 
   UserDashboardBVCount(
       {this.leftCommission,

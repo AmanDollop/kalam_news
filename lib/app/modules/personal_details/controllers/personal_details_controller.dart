@@ -156,6 +156,7 @@ class PersonalDetailsController extends GetxController {
       };
       statesModal.value = await ApiIntrigation.getStateApi(bodyParams: bodyParamsState);
       if (statesModal.value != null) {
+        print('statesModal.value::::: ${statesModal.value?.states?.length}');
         if (statesModal.value?.states != null && statesModal.value!.states!.isNotEmpty) {
           statesList.addAll(statesModal.value?.states ?? []);
         } else {
@@ -173,10 +174,6 @@ class PersonalDetailsController extends GetxController {
 
   Future<void> callingGetCityApi({required String stateId}) async {
     try {
-      offsetForCity.value = 0;
-      cityController.clear();
-      cityList.clear();
-      cityListSearch.clear();
       bodyParamsCity = {
         ApiConstantVar.stateId: stateId,
         ApiConstantVar.limit: limitForCity.toString(),
@@ -277,6 +274,7 @@ class PersonalDetailsController extends GetxController {
       ),
     ).whenComplete(() {
       searchStateController.clear();
+      isLastPageForState.value = false;
       statesListSearch.clear();
     });
   }
@@ -288,9 +286,16 @@ class PersonalDetailsController extends GetxController {
       Get.back();
       await callingGetCityApi(stateId: '${statesListSearch[index].stateId}');
     } else {
+      offsetForCity.value = 0;
+      limitForCity = '20';
+      cityController.clear();
+      cityList.clear();
+      cityListSearch.clear();
+      isLastPageForCity.value = false;
       stateController.text = '${statesList[index].stateName}';
       stateId = '${statesList[index].stateId}';
       Get.back();
+
       await callingGetCityApi(stateId: '${statesList[index].stateId}');
       count.value++;
     }
@@ -342,7 +347,7 @@ class PersonalDetailsController extends GetxController {
               isLastPage: isLastPageForCity.value,
               onLoadMore: () => onLoadMoreForCity(),
               child: ListView.builder(
-                physics: const ScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 padding: EdgeInsets.only(bottom: 20.px),
                 shrinkWrap: true,
                 itemCount: searchCityController.text.isNotEmpty
@@ -411,7 +416,7 @@ class PersonalDetailsController extends GetxController {
     KNPMethods.unFocsKeyBoard();
     offsetForCity.value = offsetForCity.value + 1;
     try {
-      if (int.parse(limitForCity) <= statesList.length) {
+      if (int.parse(limitForCity) <= cityList.length) {
         await callingGetCityApi(stateId: stateId ?? '');
         count.value++;
       }
@@ -436,7 +441,7 @@ class PersonalDetailsController extends GetxController {
         ApiConstantVar.stateId: stateId,
         ApiConstantVar.cityId: cityId,
         ApiConstantVar.pinCode: pinCodeController.text.trim().toString(),
-        ApiConstantVar.referredBy: 'AYU81YQO'/*referralCode.value*/,
+        ApiConstantVar.referredBy: /*'AYU81YQO'*/referralCode.value,
         ApiConstantVar.branch: rightLeftValue.value.toLowerCase(),
       };
       http.Response? res = await ApiIntrigation.registrationApi(bodyParams: bodyParamsRegister);

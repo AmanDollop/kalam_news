@@ -46,17 +46,14 @@ class RegistrationVerificationView extends GetView<RegistrationVerificationContr
                     SizedBox(height: CommonPaddingAndSize.size10()),
                     commonRowView(text1: 'City', text2: '${controller.referralUserData?.city}', isDivider: false),
                     SizedBox(height: CommonPaddingAndSize.size20()),
-                    youAreRegisteringTextView(text: 'Please select which way do you want to go?'),
-                    SizedBox(height: CommonPaddingAndSize.size20()),
+                    youAreRegisteringTextView(text:'Please select which way do you want to go?'),
                     Row(
                       children: [
                         KNPWidgets.commonRadioButtonWithTitle(
                           title: 'Left',
                           value: controller.selectRadioValue.value,
                           onTap: () {
-                            if(controller.referralUserData?.left == true) {
-                              controller.selectRadioValue.value = "Left";
-                            }
+                            controller.selectRadioValue.value = "Left";
                             controller.count.value++;
                           },
                         ),
@@ -65,15 +62,12 @@ class RegistrationVerificationView extends GetView<RegistrationVerificationContr
                           title: 'Right',
                           value: controller.selectRadioValue.value,
                           onTap: () {
-                            if(controller.referralUserData?.right == true) {
-                              controller.selectRadioValue.value = "Right";
-                            }
+                            controller.selectRadioValue.value = "Right";
                             controller.count.value++;
                           },
                         ),
                       ],
-                    ),
-                    SizedBox(height: CommonPaddingAndSize.size20()),
+                    ).paddingSymmetric(vertical: CommonPaddingAndSize.size20()),
                     proceedButtonView(),
                   ],
                 ),

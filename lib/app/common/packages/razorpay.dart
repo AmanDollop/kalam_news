@@ -13,8 +13,11 @@ import 'package:http/http.dart' as http;
 
 class KNPRazorpayMethods{
 
-  static String razorpayKeyName = "rzp_test_sBIiiURrNWQRTc";
-  static String razorpayKeyPassword = "UeGbEmzqYSb3tBjT7Mcphb2V";
+  // static String razorpayKeyName = "rzp_test_sBIiiURrNWQRTc";
+  // static String razorpayKeyPassword = "UeGbEmzqYSb3tBjT7Mcphb2V";
+
+  static String razorpayKeyName = "rzp_test_jk0xGqxJWDAXMD";
+  static String razorpayKeyPassword = "fQyNNa1s8r7eA0btP6daWQlP";
 
   static final userDataFromLocalDataBaseValue = false.obs;
   static final userDataFromLocalDataBase = ''.obs;

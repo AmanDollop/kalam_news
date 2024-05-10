@@ -85,7 +85,7 @@ class GenealogyController extends GetxController {
   }
 
   Future<void> clickOnLeftUser() async {
-    if(lUser?.lBvCount != 0 || lUser?.rBvCount != 0){
+    if(lUser?.lBvCount != '0' || lUser?.rBvCount != '0'){
       bodyParamsForGetUserTreeApi.clear();
       bodyParamsForGetUserTreeApi ={
         ApiConstantVar.userId : lUser?.userId.toString() ?? ''
@@ -95,7 +95,7 @@ class GenealogyController extends GetxController {
   }
 
   Future<void> clickOnRightUser() async {
-    if(rUser?.lBvCount != 0 || rUser?.rBvCount != 0){
+    if(rUser?.lBvCount != '0' || rUser?.rBvCount != '0'){
       bodyParamsForGetUserTreeApi.clear();
       bodyParamsForGetUserTreeApi = {
         ApiConstantVar.userId : rUser?.userId.toString() ?? ''

@@ -48,7 +48,11 @@ class RegistrationView extends GetView<RegistrationController> {
         hintText: 'Referral code',
         controller: controller.referralCodeController,
         focusNode: controller.referralCodeFocusNode,
+        textCapitalization: TextCapitalization.characters,
         validator: (value) => V.isValid(value: value, title: 'Please enter referral code'),
+        onChanged: (value) {
+          controller.referralCodeController.text =value.trim().toUpperCase();
+        },
       );
 
   Widget verifyButtonView() => KNPWidgets.commonElevatedButton(

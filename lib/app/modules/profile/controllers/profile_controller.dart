@@ -5,15 +5,19 @@ import 'package:kalam_news_publication/app/api/api_res_modals/user_data_modal.da
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/common/packages/cd.dart';
 import 'package:kalam_news_publication/app/common/packages/razorpay.dart';
+import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
 import 'package:kalam_news_publication/app/db/data_base_constant/data_base_constant.dart';
 import 'package:kalam_news_publication/app/db/data_base_helper/data_base_helper.dart';
 import 'package:kalam_news_publication/app/modules/bottom_bar/views/bottom_bar_view.dart';
+import 'package:kalam_news_publication/app/modules/welcome_massage/views/welcome_massage_view.dart';
 import 'package:kalam_news_publication/app/routes/app_pages.dart';
 import 'package:share_plus/share_plus.dart';
 
 class ProfileController extends GetxController {
   final count = 0.obs;
   final apiResValue = true.obs;
+
+  final referralAFriendsValue = false.obs;
 
   final userDataFromLocalDataBaseValue = false.obs;
   final userDataFromLocalDataBase = ''.obs;
@@ -67,20 +71,32 @@ class ProfileController extends GetxController {
 
   Future<void> clickOnEditProfile() async {
     await Get.toNamed(Routes.EDIT_PROFILE, arguments: [userData]);
+    Get.lazyPut(()=>ProfileController());
     onInit();
   }
 
-  void clickOnChangePassword() {
-    Get.toNamed(Routes.NEW_PASSWORD, arguments: ['Change password']);
+  Future<void> clickOnChangePassword() async {
+    await Get.toNamed(Routes.NEW_PASSWORD, arguments: ['Change password']);
+    Get.lazyPut(()=>ProfileController());
+    onInit();
   }
 
-  void clickOnManageBankDetails() {
-    Get.toNamed(Routes.MANAGE_BANK_DETAIL);
+  Future<void> clickOnManageBankDetails() async {
+    await Get.toNamed(Routes.MANAGE_BANK_DETAIL);
+    Get.lazyPut(()=>ProfileController());
+    onInit();
   }
 
   void clickOnReferralAFriends() {
-    Share.share('Give your friend up to 50% off when they sign up with your link \nReferral Code -: "${userData?.userDetails?.referralCode}"',
-        subject: 'Give your friend up to 50% off when they sign up with your link. Receive 2 Wish Cash for each referral after their first order ships. Earn up to 20 per month.',);
+    referralAFriendsValue.value = true;
+    String msg =KNPWidgets.extractTextFromHtml(appSettingModal.value?.inviteMessage ??'');
+    try{
+      Share.share(msg);
+    }catch(e){
+      referralAFriendsValue.value = false;
+    }
+    referralAFriendsValue.value = false;
+    count.value++;
   }
 
   Future<void> clickOnLogOutButton() async {

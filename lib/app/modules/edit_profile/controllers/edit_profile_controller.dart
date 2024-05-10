@@ -12,6 +12,8 @@ import 'package:kalam_news_publication/app/common/packages/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'package:kalam_news_publication/app/db/data_base_constant/data_base_constant.dart';
 import 'package:kalam_news_publication/app/db/data_base_helper/data_base_helper.dart';
+import 'package:kalam_news_publication/app/modules/bottom_bar/views/bottom_bar_view.dart';
+import 'package:kalam_news_publication/app/routes/app_pages.dart';
 
 class EditProfileController extends GetxController {
   final count = 0.obs;
@@ -170,7 +172,12 @@ class EditProfileController extends GetxController {
           mapRes = jsonDecode(response.body);
           KNPMethods.showSnackBar(message: mapRes[ApiConstantVar.message]);
           await callingGetUserDataApi();
-          Get.back();
+
+          selectedBottomNavigationIndex.value = 0;
+          // count.value++;
+          // Get.back();
+          Get.offAllNamed(Routes.BOTTOM_BAR);
+          saveButtonValue.value = false;
         }
       } else {
         apiResValue.value = false;
@@ -199,6 +206,7 @@ class EditProfileController extends GetxController {
       }
     } catch (e) {
       KNPMethods.error();
+      saveButtonValue.value = false;
     }
   }
 

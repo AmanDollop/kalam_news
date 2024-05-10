@@ -2,10 +2,12 @@ import 'package:carousel_indicator/carousel_indicator.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/common/common_padding_size/common_padding_size.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:html/parser.dart' show parse;
 
 class KNPWidgets {
   /* --------------------------Normal Widgets View--------------------------*/
@@ -868,4 +870,28 @@ class KNPWidgets {
       child: child,
     );
   }
+
+  static Widget removeHtmlTagsProductAndSellerDescription({required String string}) {
+    return Html(
+      data: string.trim(),
+      // shrinkWrap: false,
+      style: {
+        "body": Style(
+          fontSize: FontSize(12.px),
+          fontWeight: FontWeight.w500,
+          color: Theme.of(Get.context!).colorScheme.secondary,margin: Margins.zero, padding: HtmlPaddings.zero,),
+        "li": Style(
+            listStyleType: ListStyleType.circle,
+            margin: Margins.zero,
+            padding: HtmlPaddings.zero
+        ),
+      },
+    );
+  }
+
+  static String extractTextFromHtml(String htmlString) {
+    final htmlDocument = parse(htmlString);
+    return parse(htmlDocument.body!.text).documentElement!.text;
+  }
+
 }

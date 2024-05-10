@@ -29,7 +29,8 @@ class WalletView extends GetView<WalletController> {
                   inAsyncCall: controller.apiResValue.value,
                   child: controller.apiResValue.value
                       ? KNPWidgets.commonProgressBarView()
-                      : ListView(
+                      : controller.withdrawHistoryModal.value !=null
+                      ? ListView(
                           padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
                           children: [
                             totalIncomeView(),
@@ -43,7 +44,8 @@ class WalletView extends GetView<WalletController> {
                             historyView(),
                             SizedBox(height: CommonPaddingAndSize.size20() * 4)
                           ],
-                        ),
+                        )
+                      : KNPWidgets.noDataFoundView(),
                 ),
               ),
             ),
@@ -92,9 +94,9 @@ class WalletView extends GetView<WalletController> {
     hintText: '₹ Enter amount',
     controller: controller.withdrawAmountController,
     focusNode: controller.withdrawAmountFocusNode,
-    keyboardType: TextInputType.number,
-    maxLength: 7,
-    validator: (value) => V.isValid(value: value, title: 'Please enter withdraw amount'),
+    // keyboardType: TextInputType.number,
+    // maxLength: 7,
+    // validator: (value) => V.isValid(value: value, title: 'Please enter withdraw amount'),
   );
 
   Widget withdrawNowButtonView() => KNPWidgets.commonElevatedButton(
@@ -170,6 +172,7 @@ class WalletView extends GetView<WalletController> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         textFiledTitleTextView(text: 'Kotak mahindra  bank',fontSize: 12.px),
+                        if(controller.walletHistory?[index].createdAt != null && controller.walletHistory![index].createdAt!.isNotEmpty)
                         cardSubTitleTextView(
                           text:
                           controller.walletHistory?[index].transactionType == 'income'
@@ -191,6 +194,7 @@ class WalletView extends GetView<WalletController> {
                   ),
                 ],
               ),
+              if(controller.walletHistory?.length != null && controller.walletHistory!.isNotEmpty)
               if(index != controller.walletHistory!.length-1)
                 KNPWidgets.commonDividerView(height: CommonPaddingAndSize.size12()*2,leftPadding: 0, rightPadding: 0),
             ],

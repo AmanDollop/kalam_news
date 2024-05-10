@@ -13,6 +13,10 @@ class ProfileView extends GetView<ProfileController> {
 
   @override
   Widget build(BuildContext context) {
+    Get.lazyPut<ProfileController>(
+          () => ProfileController(),
+    );
+    ProfileController profileController = Get.find();
     return Scaffold(
       body: Obx(() {
         controller.count.value;
@@ -151,8 +155,7 @@ class ProfileView extends GetView<ProfileController> {
             children: [
               Flexible(
                 flex: 2,
-                child:
-                    cardTitleTextView(text: text1, textAlign: TextAlign.start),
+                child: cardTitleTextView(text: text1, textAlign: TextAlign.start),
               ),
               SizedBox(width: CommonPaddingAndSize.size10()),
               buttonValue
@@ -211,7 +214,9 @@ class ProfileView extends GetView<ProfileController> {
             KNPWidgets.commonDividerView(height: 0),
             commonRowForCard(
               text1: 'Referral a friends',
-              onTap: () => controller.clickOnReferralAFriends(),
+              onTap: controller.referralAFriendsValue.value
+                  ? () => KNPMethods.showSnackBar(message: 'Wait for response')
+                  : () => controller.clickOnReferralAFriends(),
             ),
             KNPWidgets.commonDividerView(height: 0),
             commonRowForCard(

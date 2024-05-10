@@ -11,57 +11,36 @@ import 'package:http/http.dart' as http;
 
 class KNPMethods{
 
+
+  static String checkStringIsNullOrEmpty({String? string}){
+    if(string != null && string.isNotEmpty){
+      return string;
+    }else{
+      return '?';
+    }
+  }
+
   static void unFocsKeyBoard() {
     FocusManager.instance.primaryFocus?.unfocus();
   }
 
   static void showSnackBar({required String message, Duration? duration, bool isFloating = true, Color? backgroundColor, bool showCloseIcon = false}) {backgroundColor = Theme.of(Get.context!).colorScheme.primary;
-    // Vibration.vibrate(duration: 500);
     if (isFloating) {
-      /*var snackBar = SnackBar(
-        elevation: .4,
-        showCloseIcon: showCloseIcon,
-        closeIconColor: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(C.radius)),
-        content: Text(
-          message,
-          style: Theme.of(Get.context!).textTheme.labelLarge?.copyWith(
-                fontSize: 14.px,
-              ),
-        ),
-        backgroundColor: backgroundColor,
-        margin: EdgeInsets.symmetric(horizontal: C.margin, vertical: C.margin*6),
-        behavior: SnackBarBehavior.floating,
-        duration: duration ?? const Duration(seconds: 2),
-      );
-      ScaffoldMessenger.of(Get.context!).showSnackBar(snackBar);*/
       Fluttertoast.cancel();
       Fluttertoast.showToast(
           msg: message,
           toastLength: Toast.LENGTH_LONG,
+          backgroundColor: Theme.of(Get.context!).colorScheme.primary,
           gravity: ToastGravity.TOP,
           timeInSecForIosWeb: 1,
           textColor: Theme.of(Get.context!).colorScheme.inversePrimary,
           fontSize: 12.px
       );
     } else {
-      /*var snackBar = SnackBar(
-        elevation: .4,
-        showCloseIcon: showCloseIcon,
-        closeIconColor: Col.inverseSecondary,
-        content: Text(
-          message,
-          style: Theme.of(Get.context!).textTheme.labelLarge?.copyWith(
-                fontSize: 14.px,
-              ),
-        ),
-        backgroundColor: backgroundColor,
-        duration: duration ?? const Duration(seconds: 2),
-      );
-      ScaffoldMessenger.of(Get.context!).showSnackBar(snackBar);*/
       Fluttertoast.cancel();
       Fluttertoast.showToast(
           msg: message,
+          backgroundColor: Theme.of(Get.context!).colorScheme.primary,
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.TOP,
           timeInSecForIosWeb: 1,
@@ -72,9 +51,10 @@ class KNPMethods{
   }
 
   static void error() {
-    // Vibration.vibrate(duration: 500);
+    Fluttertoast.cancel();
     Fluttertoast.showToast(
         msg: 'Something went wrong!',
+        backgroundColor: Theme.of(Get.context!).colorScheme.error,
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 1,
@@ -85,9 +65,12 @@ class KNPMethods{
   }
 
   static void noInternet() {
-    // showSnackBar(message: 'Please check your internet connection');
+    Fluttertoast.cancel();
+    ToastStateFulState();
+
     Fluttertoast.showToast(
         msg: 'Please check your internet connection',
+        backgroundColor: Theme.of(Get.context!).colorScheme.error,
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.TOP,
         timeInSecForIosWeb: 1,

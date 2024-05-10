@@ -61,7 +61,7 @@ class MyHttp {
         if (kDebugMode) print("ERROR:: $e");
          if (kDebugMode) print("CALLING:: Server Down");
        // MyLogger.logger.e("CALLING:: Server Down");
-        //MyCommonMethods.serverDownShowSnackBar(context: context);
+        KNPMethods.error();
         return null;
       }
     } else {
@@ -103,6 +103,7 @@ class MyHttp {
            if (kDebugMode) print("CALLING:: Server Down");
         // MyLogger.logger.e("CALLING:: Server Down");
           //MyCommonMethods.serverDownShowSnackBar(context: context);
+          KNPMethods.error();
           return null;
         }
         // ignore: unnecessary_null_comparison
@@ -132,6 +133,7 @@ class MyHttp {
            if (kDebugMode) print("CALLING:: Server Down");
         // MyLogger.logger.e("CALLING:: Server Down");
           //MyCommonMethods.serverDownShowSnackBar(context: context);
+          KNPMethods.error();
           return null;
         }
         // ignore: unnecessary_null_comparison
@@ -181,6 +183,7 @@ class MyHttp {
          if (kDebugMode) print("CALLING:: Server Down");
         // MyLogger.logger.e("CALLING:: Server Down");
         //MyCommonMethods.serverDownShowSnackBar(context: context);
+        KNPMethods.error();
         return null;
       }
     } else {
@@ -220,6 +223,7 @@ class MyHttp {
            if (kDebugMode) print("CALLING:: Server Down");
         // MyLogger.logger.e("CALLING:: Server Down");
           //MyCommonMethods.serverDownShowSnackBar(context: context);
+          KNPMethods.error();
           return null;
         }
         // ignore: unnecessary_null_comparison
@@ -252,6 +256,7 @@ class MyHttp {
            if (kDebugMode) print("CALLING:: Server Down");
         // MyLogger.logger.e("CALLING:: Server Down");
           //MyCommonMethods.serverDownShowSnackBar(context: context);
+          KNPMethods.error();
           return null;
         }
         // ignore: unnecessary_null_comparison
@@ -328,6 +333,7 @@ class MyHttp {
           if (kDebugMode) print("ERROR:: $e");
            if (kDebugMode) print("CALLING:: Server Down");
         // MyLogger.logger.e("CALLING:: Server Down");
+          KNPMethods.error();
           //MyCommonMethods.serverDownShowSnackBar(context: context);
           return null;
         }
@@ -356,6 +362,7 @@ class MyHttp {
         // ignore: use_build_context_synchronously
          if (kDebugMode) print("CALLING:: Server Down");
         // MyLogger.logger.e("CALLING:: Server Down");
+        KNPMethods.error();
         //MyCommonMethods.serverDownShowSnackBar(context: context);
         return null;
       }

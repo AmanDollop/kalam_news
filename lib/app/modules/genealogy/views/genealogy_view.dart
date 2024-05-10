@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/common/common_padding_size/common_padding_size.dart';
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
@@ -109,11 +110,16 @@ class GenealogyView extends GetView<GenealogyController> {
                       ? '${controller.userData?.userDetails?.userId}'
                       : '?',
                 ),
-                commonRowForProfileSection(
-                  text1: 'Referral code - ',
-                  text2: controller.userData?.userDetails?.referralCode != null
-                      ? '${controller.userData?.userDetails?.referralCode}'
-                      : '?',
+                InkWell(
+                  onTap: controller.userData?.userDetails?.referralCode != null
+                      ? () async => await Clipboard.setData(ClipboardData(text: "${controller.userData?.userDetails?.referralCode}"))
+                      : () => null,
+                  child: commonRowForProfileSection(
+                    text1: 'Referral code - ',
+                    text2: controller.userData?.userDetails?.referralCode != null
+                        ? '${controller.userData?.userDetails?.referralCode}'
+                        : '?',
+                  ),
                 ),
               ],
             ),
@@ -262,10 +268,16 @@ class GenealogyView extends GetView<GenealogyController> {
 
   Widget totalBusinessValueView() => commonCard(
         title: 'Total business value',
-        totalCountText: controller.userBVCount?.totalBvCount.toString() ?? '00',
-        text1: controller.userBVCount?.lBvCount.toString() ?? '00',
+        totalCountText: controller.userBVCount?.totalBvCount != null && controller.userBVCount!.totalBvCount!.isNotEmpty
+            ? '${controller.userBVCount?.totalBvCount}'
+            : '?',
+        text1: controller.userBVCount?.lBvCount != null && controller.userBVCount!.lBvCount!.isNotEmpty
+            ? '${controller.userBVCount?.lBvCount}'
+            : '?',
         text2: 'Left Bv',
-        text3: controller.userBVCount?.rBvCount.toString() ?? '00',
+        text3: controller.userBVCount?.rBvCount != null && controller.userBVCount!.rBvCount!.isNotEmpty
+            ? '${controller.userBVCount?.rBvCount}'
+            : '?',
         text4: 'Right Bv',
       );
 
@@ -278,8 +290,8 @@ class GenealogyView extends GetView<GenealogyController> {
           padding: EdgeInsets.symmetric(horizontal: 14.px, vertical: 6.px),
           decoration: BoxDecoration(
             color: isPaidUser == 0
-                ? Theme.of(Get.context!).colorScheme.onError
-                : Theme.of(Get.context!).colorScheme.onTertiary.withOpacity(.2),
+                ? const Color(0xfffff4f4)
+                : const Color(0xfff3fcf2),
             borderRadius: BorderRadius.circular(10.px),
             border: Border.all(color: isPaidUser == 0
                 ? Theme.of(Get.context!).colorScheme.error
@@ -317,6 +329,8 @@ class GenealogyView extends GetView<GenealogyController> {
                       color: Theme.of(Get.context!).colorScheme.secondary,
                       fontWeight: FontWeight.w700,
                     ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
               KNPWidgets.commonDividerView(color: isPaidUser == 0
                   ? Theme.of(Get.context!).colorScheme.error
@@ -324,9 +338,13 @@ class GenealogyView extends GetView<GenealogyController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  commonColumnForLevelCard(text1: leftBVCount, text2: 'Left BV', textColor: isPaidUser == 0
+                  commonColumnForLevelCard(
+                    text1: leftBVCount,
+                    text2: 'Left BV',
+                    textColor: isPaidUser == 0
                       ? Theme.of(Get.context!).colorScheme.error
-                      : Theme.of(Get.context!).colorScheme.onTertiary,),
+                      : Theme.of(Get.context!).colorScheme.onTertiary,
+                  ),
                   SizedBox(
                     height: 18.px,
                     child: VerticalDivider(
@@ -337,9 +355,13 @@ class GenealogyView extends GetView<GenealogyController> {
                       width: CommonPaddingAndSize.size20(),
                     ),
                   ),
-                  commonColumnForLevelCard(text1: rightBVCount, text2: 'Right BV', textColor: isPaidUser == 0
+                  commonColumnForLevelCard(
+                    text1: rightBVCount,
+                    text2: 'Right BV',
+                    textColor: isPaidUser == 0
                       ? Theme.of(Get.context!).colorScheme.error
-                      : Theme.of(Get.context!).colorScheme.onTertiary,),
+                      : Theme.of(Get.context!).colorScheme.onTertiary,
+                  ),
                 ],
               )
             ],
@@ -405,15 +427,19 @@ class GenealogyView extends GetView<GenealogyController> {
   Widget topUserView() => commonLevelConnection(
       isPaidUser: controller.userDetailsForUserTree?.isPaidUser ?? 0,
       userName: '${controller.userDetailsForUserTree?.firstName} ${controller.userDetailsForUserTree?.lastName}',
-      leftBVCount: '${controller.userDetailsForUserTree?.lBvCount}',
-      rightBVCount: '${controller.userDetailsForUserTree?.rBvCount}',
+      leftBVCount: controller.userDetailsForUserTree?.lBvCount != null && controller.userDetailsForUserTree!.lBvCount!.isNotEmpty
+          ? '${controller.userDetailsForUserTree?.lBvCount}'
+          : '?',
+      rightBVCount: controller.userDetailsForUserTree?.rBvCount != null && controller.userDetailsForUserTree!.rBvCount!.isNotEmpty
+          ? '${controller.userDetailsForUserTree?.rBvCount}'
+          : '?',
       profile: KNPMethods.baseUrlForNetworkImage(imagePath: '${controller.userDetailsForUserTree?.profile}')
   );
 
   Widget levelCountAndGoBackView ()=> RichText(
     text: TextSpan(
-      text: controller.userDetailsForUserTree?.userLevel != null && controller.userDetailsForUserTree?.userLevel != null
-          ? '${controller.userDetailsForUserTree?.userLevel} Leave below '
+      text: controller.userDetailsForUserTree?.userLevel != null && controller.userDetailsForUserTree?.userLevel != 0
+          ? '${controller.userDetailsForUserTree?.userLevel} Level below '
           : ' ',
       style: Theme.of(Get.context!).textTheme.titleSmall,
       children: [
@@ -433,8 +459,12 @@ class GenealogyView extends GetView<GenealogyController> {
   Widget leftUserView() => commonLevelConnection(
       isPaidUser: controller.lUser?.isPaidUser ?? 0,
       userName: '${controller.lUser?.firstName} ${controller.lUser?.lastName}',
-      leftBVCount: '${controller.lUser?.lBvCount}',
-      rightBVCount: '${controller.lUser?.rBvCount}',
+      leftBVCount: controller.lUser?.lBvCount != null && controller.lUser!.lBvCount!.isNotEmpty
+          ? '${controller.lUser?.lBvCount}'
+          : '?',
+      rightBVCount: controller.lUser?.rBvCount != null && controller.lUser!.rBvCount!.isNotEmpty
+          ? '${controller.lUser?.rBvCount}'
+          : '?',
       onTap: () => controller.clickOnLeftUser(),
       profile: KNPMethods.baseUrlForNetworkImage(imagePath: '${controller.lUser?.profile}')
   );
@@ -442,8 +472,12 @@ class GenealogyView extends GetView<GenealogyController> {
   Widget rightUserView() => commonLevelConnection(
       isPaidUser: controller.rUser?.isPaidUser?? 0,
       userName: '${controller.rUser?.firstName} ${controller.rUser?.lastName}',
-      leftBVCount: '${controller.rUser?.lBvCount}',
-      rightBVCount: '${controller.rUser?.rBvCount}',
+      leftBVCount: controller.rUser?.lBvCount != null && controller.rUser!.lBvCount!.isNotEmpty
+          ? '${controller.rUser?.lBvCount}'
+          : '?',
+      rightBVCount: controller.rUser?.rBvCount != null && controller.rUser!.rBvCount!.isNotEmpty
+          ? '${controller.rUser?.rBvCount}'
+          : '?',
       onTap: () => controller.clickOnRightUser(),
       profile: KNPMethods.baseUrlForNetworkImage(imagePath: '${controller.rUser?.profile}')
   );
@@ -456,12 +490,17 @@ class GenealogyView extends GetView<GenealogyController> {
           color: Theme.of(Get.context!).colorScheme.secondary,
           fontWeight: FontWeight.w700,
         ),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
       ),
       Text(
         text2,
         style: Theme.of(Get.context!).textTheme.titleSmall?.copyWith(
             color: Theme.of(Get.context!).colorScheme.secondary, //textColor,
-            fontSize: 8.px),
+            fontSize: 8.px,
+        ),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
       ),
     ],
   );

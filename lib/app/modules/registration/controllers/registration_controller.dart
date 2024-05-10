@@ -51,7 +51,7 @@ class RegistrationController extends GetxController {
       };
       referralUserDataModal.value = await ApiIntrigation.referralUserDataApi(bodyParams: bodyParams);
       if(referralUserDataModal.value != null){
-        print(referralUserDataModal.value?.message);
+        KNPMethods.showSnackBar(message: '${referralUserDataModal.value?.message}');
         referralUserData = referralUserDataModal.value?.referralUserData;
         Get.toNamed(Routes.REGISTRATION_VERIFICATION,arguments: [referralUserData]);
         buttonValue.value = false;

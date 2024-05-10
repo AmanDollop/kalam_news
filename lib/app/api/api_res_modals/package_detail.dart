@@ -3,6 +3,7 @@ class PackageDetailModal {
   String? packageName;
   String? packageImage;
   String? packageAmount;
+  String? packageDescription;
   List<PackageDetails>? packageDetails;
   int? isUserPackage;
 
@@ -11,6 +12,7 @@ class PackageDetailModal {
         this.packageName,
         this.packageImage,
         this.packageAmount,
+        this.packageDescription,
         this.packageDetails,
         this.isUserPackage});
 
@@ -19,6 +21,7 @@ class PackageDetailModal {
     packageName = json['package_name'];
     packageImage = json['package_image'];
     packageAmount = json['package_amount'];
+    packageDescription = json['package_description'];
     if (json['package_details'] != null) {
       packageDetails = <PackageDetails>[];
       json['package_details'].forEach((v) {
@@ -34,6 +37,7 @@ class PackageDetailModal {
     data['package_name'] = packageName;
     data['package_image'] = packageImage;
     data['package_amount'] = packageAmount;
+    data['package_description'] = packageDescription;
     if (packageDetails != null) {
       data['package_details'] =
           packageDetails!.map((v) => v.toJson()).toList();
@@ -55,6 +59,7 @@ class PackageDetails {
   String? packageName;
   String? packageImage;
   String? packagePrice;
+  String? packageDesc;
 
   PackageDetails(
       {this.stageId,
@@ -67,7 +72,8 @@ class PackageDetails {
         this.updatedAt,
         this.packageName,
         this.packageImage,
-        this.packagePrice});
+        this.packagePrice,
+        this.packageDesc});
 
   PackageDetails.fromJson(Map<String, dynamic> json) {
     stageId = json['stage_id'];
@@ -81,6 +87,7 @@ class PackageDetails {
     packageName = json['package_name'];
     packageImage = json['package_image'];
     packagePrice = json['package_price'];
+    packageDesc = json['package_desc'];
   }
 
   Map<String, dynamic> toJson() {
@@ -96,6 +103,7 @@ class PackageDetails {
     data['package_name'] = packageName;
     data['package_image'] = packageImage;
     data['package_price'] = packagePrice;
+    data['package_desc'] = packageDesc;
     return data;
   }
 }

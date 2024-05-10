@@ -1,7 +1,7 @@
 class WithdrawHistoryModal {
   bool? success;
-  int? totalWithdrawal;
-  int? totalCommission;
+  String? totalWithdrawal;
+  String? totalCommission;
   List<WalletHistory>? walletHistory;
 
   WithdrawHistoryModal(

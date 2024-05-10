@@ -1,8 +1,8 @@
 import 'dart:async';
-
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/common/packages/scroll_behavior.dart';
@@ -12,7 +12,7 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import 'app/routes/app_pages.dart';
 
 void main() {
-   const SystemUiOverlayStyle(
+  const SystemUiOverlayStyle(
       statusBarBrightness: Brightness.dark, // For iOS: (dark icons)
       statusBarIconBrightness: Brightness.dark, // For Android(M and greater): (dark icons)
       systemNavigationBarIconBrightness: Brightness.dark
@@ -30,7 +30,10 @@ void main() {
         enabled: false,
         builder: (context) => ResponsiveSizer(
           builder: (buildContext, orientation, screenType) => GestureDetector(
-            onTap: () => KNPMethods.unFocsKeyBoard(),
+            onTap: () {
+              KNPMethods.unFocsKeyBoard();
+              Fluttertoast.cancel();
+            },
             child: GetMaterialApp(
               title: "Application",
               theme: AppThemeData.kNPThemeData(fontFamily: 'HelveticaNeue'),

@@ -44,7 +44,7 @@ class BottomBarController extends GetxController {
   Widget pageCalling({int? selectedIndex}) {
     switch (selectedIndex) {
       case 0:
-        Get.delete<HomeController>();
+        // Get.delete<HomeController>();
         Get.lazyPut<HomeController>(
           () => HomeController(),
         );
@@ -52,7 +52,7 @@ class BottomBarController extends GetxController {
         return const HomeView();
 
       case 1:
-        Get.delete<ProfileController>();
+        // Get.delete<ProfileController>();
         Get.lazyPut<ProfileController>(
           () => ProfileController(),
         );
@@ -60,7 +60,7 @@ class BottomBarController extends GetxController {
         return const ProfileView();
 
       case 2:
-        Get.delete<GenealogyController>();
+        // Get.delete<GenealogyController>();
         Get.lazyPut<GenealogyController>(
           () => GenealogyController(),
         );
@@ -68,7 +68,7 @@ class BottomBarController extends GetxController {
         return const GenealogyView();
 
       case 3:
-        Get.delete<WalletController>();
+        // Get.delete<WalletController>();
         Get.lazyPut<WalletController>(
           () => WalletController(),
         );
@@ -76,7 +76,7 @@ class BottomBarController extends GetxController {
         return const WalletView();
 
       case 4:
-        Get.delete<AchievementsController>();
+        // Get.delete<AchievementsController>();
         Get.lazyPut<AchievementsController>(
           () => AchievementsController(),
         );

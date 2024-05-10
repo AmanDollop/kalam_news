@@ -1,6 +1,8 @@
+import 'dart:io';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/api/api_constant_var/api_constant_var.dart';
 import 'package:kalam_news_publication/app/api/api_intrigation/api_intrigation.dart';
@@ -78,7 +80,10 @@ class HomeController extends GetxController {
   onWillPop() {
     CD.commonIosExitAppDialog(
       clickOnCancel: () => Get.back(),
-      clickOnExit: () => /*exit(0)*/ SystemNavigator.pop(),
+      clickOnExit: () {
+        Fluttertoast.cancel();
+        exit(0); /*SystemNavigator.pop()*/
+      },
     );
   }
 
@@ -131,9 +136,9 @@ class HomeController extends GetxController {
                   '${packageDetailModal.value?.packageName}',
                   style: Theme.of(Get.context!).textTheme.labelLarge?.copyWith(fontSize: 20.px),
                 ),
-                if (packageDetails != null && packageDetails!.isNotEmpty)
-                SizedBox(height: CommonPaddingAndSize.size10()),
-                if (packageDetails != null && packageDetails!.isNotEmpty)
+                // if (packageDetailModal.value?.packageDescription != null && packageDetailModal.value!.packageDescription!.isNotEmpty)
+                // SizedBox(height: CommonPaddingAndSize.size10()),
+                /*if (packageDetails != null && packageDetails!.isNotEmpty)
                 KNPWidgets.commonContainerView(
                     child: Column(
                       children: [
@@ -160,7 +165,8 @@ class HomeController extends GetxController {
                         ),
                       ],
                     ),
-                  ),
+                  ),*/
+                KNPWidgets.removeHtmlTagsProductAndSellerDescription(string: packageDetailModal.value?.packageDescription ?? ''),
                 if(packageDetailModal.value?.isUserPackage == 0)
                 SizedBox(height: CommonPaddingAndSize.size10()),
                 if(packageDetailModal.value?.isUserPackage == 0)
@@ -296,8 +302,7 @@ class HomeController extends GetxController {
   Future<void> callingPackageDetailApi({required String packageId}) async {
     try {
       bodyParamsForPackageDetailApi = {ApiConstantVar.packageId: packageId};
-      packageDetailModal.value = await ApiIntrigation.getPackageDetailApi(
-          bodyParams: bodyParamsForPackageDetailApi);
+      packageDetailModal.value = await ApiIntrigation.getPackageDetailApi(bodyParams: bodyParamsForPackageDetailApi);
       if (packageDetailModal.value != null) {
         packageDetails = packageDetailModal.value?.packageDetails;
       }
