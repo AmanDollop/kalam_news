@@ -66,6 +66,8 @@ class PersonalDetailsView extends GetView<PersonalDetailsController> {
                            SizedBox(height: CommonPaddingAndSize.size10()),
                            completeAddressTextFieldView(),
                            SizedBox(height: CommonPaddingAndSize.size20()),
+                           aadharNumberTextFieldView(),
+                           SizedBox(height: CommonPaddingAndSize.size20()),
                            stateTextFieldView(),
                            SizedBox(height: CommonPaddingAndSize.size20()),
                            if(controller.stateController.text.isNotEmpty)
@@ -200,6 +202,16 @@ class PersonalDetailsView extends GetView<PersonalDetailsController> {
         controller: controller.completeAddressController,
         focusNode: controller.completeAddressFocusNode,
         validator: (value) => V.isValid(value: value, title: 'Please enter complete address'),
+      );
+
+  Widget aadharNumberTextFieldView() => KNPWidgets.commonTextFormField(
+        title: 'Aadhar number*',
+        hintText: 'Aadhar number',
+        controller: controller.aadharNumberController,
+        focusNode: controller.aadharNumberFocusNode,
+        keyboardType: TextInputType.number,
+        maxLength: 12,
+        validator: (value) => V.isValidateAadhar(value: value),
       );
 
   Widget downArrowIconView() => Icon(

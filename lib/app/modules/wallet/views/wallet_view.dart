@@ -94,8 +94,8 @@ class WalletView extends GetView<WalletController> {
     hintText: '₹ Enter amount',
     controller: controller.withdrawAmountController,
     focusNode: controller.withdrawAmountFocusNode,
-    // keyboardType: TextInputType.number,
-    // maxLength: 7,
+    keyboardType: TextInputType.number,
+    maxLength: 7,
     // validator: (value) => V.isValid(value: value, title: 'Please enter withdraw amount'),
   );
 

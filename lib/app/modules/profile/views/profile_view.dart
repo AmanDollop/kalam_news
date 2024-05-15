@@ -67,11 +67,11 @@ class ProfileView extends GetView<ProfileController> {
                 userNameTextView(),
                 Row(
                   children: [
-                    cardTitleTextView(text: 'User id - '),
+                    cardTitleTextView(text: 'Referred By - '),
                     Flexible(
                       child: cardSubTitleTextView(
-                        text: controller.userData?.userDetails?.userId != null
-                            ? '${controller.userData?.userDetails?.userId}'
+                        text: controller.userData?.userDetails?.referredBy != null
+                            ? '${controller.userData?.userDetails?.referredBy}'
                             : '?',
                       ),
                     ),

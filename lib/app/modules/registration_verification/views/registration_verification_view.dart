@@ -80,8 +80,8 @@ class RegistrationVerificationView extends GetView<RegistrationVerificationContr
   }
 
   Widget referralCodeTextFieldView() => KNPWidgets.commonTextFormField(
-        title: 'Referral code',
-        hintText: 'Referral code',
+        title: 'Referral code / Phone*',
+        hintText: 'Referral code / Phone',
         controller: controller.referralCodeController,
         focusNode: controller.referralCodeFocusNode,
         readOnly: true,

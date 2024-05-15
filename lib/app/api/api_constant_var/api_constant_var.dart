@@ -4,7 +4,7 @@ class ApiConstantVar{
 
   static const bearer = "Bearer";
 
-  static const authorization="Authorization";
+  static const authorization = "Authorization";
 
   static const limit = "limit";
 
@@ -40,6 +40,8 @@ class ApiConstantVar{
 
   static const address = "address";
 
+  static const aadharNumber = "aadhar_number";
+
   static const city = "city";
 
   static const state = "state";
@@ -68,7 +70,6 @@ class ApiConstantVar{
 
   static const profile = "profile";
 
-
   static const bankName = "bank_name";
 
   static const bankBranch = "bank_branch";
@@ -92,12 +93,13 @@ class ApiUrls{
 
   // static const baseUrlForGet = "192.168.1.172:8000";
 
-  /* static const baseUrl = "http://192.168.1.229:8000/api/";
+
+  /*   static const baseUrl = "http://192.168.1.229:8000/api/";
 
      static const baseUrlForImage = "http://192.168.1.229:8000/";
 
-     static const baseUrlForGet = "192.168.1.229:8000";
-  */
+     static const baseUrlForGet = "192.168.1.229:8000";*/
+
 
   static const baseUrl = "https://kalamnewspublication.in/api/";
 

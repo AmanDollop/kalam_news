@@ -27,14 +27,12 @@ class DataBaseHelper {
     database?.close();
   }
 
-
   createTableInDataBaseForUserDetail({required Database db}) async {
     await db.execute('''CREATE TABLE IF NOT EXISTS ${DataBaseConstant.tableNameForUserDetail}  
         (${DataBaseConstant.columnId} ${DataBaseType.autoIncrementUserId}
         , ${DataBaseConstant.userDetail} ${DataBaseType.textType}
         )''');
   }
-
 
   insertInDataBase({required Map<String, dynamic> data,required String tableName}) async {
     int id = await dataBaseHelper?.insert(tableName, data) ?? -1;

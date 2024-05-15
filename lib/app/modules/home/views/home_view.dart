@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kalam_news_publication/app/api/api_constant_var/api_constant_var.dart';
 import 'package:kalam_news_publication/app/common/common_padding_size/common_padding_size.dart';
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/common/packages/model_progress_bar.dart';
@@ -140,10 +139,7 @@ class HomeView extends GetView<HomeController> {
 
   Widget cardSubTitleTextView({required String text}) => Text(
         text,
-        style: Theme.of(Get.context!)
-            .textTheme
-            .labelMedium
-            ?.copyWith(fontWeight: FontWeight.w500),
+        style: Theme.of(Get.context!).textTheme.labelMedium?.copyWith(fontWeight: FontWeight.w500),
         overflow: TextOverflow.ellipsis,
         maxLines: 1,
       );
@@ -164,7 +160,7 @@ class HomeView extends GetView<HomeController> {
             itemCount: controller.packageList?.length,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
-              return Padding(
+             return Padding(
                 padding: EdgeInsets.only(right: 8.px, top: 2.px, bottom: 2.px, left: 2.px),
                 child: InkWell(
                   onTap: controller.packageClickValue.value
@@ -267,25 +263,25 @@ class HomeView extends GetView<HomeController> {
 
   Widget nodeCountView() => commonCard(
         title: 'Node count',
-        text1: KNPMethods.checkStringIsNullOrEmpty(string: controller.userDashboardBVCount?.lUserNodeCount),
+        text1: KNPMethods.checkStringIsNullOrEmpty(string: controller.userDashboardBVCount?.lUserNodeCount,blankText: '00'),
         text2: 'Left Bv',
-        text3:  KNPMethods.checkStringIsNullOrEmpty(string: controller.userDashboardBVCount?.rUserNodeCount),
+        text3:  KNPMethods.checkStringIsNullOrEmpty(string: controller.userDashboardBVCount?.rUserNodeCount,blankText: '00'),
         text4: 'Right Bv',
       );
 
   Widget commissionView() => commonCard(
         title: 'Commission',
-        text1:  KNPMethods.checkStringIsNullOrEmpty(string: controller.userDashboardBVCount?.leftCommission),
+        text1:  KNPMethods.checkStringIsNullOrEmpty(string: controller.userDashboardBVCount?.leftCommission,blankText: '00'),
         text2: 'Left Bv',
-        text3:  KNPMethods.checkStringIsNullOrEmpty(string: controller.userDashboardBVCount?.rightCommission),
+        text3:  KNPMethods.checkStringIsNullOrEmpty(string: controller.userDashboardBVCount?.rightCommission,blankText: '00'),
         text4: 'Right Bv',
       );
 
   Widget yourSalesView() => commonCard(
         title: 'Your sales',
-        text1:  '₹${KNPMethods.checkStringIsNullOrEmpty(string: controller.userDashboardBVCount?.totalWalletBalance)}',
+        text1:  '₹${KNPMethods.checkStringIsNullOrEmpty(string: controller.userDashboardBVCount?.totalWalletBalance,blankText: '00')}',
         text2: 'Wallet balance',
-        text3:  '₹${KNPMethods.checkStringIsNullOrEmpty(string: controller.userDashboardBVCount?.totalWithdrawal)}',
+        text3:  '₹${KNPMethods.checkStringIsNullOrEmpty(string: controller.userDashboardBVCount?.totalWithdrawal,blankText: '00')}',
         text4: 'Withdrawal balance',
       );
 

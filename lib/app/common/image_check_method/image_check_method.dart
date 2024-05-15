@@ -1,8 +1,8 @@
 import 'dart:io';
-
 import 'package:image/image.dart' as img;
 
 class CheckImage {
+
   static Future<bool> validateAadharImage({required File imageFile}) async {
     // Use the image package to decode the image
     final image = img.decodeImage(await imageFile.readAsBytes());
@@ -56,4 +56,5 @@ class CheckImage {
 
     return r > thresholdR && g > thresholdG && b > thresholdB;
   }
+
 }

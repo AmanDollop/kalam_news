@@ -16,11 +16,14 @@ class MyHttp {
     if (kDebugMode) print("CALLING:: $url");
     if (await KNPMethods.internetConnectionCheckerMethod()) {
       try {
+        if (kDebugMode) print("authorization:: $token");
         http.Response? response = await http.get(
           Uri.parse(url),
           headers: token,
         );
         if (kDebugMode) print("CALLING:: ${response.body}");
+        if (kDebugMode) print("statusCode:: ${response.statusCode}");
+        // if (kDebugMode) print("response.headers:: :: ${response.headers}");
         //MyLogger.logger.w("CALLING:: ${response.body}");
         return response;
       } catch (e) {
@@ -167,12 +170,15 @@ class MyHttp {
       required BuildContext context}) async {
     if (await KNPMethods.internetConnectionCheckerMethod()) {
       try {
-        Uri uri = Uri.http(baseUri, endPointUri, queryParameters);
+        Uri uri = Uri.https(baseUri, endPointUri, queryParameters);
         if (kDebugMode) print("CALLING:: $uri");
         if (kDebugMode) print("queryParameters:: $queryParameters");
+        if (kDebugMode) print("authorization:: $authorization");
         http.Response? response = await http.get(uri, headers: authorization);
         if (kDebugMode) print("CALLING:: ${response.body}");
-          // ignore: unnecessary_null_comparison
+        if (kDebugMode) print("statusCode:: ${response.statusCode}");
+        // if (kDebugMode) print("response.headers:: ${response.headers}");
+        // ignore: unnecessary_null_comparison
         if (response != null) {
           return response;
         } else {

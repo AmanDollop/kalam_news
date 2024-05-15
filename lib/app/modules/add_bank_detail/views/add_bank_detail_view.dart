@@ -121,7 +121,7 @@ class AddBankDetailView extends GetView<AddBankDetailController> {
     hintText: 'IFSC code',
     controller: controller.ifscCodeController,
     focusNode: controller.ifscCodeFocusNode,
-    validator: (value) => V.isValid(value: value, title: 'Please enter ifsc code'),
+    validator: (value) => V.isIfscCodeValid(value: value),
   );
 
   Widget addBankButtonView() => KNPWidgets.commonElevatedButton(

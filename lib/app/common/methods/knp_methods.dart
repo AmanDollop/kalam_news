@@ -12,11 +12,17 @@ import 'package:http/http.dart' as http;
 class KNPMethods{
 
 
-  static String checkStringIsNullOrEmpty({String? string}){
-    if(string != null && string.isNotEmpty){
+  static String checkStringIsNullOrEmpty({String? string,String? blankText}){
+    // print('string:::: $string');
+    // print('blankText:::: $blankText');
+    if(string != null && string != 'null' && string.isNotEmpty){
       return string;
     }else{
-      return '?';
+      if(blankText != null && blankText.isNotEmpty){
+        return blankText;
+      }else {
+        return '?';
+      }
     }
   }
 

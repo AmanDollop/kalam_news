@@ -36,6 +36,7 @@ class ApiIntrigation{
 
     authorization = {
       ApiConstantVar.authorization: token.value,
+      'Accept' : 'application/json'
     };
 
     if(stringToken){

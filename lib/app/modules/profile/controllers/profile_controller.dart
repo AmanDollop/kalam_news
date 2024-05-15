@@ -8,8 +8,8 @@ import 'package:kalam_news_publication/app/common/packages/razorpay.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
 import 'package:kalam_news_publication/app/db/data_base_constant/data_base_constant.dart';
 import 'package:kalam_news_publication/app/db/data_base_helper/data_base_helper.dart';
+import 'package:kalam_news_publication/app/get_material_controller/ac.dart';
 import 'package:kalam_news_publication/app/modules/bottom_bar/views/bottom_bar_view.dart';
-import 'package:kalam_news_publication/app/modules/welcome_massage/views/welcome_massage_view.dart';
 import 'package:kalam_news_publication/app/routes/app_pages.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -88,15 +88,19 @@ class ProfileController extends GetxController {
   }
 
   void clickOnReferralAFriends() {
-    referralAFriendsValue.value = true;
-    String msg =KNPWidgets.extractTextFromHtml(appSettingModal.value?.inviteMessage ??'');
-    try{
-      Share.share(msg);
-    }catch(e){
-      referralAFriendsValue.value = false;
-    }
-    referralAFriendsValue.value = false;
-    count.value++;
+   if(AC.isConnect.value){
+     referralAFriendsValue.value = true;
+     String msg = KNPWidgets.extractTextFromHtml(appSettingModal.value?.inviteMessage ??'');
+     try{
+       Share.share(msg,);
+     }catch(e){
+       referralAFriendsValue.value = false;
+     }
+     referralAFriendsValue.value = false;
+     count.value++;
+   }else{
+     KNPMethods.noInternet();
+   }
   }
 
   Future<void> clickOnLogOutButton() async {

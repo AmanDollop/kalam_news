@@ -26,6 +26,9 @@ class GenealogyController extends GetxController {
     super.onInit();
     apiResValue.value = true;
     await dataBaseCalling();
+    bodyParamsForGetUserTreeApi = {
+      ApiConstantVar.userId : ''
+    };
     await callingGetUserTreeApi();
   }
 
@@ -62,7 +65,7 @@ class GenealogyController extends GetxController {
       userTreeModal.value = await ApiIntrigation.getUserTreeApi(bodyParams: bodyParamsForGetUserTreeApi);
       if (userTreeModal.value != null) {
         parentUserId.value = userTreeModal.value?.parentUserId.toString() ?? '';
-        userDetailsForUserTree = userTreeModal.value?.userDetailsForUserTree;
+        userDetailsForUserTree = userTreeModal.value?.userDetails;
         rUser = userTreeModal.value?.rUser;
         lUser = userTreeModal.value?.lUser;
         userBVCount = userTreeModal.value?.userBVCount;

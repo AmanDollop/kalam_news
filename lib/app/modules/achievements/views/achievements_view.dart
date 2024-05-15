@@ -31,6 +31,7 @@ class AchievementsView extends GetView<AchievementsController> {
                       : ListView(
                           padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
                           children: [
+                            if(controller.bannerList.isNotEmpty)
                             bannerView(),
                             SizedBox(height: CommonPaddingAndSize.size14()),
                             contactSupportView(),

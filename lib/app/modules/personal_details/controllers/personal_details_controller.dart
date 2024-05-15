@@ -64,6 +64,9 @@ class PersonalDetailsController extends GetxController {
   final completeAddressController = TextEditingController();
   FocusNode completeAddressFocusNode = FocusNode();
 
+  final aadharNumberController = TextEditingController();
+  FocusNode aadharNumberFocusNode = FocusNode();
+
   final stateController = TextEditingController();
   FocusNode stateFocusNode = FocusNode();
 
@@ -438,6 +441,7 @@ class PersonalDetailsController extends GetxController {
         ApiConstantVar.email: emailController.text.trim().toString(),
         ApiConstantVar.password: confirmPasswordController.text.trim().toString(),
         ApiConstantVar.address: completeAddressController.text.trim().toString(),
+        ApiConstantVar.aadharNumber: aadharNumberController.text.trim().toString(),
         ApiConstantVar.stateId: stateId,
         ApiConstantVar.cityId: cityId,
         ApiConstantVar.pinCode: pinCodeController.text.trim().toString(),

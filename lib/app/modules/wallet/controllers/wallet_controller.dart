@@ -6,7 +6,6 @@ import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/modules/bottom_bar/views/bottom_bar_view.dart';
 
 class WalletController extends GetxController {
-
   final count = 0.obs;
 
   final apiResValue = true.obs;
@@ -42,20 +41,30 @@ class WalletController extends GetxController {
     count.value++;
   }
 
-  void clickOnWithdrawNowButton() {}
+  void clickOnWithdrawNowButton() {
+    KNPMethods.unFocsKeyBoard();
+    if(withdrawAmountController.text.isNotEmpty){
+      withdrawNowButtonValue.value = true;
+      Future.delayed(
+        const Duration(seconds: 3),
+            () => withdrawNowButtonValue.value = false,
+      );
+    }else{
+      withdrawNowButtonValue.value = false;
+    }
+  }
 
   Future<void> callingGetWithdrawHistoryApi() async {
-    try{
+    try {
       withdrawHistoryModal.value = await ApiIntrigation.getWithdrawHistoryApi();
-      if(withdrawHistoryModal.value != null){
+      if (withdrawHistoryModal.value != null) {
         walletHistory = withdrawHistoryModal.value?.walletHistory;
       }
-    }catch(e){
+    } catch (e) {
       print('callingGetWithdrawHistoryApi:::  ERROR::: $e');
       KNPMethods.error();
       apiResValue.value = false;
     }
     apiResValue.value = false;
   }
-
 }

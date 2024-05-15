@@ -73,15 +73,17 @@ class GenealogyView extends GetView<GenealogyController> {
                                   children: [
                                     if(controller.lUser?.userId != null)
                                       leftUserView(),
-                                    if(controller.rUser?.userId != null )
+                                    if(controller.rUser?.userId != null)
                                       rightUserView(),
                                   ],
                                 )
                               ],
                             ),
+                            if(controller.lUser != null && controller.rUser != null || controller.lUser?.userId != null && controller.rUser?.userId != null)
                             KNPWidgets.commonDividerView(height: CommonPaddingAndSize.size20() * 2),
+                            if(controller.lUser != null && controller.rUser != null || controller.lUser?.userId != null && controller.rUser?.userId != null)
                             paidAndUnPaidView(),
-                            SizedBox(height: CommonPaddingAndSize.size20() * 4)
+                            SizedBox(height: CommonPaddingAndSize.size20() * 4),
                           ],
                         ),
                 ),
@@ -105,9 +107,9 @@ class GenealogyView extends GetView<GenealogyController> {
               children: [
                 userNameTextView(text: '${controller.userData?.userDetails?.initials}. ${controller.userData?.userDetails?.firstName} ${controller.userData?.userDetails?.lastName}'),
                 commonRowForProfileSection(
-                  text1: 'User id - ',
-                  text2: controller.userData?.userDetails?.userId != null
-                      ? '${controller.userData?.userDetails?.userId}'
+                  text1: 'Referred By - ',
+                  text2: controller.userData?.userDetails?.referredBy != null
+                      ? '${controller.userData?.userDetails?.referredBy}'
                       : '?',
                 ),
                 InkWell(
@@ -268,16 +270,10 @@ class GenealogyView extends GetView<GenealogyController> {
 
   Widget totalBusinessValueView() => commonCard(
         title: 'Total business value',
-        totalCountText: controller.userBVCount?.totalBvCount != null && controller.userBVCount!.totalBvCount!.isNotEmpty
-            ? '${controller.userBVCount?.totalBvCount}'
-            : '?',
-        text1: controller.userBVCount?.lBvCount != null && controller.userBVCount!.lBvCount!.isNotEmpty
-            ? '${controller.userBVCount?.lBvCount}'
-            : '?',
+        totalCountText:  KNPMethods.checkStringIsNullOrEmpty(string: '${controller.userBVCount?.totalBvCount}',blankText: '00'),
+        text1:  KNPMethods.checkStringIsNullOrEmpty(string: '${controller.userBVCount?.lBvCount}',blankText: '00'),
         text2: 'Left Bv',
-        text3: controller.userBVCount?.rBvCount != null && controller.userBVCount!.rBvCount!.isNotEmpty
-            ? '${controller.userBVCount?.rBvCount}'
-            : '?',
+        text3:  KNPMethods.checkStringIsNullOrEmpty(string: '${controller.userBVCount?.rBvCount}',blankText: '00'),
         text4: 'Right Bv',
       );
 
@@ -427,12 +423,8 @@ class GenealogyView extends GetView<GenealogyController> {
   Widget topUserView() => commonLevelConnection(
       isPaidUser: controller.userDetailsForUserTree?.isPaidUser ?? 0,
       userName: '${controller.userDetailsForUserTree?.firstName} ${controller.userDetailsForUserTree?.lastName}',
-      leftBVCount: controller.userDetailsForUserTree?.lBvCount != null && controller.userDetailsForUserTree!.lBvCount!.isNotEmpty
-          ? '${controller.userDetailsForUserTree?.lBvCount}'
-          : '?',
-      rightBVCount: controller.userDetailsForUserTree?.rBvCount != null && controller.userDetailsForUserTree!.rBvCount!.isNotEmpty
-          ? '${controller.userDetailsForUserTree?.rBvCount}'
-          : '?',
+      leftBVCount: KNPMethods.checkStringIsNullOrEmpty(string: '${controller.userDetailsForUserTree?.lBvCount}',blankText: '00'),
+      rightBVCount: KNPMethods.checkStringIsNullOrEmpty(string: '${controller.userDetailsForUserTree?.rBvCount}',blankText: '00'),
       profile: KNPMethods.baseUrlForNetworkImage(imagePath: '${controller.userDetailsForUserTree?.profile}')
   );
 
@@ -459,12 +451,8 @@ class GenealogyView extends GetView<GenealogyController> {
   Widget leftUserView() => commonLevelConnection(
       isPaidUser: controller.lUser?.isPaidUser ?? 0,
       userName: '${controller.lUser?.firstName} ${controller.lUser?.lastName}',
-      leftBVCount: controller.lUser?.lBvCount != null && controller.lUser!.lBvCount!.isNotEmpty
-          ? '${controller.lUser?.lBvCount}'
-          : '?',
-      rightBVCount: controller.lUser?.rBvCount != null && controller.lUser!.rBvCount!.isNotEmpty
-          ? '${controller.lUser?.rBvCount}'
-          : '?',
+      leftBVCount:  KNPMethods.checkStringIsNullOrEmpty(string: '${controller.lUser?.lBvCount}',blankText: '00'),
+      rightBVCount: KNPMethods.checkStringIsNullOrEmpty(string: '${controller.lUser?.rBvCount}',blankText: '00'),
       onTap: () => controller.clickOnLeftUser(),
       profile: KNPMethods.baseUrlForNetworkImage(imagePath: '${controller.lUser?.profile}')
   );
@@ -472,12 +460,8 @@ class GenealogyView extends GetView<GenealogyController> {
   Widget rightUserView() => commonLevelConnection(
       isPaidUser: controller.rUser?.isPaidUser?? 0,
       userName: '${controller.rUser?.firstName} ${controller.rUser?.lastName}',
-      leftBVCount: controller.rUser?.lBvCount != null && controller.rUser!.lBvCount!.isNotEmpty
-          ? '${controller.rUser?.lBvCount}'
-          : '?',
-      rightBVCount: controller.rUser?.rBvCount != null && controller.rUser!.rBvCount!.isNotEmpty
-          ? '${controller.rUser?.rBvCount}'
-          : '?',
+      leftBVCount:  KNPMethods.checkStringIsNullOrEmpty(string: '${controller.rUser?.lBvCount}',blankText: '00'),
+      rightBVCount: KNPMethods.checkStringIsNullOrEmpty(string: '${controller.rUser?.rBvCount}',blankText: '00'),
       onTap: () => controller.clickOnRightUser(),
       profile: KNPMethods.baseUrlForNetworkImage(imagePath: '${controller.rUser?.profile}')
   );

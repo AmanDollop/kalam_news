@@ -1,23 +1,23 @@
 class UserTreeModal {
   String? message;
   String? parentUserId;
-  UserDetailsForUserTree? userDetailsForUserTree;
+  UserDetailsForUserTree? userDetails;
   RUser? rUser;
   LUser? lUser;
   UserBVCount? userBVCount;
 
   UserTreeModal(
       {this.message,
-      this.parentUserId,
-      this.userDetailsForUserTree,
-      this.rUser,
-      this.lUser,
-      this.userBVCount});
+        this.parentUserId,
+        this.userDetails,
+        this.rUser,
+        this.lUser,
+        this.userBVCount});
 
   UserTreeModal.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     parentUserId = json['parentUserId'];
-    userDetailsForUserTree = json['user_details'] != null
+    userDetails = json['user_details'] != null
         ? UserDetailsForUserTree.fromJson(json['user_details'])
         : null;
     rUser = json['rUser'] != null ? RUser.fromJson(json['rUser']) : null;
@@ -28,11 +28,11 @@ class UserTreeModal {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['message'] = message;
     data['parentUserId'] = parentUserId;
-    if (userDetailsForUserTree != null) {
-      data['user_details'] = userDetailsForUserTree!.toJson();
+    if (userDetails != null) {
+      data['user_details'] = userDetails!.toJson();
     }
     if (rUser != null) {
       data['rUser'] = rUser!.toJson();
@@ -72,40 +72,40 @@ class UserDetailsForUserTree {
   int? isEmailVerify;
   String? createdAt;
   String? updatedAt;
+  int? isPaidUser;
+  int? userLevel;
   String? lBvCount;
   String? rBvCount;
-  int? userLevel;
-  int? isPaidUser;
 
   UserDetailsForUserTree(
       {this.userId,
-      this.uuid,
-      this.referralCode,
-      this.initials,
-      this.firstName,
-      this.middleName,
-      this.lastName,
-      this.dob,
-      this.mobileNumber,
-      this.whatsappNumber,
-      this.email,
-      this.pincode,
-      this.cityId,
-      this.stateId,
-      this.address,
-      this.profile,
-      this.otp,
-      this.referredBy,
-      this.rUserId,
-      this.lUserId,
-      this.isMobileVerify,
-      this.isEmailVerify,
-      this.createdAt,
-      this.updatedAt,
-      this.lBvCount,
-      this.userLevel,
-      this.isPaidUser,
-      this.rBvCount});
+        this.uuid,
+        this.referralCode,
+        this.initials,
+        this.firstName,
+        this.middleName,
+        this.lastName,
+        this.dob,
+        this.mobileNumber,
+        this.whatsappNumber,
+        this.email,
+        this.pincode,
+        this.cityId,
+        this.stateId,
+        this.address,
+        this.profile,
+        this.otp,
+        this.referredBy,
+        this.rUserId,
+        this.lUserId,
+        this.isMobileVerify,
+        this.isEmailVerify,
+        this.createdAt,
+        this.updatedAt,
+        this.isPaidUser,
+        this.userLevel,
+        this.lBvCount,
+        this.rBvCount});
 
   UserDetailsForUserTree.fromJson(Map<String, dynamic> json) {
     userId = json['user_id'];
@@ -132,14 +132,14 @@ class UserDetailsForUserTree {
     isEmailVerify = json['is_email_verify'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+    isPaidUser = json['is_paid_user'];
+    userLevel = json['user_level'];
     lBvCount = json['l_bv_count'];
     rBvCount = json['r_bv_count'];
-    userLevel = json['user_level'];
-    isPaidUser = json['is_paid_user'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['user_id'] = userId;
     data['uuid'] = uuid;
     data['referral_code'] = referralCode;
@@ -164,10 +164,10 @@ class UserDetailsForUserTree {
     data['is_email_verify'] = isEmailVerify;
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
+    data['is_paid_user'] = isPaidUser;
+    data['user_level'] = userLevel;
     data['l_bv_count'] = lBvCount;
     data['r_bv_count'] = rBvCount;
-    data['user_level'] = userLevel;
-    data['is_paid_user'] = isPaidUser;
     return data;
   }
 }
@@ -198,39 +198,39 @@ class RUser {
   String? createdAt;
   String? updatedAt;
   int? userLevel;
+  int? isPaidUser;
   String? lBvCount;
   String? rBvCount;
-  int? isPaidUser;
 
   RUser(
       {this.userId,
-      this.uuid,
-      this.referralCode,
-      this.initials,
-      this.firstName,
-      this.middleName,
-      this.lastName,
-      this.dob,
-      this.mobileNumber,
-      this.whatsappNumber,
-      this.email,
-      this.pincode,
-      this.cityId,
-      this.stateId,
-      this.address,
-      this.profile,
-      this.otp,
-      this.referredBy,
-      this.rUserId,
-      this.lUserId,
-      this.isMobileVerify,
-      this.isEmailVerify,
-      this.createdAt,
-      this.updatedAt,
-      this.userLevel,
-      this.lBvCount,
-      this.isPaidUser,
-      this.rBvCount});
+        this.uuid,
+        this.referralCode,
+        this.initials,
+        this.firstName,
+        this.middleName,
+        this.lastName,
+        this.dob,
+        this.mobileNumber,
+        this.whatsappNumber,
+        this.email,
+        this.pincode,
+        this.cityId,
+        this.stateId,
+        this.address,
+        this.profile,
+        this.otp,
+        this.referredBy,
+        this.rUserId,
+        this.lUserId,
+        this.isMobileVerify,
+        this.isEmailVerify,
+        this.createdAt,
+        this.updatedAt,
+        this.userLevel,
+        this.isPaidUser,
+        this.lBvCount,
+        this.rBvCount});
 
   RUser.fromJson(Map<String, dynamic> json) {
     userId = json['user_id'];
@@ -258,13 +258,13 @@ class RUser {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     userLevel = json['user_level'];
+    isPaidUser = json['is_paid_user'];
     lBvCount = json['l_bv_count'];
     rBvCount = json['r_bv_count'];
-    isPaidUser = json['is_paid_user'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['user_id'] = userId;
     data['uuid'] = uuid;
     data['referral_code'] = referralCode;
@@ -290,9 +290,9 @@ class RUser {
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     data['user_level'] = userLevel;
+    data['is_paid_user'] = isPaidUser;
     data['l_bv_count'] = lBvCount;
     data['r_bv_count'] = rBvCount;
-    data['is_paid_user'] = isPaidUser;
     return data;
   }
 }
@@ -323,39 +323,39 @@ class LUser {
   String? createdAt;
   String? updatedAt;
   int? userLevel;
+  int? isPaidUser;
   String? lBvCount;
   String? rBvCount;
-  int? isPaidUser;
 
   LUser(
       {this.userId,
-      this.uuid,
-      this.referralCode,
-      this.initials,
-      this.firstName,
-      this.middleName,
-      this.lastName,
-      this.dob,
-      this.mobileNumber,
-      this.whatsappNumber,
-      this.email,
-      this.pincode,
-      this.cityId,
-      this.stateId,
-      this.address,
-      this.profile,
-      this.otp,
-      this.referredBy,
-      this.rUserId,
-      this.lUserId,
-      this.isMobileVerify,
-      this.isEmailVerify,
-      this.createdAt,
-      this.updatedAt,
-      this.userLevel,
-      this.lBvCount,
-      this.isPaidUser,
-      this.rBvCount});
+        this.uuid,
+        this.referralCode,
+        this.initials,
+        this.firstName,
+        this.middleName,
+        this.lastName,
+        this.dob,
+        this.mobileNumber,
+        this.whatsappNumber,
+        this.email,
+        this.pincode,
+        this.cityId,
+        this.stateId,
+        this.address,
+        this.profile,
+        this.otp,
+        this.referredBy,
+        this.rUserId,
+        this.lUserId,
+        this.isMobileVerify,
+        this.isEmailVerify,
+        this.createdAt,
+        this.updatedAt,
+        this.userLevel,
+        this.isPaidUser,
+        this.lBvCount,
+        this.rBvCount});
 
   LUser.fromJson(Map<String, dynamic> json) {
     userId = json['user_id'];
@@ -383,13 +383,13 @@ class LUser {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     userLevel = json['user_level'];
+    isPaidUser = json['is_paid_user'];
     lBvCount = json['l_bv_count'];
     rBvCount = json['r_bv_count'];
-    isPaidUser = json['is_paid_user'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['user_id'] = userId;
     data['uuid'] = uuid;
     data['referral_code'] = referralCode;
@@ -415,9 +415,9 @@ class LUser {
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     data['user_level'] = userLevel;
+    data['is_paid_user'] = isPaidUser;
     data['l_bv_count'] = lBvCount;
     data['r_bv_count'] = rBvCount;
-    data['is_paid_user'] = isPaidUser;
     return data;
   }
 }
@@ -436,7 +436,7 @@ class UserBVCount {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['total_bv_count'] = totalBvCount;
     data['l_bv_count'] = lBvCount;
     data['r_bv_count'] = rBvCount;

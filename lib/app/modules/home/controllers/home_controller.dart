@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/api/api_constant_var/api_constant_var.dart';
@@ -19,7 +18,7 @@ import 'package:kalam_news_publication/app/common/packages/razorpay.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
 import 'package:kalam_news_publication/app/routes/app_pages.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
-import '../../../api/api_res_modals/user_data_modal.dart';
+import 'package:kalam_news_publication/app/api/api_res_modals/user_data_modal.dart';
 
 class HomeController extends GetxController {
   final count = 0.obs;
@@ -67,6 +66,11 @@ class HomeController extends GetxController {
     super.onClose();
   }
 
+  @override
+  void refresh() {
+    super.refresh();
+  }
+
   void increment() => count.value++;
 
   Future<void> apisCallingMethod() async {
@@ -101,7 +105,7 @@ class HomeController extends GetxController {
     count.value++;
     try {
       await callingPackageDetailApi(packageId: '${packageList?[index].packageId}');
-      if(packageDetailModal.value?.isUserPackage == 1){
+      if (packageDetailModal.value?.isUserPackage == 1) {
         termsAndConditionsValue.value = true;
       }
       await CBS.commonDraggableBottomSheet(
@@ -124,11 +128,11 @@ class HomeController extends GetxController {
                     borderRadius: BorderRadius.circular(8.px),
                   ),
                   child: KNPWidgets.commonNetworkImageView(
-                      path: KNPMethods.baseUrlForNetworkImage(imagePath: '${packageDetailModal.value?.packageImage}'),
-                      height: 200.px,
-                      width: double.infinity,
-                      fit: BoxFit.contain,
-                      radius: 8.px,
+                    path: KNPMethods.baseUrlForNetworkImage(imagePath: '${packageDetailModal.value?.packageImage}'),
+                    height: 200.px,
+                    width: double.infinity,
+                    fit: BoxFit.contain,
+                    radius: 8.px,
                   ),
                 ),
                 SizedBox(height: CommonPaddingAndSize.size10()),
@@ -167,18 +171,18 @@ class HomeController extends GetxController {
                     ),
                   ),*/
                 KNPWidgets.removeHtmlTagsProductAndSellerDescription(string: packageDetailModal.value?.packageDescription ?? ''),
-                if(packageDetailModal.value?.isUserPackage == 0)
-                SizedBox(height: CommonPaddingAndSize.size10()),
-                if(packageDetailModal.value?.isUserPackage == 0)
-                commonRowForTermsAndConditions(),
+                if (packageDetailModal.value?.isUserPackage == 0)
+                  SizedBox(height: CommonPaddingAndSize.size10()),
+                if (packageDetailModal.value?.isUserPackage == 0)
+                  commonRowForTermsAndConditions(),
                 if (termsAndConditionsValue.value)
-                SizedBox(height: CommonPaddingAndSize.size10()),
+                  SizedBox(height: CommonPaddingAndSize.size10()),
                 if (termsAndConditionsValue.value)
-                KNPWidgets.commonElevatedButton(
-                      onPressed: () => clickOnPurchaseNow(index: index),
-                      buttonText: packageDetailModal.value?.isUserPackage == 0
-                          ? 'Purchase now'
-                          : 'Already purchased',
+                  KNPWidgets.commonElevatedButton(
+                    onPressed: () => clickOnPurchaseNow(index: index),
+                    buttonText: packageDetailModal.value?.isUserPackage == 0
+                        ? 'Purchase now'
+                        : 'Already purchased',
                   ),
                 SizedBox(height: CommonPaddingAndSize.size20()),
               ],
@@ -241,9 +245,9 @@ class HomeController extends GetxController {
           KNPWidgets.commonCheckBoxView(
             changeValue: termsAndConditionsValue.value,
             onChanged: (value) {
-               termsAndConditionsValue.value = !termsAndConditionsValue.value;
-               count.value++;
-              },
+              termsAndConditionsValue.value = !termsAndConditionsValue.value;
+              count.value++;
+            },
             visualDensity: VisualDensity(horizontal: -4.px, vertical: -4.px),
           ),
           RichText(
@@ -255,8 +259,11 @@ class HomeController extends GetxController {
                   text: 'Term & Conditions',
                   style: Theme.of(Get.context!).textTheme.labelSmall,
                   recognizer: TapGestureRecognizer()..onTap = () {
-                    Get.toNamed(Routes.WELCOME_MASSAGE,arguments: ['Term & Conditions',termCondition.value]);
-                  },
+                      Get.toNamed(Routes.WELCOME_MASSAGE, arguments: [
+                        'Term & Conditions',
+                        termCondition.value
+                      ]);
+                    },
                 ),
               ],
             ),
@@ -267,21 +274,20 @@ class HomeController extends GetxController {
   }
 
   Future<void> clickOnPurchaseNow({required int index}) async {
-   if(packageDetailModal.value?.isUserPackage == 1){
-     KNPMethods.showSnackBar(message: 'Already purchased');
-     Get.back();
-   }
-   else{
-     try {
-       await KNPRazorpayMethods.clickOnMakePaymentButton(
-           purchaseAmount: double.parse('${packageDetailModal.value?.packageAmount}').toInt(),
-           traTypeValue: 'Online',
-           packageDetails: packageDetails ?? []
-       ).whenComplete(() => Get.back());
-     } catch (e) {
-       print('clickOnPurchaseNow:::: ERROR::::::: $e');
-     }
-   }
+    if (packageDetailModal.value?.isUserPackage == 1) {
+      KNPMethods.showSnackBar(message: 'Already purchased');
+      Get.back();
+    } else {
+      try {
+        await KNPRazorpayMethods.clickOnMakePaymentButton(
+                purchaseAmount: double.parse('${packageDetailModal.value?.packageAmount}').toInt(),
+                traTypeValue: 'Online',
+                packageDetails: packageDetails ?? [],
+        ).whenComplete(() => Get.back());
+      } catch (e) {
+        print('clickOnPurchaseNow:::: ERROR::::::: $e');
+      }
+    }
   }
 
   Future<void> callingPackageApi() async {
@@ -361,5 +367,4 @@ class HomeController extends GetxController {
     }
     apiResValue.value = false;
   }
-
 }

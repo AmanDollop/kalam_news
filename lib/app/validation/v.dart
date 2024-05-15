@@ -45,7 +45,7 @@ class V {
     } else if (value.trim().length < 6) {
       return "Password length greater than six";
     } else if (value.trim().length > 12) {
-      return "Password length less than twelve";
+      return "Password length less than 12";
     } else if (!RegExp("^(?=.*[a-z])").hasMatch(value)) {
       return "Password contain at least one lowercase";
     } else if (!RegExp("^(?=.*[A-Z])").hasMatch(value)) {
@@ -153,6 +153,20 @@ class V {
     }else {
       return null;
     }
+  }
+
+  static String? isIfscCodeValid({required String? value})
+  {
+    RegExp ifscRegExp = RegExp(r'^[A-Z]{4}[0][A-Z0-9]{6}$');
+
+    if (value == null ||value.isEmpty) {
+      return 'Please enter IFSC code';
+    } else if (!ifscRegExp.hasMatch(value)) {
+      return 'Invalid IFSC Code';
+    }else {
+      return null;
+    }
+
   }
 
 }

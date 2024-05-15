@@ -5,7 +5,6 @@ import 'package:kalam_news_publication/app/common/common_padding_size/common_pad
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
 import 'package:kalam_news_publication/app/validation/v.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
 import '../controllers/registration_controller.dart';
 
 class RegistrationView extends GetView<RegistrationController> {
@@ -44,8 +43,8 @@ class RegistrationView extends GetView<RegistrationController> {
   }
 
   Widget referralCodeTextFieldView() => KNPWidgets.commonTextFormField(
-        title: 'Referral code*',
-        hintText: 'Referral code',
+        title: 'Referral code / Phone*',
+        hintText: 'Referral code / Phone',
         controller: controller.referralCodeController,
         focusNode: controller.referralCodeFocusNode,
         textCapitalization: TextCapitalization.characters,
