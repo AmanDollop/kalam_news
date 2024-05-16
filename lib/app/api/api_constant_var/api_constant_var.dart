@@ -84,7 +84,6 @@ class ApiConstantVar{
 
   static const bankId = "bank_id";
 
-
 }
 
 class ApiUrls{
@@ -93,13 +92,11 @@ class ApiUrls{
 
   // static const baseUrlForGet = "192.168.1.172:8000";
 
-
-  /*   static const baseUrl = "http://192.168.1.229:8000/api/";
+  /* static const baseUrl = "http://192.168.1.229:8000/api/";
 
      static const baseUrlForImage = "http://192.168.1.229:8000/";
 
-     static const baseUrlForGet = "192.168.1.229:8000";*/
-
+     static const baseUrlForGet = "192.168.1.229:8000"; */
 
   static const baseUrl = "https://kalamnewspublication.in/api/";
 
