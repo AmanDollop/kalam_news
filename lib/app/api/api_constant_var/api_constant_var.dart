@@ -105,6 +105,8 @@ class ApiUrls{
 
   static const baseUrlForImage = "https://kalamnewspublication.in/public/";
 
+  static const baseUrlForBannerImage = "https://kalamnewspublication.in/";
+
   static const baseUrlForGet = "kalamnewspublication.in";
 
   static const apiEndPointRegister = "register";

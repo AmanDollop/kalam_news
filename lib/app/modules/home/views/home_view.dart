@@ -27,7 +27,7 @@ class HomeView extends GetView<HomeController> {
                 child: ModalProgress(
                   inAsyncCall: controller.apiResValue.value,
                   child: controller.apiResValue.value
-                      ? KNPWidgets.commonProgressBarView()
+                      ? KNPWidgets.myLoaderView()
                       : ListView(
                           padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
                           shrinkWrap: true,

@@ -28,7 +28,7 @@ class WalletView extends GetView<WalletController> {
                 child: ModalProgress(
                   inAsyncCall: controller.apiResValue.value,
                   child: controller.apiResValue.value
-                      ? KNPWidgets.commonProgressBarView()
+                      ? KNPWidgets.myLoaderView()
                       : controller.withdrawHistoryModal.value !=null
                       ? ListView(
                           padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),

@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/common/common_padding_size/common_padding_size.dart';
+import 'package:lottie/lottie.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:html/parser.dart' show parse;
@@ -65,8 +66,7 @@ class KNPWidgets {
     GestureTapCallback? onTap,
     ImageLoadingBuilder? loadingBuilder,
     String? errorImage,
-  }) =>
-      InkWell(
+  }) => InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(radius ?? 0.px),
         child: ClipRRect(
@@ -112,14 +112,7 @@ class KNPWidgets {
         ),
       );
 
-  static commonContainerView(
-          {EdgeInsetsGeometry? padding,
-          required Widget child,
-          double? width,
-          double? height,
-          Color? color,
-          Color? borderColor}) =>
-      Container(
+  static commonContainerView({EdgeInsetsGeometry? padding, required Widget child, double? width, double? height, Color? color, Color? borderColor}) => Container(
         height: height,
         width: width,
         padding: padding ?? EdgeInsets.all(16.px),
@@ -160,13 +153,7 @@ class KNPWidgets {
     );
   }
 
-  static Widget scaffoldBackgroundImageViewWithAppBar(
-      {required Widget child2,
-      bool appBarValue = true,
-      bool isHomeAppBarValue = false,
-      String? appBarTitle,
-      Widget? child1,
-      GestureTapCallback? onTapForBackButton}) {
+  static Widget scaffoldBackgroundImageViewWithAppBar({required Widget child2, bool appBarValue = true, bool isHomeAppBarValue = false, String? appBarTitle, Widget? child1, GestureTapCallback? onTapForBackButton}) {
     const SystemUiOverlayStyle(
         statusBarBrightness: Brightness.light,
         // For iOS: (dark icons)
@@ -366,38 +353,20 @@ class KNPWidgets {
     );
   }
 
-  static Widget commonCheckBoxView(
-          {required bool changeValue,
-          required ValueChanged<bool?>? onChanged,
-          OutlinedBorder? shape,
-          Color? activeFillColor,
-          Color? checkColor,
-          Color? borderColor,
-          VisualDensity? visualDensity}) =>
-      Checkbox(
+  static Widget commonCheckBoxView({required bool changeValue, required ValueChanged<bool?>? onChanged, OutlinedBorder? shape, Color? activeFillColor, Color? checkColor, Color? borderColor, VisualDensity? visualDensity}) => Checkbox(
         visualDensity: visualDensity,
         value: changeValue,
         onChanged: onChanged,
-        activeColor:
-            activeFillColor ?? Theme.of(Get.context!).colorScheme.primary,
-        checkColor:
-            checkColor ?? Theme.of(Get.context!).colorScheme.inversePrimary,
+        activeColor: activeFillColor ?? Theme.of(Get.context!).colorScheme.primary,
+        checkColor: checkColor ?? Theme.of(Get.context!).colorScheme.inversePrimary,
         splashRadius: 24.px,
         side: BorderSide(
             color: borderColor ?? Theme.of(Get.context!).colorScheme.onSurface,
             width: 1.px),
-        shape: shape ??
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.px)),
+        shape: shape ?? RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.px)),
       );
 
-  static Widget commonDividerView({
-    Color? color,
-    double? height,
-    double? wight,
-    double? leftPadding,
-    double? rightPadding,
-  }) =>
-      Divider(
+  static Widget commonDividerView({Color? color, double? height, double? wight, double? leftPadding, double? rightPadding}) => Divider(
         color: color ?? Theme.of(Get.context!).colorScheme.onSecondary,
         height: height ?? 10.px,
         thickness: wight ?? .5.px,
@@ -524,12 +493,7 @@ class KNPWidgets {
   }
 
   /* --------------------------Progress Bar View--------------------------*/
-  static commonProgressBarView(
-          {Color? color,
-          Color? backgroundColor,
-          double? value,
-          double? strokeWidth}) =>
-      Center(
+  static commonProgressBarView({Color? color, Color? backgroundColor, double? value, double? strokeWidth}) => Center(
         child: CircularProgressIndicator(
           backgroundColor: backgroundColor ??
               Theme.of(Get.context!).colorScheme.primary.withOpacity(.2),
@@ -540,13 +504,27 @@ class KNPWidgets {
         ),
       );
 
-  static Widget commonLinearProgressBar({
-    required double value,
-    double? height,
-    Color? color,
-    Color? backgroundColor,
-  }) =>
-      ClipRRect(
+  static myLoaderView({double? height,double? width,double? imageHeight,double? imageWidth,Color? color}) => Center(
+    child: SizedBox(
+      height: height ?? 260.px,
+      width: width ?? 260.px,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          ColorFiltered(
+            colorFilter: ColorFilter.mode(
+              color ?? Theme.of(Get.context!).colorScheme.primary,
+              BlendMode.srcIn,
+            ),
+            child: Lottie.asset('assets/animations/lod.json',),
+          ),
+          KNPWidgets.commonNetworkImageView(path: 'assets/image/app_logo.png',height:imageHeight ?? 100.px,width: imageWidth ?? 100.px,isAssetImage: true)
+        ],
+      ),
+    ),
+  );
+
+  static Widget commonLinearProgressBar({required double value, double? height, Color? color, Color? backgroundColor}) => ClipRRect(
         borderRadius: BorderRadius.circular(20.px),
         child: LinearProgressIndicator(
           color: color ?? Theme.of(Get.context!).colorScheme.primary,
@@ -659,8 +637,7 @@ class KNPWidgets {
                     color: Theme.of(Get.context!).colorScheme.inversePrimary),
               ),
             )
-          : child ??
-              Text(
+          : child ?? Text(
                 buttonText ?? '',
                 style: Theme.of(Get.context!)
                     .textTheme
@@ -670,12 +647,7 @@ class KNPWidgets {
     );
   }
 
-  static Widget commonTextButton({
-    required VoidCallback onPressed,
-    required String buttonText,
-    double? fontSize,
-    Color? buttonTextColor,
-  }) {
+  static Widget commonTextButton({required VoidCallback onPressed, required String buttonText, double? fontSize, Color? buttonTextColor}) {
     return TextButton(
       onPressed: onPressed,
       style: TextButton.styleFrom(
@@ -702,8 +674,7 @@ class KNPWidgets {
     IconData? icon,
     Color? color,
     Color? splashColor,
-  }) =>
-      IconButton(
+  }) => IconButton(
         onPressed: onPressed,
         splashRadius: size != null ? size + 4.px : 24.px,
         icon: imagePath != null && imagePath.isNotEmpty
@@ -731,8 +702,7 @@ class KNPWidgets {
     required List<String> imageList,
     required int selectedIndex,
     EdgeInsetsGeometry? padding,
-    required Function(int index, CarouselPageChangedReason reason)?
-        onPageChanged,
+    required Function(int index, CarouselPageChangedReason reason)? onPageChanged,
     CarouselController? carouselController,
     double? height,
     double? borderRadius,
@@ -746,8 +716,7 @@ class KNPWidgets {
     Color? indicatorActiveColor,
     Color? indicatorInactiveColor,
     int indicatorAnimationDuration = 300,
-  }) =>
-      Stack(
+  }) => Stack(
         alignment: Alignment.bottomCenter,
         children: [
           ClipRRect(
@@ -762,7 +731,8 @@ class KNPWidgets {
                           color: Theme.of(Get.context!).colorScheme.surface,
                           child: commonNetworkImageView(
                               path: image,
-                              fit: BoxFit.cover,
+                              // fit: BoxFit.cover,
+                              fit: BoxFit.fill,
                               width: double.infinity,
                               height: height ?? 150.px),
                         ),
@@ -780,6 +750,7 @@ class KNPWidgets {
             ),
           ),
           if (isIndicator)
+            if(imageList.isNotEmpty)
             commonBannerIndicatorView(
                 selectedIndex: selectedIndex,
                 length: imageList.length,
@@ -808,8 +779,7 @@ class KNPWidgets {
     double? cornerRadius,
     Color? activeColor,
     Color? inactiveColor,
-  }) =>
-      Padding(
+  }) => Padding(
         padding: EdgeInsets.only(bottom: bottomPadding ?? 12.px),
         child: CarouselIndicator(
           count: length,
@@ -826,10 +796,7 @@ class KNPWidgets {
 
 /* --------------------------Radio Button View--------------------------*/
 
-  static Widget commonRadioButtonWithTitle(
-      {required String title,
-      required String value,
-      GestureTapCallback? onTap}) {
+  static Widget commonRadioButtonWithTitle({required String title, required String value, GestureTapCallback? onTap}) {
     return InkWell(
       onTap: onTap,
       child: Row(

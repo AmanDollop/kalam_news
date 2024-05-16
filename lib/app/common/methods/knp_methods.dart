@@ -139,13 +139,17 @@ class KNPMethods{
     return MaterialColor(color.value, shades);
   }
 
-  static String baseUrlForNetworkImage({required String imagePath}){
+  static String baseUrlForNetworkImage({required String imagePath,bool isBanner = false}){
     Uri convertUrl = Uri.parse(imagePath);
     String convertMainUrl = convertUrl.toString();
     if (convertMainUrl.contains('https://')) {
       return convertMainUrl;
     } else {
-      return ApiUrls.baseUrlForImage + convertMainUrl;
+      if(isBanner) {
+        return ApiUrls.baseUrlForBannerImage + convertMainUrl;
+      }else{
+        return ApiUrls.baseUrlForImage + convertMainUrl;
+      }
     }
   }
 

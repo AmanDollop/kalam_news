@@ -22,7 +22,7 @@ class AddBankDetailView extends GetView<AddBankDetailController> {
             child2: ModalProgress(
               inAsyncCall: controller.apiResValue.value,
               child: controller.apiResValue.value
-                  ? KNPWidgets.commonProgressBarView()
+                  ? KNPWidgets.myLoaderView()
                   : Padding(
                       padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
                       child: Column(

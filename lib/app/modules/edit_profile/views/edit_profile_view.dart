@@ -32,7 +32,7 @@ class EditProfileView extends GetView<EditProfileController> {
                 child: ModalProgress(
                   inAsyncCall: controller.apiResValue.value,
                   child: controller.apiResValue.value
-                      ? KNPWidgets.commonProgressBarView()
+                      ? KNPWidgets.myLoaderView()
                       : Padding(
                         padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
                         child: Column(

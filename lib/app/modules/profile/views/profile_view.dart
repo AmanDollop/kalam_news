@@ -30,7 +30,7 @@ class ProfileView extends GetView<ProfileController> {
               child: ModalProgress(
                 inAsyncCall: controller.apiResValue.value,
                 child: controller.apiResValue.value
-                    ? KNPWidgets.commonProgressBarView()
+                    ? KNPWidgets.myLoaderView()
                     : ListView(
                         padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
                         children: [

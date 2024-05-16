@@ -24,15 +24,9 @@ class SplashController extends GetxController {
     super.onInit();
     try{
       await dataBaseCalling();
-      Timer(
-        const Duration(seconds: 3),
-            () => callingNextScreen(),
-      );
+      Timer(const Duration(seconds: 3), () => callingNextScreen(),);
     }catch(e){
-      Timer(
-        const Duration(seconds: 3),
-            () => callingNextScreen(),
-      );
+      Timer(const Duration(seconds: 3), () => callingNextScreen(),);
     }
   }
 

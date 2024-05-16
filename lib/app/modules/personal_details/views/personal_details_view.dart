@@ -36,7 +36,7 @@ class PersonalDetailsView extends GetView<PersonalDetailsController> {
                 child: ModalProgress(
                   inAsyncCall: controller.apiResValue.value,
                   child: controller.apiResValue.value
-                      ? KNPWidgets.commonProgressBarView()
+                      ? KNPWidgets.myLoaderView()
                       : ListView(
                          padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
                          shrinkWrap: true,
@@ -71,9 +71,9 @@ class PersonalDetailsView extends GetView<PersonalDetailsController> {
                            stateTextFieldView(),
                            SizedBox(height: CommonPaddingAndSize.size20()),
                            if(controller.stateController.text.isNotEmpty)
-                             cityTextFieldView(),
+                           cityTextFieldView(),
                            if(controller.stateController.text.isNotEmpty)
-                             SizedBox(height: CommonPaddingAndSize.size20()),
+                           SizedBox(height: CommonPaddingAndSize.size20()),
                            pinCodeTextFieldView(),
                            SizedBox(height: CommonPaddingAndSize.size20()),
                            passwordTextFieldView(),
