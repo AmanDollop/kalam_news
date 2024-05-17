@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/common/packages/scroll_behavior.dart';
+import 'package:kalam_news_publication/app/common/page_const_var/define_languages.dart';
 import 'package:kalam_news_publication/app/get_material_controller/ac.dart';
 import 'package:kalam_news_publication/app/theme/theme_data/theme_data.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -38,6 +39,8 @@ void main() {
             },
             child: GetMaterialApp(
               title: "Application",
+              translations: LanguageTranslations(),
+              locale: const Locale("en", "US"),
               theme: AppThemeData.kNPThemeData(fontFamily: 'HelveticaNeue'),
               initialRoute: AppPages.INITIAL,
               getPages: AppPages.routes,

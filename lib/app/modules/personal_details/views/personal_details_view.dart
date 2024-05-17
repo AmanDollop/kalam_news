@@ -5,6 +5,7 @@ import 'package:kalam_news_publication/app/common/common_padding_size/common_pad
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/common/packages/model_progress_bar.dart';
 import 'package:kalam_news_publication/app/common/packages/my_drop_down.dart';
+import 'package:kalam_news_publication/app/common/page_const_var/page_const_var.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
 import 'package:kalam_news_publication/app/validation/v.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -37,52 +38,62 @@ class PersonalDetailsView extends GetView<PersonalDetailsController> {
                   inAsyncCall: controller.apiResValue.value,
                   child: controller.apiResValue.value
                       ? KNPWidgets.myLoaderView()
-                      : ListView(
-                         padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
-                         shrinkWrap: true,
-                         children: [
-                           mrAndMrsTextFieldView(),
-                           SizedBox(height: CommonPaddingAndSize.size20()),
-                           firstNameTextFieldView(),
-                           SizedBox(height: CommonPaddingAndSize.size20()),
-                           middleNameTextFieldView(),
-                           SizedBox(height: CommonPaddingAndSize.size20()),
-                           lastNameTextFieldView(),
-                           SizedBox(height: CommonPaddingAndSize.size20()),
-                           dobTextFieldView(),
-                           SizedBox(height: CommonPaddingAndSize.size20()),
-                           emailTextFieldView(),
-                           SizedBox(height: CommonPaddingAndSize.size20()),
-                           phoneNumberFieldView(),
-                           SizedBox(height: CommonPaddingAndSize.size20()),
-                           whatsappNumberFieldView(),
-                           SizedBox(height: CommonPaddingAndSize.size10()),
-                           Row(
+                      : Stack(
+                        alignment: Alignment.bottomCenter,
+                        children: [
+                          ListView(
+                             padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
+                             shrinkWrap: true,
                              children: [
-                               checkBoxView(),
-                               sameAsMobileNumberTextView(text: 'Same as phone number')
+                               mrAndMrsTextFieldView(),
+                               SizedBox(height: CommonPaddingAndSize.size20()),
+                               firstNameTextFieldView(),
+                               SizedBox(height: CommonPaddingAndSize.size20()),
+                               middleNameTextFieldView(),
+                               SizedBox(height: CommonPaddingAndSize.size20()),
+                               lastNameTextFieldView(),
+                               SizedBox(height: CommonPaddingAndSize.size20()),
+                               dobTextFieldView(),
+                               SizedBox(height: CommonPaddingAndSize.size20()),
+                               emailTextFieldView(),
+                               SizedBox(height: CommonPaddingAndSize.size20()),
+                               phoneNumberFieldView(),
+                               SizedBox(height: CommonPaddingAndSize.size20()),
+                               whatsappNumberFieldView(),
+                               SizedBox(height: CommonPaddingAndSize.size10()),
+                               Row(
+                                 children: [
+                                   checkBoxView(),
+                                   sameAsMobileNumberTextView(text: PageConstVar.sameAsPhoneNumber.tr)
+                                 ],
+                               ),
+                               SizedBox(height: CommonPaddingAndSize.size10()),
+                               completeAddressTextFieldView(),
+                               SizedBox(height: CommonPaddingAndSize.size20()),
+                               aadharNumberTextFieldView(),
+                               SizedBox(height: CommonPaddingAndSize.size20()),
+                               stateTextFieldView(),
+                               SizedBox(height: CommonPaddingAndSize.size20()),
+                               if(controller.stateController.text.isNotEmpty)
+                               cityTextFieldView(),
+                               if(controller.stateController.text.isNotEmpty)
+                               SizedBox(height: CommonPaddingAndSize.size20()),
+                               pinCodeTextFieldView(),
+                               SizedBox(height: CommonPaddingAndSize.size20()),
+                               passwordTextFieldView(),
+                               SizedBox(height: CommonPaddingAndSize.size20()),
+                               confirmPasswordTextFieldView(),
+                               SizedBox(height: CommonPaddingAndSize.size20()*3),
                              ],
                            ),
-                           SizedBox(height: CommonPaddingAndSize.size10()),
-                           completeAddressTextFieldView(),
-                           SizedBox(height: CommonPaddingAndSize.size20()),
-                           aadharNumberTextFieldView(),
-                           SizedBox(height: CommonPaddingAndSize.size20()),
-                           stateTextFieldView(),
-                           SizedBox(height: CommonPaddingAndSize.size20()),
-                           if(controller.stateController.text.isNotEmpty)
-                           cityTextFieldView(),
-                           if(controller.stateController.text.isNotEmpty)
-                           SizedBox(height: CommonPaddingAndSize.size20()),
-                           pinCodeTextFieldView(),
-                           SizedBox(height: CommonPaddingAndSize.size20()),
-                           passwordTextFieldView(),
-                           SizedBox(height: CommonPaddingAndSize.size20()),
-                           confirmPasswordTextFieldView(),
-                           SizedBox(height: CommonPaddingAndSize.size20()),
-                           continueButtonView(),
-                         ],
-                       ),
+                          Container(
+                            height: 80.px,
+                            padding: EdgeInsets.symmetric(horizontal: CommonPaddingAndSize.size12(),vertical: CommonPaddingAndSize.size14()),
+                            color: Theme.of(context).colorScheme.inversePrimary,
+                            child: continueButtonView(),
+                          ),
+                        ],
+                      ),
                      ),
                    )
             ),
@@ -94,11 +105,11 @@ class PersonalDetailsView extends GetView<PersonalDetailsController> {
 
 
   Widget mrAndMrsTextFieldView() => MyDropdown(
-        title: 'Initials*',
+        title: '${PageConstVar.initials.tr}*',
         items: controller.initialsList,
         nameList: controller.initialsList,
         selectedItem: controller.selectedInitialsValue.value,
-        hintText: 'Select Initials',
+        hintText: '${PageConstVar.select.tr} ${PageConstVar.initials.tr}',
         focusNode: controller.initialsFocusNode,
         textEditingController: controller.initialsController,
         isOpenValue: controller.isInitialsDropDownValue.value,
@@ -110,45 +121,45 @@ class PersonalDetailsView extends GetView<PersonalDetailsController> {
           controller.count.value++;
         },
         clickOnListOfDropDown: (value) => controller.clickOnInitialsListOfDropDown(value: value),
-        validator: (value) => V.isValid(value: value, title: 'Please select initials'),
+        validator: (value) => V.isValid(value: value, title: PageConstVar.pleaseSelectInitials.tr),
       );
 
   Widget firstNameTextFieldView() => KNPWidgets.commonTextFormField(
-        title: 'First name*',
-        hintText: 'First name',
+        title: '${PageConstVar.firstName.tr}*',
+        hintText: PageConstVar.firstName.tr,
         controller: controller.firstNameController,
         focusNode: controller.firstNameFocusNode,
-        validator: (value) => V.isValid(value: value, title: 'Please enter first name'),
+        validator: (value) => V.isValid(value: value, title: PageConstVar.pleaseEnterFirsName.tr),
       );
 
   Widget lastNameTextFieldView() => KNPWidgets.commonTextFormField(
-        title: 'Last name*',
-        hintText: 'Last name',
+        title: '${PageConstVar.lastName.tr}*',
+        hintText: PageConstVar.lastName.tr,
         controller: controller.lastNameController,
         focusNode: controller.lastNameFocusNode,
-        validator: (value) => V.isValid(value: value, title: 'Please enter last name'),
+        validator: (value) => V.isValid(value: value, title: PageConstVar.pleaseEnterLastName.tr),
       );
 
   Widget middleNameTextFieldView() => KNPWidgets.commonTextFormField(
-        title: 'Middle name ( Optional )',
-        hintText: 'Middle name',
+        title: '${PageConstVar.middleName.tr} ( ${PageConstVar.optional.tr} )',
+        hintText: PageConstVar.middleName.tr,
         controller: controller.middleNameController,
         focusNode: controller.middleNameFocusNode,
       );
 
   Widget dobTextFieldView() => KNPWidgets.commonTextFormField(
-        title: 'DOB*',
-        hintText: 'DOB',
+        title: '${PageConstVar.dob.tr}*',
+        hintText: PageConstVar.dob.tr,
         controller: controller.dobController,
         focusNode: controller.dobFocusNode,
         readOnly: true,
         onTap: () => controller.clickOnDObTextField(),
-        validator: (value) => V.isValid(value: value, title: 'Please enter dob'),
+        validator: (value) => V.isValid(value: value, title: PageConstVar.pleaseEnterDob.tr),
       );
 
   Widget emailTextFieldView() => KNPWidgets.commonTextFormField(
-        title: 'Email Id*',
-        hintText: 'Email Id',
+        title: '${PageConstVar.emailID.tr}*',
+        hintText: PageConstVar.emailID.tr,
         controller: controller.emailController,
         focusNode: controller.emailFocusNode,
         keyboardType: TextInputType.emailAddress,
@@ -157,8 +168,8 @@ class PersonalDetailsView extends GetView<PersonalDetailsController> {
       );
 
   Widget phoneNumberFieldView() => KNPWidgets.commonTextFormField(
-        title: 'Phone number*',
-        hintText: 'Phone number',
+        title: '${PageConstVar.phoneNumber.tr}*',
+        hintText: PageConstVar.phoneNumber.tr,
         controller: controller.mobileNumberController,
         focusNode: controller.mobileNumberFocusNode,
         keyboardType: TextInputType.number,
@@ -167,8 +178,8 @@ class PersonalDetailsView extends GetView<PersonalDetailsController> {
       );
 
   Widget whatsappNumberFieldView() => KNPWidgets.commonTextFormField(
-        title: 'WhatsApp number ( Optional )',
-        hintText: 'WhatsApp number',
+        title: '${PageConstVar.whatsAppNumber.tr} ( ${PageConstVar.optional.tr} )',
+        hintText: PageConstVar.whatsAppNumber.tr,
         controller: controller.whatsappNumberController,
         focusNode: controller.whatsappNumberFocusNode,
         keyboardType: TextInputType.number,
@@ -197,16 +208,16 @@ class PersonalDetailsView extends GetView<PersonalDetailsController> {
       );
 
   Widget completeAddressTextFieldView() => KNPWidgets.commonTextFormField(
-        title: 'Complete address*',
-        hintText: 'Complete address',
+        title: '${PageConstVar.completeAddress.tr}*',
+        hintText: PageConstVar.completeAddress.tr,
         controller: controller.completeAddressController,
         focusNode: controller.completeAddressFocusNode,
-        validator: (value) => V.isValid(value: value, title: 'Please enter complete address'),
+        validator: (value) => V.isValid(value: value, title: PageConstVar.pleaseEnterCompleteAddress.tr),
       );
 
   Widget aadharNumberTextFieldView() => KNPWidgets.commonTextFormField(
-        title: 'Aadhar number*',
-        hintText: 'Aadhar number',
+        title: '${PageConstVar.aadharNumber.tr}*',
+        hintText: PageConstVar.aadharNumber.tr,
         controller: controller.aadharNumberController,
         focusNode: controller.aadharNumberFocusNode,
         keyboardType: TextInputType.number,
@@ -221,48 +232,48 @@ class PersonalDetailsView extends GetView<PersonalDetailsController> {
       );
 
   Widget stateTextFieldView() => KNPWidgets.commonTextFormField(
-        title: 'State*',
-        hintText: 'Select state',
+        title: '${PageConstVar.state.tr}*',
+        hintText: '${PageConstVar.select.tr} ${PageConstVar.state.toLowerCase().tr}',
         controller: controller.stateController,
         focusNode: controller.stateFocusNode,
         readOnly: true,
         suffixIcon: downArrowIconView(),
         onTap: () => controller.clickOnStateTextFormFiled(),
-        validator: (value) => V.isValid(value: value, title: 'Please select state'),
+        validator: (value) => V.isValid(value: value, title: PageConstVar.pleaseSelectState.tr),
       );
 
   Widget cityTextFieldView() => KNPWidgets.commonTextFormField(
-        title: 'City*',
-        hintText: 'Select city',
+        title: '${PageConstVar.city.tr}*',
+        hintText: '${PageConstVar.select.tr} ${PageConstVar.city.toLowerCase().tr}',
         controller: controller.cityController,
         focusNode: controller.cityFocusNode,
         readOnly: true,
         suffixIcon: downArrowIconView(),
         onTap: () => controller.clickOnCityTextFormFiled(),
-        validator: (value) => V.isValid(value: value, title: 'Please select city'),
+        validator: (value) => V.isValid(value: value, title: PageConstVar.pleaseSelectCity.tr),
       );
 
   Widget pinCodeTextFieldView() => KNPWidgets.commonTextFormField(
-        title: 'Pin code*',
-        hintText: 'Pin code',
+        title: '${PageConstVar.pinCode.tr}*',
+        hintText: PageConstVar.pinCode.tr,
         controller: controller.pinCodeController,
         focusNode: controller.pinCodeFocusNode,
         keyboardType: TextInputType.number,
         maxLength: 6,
-        validator: (value) => V.isValid(value: value, title: 'Please enter pin code'),
+        validator: (value) => V.isValid(value: value, title: PageConstVar.pleaseEnterPinCode.tr),
       );
 
   Widget passwordTextFieldView() => KNPWidgets.commonTextFormField(
-        title: 'Password*',
-        hintText: 'Password',
+        title: '${PageConstVar.password.tr}*',
+        hintText: PageConstVar.password.tr,
         controller: controller.passwordController,
         focusNode: controller.passwordFocusNode,
         validator: (value) => V.isPasswordValid(value: value),
       );
 
   Widget confirmPasswordTextFieldView() => KNPWidgets.commonTextFormField(
-        title: 'Confirm password*',
-        hintText: 'Confirm password',
+        title: '${PageConstVar.confirmPassword.tr}*',
+        hintText: PageConstVar.confirmPassword.tr,
         controller: controller.confirmPasswordController,
         focusNode: controller.confirmPasswordFocusNode,
         validator: (value) => V.isConfirmPasswordValid(value: value, password: controller.passwordController.text),
@@ -273,7 +284,7 @@ class PersonalDetailsView extends GetView<PersonalDetailsController> {
         onPressed: controller.confirmButtonValue.value
             ? () => null
             : () => controller.clickOnContinueButtonView(),
-        buttonText: 'Continue',
+        buttonText: PageConstVar.continueText.tr,
       );
 
 }

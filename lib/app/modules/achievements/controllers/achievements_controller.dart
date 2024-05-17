@@ -122,7 +122,7 @@ class AchievementsController extends GetxController {
       if (bannerModal.value != null) {
         banner = bannerModal.value?.banner;
         banner?.forEach((element) {
-          bannerList.add(KNPMethods.baseUrlForNetworkImage(imagePath: '${element.bannerImage}',isBanner: true));
+          bannerList.add(KNPMethods.baseUrlForNetworkImage(imagePath: '${element.bannerImage}'));
         });
       }
     } catch (e) {

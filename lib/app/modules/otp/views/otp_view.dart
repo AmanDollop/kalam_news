@@ -3,8 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/common/common_padding_size/common_padding_size.dart';
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
+import 'package:kalam_news_publication/app/common/page_const_var/page_const_var.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
-import 'package:kalam_news_publication/app/validation/v.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:timer_count_down/timer_count_down.dart';
 import '../controllers/otp_controller.dart';
@@ -34,63 +34,63 @@ class OtpView extends GetView<OtpController> {
                 return Stack(
                   children: [
                     KNPWidgets.scaffoldBackgroundImageViewWithAppBar(
-                      child1: Column(
-                        children: [
-                          otpTextView(),
-                          SizedBox(height: 4.px),
-                          emailAndMobileNumberTextView(),
-                        ],
-                      ),
-                      child2: ListView(
-                        padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
-                        shrinkWrap: true,
-                        children: [
-                          verificationCodeTextView(),
-                          SizedBox(height: CommonPaddingAndSize.size20()),
-                          otpView(),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                        child1: Center(
+                          child: Column(
                             children: [
-                              controller.timer.value
-                                  ? KNPWidgets.commonTextButton(
-                                  onPressed: () {},
-                                  buttonText: 'Resend')
-                                  : Row(
-                                children: [
-                                  Text(
-                                    "Didn’t receive code? ",
-                                    style: Theme.of(Get.context!).textTheme.titleMedium,
-                                  ),
-                                  KNPWidgets.commonTextButton(
-                                      onPressed: () async {
-                                        controller.timer.value = !controller.timer.value;
-                                        await controller.callingSendOtpApi();
-                                      },
-                                      buttonText: 'Resend OTP'),
-                                ],
-                              ),
-                              controller.timer.value
-                                  ? Countdown(
-                                seconds: 30,
-                                build: (_, double time) {
-                                  return Text(
-                                    " 00:${time.toInt()} Sec",
-                                    style: Theme.of(Get.context!).textTheme.bodySmall,
-                                  );
-                                },
-                                interval: const Duration(milliseconds: 100),
-                                onFinished: () {
-                                  controller.timer.value = !controller.timer.value;
-                                },
-                              )
-                                  : const SizedBox(),
+                              otpTextView(),
+                              SizedBox(height: 4.px),
+                              emailAndMobileNumberTextView(),
                             ],
                           ),
-                          SizedBox(height: CommonPaddingAndSize.size20()),
-                          verifyButtonView(),
-                        ],
-                      )
-                    ),
+                        ),
+                        child2: ListView(
+                          padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
+                          shrinkWrap: true,
+                          children: [
+                            verificationCodeTextView(),
+                            SizedBox(height: CommonPaddingAndSize.size20()),
+                            otpView(),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                controller.timer.value
+                                    ? KNPWidgets.commonTextButton(onPressed: () {}, buttonText: PageConstVar.resend.tr)
+                                    : Row(
+                                        children: [
+                                          Text(
+                                            "${PageConstVar.didntReceiveCode.tr} ",
+                                            style: Theme.of(Get.context!).textTheme.titleMedium,
+                                          ),
+                                          KNPWidgets.commonTextButton(
+                                            onPressed: () async {
+                                              controller.timer.value = !controller.timer.value;
+                                              await controller.callingSendOtpApi();
+                                            },
+                                            buttonText: PageConstVar.resendOTP.tr,
+                                          ),
+                                        ],
+                                      ),
+                                controller.timer.value
+                                    ? Countdown(
+                                        seconds: 10,
+                                        build: (_, double time) {
+                                          return Text(
+                                            " 00:${time.toInt()} ${PageConstVar.sec.tr}",
+                                            style: Theme.of(Get.context!).textTheme.bodySmall,
+                                          );
+                                        },
+                                        interval: const Duration(milliseconds: 100),
+                                        onFinished: () {
+                                          controller.timer.value = !controller.timer.value;
+                                        },
+                                      )
+                                    : const SizedBox(),
+                              ],
+                            ),
+                            SizedBox(height: CommonPaddingAndSize.size20()),
+                            verifyButtonView(),
+                          ],
+                        )),
                   ],
                 );
               }),
@@ -101,16 +101,16 @@ class OtpView extends GetView<OtpController> {
     });
   }
 
-  Widget otpTextView() => Text('OTP Verification', style: Theme.of(Get.context!).textTheme.headlineLarge);
+  Widget otpTextView() => Text(PageConstVar.otpVerification.tr, style: Theme.of(Get.context!).textTheme.headlineLarge);
 
   Widget emailAndMobileNumberTextView() => Text(
-        'Enter the verification code we just send to your phone number 9876543210.',
+        PageConstVar.enterTheVerificationCodeWeJustSendToYourPhoneNumber.tr,
         style: Theme.of(Get.context!).textTheme.titleLarge?.copyWith(color: Theme.of(Get.context!).colorScheme.onPrimary),
         textAlign: TextAlign.center,
       );
 
   Widget verificationCodeTextView() => Text(
-        'Verification code',
+        PageConstVar.verificationCode.tr,
         style: Theme.of(Get.context!).textTheme.labelLarge,
       );
 
@@ -125,7 +125,7 @@ class OtpView extends GetView<OtpController> {
         onPressed: controller.verifyButtonValue.value
             ? () => null
             : () => controller.clickOnVerifyButtonView(),
-        buttonText: 'Verify',
+        buttonText: PageConstVar.verify.tr,
         isLoading: controller.verifyButtonValue.value,
       );
 }

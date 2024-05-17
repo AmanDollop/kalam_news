@@ -12,6 +12,7 @@ import 'package:kalam_news_publication/app/common/packages/cbs.dart';
 import 'package:kalam_news_publication/app/common/packages/cdt.dart';
 import 'package:kalam_news_publication/app/common/packages/common_methods_for_date_time.dart';
 import 'package:kalam_news_publication/app/common/packages/lm.dart';
+import 'package:kalam_news_publication/app/common/page_const_var/page_const_var.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
 import 'package:kalam_news_publication/app/routes/app_pages.dart';
 import 'package:http/http.dart' as http;
@@ -32,10 +33,10 @@ class PersonalDetailsController extends GetxController {
   final isInitialsDropDownValue = false.obs;
   final selectedInitialsValue = ''.obs;
   List<String> initialsList = [
-    'Mr',
-    'Mrs',
-    'Ms',
-    'Mst',
+    PageConstVar.mr.tr,
+    PageConstVar.mrs.tr,
+    PageConstVar.ms.tr,
+    PageConstVar.mst.tr,
   ];
 
   final firstNameController = TextEditingController();

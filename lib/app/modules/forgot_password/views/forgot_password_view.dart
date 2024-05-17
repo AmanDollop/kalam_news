@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/common/common_padding_size/common_padding_size.dart';
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
+import 'package:kalam_news_publication/app/common/page_const_var/page_const_var.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
 import 'package:kalam_news_publication/app/validation/v.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -20,12 +20,15 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
           controller.count.value;
           return KNPWidgets.scaffoldBackgroundImageViewWithAppBar(
               appBarTitle: '',
-              child1: Column(
-                children: [
-                  forgotYourPasswordTextView(),
-                  SizedBox(height: 4.px),
-                  emailAndPhoneNumberTextView(),
-                ],
+              child1: Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    forgotYourPasswordTextView(),
+                    SizedBox(height: 4.px),
+                    emailAndPhoneNumberTextView(),
+                  ],
+                ),
               ),
             child2: Form(
               key: controller.key,
@@ -45,27 +48,27 @@ class ForgotPasswordView extends GetView<ForgotPasswordController> {
     );
   }
 
-  Widget forgotYourPasswordTextView() => Text('Forgot your password', style: Theme.of(Get.context!).textTheme.headlineLarge);
+  Widget forgotYourPasswordTextView() => Text(PageConstVar.forgotYourPassword.tr, style: Theme.of(Get.context!).textTheme.headlineLarge);
 
   Widget emailAndPhoneNumberTextView() => Text(
-    'Please enter your email / Phone number to reset the password',
+    PageConstVar.pleaseEnterYourEmailPhoneNumberToResetThePassword.tr,
     style: Theme.of(Get.context!).textTheme.titleLarge?.copyWith(color: Theme.of(Get.context!).colorScheme.onPrimary),
     textAlign: TextAlign.center,
   );
 
   Widget emailAndMobileNumberTextFieldView() => KNPWidgets.commonTextFormField(
-      title: 'Email / Phone*',
-      hintText: 'Email / Phone',
+      title: '${PageConstVar.emailPhone.tr}*',
+      hintText: PageConstVar.emailPhone.tr,
       controller: controller.emailAndMobileNumberController,
       focusNode: controller.emailMobileNumberFocusNode,
-      validator: (value) => V.isValid(value: value, title: 'This filed is required.'),
+      validator: (value) => V.isValid(value: value, title: PageConstVar.thisFiledIsRequired.tr),
   );
 
   Widget sendOtpButtonView() => KNPWidgets.commonElevatedButton(
     onPressed: controller.sendOtpButtonValue.value
         ? () => null
         : () => controller.clickOnSendOtpButtonView(),
-    buttonText: 'Send Otp',
+    buttonText: PageConstVar.sendOTP.tr,
     isLoading: controller.sendOtpButtonValue.value,
   );
 

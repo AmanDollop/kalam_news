@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/api/api_constant_var/api_constant_var.dart';
 import 'package:kalam_news_publication/app/api/api_intrigation/api_intrigation.dart';
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
+import 'package:kalam_news_publication/app/common/page_const_var/page_const_var.dart';
+import 'package:kalam_news_publication/app/common/page_const_var/page_const_var.dart';
 import 'package:kalam_news_publication/app/routes/app_pages.dart';
 import 'package:http/http.dart' as http;
 
@@ -33,7 +35,7 @@ class NewPasswordController extends GetxController {
   void onInit() {
     super.onInit();
     pageName.value = Get.arguments[0];
-    if(pageName.value == "Set new password") {
+    if(pageName.value == PageConstVar.setNewPassword.tr) {
       mobileNumber.value = Get.arguments[1];
     }
   }
@@ -53,7 +55,7 @@ class NewPasswordController extends GetxController {
   Future<void> clickOnUpDateButtonView() async {
     KNPMethods.unFocsKeyBoard();
     if(key.currentState!.validate()){
-      if(pageName.value == "Set new password"){
+      if(pageName.value == PageConstVar.setNewPassword.tr){
         await callingResetPassword();
       }else{
         await callingChangePasswordApi();

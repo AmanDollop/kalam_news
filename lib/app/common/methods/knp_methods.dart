@@ -145,11 +145,7 @@ class KNPMethods{
     if (convertMainUrl.contains('https://')) {
       return convertMainUrl;
     } else {
-      if(isBanner) {
-        return ApiUrls.baseUrlForBannerImage + convertMainUrl;
-      }else{
         return ApiUrls.baseUrlForImage + convertMainUrl;
-      }
     }
   }
 

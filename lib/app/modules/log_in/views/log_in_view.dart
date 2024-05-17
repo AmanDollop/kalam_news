@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/common/common_padding_size/common_padding_size.dart';
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
+import 'package:kalam_news_publication/app/common/page_const_var/page_const_var.dart';
+import 'package:kalam_news_publication/app/common/page_const_var/selected_language_page.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
 import 'package:kalam_news_publication/app/validation/v.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -19,93 +21,92 @@ class LogInView extends GetView<LogInController> {
         body: Obx(() {
           controller.count.value;
           return KNPWidgets.scaffoldBackgroundImageViewWithAppBar(
-            appBarValue: false,
-            child1: Center(
-              child: Column(
-                children: [
-                  loginTextView(),
-                  SizedBox(height: 4.px),
-                  signInUpTextView(),
-                ],
+              appBarValue: false,
+              child1: Center(
+                child: Column(
+                  children: [
+                    loginTextView(),
+                    SizedBox(height: 4.px),
+                    signInUpTextView(),
+                  ],
+                ),
               ),
-            ),
-            child2: Form(
-              key: controller.key,
-              child: ListView(
-                padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
-                shrinkWrap: true,
-                children: [
-                  emailAndMobileNumberTextFieldView(),
-                  SizedBox(height: CommonPaddingAndSize.size20()),
-                  passwordTextFieldView(),
-                  SizedBox(height: CommonPaddingAndSize.size20()),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          checkBoxView(),
-                          rememberMeTextView(text: 'Remember me')
-                        ],
-                      ),
-                      forgetPasswordTextButtonView()
-                    ],
-                  ),
-                  SizedBox(height: CommonPaddingAndSize.size20()),
-                  loginButtonView(),
-                  SizedBox(height: CommonPaddingAndSize.size20()),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      rememberMeTextView(text: 'Don’t have an account? '),
-                      registeredNowTextButtonView()
-                    ],
-                  ),
-                ],
-              ),
-            )
-          );
+              child2: Form(
+                key: controller.key,
+                child: ListView(
+                  padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
+                  shrinkWrap: true,
+                  children: [
+                    emailAndMobileNumberTextFieldView(),
+                    SizedBox(height: CommonPaddingAndSize.size20()),
+                    passwordTextFieldView(),
+                    SizedBox(height: CommonPaddingAndSize.size20()),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            checkBoxView(),
+                            rememberMeTextView(text: PageConstVar.rememberMe.tr)
+                          ],
+                        ),
+                        forgetPasswordTextButtonView()
+                      ],
+                    ),
+                    SizedBox(height: CommonPaddingAndSize.size20()),
+                    loginButtonView(),
+                    SizedBox(height: CommonPaddingAndSize.size20()),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        rememberMeTextView(text: '${PageConstVar.dontHaveAnAccount.tr}? '),
+                        registeredNowTextButtonView()
+                      ],
+                    ),
+                  ],
+                ),
+              ));
         }),
       ),
     );
   }
 
-  Widget loginTextView() => Text('Login', style: Theme.of(Get.context!).textTheme.headlineLarge);
+  Widget loginTextView() => Text(PageConstVar.logIn.tr, style: Theme.of(Get.context!).textTheme.headlineLarge);
 
   Widget signInUpTextView() => Text(
-        'Sign in-up to enjoy the best managing experience',
+        PageConstVar.signInUpToEnjoyTheBestManagingExperience.tr,
         style: Theme.of(Get.context!).textTheme.titleLarge?.copyWith(color: Theme.of(Get.context!).colorScheme.onPrimary),
       );
 
   Widget emailAndMobileNumberTextFieldView() => KNPWidgets.commonTextFormField(
-      title: 'Email / Phone*',
-      hintText: 'Email / Phone',
-      controller: controller.emailAndMobileNumberController,
-      focusNode: controller.emailMobileNumberFocusNode,
-      validator: (value) => V.isValid(value: value, title: 'This filed is required.'),
-  );
+        title: '${PageConstVar.emailPhone.tr}*',
+        hintText: PageConstVar.emailPhone.tr,
+        controller: controller.emailAndMobileNumberController,
+        focusNode: controller.emailMobileNumberFocusNode,
+        validator: (value) => V.isValid(value: value, title: '${PageConstVar.thisFiledIsRequired.tr}.'),
+      );
 
   Widget passwordTextFieldView() => KNPWidgets.commonTextFormField(
-      title: 'Password*',
-      hintText: 'Password',
-      controller: controller.passwordController,
-      focusNode: controller.passwordFocusNode,
-      obscureText: !controller.passwordVisible.value,
-      suffixIcon: IconButton(
-          icon: Icon(
-            controller.passwordVisible.value
-                ? Icons.remove_red_eye_outlined
-                : Icons.visibility_off_outlined,
-            color: Theme.of(Get.context!).colorScheme.onSurface,
-            size: CommonPaddingAndSize.size20(),
-          ),
-          splashRadius: 20,
-          onPressed: () {
-            controller.passwordVisible.value = !controller.passwordVisible.value;
-          }
-      ),
-     validator: (value) => V.isValid(value: value, title: 'This filed is required.'),
-  );
+        title: '${PageConstVar.password.tr}*',
+        hintText: PageConstVar.password.tr,
+        controller: controller.passwordController,
+        focusNode: controller.passwordFocusNode,
+        obscureText: !controller.passwordVisible.value,
+        suffixIcon: IconButton(
+            icon: Icon(
+              controller.passwordVisible.value
+                  ? Icons.remove_red_eye_outlined
+                  : Icons.visibility_off_outlined,
+              color: Theme.of(Get.context!).colorScheme.onSurface,
+              size: CommonPaddingAndSize.size20(),
+            ),
+            splashRadius: 20,
+            onPressed: () {
+              controller.passwordVisible.value = !controller.passwordVisible.value;
+            },
+        ),
+        validator: (value) => V.isValid(value: value, title: '${PageConstVar.thisFiledIsRequired.tr}.'),
+      );
 
   Widget checkBoxView() => KNPWidgets.commonCheckBoxView(
       changeValue: controller.rememberMeValue.value,
@@ -113,28 +114,33 @@ class LogInView extends GetView<LogInController> {
         controller.rememberMeValue.value = !controller.rememberMeValue.value;
         controller.count.value++;
       },
-      visualDensity: VisualDensity(horizontal: -4.px, vertical: -4.px));
-
-  Widget rememberMeTextView({required String text}) => Text(
-    text,
-    style: Theme.of(Get.context!).textTheme.titleMedium?.copyWith(color: Theme.of(Get.context!).colorScheme.onSurface),
+      visualDensity: VisualDensity(horizontal: -4.px, vertical: -4.px),
   );
 
+  Widget rememberMeTextView({required String text}) => Text(
+        text,
+        style: Theme.of(Get.context!)
+            .textTheme
+            .titleMedium
+            ?.copyWith(color: Theme.of(Get.context!).colorScheme.onSurface),
+      );
+
   Widget forgetPasswordTextButtonView() => KNPWidgets.commonTextButton(
-      onPressed: () => controller.clickOnForgetPasswordButton(),
-      buttonText: 'Forget Password?');
+        onPressed: () => controller.clickOnForgetPasswordButton(),
+        buttonText: '${PageConstVar.forgetPassword.tr}?',
+      );
 
   Widget loginButtonView() => KNPWidgets.commonElevatedButton(
         onPressed: controller.loginButtonValue.value
             ? () => null
             : () => controller.clickOnLogInButtonView(),
-        buttonText: 'Login',
+        buttonText: PageConstVar.logIn.tr,
         isLoading: controller.loginButtonValue.value,
       );
 
   Widget registeredNowTextButtonView() => KNPWidgets.commonTextButton(
-      onPressed: () => controller.clickOnRegisteredNowButton(),
-      buttonText: 'Registered Now',
-  );
+        onPressed: () => controller.clickOnRegisteredNowButton(),
+        buttonText: PageConstVar.registeredNow.tr,
+      );
 
 }

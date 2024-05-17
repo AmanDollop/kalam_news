@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/common/common_padding_size/common_padding_size.dart';
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
+import 'package:kalam_news_publication/app/common/page_const_var/page_const_var.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import '../controllers/registration_verification_controller.dart';
@@ -20,49 +21,49 @@ class RegistrationVerificationView extends GetView<RegistrationVerificationContr
           return Stack(
             children: [
               KNPWidgets.scaffoldBackgroundImageViewWithAppBar(
-                appBarTitle: 'Verify Registered',
+                appBarTitle: PageConstVar.verifyRegistered.tr,
                 child2: ListView(
                   padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
                   shrinkWrap: true,
                   children: [
                     referralCodeTextFieldView(),
                     SizedBox(height: CommonPaddingAndSize.size20()),
-                    youAreRegisteringTextView(text: 'You are registering a new member under'),
+                    youAreRegisteringTextView(text: PageConstVar.youAreRegisteringANewMemberUnder.tr),
                     SizedBox(height: CommonPaddingAndSize.size20()),
                     commonRowView(
-                      text1: 'Reference Code*',
+                      text1: PageConstVar.referralCode.tr,
                       text2: 'AB1234567980AB123456798 0AB123456798 0AB12345679 80AB1 234567980AB123 4567980',
                     ),
                     SizedBox(height: CommonPaddingAndSize.size10()),
                     commonRowView(
-                      text1: 'Name',
+                      text1: PageConstVar.name.tr,
                       text2: '${controller.referralUserData?.name}',
                     ),
                     SizedBox(height: CommonPaddingAndSize.size10()),
                     commonRowView(
-                      text1: 'Mobile',
+                      text1: PageConstVar.mobile.tr,
                       text2: '${controller.referralUserData?.mobileNumber}',
                     ),
                     SizedBox(height: CommonPaddingAndSize.size10()),
-                    commonRowView(text1: 'City', text2: '${controller.referralUserData?.city}', isDivider: false),
+                    commonRowView(text1: PageConstVar.city.tr, text2: '${controller.referralUserData?.city}', isDivider: false),
                     SizedBox(height: CommonPaddingAndSize.size20()),
-                    youAreRegisteringTextView(text:'Please select which way do you want to go?'),
+                    youAreRegisteringTextView(text:PageConstVar.pleaseSelectWhichWayDoYouWantToGo.tr),
                     Row(
                       children: [
                         KNPWidgets.commonRadioButtonWithTitle(
-                          title: 'Left',
+                          title: PageConstVar.left.tr,
                           value: controller.selectRadioValue.value,
                           onTap: () {
-                            controller.selectRadioValue.value = "Left";
+                            controller.selectRadioValue.value = PageConstVar.left.tr;
                             controller.count.value++;
                           },
                         ),
                         SizedBox(width: CommonPaddingAndSize.size16()),
                         KNPWidgets.commonRadioButtonWithTitle(
-                          title: 'Right',
+                          title: PageConstVar.right.tr,
                           value: controller.selectRadioValue.value,
                           onTap: () {
-                            controller.selectRadioValue.value = "Right";
+                            controller.selectRadioValue.value = PageConstVar.right.tr;
                             controller.count.value++;
                           },
                         ),
@@ -80,8 +81,8 @@ class RegistrationVerificationView extends GetView<RegistrationVerificationContr
   }
 
   Widget referralCodeTextFieldView() => KNPWidgets.commonTextFormField(
-        title: 'Referral code / Phone*',
-        hintText: 'Referral code / Phone',
+        title: '${PageConstVar.referralCodeOrPhone.tr}*',
+        hintText: PageConstVar.referralCodeOrPhone.tr,
         controller: controller.referralCodeController,
         focusNode: controller.referralCodeFocusNode,
         readOnly: true,
@@ -122,6 +123,6 @@ class RegistrationVerificationView extends GetView<RegistrationVerificationContr
 
   Widget proceedButtonView() => KNPWidgets.commonElevatedButton(
         onPressed: () => controller.clickOnProceedButtonView(),
-        buttonText: 'Proceed',
+        buttonText: PageConstVar.proceed.tr,
       );
 }

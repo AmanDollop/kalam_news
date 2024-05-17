@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/common/common_padding_size/common_padding_size.dart';
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
-import 'package:kalam_news_publication/app/common/packages/common_methods_for_date_time.dart';
 import 'package:kalam_news_publication/app/common/packages/model_progress_bar.dart';
+import 'package:kalam_news_publication/app/common/page_const_var/page_const_var.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import '../controllers/profile_controller.dart';
@@ -40,15 +40,16 @@ class ProfileView extends GetView<ProfileController> {
                           welcomeCardView().paddingOnly(bottom: CommonPaddingAndSize.size20()),
                           cardHeadlineTextView(text: 'Account Setting').paddingOnly(bottom: CommonPaddingAndSize.size10()),
                           accountSettingCardView().paddingOnly(bottom: CommonPaddingAndSize.size20()),
-                        ],
-                      ),
-              ),
-            ),
-          ),
-        );
-      }),
-    );
-  }
+                          // changeLanguageView().paddingOnly(bottom: CommonPaddingAndSize.size20()),
+                   ],
+                 ),
+               ),
+             ),
+           ),
+         );
+       }),
+     );
+   }
 
   Widget userProfileView() => Row(
         children: [
@@ -231,5 +232,15 @@ class ProfileView extends GetView<ProfileController> {
         onPressed: () => controller.clickOnLogOutButton(),
         buttonText: 'Log Out',
       );
+
+  Widget changeLanguageView() {
+    return KNPWidgets.commonContainerView(
+      padding: EdgeInsets.zero,
+      child: commonRowForCard(
+        text1: PageConstVar.changeLanguage.tr,
+        onTap: () => controller.clickOnChangeLanguage(),
+      ),
+    );
+  }
 
 }

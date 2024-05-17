@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/api/api_intrigation/api_intrigation.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/app_setting_modal.dart';
@@ -5,15 +6,20 @@ import 'package:kalam_news_publication/app/api/api_res_modals/user_data_modal.da
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/common/packages/cd.dart';
 import 'package:kalam_news_publication/app/common/packages/razorpay.dart';
+import 'package:kalam_news_publication/app/common/page_const_var/selected_language_page.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
 import 'package:kalam_news_publication/app/db/data_base_constant/data_base_constant.dart';
 import 'package:kalam_news_publication/app/db/data_base_helper/data_base_helper.dart';
 import 'package:kalam_news_publication/app/get_material_controller/ac.dart';
 import 'package:kalam_news_publication/app/modules/bottom_bar/views/bottom_bar_view.dart';
 import 'package:kalam_news_publication/app/routes/app_pages.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:share_plus/share_plus.dart';
 
+final isEN = 'en'.obs;
+
 class ProfileController extends GetxController {
+
   final count = 0.obs;
   final apiResValue = true.obs;
 
@@ -44,7 +50,8 @@ class ProfileController extends GetxController {
     super.onClose();
   }
 
-  void increment() => count.value++;
+  // void increment() => count.value++;
+  void increment(String value) => isEN.value = value;
 
   onWillPop() {
     selectedBottomNavigationIndex.value = 0;
@@ -128,6 +135,27 @@ class ProfileController extends GetxController {
       KNPMethods.error();
     }
     apiResValue.value = false;
+  }
+
+  void clickOnChangeLanguage() {
+    showModalBottomSheet(
+      context: Get.context!,
+      isDismissible: false,
+      builder: (BuildContext context) {
+        return Obx((){
+            count.value;
+            return SizedBox(
+              height: 330.px,
+              child: SelectedLanguagePage(
+                isEn: isEN.value,
+                changeLanguage: (String value) => increment(value),
+                onPressed: () {},
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 
 }

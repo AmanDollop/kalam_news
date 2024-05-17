@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/referral_user_data_modal.dart';
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
+import 'package:kalam_news_publication/app/common/page_const_var/page_const_var.dart';
 import 'package:kalam_news_publication/app/routes/app_pages.dart';
 
 class RegistrationVerificationController extends GetxController {
@@ -12,7 +13,7 @@ class RegistrationVerificationController extends GetxController {
   FocusNode referralCodeFocusNode = FocusNode();
   ReferralUserData? referralUserData;
 
-  final selectRadioValue = 'Left' .obs;
+  final selectRadioValue = PageConstVar.left.tr .obs;
 
   @override
   void onInit() {
@@ -35,7 +36,7 @@ class RegistrationVerificationController extends GetxController {
 
   void clickOnProceedButtonView() {
     if(selectRadioValue.value == ""){
-      KNPMethods.showSnackBar(message: 'Please select which way do you want to go?');
+      KNPMethods.showSnackBar(message: PageConstVar.pleaseSelectWhichWayDoYouWantToGo.tr);
     }
     else{
       Get.toNamed(Routes.PERSONAL_DETAILS,arguments: [selectRadioValue.value,referralCodeController.text.trim().toString()]);

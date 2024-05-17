@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/common/common_padding_size/common_padding_size.dart';
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
+import 'package:kalam_news_publication/app/common/page_const_var/page_const_var.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
 import 'package:kalam_news_publication/app/validation/v.dart';
 import '../controllers/registration_controller.dart';
@@ -21,7 +22,7 @@ class RegistrationView extends GetView<RegistrationController> {
           return Stack(
             children: [
               KNPWidgets.scaffoldBackgroundImageViewWithAppBar(
-                appBarTitle: 'Registered',
+                appBarTitle: PageConstVar.registered.tr,
                 child2: Form(
                   key: controller.key,
                   child: ListView(
@@ -43,12 +44,12 @@ class RegistrationView extends GetView<RegistrationController> {
   }
 
   Widget referralCodeTextFieldView() => KNPWidgets.commonTextFormField(
-        title: 'Referral code / Phone*',
-        hintText: 'Referral code / Phone',
+        title: '${PageConstVar.referralCodeOrPhone.tr}*',
+        hintText: PageConstVar.referralCodeOrPhone.tr,
         controller: controller.referralCodeController,
         focusNode: controller.referralCodeFocusNode,
         textCapitalization: TextCapitalization.characters,
-        validator: (value) => V.isValid(value: value, title: 'Please enter referral code'),
+        validator: (value) => V.isValid(value: value, title: PageConstVar.pleaseEnterReferralCode.tr),
         onChanged: (value) {
           controller.referralCodeController.text =value.trim().toUpperCase();
         },
@@ -58,7 +59,7 @@ class RegistrationView extends GetView<RegistrationController> {
         onPressed: controller.buttonValue.value
             ? () => null
             : () => controller.clickOnVerifyButtonView(),
-        buttonText: 'Verify',
+        buttonText: PageConstVar.verify.tr,
         isLoading: controller.buttonValue.value,
       );
 }

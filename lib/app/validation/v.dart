@@ -1,11 +1,12 @@
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
+import 'package:kalam_news_publication/app/common/page_const_var/page_const_var.dart';
 
 class V {
   static String? isEmailValid({required String? value}) {
     if (value == null || value.trim().isEmpty) {
-      return "Please enter email";
+      return PageConstVar.pleaseEnterEmail.tr;
     } else if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value)) {
-      return "Please enter valid email";
+      return PageConstVar.pleaseEnterValidEmail.tr;
     } else {
       return null;
     }
@@ -41,24 +42,24 @@ class V {
 
   static String? isPasswordValid({required String? value, String? password = "Not"}) {
     if (value == null || value.trim().toString().isEmpty) {
-      return "Please enter password";
+      return PageConstVar.pleaseEnterPassword.tr;
     } else if (value.trim().length < 6) {
-      return "Password length greater than six";
+      return PageConstVar.passwordLengthGreaterThan6.tr;
     } else if (value.trim().length > 12) {
-      return "Password length less than 12";
+      return PageConstVar.passwordLengthLessThan12.tr;
     } else if (!RegExp("^(?=.*[a-z])").hasMatch(value)) {
-      return "Password contain at least one lowercase";
+      return PageConstVar.passwordContainAtLeastOneLowercase.tr;
     } else if (!RegExp("^(?=.*[A-Z])").hasMatch(value)) {
-      return "Password contain at least one uppercase";
+      return PageConstVar.passwordContainAtLeastOneUppercase.tr;
     } else if (!RegExp("^(?=.*[@#\$%^&+=]).*\$").hasMatch(value)) {
-      return "Password contain at least one special character";
+      return PageConstVar.passwordContainAtLeastOneSpecialCharacter.tr;
     } else if (!RegExp("^(?=.*[0-9])").hasMatch(value)) {
-      return "Password contain at least one numeric character";
+      return PageConstVar.passwordContainAtLeastOneNumericCharacter.tr;
     } else if ((password?.trim().toString() != "Not")) {
       if (password?.trim().toString() == value.trim().toString()) {
         return null;
       } else {
-        return "Please enter correct password";
+        return PageConstVar.pleaseEnterCorrectPassword.tr;
       }
     } else {
       return null;
@@ -67,12 +68,12 @@ class V {
 
   static String? isConfirmPasswordValid({required String? value, String? password = "Not"}) {
     if (value == null || value.trim().toString().isEmpty) {
-      return "Please enter confirm password".tr;
+      return PageConstVar.pleaseEnterConfirmPassword.tr;
     } else if (password?.trim().toString() != "Not") {
       if (password?.trim().toString() == value.trim().toString()) {
         return null;
       } else {
-        return "Confirm password not match".tr;
+        return PageConstVar.confirmPasswordNotMatch.tr;
       }
     } else {
       return null;
@@ -133,9 +134,9 @@ class V {
     RegExp aadharRegExp = RegExp(r'^\d{12}$');
 
     if (value == null  || value.isEmpty) {
-      return 'Please enter Aadhar card number';
+      return PageConstVar.pleaseEnterAadharNumber.tr;
     } else if (!aadharRegExp.hasMatch(value)) {
-      return 'Invalid Aadhar card number';
+      return PageConstVar.pleaseEnterValidAadharNumber.tr;
     }else {
       return null;
     }

@@ -6,6 +6,7 @@ import 'package:kalam_news_publication/app/api/api_constant_var/api_constant_var
 import 'package:kalam_news_publication/app/api/api_intrigation/api_intrigation.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/user_data_modal.dart';
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
+import 'package:kalam_news_publication/app/common/page_const_var/page_const_var.dart';
 import 'package:kalam_news_publication/app/db/data_base_constant/data_base_constant.dart';
 import 'package:kalam_news_publication/app/db/data_base_helper/data_base_helper.dart';
 import 'package:kalam_news_publication/app/modules/bottom_bar/views/bottom_bar_view.dart';
@@ -86,7 +87,7 @@ class OtpController extends GetxController {
           Get.offAllNamed(Routes.BOTTOM_BAR);
         }
         else{
-          Get.toNamed(Routes.NEW_PASSWORD,arguments: ['Set new password',mobileNumber.value]);
+          Get.toNamed(Routes.NEW_PASSWORD,arguments: [PageConstVar.setNewPassword.tr,mobileNumber.value]);
         }
         verifyButtonValue.value = false;
       }

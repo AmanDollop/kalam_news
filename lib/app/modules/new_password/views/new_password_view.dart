@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/common/common_padding_size/common_padding_size.dart';
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
+import 'package:kalam_news_publication/app/common/page_const_var/page_const_var.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
 import 'package:kalam_news_publication/app/validation/v.dart';
 import '../controllers/new_password_controller.dart';
@@ -74,8 +75,8 @@ class NewPasswordView extends GetView<NewPasswordController> {
           onPressed: onPressed);
 
   Widget oldPasswordTextFieldView() => KNPWidgets.commonTextFormField(
-        title: 'Old password*',
-        hintText: 'Old password',
+        title: '${PageConstVar.oldPassword.tr}*',
+        hintText: PageConstVar.oldPassword.tr,
         controller: controller.oldPasswordController,
         focusNode: controller.oldPasswordFocusNode,
         obscureText: !controller.oldPasswordVisible.value,
@@ -87,8 +88,8 @@ class NewPasswordView extends GetView<NewPasswordController> {
       );
 
   Widget newPasswordTextFieldView() => KNPWidgets.commonTextFormField(
-        title: 'New password*',
-        hintText: 'New password',
+        title: '${PageConstVar.newPassword.tr}*',
+        hintText: PageConstVar.newPassword.tr,
         controller: controller.newPasswordController,
         focusNode: controller.newPasswordFocusNode,
         obscureText: !controller.newPasswordVisible.value,
@@ -100,8 +101,8 @@ class NewPasswordView extends GetView<NewPasswordController> {
       );
 
   Widget confirmPasswordTextFieldView() => KNPWidgets.commonTextFormField(
-        title: 'Confirm password*',
-        hintText: 'Confirm password',
+        title: '${PageConstVar.confirmPassword.tr}*',
+        hintText: PageConstVar.confirmPassword.tr,
         controller: controller.confirmPasswordController,
         focusNode: controller.confirmPasswordFocusNode,
         obscureText: !controller.confirmPasswordVisible.value,
@@ -117,7 +118,7 @@ class NewPasswordView extends GetView<NewPasswordController> {
       onPressed: controller.upDateButtonValue.value
           ? () => null
           : () => controller.clickOnUpDateButtonView(),
-      buttonText: 'Update',
+      buttonText: PageConstVar.verify.tr,
       isLoading: controller.upDateButtonValue.value,
   );
 
