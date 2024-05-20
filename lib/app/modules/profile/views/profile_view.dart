@@ -23,7 +23,7 @@ class ProfileView extends GetView<ProfileController> {
         return WillPopScope(
           onWillPop: () => controller.onWillPop(),
           child: KNPWidgets.scaffoldBackgroundImageViewWithAppBar(
-            appBarTitle: 'Profile',
+            appBarTitle: PageConstVar.profile.tr,
             onTapForBackButton: () => controller.onWillPop(),
             child2: KNPWidgets.commonRefreshIndicator(
               onRefresh: () async => await controller.onInit(),
@@ -36,9 +36,9 @@ class ProfileView extends GetView<ProfileController> {
                         children: [
                           userProfileView(),
                           KNPWidgets.commonDividerView(height: 0).paddingSymmetric(vertical: CommonPaddingAndSize.size20()),
-                          cardHeadlineTextView(text: 'Welcome').paddingOnly(bottom: CommonPaddingAndSize.size10()),
+                          cardHeadlineTextView(text: PageConstVar.welcome.tr).paddingOnly(bottom: CommonPaddingAndSize.size10()),
                           welcomeCardView().paddingOnly(bottom: CommonPaddingAndSize.size20()),
-                          cardHeadlineTextView(text: 'Account Setting').paddingOnly(bottom: CommonPaddingAndSize.size10()),
+                          cardHeadlineTextView(text: PageConstVar.accountSetting.tr).paddingOnly(bottom: CommonPaddingAndSize.size10()),
                           accountSettingCardView().paddingOnly(bottom: CommonPaddingAndSize.size20()),
                           // changeLanguageView().paddingOnly(bottom: CommonPaddingAndSize.size20()),
                    ],
@@ -68,7 +68,7 @@ class ProfileView extends GetView<ProfileController> {
                 userNameTextView(),
                 Row(
                   children: [
-                    cardTitleTextView(text: 'Referred By - '),
+                    cardTitleTextView(text: '${PageConstVar.referredBy.tr} - '),
                     Flexible(
                       child: cardSubTitleTextView(
                         text: controller.userData?.userDetails?.referredBy != null
@@ -182,12 +182,12 @@ class ProfileView extends GetView<ProfileController> {
     child: Column(
       children: [
         commonRowForCard(
-            text1: 'Welcome message',
+            text1: '${PageConstVar.welcome.tr} ${PageConstVar.message.tr}',
             onTap: () => controller.clickOnWelcomeMessage(),
         ),
         KNPWidgets.commonDividerView(height: 0),
         commonRowForCard(
-            text1: 'KYC application',
+            text1: PageConstVar.kycApplication.tr,
             onTap: () => controller.clickOnKYCApplication(),
         ),
       ],
@@ -199,38 +199,33 @@ class ProfileView extends GetView<ProfileController> {
         child: Column(
           children: [
             commonRowForCard(
-              text1: 'Edit profile',
+              text1: PageConstVar.editProfile.tr,
               onTap: () => controller.clickOnEditProfile(),
             ),
             KNPWidgets.commonDividerView(height: 0),
             commonRowForCard(
-              text1: 'Change password',
+              text1: PageConstVar.changePassword.tr,
               onTap: () => controller.clickOnChangePassword(),
             ),
             KNPWidgets.commonDividerView(height: 0),
             commonRowForCard(
-              text1: 'Manage bank detail',
+              text1: PageConstVar.manageBankDetail.tr,
               onTap: () => controller.clickOnManageBankDetails(),
             ),
             KNPWidgets.commonDividerView(height: 0),
             commonRowForCard(
-              text1: 'Referral a friends',
+              text1: PageConstVar.referralAFriends.tr,
               onTap: controller.referralAFriendsValue.value
-                  ? () => KNPMethods.showSnackBar(message: 'Wait for response')
+                  ? () => KNPMethods.showSnackBar(message: PageConstVar.waitForResponse.tr)
                   : () => controller.clickOnReferralAFriends(),
             ),
             KNPWidgets.commonDividerView(height: 0),
             commonRowForCard(
-              text1: 'Log out',
+              text1: PageConstVar.logOut.tr,
               onTap: () => controller.clickOnLogOutButton(),
             ),
           ],
         ),
-      );
-
-  Widget logoutButtonView() => KNPWidgets.commonElevatedButton(
-        onPressed: () => controller.clickOnLogOutButton(),
-        buttonText: 'Log Out',
       );
 
   Widget changeLanguageView() {

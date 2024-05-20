@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kalam_news_publication/app/common/page_const_var/page_const_var.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -46,7 +47,6 @@ class C {
   static const textLogout = "Logout";
   static const textExitDialogTitle = "Exit";
   static const textExitDialogContent = "Do you want to exit this application?";
-  static const textExit = "Exit";
   static const textWhoops = "Whoops!";
   static const textNoInternetConnectionFound = "No internet connection found.";
   static const textPleaseCheckYourInternetConnection = "Please check your connection and try again.";
@@ -119,12 +119,12 @@ class CD {
 
   static Future<void> commonIosLogoutDialog({required VoidCallback clickOnCancel, required VoidCallback clickOnLogout, bool isDismiss = true}) async {
     await CD.commonIosAlertDialogBox(
-        title: C.textLogOutDialogTitle,
-        content: C.textLogOutDialogContent,
+        title: PageConstVar.logOut.tr,
+        content: C.textLogOutDialogContent.tr,
         clickOnLeftButton: clickOnCancel,
         clickOnRightButton: clickOnLogout,
-        leftButtonTitle: C.textCancel,
-        rightButtonTitle: C.textLogout,
+        leftButtonTitle: C.textCancel.tr,
+        rightButtonTitle: PageConstVar.logOut.tr,
         isDismiss: isDismiss);
   }
 
@@ -133,12 +133,12 @@ class CD {
       required VoidCallback clickOnDelete,
       bool isDismiss = true}) async {
       await CD.commonIosAlertDialogBox(
-        title: C.textDeleteDialogTitle,
-        content: C.textDeleteDialogContent,
+        title: C.textDeleteDialogTitle.tr,
+        content: C.textDeleteDialogContent.tr,
         clickOnLeftButton: clickOnCancel,
         clickOnRightButton: clickOnDelete,
-        leftButtonTitle: C.textCancel,
-        rightButtonTitle: C.textDeleteDialogTitle,
+        leftButtonTitle: C.textCancel.tr,
+        rightButtonTitle: C.textDeleteDialogTitle.tr,
         isDismiss: isDismiss);
   }
 
@@ -147,12 +147,12 @@ class CD {
       required VoidCallback clickOnExit,
       bool isDismiss = true}) async {
     await CD.commonIosAlertDialogBox(
-        title: C.textExitDialogTitle,
-        content: C.textExitDialogContent,
+        title: C.textExitDialogTitle.tr,
+        content: C.textExitDialogContent.tr,
         clickOnLeftButton: clickOnCancel,
         clickOnRightButton: clickOnExit,
-        leftButtonTitle: C.textCancel,
-        rightButtonTitle: C.textExit,
+        leftButtonTitle: C.textCancel.tr,
+        rightButtonTitle: C.textExitDialogTitle.tr,
         isDismiss: isDismiss);
   }
 
@@ -174,12 +174,12 @@ class CD {
       required VoidCallback clickOnGallery,
       bool isDismiss = true}) async {
     await CD.commonIosAlertDialogBox(
-        title: C.textSelectImageTitle,
-        content: C.textImageDialogContent,
+        title: C.textSelectImageTitle.tr,
+        content: C.textImageDialogContent.tr,
         clickOnLeftButton: clickOnCamera,
         clickOnRightButton: clickOnGallery,
-        leftButtonTitle: C.textCamera,
-        rightButtonTitle: C.textGallery,
+        leftButtonTitle: C.textCamera.tr,
+        rightButtonTitle: C.textGallery.tr,
         isDismiss: isDismiss);
   }
 
@@ -332,7 +332,7 @@ class CD {
         clickOnLeftButton: clickOnCancel,
         clickOnRightButton: clickOnExit,
         leftButtonTitle: C.textCancel,
-        rightButtonTitle: C.textExit,
+        rightButtonTitle: C.textExitDialogTitle,
         isDismiss: isDismiss);
   }
 

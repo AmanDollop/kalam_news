@@ -34,9 +34,9 @@ class NewPasswordView extends GetView<NewPasswordController> {
                               shrinkWrap: true,
                               children: [
                                 setNewPasswordTextView(),
-                                if (controller.pageName.value == "Change password")
+                                if (controller.pageName.value == PageConstVar.changePassword.tr)
                                 SizedBox(height: CommonPaddingAndSize.size20()),
-                                if (controller.pageName.value == "Change password")
+                                if (controller.pageName.value == PageConstVar.changePassword.tr)
                                 oldPasswordTextFieldView(),
                                 SizedBox(height: CommonPaddingAndSize.size20()),
                                 newPasswordTextFieldView(),

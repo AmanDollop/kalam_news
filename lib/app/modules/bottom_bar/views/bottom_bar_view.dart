@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/common/packages/bottom_bar/GButton.dart';
 import 'package:kalam_news_publication/app/common/packages/bottom_bar/GnavStyle.dart';
+import 'package:kalam_news_publication/app/common/page_const_var/page_const_var.dart';
+import 'package:kalam_news_publication/app/common/page_const_var/page_const_var.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import '../controllers/bottom_bar_controller.dart';
 
@@ -43,51 +47,55 @@ class BottomBarView extends GetView<BottomBarController> {
                   icon: selectedBottomNavigationIndex.value == 0
                       ? selectedCommonButtonView(
                         imagePath: 'assets/bottom_bar_icon/d_home_icon.png',
-                        title: 'Home')
+                        title: PageConstVar.home.tr)
                       : unSelectedCommonButtonView(
                          imagePath: 'assets/bottom_bar_icon/l_home_icon.png',
-                        title: 'Home'),
+                        title: PageConstVar.home.tr),
                 ),
                 GButton(
                   icon: selectedBottomNavigationIndex.value == 1
                       ? selectedCommonButtonView(
                         imagePath: 'assets/bottom_bar_icon/d_profile_icon.png',
-                        title: 'Profile')
+                        title: PageConstVar.profile.tr)
                       : unSelectedCommonButtonView(
                         imagePath: 'assets/bottom_bar_icon/l_profile_icon.png',
-                        title: 'Profile'),
+                        title: PageConstVar.profile.tr),
                 ),
                 GButton(
                   icon: selectedBottomNavigationIndex.value == 2
                       ? selectedCommonButtonView(
                         imagePath: 'assets/bottom_bar_icon/d_genealogy_icon.png',
-                        title: 'Genealogy')
+                        title: PageConstVar.genealogy.tr)
                       : unSelectedCommonButtonView(
                       imagePath: 'assets/bottom_bar_icon/l_genealogy_icon.png',
-                      title: 'Genealogy'),
+                      title: PageConstVar.genealogy.tr),
                 ),
                 GButton(
                   icon: selectedBottomNavigationIndex.value == 3
                       ? selectedCommonButtonView(
                          imagePath: 'assets/bottom_bar_icon/d_wallet_icon.png',
-                         title: 'Wallet')
+                         title: PageConstVar.wallet.tr)
                       : unSelectedCommonButtonView(
                          imagePath: 'assets/bottom_bar_icon/l_wallet_icon.png',
-                         title: 'Wallet'),
+                         title: PageConstVar.wallet.tr),
                 ),
                 GButton(
                   icon: selectedBottomNavigationIndex.value == 4
                       ? selectedCommonButtonView(
                         imagePath: 'assets/bottom_bar_icon/d_achievements_icon.png',
-                        title: 'Achievements')
+                        title: PageConstVar.achievements.tr)
                       : unSelectedCommonButtonView(
                       imagePath: 'assets/bottom_bar_icon/l_achievements_icon.png',
-                      title: 'Achievements'),
+                      title: PageConstVar.achievements.tr),
                 ),
               ],
               selectedIndex: selectedBottomNavigationIndex.value,
               onTabChange: (index) {
-                selectedBottomNavigationIndex.value = index;
+                if(controller.isUserPackage == 0){
+                  KNPMethods.showSnackBar(message: 'Buy package.');
+                }else{
+                  selectedBottomNavigationIndex.value = index;
+                }
                 controller.count.value++;
               },
             ),

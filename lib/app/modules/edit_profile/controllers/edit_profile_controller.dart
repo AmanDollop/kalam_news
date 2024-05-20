@@ -10,6 +10,7 @@ import 'package:kalam_news_publication/app/common/packages/cd.dart';
 import 'package:kalam_news_publication/app/common/packages/common_methods_for_date_time.dart';
 import 'package:kalam_news_publication/app/common/packages/image_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:kalam_news_publication/app/common/page_const_var/page_const_var.dart';
 import 'package:kalam_news_publication/app/db/data_base_constant/data_base_constant.dart';
 import 'package:kalam_news_publication/app/db/data_base_helper/data_base_helper.dart';
 import 'package:kalam_news_publication/app/modules/bottom_bar/views/bottom_bar_view.dart';
@@ -36,10 +37,10 @@ class EditProfileController extends GetxController {
   final isInitialsDropDownValue = false.obs;
   final selectedInitialsValue = ''.obs;
   List<String> initialsList = [
-    'Mr',
-    'Mrs',
-    'Ms',
-    'Mst',
+    PageConstVar.mr.tr,
+    PageConstVar.mrs.tr,
+    PageConstVar.ms.tr,
+    PageConstVar.mst.tr,
   ];
 
   final firstNameController = TextEditingController();

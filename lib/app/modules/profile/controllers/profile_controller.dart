@@ -6,6 +6,7 @@ import 'package:kalam_news_publication/app/api/api_res_modals/user_data_modal.da
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/common/packages/cd.dart';
 import 'package:kalam_news_publication/app/common/packages/razorpay.dart';
+import 'package:kalam_news_publication/app/common/page_const_var/page_const_var.dart';
 import 'package:kalam_news_publication/app/common/page_const_var/selected_language_page.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
 import 'package:kalam_news_publication/app/db/data_base_constant/data_base_constant.dart';
@@ -69,7 +70,7 @@ class ProfileController extends GetxController {
   }
 
   void clickOnWelcomeMessage() {
-    Get.toNamed(Routes.WELCOME_MASSAGE,arguments: ['Welcome massage',welcomeMessage.value]);
+    Get.toNamed(Routes.WELCOME_MASSAGE,arguments: ['${PageConstVar.welcome.tr} ${PageConstVar.message.tr}',welcomeMessage.value]);
   }
 
   void clickOnKYCApplication() {
@@ -83,7 +84,7 @@ class ProfileController extends GetxController {
   }
 
   Future<void> clickOnChangePassword() async {
-    await Get.toNamed(Routes.NEW_PASSWORD, arguments: ['Change password']);
+    await Get.toNamed(Routes.NEW_PASSWORD, arguments: [PageConstVar.changePassword.tr]);
     Get.lazyPut(()=>ProfileController());
     onInit();
   }
@@ -115,8 +116,7 @@ class ProfileController extends GetxController {
       isDismiss: false,
       clickOnCancel: () => Get.back(),
       clickOnLogout: () async {
-        await DataBaseHelper()
-            .deleteDataBase(tableName: DataBaseConstant.tableNameForUserDetail);
+        await DataBaseHelper().deleteDataBase(tableName: DataBaseConstant.tableNameForUserDetail);
         Get.offAllNamed(Routes.LOG_IN);
       },
     );

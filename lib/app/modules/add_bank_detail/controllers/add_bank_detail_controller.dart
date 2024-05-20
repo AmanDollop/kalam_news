@@ -5,6 +5,7 @@ import 'package:kalam_news_publication/app/api/api_constant_var/api_constant_var
 import 'package:kalam_news_publication/app/api/api_intrigation/api_intrigation.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/bank_account_modal.dart';
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
+import 'package:kalam_news_publication/app/common/page_const_var/page_const_var.dart';
 
 class AddBankDetailController extends GetxController {
 
@@ -33,7 +34,7 @@ class AddBankDetailController extends GetxController {
   final ifscCodeController = TextEditingController();
   FocusNode ifscCodeFocusNode = FocusNode();
 
-  final accountType = 'Current'.obs;
+  final accountType = PageConstVar.current.tr.obs;
 
   BankAccounts? bankAccounts;
 
@@ -43,7 +44,7 @@ class AddBankDetailController extends GetxController {
   void onInit() {
     super.onInit();
     pageName.value =  Get.arguments[0];
-    if(pageName.value == "Update bank detail") {
+    if(pageName.value == PageConstVar.updateBankDetail.tr) {
       bankAccounts = Get.arguments[1];
       setBankDataOnFiled();
     }
@@ -69,9 +70,9 @@ class AddBankDetailController extends GetxController {
     reAccountNumberController.text = bankAccounts?.accountNo ?? '';
     customerNameController.text = bankAccounts?.customerName ?? '';
     if(bankAccounts?.accountType == 'saving' || bankAccounts?.accountType == "Saving"){
-      accountType.value = 'Saving';
+      accountType.value = PageConstVar.saving.tr;
     }else{
-      accountType.value = 'Current';
+      accountType.value = PageConstVar.current.tr;
     }
     ifscCodeController.text = bankAccounts?.ifscCode ?? '';
   }
@@ -93,12 +94,12 @@ class AddBankDetailController extends GetxController {
        ApiConstantVar.accountType : accountType.value.toLowerCase(),
        ApiConstantVar.ifscCode : ifscCodeController.text.trim().toString(),
       };
-      if(pageName.value == "Update bank detail") {
+      if(pageName.value == PageConstVar.updateBankDetail.tr) {
         bodyParamsForAddAndUpdateBankAccount.addAll({ApiConstantVar.bankId : bankAccounts?.bankId.toString() ?? '',});
       }
       http.Response? res = await ApiIntrigation.addBankDetailApi(
           bodyParams: bodyParamsForAddAndUpdateBankAccount,
-          endPoint: pageName.value == "Update bank detail"
+          endPoint: pageName.value == PageConstVar.updateBankDetail.tr
           ? ApiUrls.apiEndPointUpdateBankAccounts
           : ApiUrls.apiEndPointAddBankAccount);
       if(res != null && res.statusCode == 200){

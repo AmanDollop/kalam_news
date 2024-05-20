@@ -97,6 +97,15 @@ class PageConstVar{
   static const pleaseEnterConfirmPassword = "Please enter confirm password";
   static const confirmPasswordNotMatch = "Confirm password not match";
 
+  static const pleaseEnterBankName = "Please enter bank name";
+  static const pleaseEnterBankBranchName = "Please enter bank branch name";
+  static const pleaseEnterAccountNumber = "Please enter account number";
+  static const pleaseEnterReAccountNumber = "Please enter re-account number";
+  static const accountNumberNotMatch = "Account number not match";
+  static const pleaseEnterCustomerName = "Please enter customer name";
+  static const pleaseEnterIFSCCode = "Please enter IFSC code";
+  static const pleaseEnterValidIFSCCode = "Please enter valid IFSC code";
+
 
   /// TODO<-----------------✔✔✔✔✔✔✔-----------------OTP Verification Page Const-----------------✔✔✔✔✔✔✔----------------->
 
@@ -126,5 +135,91 @@ class PageConstVar{
   static const success = "Success";
   static const yourPasswordHasBeenSuccessfullyReset = "Your password has been successfully reset.";
 
+
+  /// TODO<-----------------✔✔✔✔✔✔✔-----------------Bottom Bar Const-----------------✔✔✔✔✔✔✔----------------->
+
+  static const home = "Home";
+  static const profile = "Profile";
+  static const genealogy = "Genealogy";
+  static const wallet = "Wallet";
+  static const achievements = "Achievements";
+
+
+  /// TODO<-----------------✔✔✔✔✔✔✔-----------------Home Page Const-----------------✔✔✔✔✔✔✔----------------->
+
+  static const welcome = "Welcome";
+  static const yourProfileProgress = "Your profile progress";
+  static const packages = "Packages";
+  static const nodeCount = "Node count";
+  static const leftBv = "Left Bv";
+  static const rightBv = "Right Bv";
+  static const commission = "Commission";
+  static const yourSales = "Your sales";
+  static const walletBalance = "Wallet balance";
+  static const withdrawalBalance = "Withdrawal balance";
+
+  /// TODO<-----------------✔✔✔✔✔✔✔-----------------Profile Page Const-----------------✔✔✔✔✔✔✔----------------->
+
+  static const referredBy = "Referred By";
+  static const message = "message";
+  static const kycApplication = "KYC application";
+  static const accountSetting = "Account Setting";
+  static const editProfile = "Edit profile";
+  static const changePassword = "Change password";
+  static const manageBankDetail = "Manage bank detail";
+  static const referralAFriends = "Referral a friends";
+  static const waitForResponse = "Wait for response";
+  static const logOut = "Log out";
+
+  /// TODO<-----------------✔✔✔✔✔✔✔-----------------Manage bank Page Const-----------------✔✔✔✔✔✔✔----------------->
+
+  static const manageBank = "Manage bank";
+  static const primary = "Primary";
+  static const viewAccountDetails = "View Account Details";
+  static const accountHolderName = "Account Holder Name";
+  static const accountNumber = "Account Number";
+  static const accountType = "Account Type";
+  static const iFSCCode = "IFSC Code";
+  static const branch = "Branch";
+  static const addBank = "Add Bank";
+  static const updateBank = "Update Bank";
+  static const updateBankDetail = "Update bank detail";
+  static const addBankDetail = "Add bank detail";
+  static const chooseAction = "Choose Action";
+  static const edit = "Edit";
+  static const setAsPrimary = "Set as Primary";
+  static const remove = "Remove";
+
+  /// TODO<-----------------✔✔✔✔✔✔✔-----------------Add bank Page Const-----------------✔✔✔✔✔✔✔----------------->
+
+  static const bankName = "Bank name";
+  static const bankBranchName = "Bank branch name";
+  static const reAccountNumber = "Re-account number";
+  static const customerName = "Customer name";
+  static const current = "Current";
+  static const saving = "Saving";
+
+  /// TODO<-----------------✔✔✔✔✔✔✔-----------------Genealogy Page Const-----------------✔✔✔✔✔✔✔----------------->
+
+  static const totalBusinessValue = "Total business value";
+  static const levelBelow = "Level below";
+  static const goBack = "Go back";
+  static const paidUsers = "Paid users";
+  static const unpaidUsers = "Unpaid users";
+
+  /// TODO<-----------------✔✔✔✔✔✔✔-----------------Wallet Page Const-----------------✔✔✔✔✔✔✔----------------->
+
+  static const totalIncome = "Total income";
+  static const withdrawalAmount = "Withdrawal amount";
+  static const enterAmount = "Enter amount";
+  static const withdrawNow = "Withdraw now";
+  static const history = "History";
+  static const creditOn = "Credit on";
+  static const depositOn = "Deposit on";
+
+  /// TODO<-----------------✔✔✔✔✔✔✔-----------------Achievements Page Const-----------------✔✔✔✔✔✔✔----------------->
+
+  static const contactSupport = "Contact support";
+  static const followSocialLinks = "Follow social links";
 
 }

@@ -26,9 +26,9 @@ class V {
 
   static String? isNumberValid({required String? value,bool countryCodeValue = false, String? countyCode,}) {
     if (value == null || value.trim().toString().isEmpty) {
-      return "Please enter number";
+      return PageConstVar.pleaseEnterNumber.tr;
     } else if (value.trim().length < 10 || value.trim().length > 12) {
-      return "Please enter valid number";
+      return PageConstVar.pleaseEnterValidNumber.tr;
     }
     else if (countryCodeValue) {
       if(countyCode == null || countyCode.isEmpty) {
@@ -82,12 +82,12 @@ class V {
 
   static String? isAccountNumberValid({required String? value, String? accountNumber = "Not"}) {
     if (value == null || value.trim().toString().isEmpty) {
-      return "Please enter re-account number".tr;
+      return PageConstVar.pleaseEnterReAccountNumber.tr;
     } else if (accountNumber?.trim().toString() != "Not") {
       if (accountNumber?.trim().toString() == value.trim().toString()) {
         return null;
       } else {
-        return "Account number not match".tr;
+        return PageConstVar.accountNumberNotMatch.tr;
       }
     } else {
       return null;
@@ -114,18 +114,6 @@ class V {
     }
     return "";
   }
-
-  static String isIFSCValid(String value) {
-    String pattern = '^[A-Z]{4}0[A-Z0-9]{6}\$';
-    RegExp regExp = RegExp(pattern);
-    if (value.isEmpty) {
-      return 'Please Enter IFSC';
-    } else if (!regExp.hasMatch(value)) {
-      return 'Please Enter valid IFSC';
-    }
-    return "";
-  }
-
 
 
   static String? isValidateAadhar({required String? value}) {
@@ -161,9 +149,9 @@ class V {
     RegExp ifscRegExp = RegExp(r'^[A-Z]{4}[0][A-Z0-9]{6}$');
 
     if (value == null ||value.isEmpty) {
-      return 'Please enter IFSC code';
+      return PageConstVar.pleaseEnterIFSCCode.tr;
     } else if (!ifscRegExp.hasMatch(value)) {
-      return 'Invalid IFSC Code';
+      return PageConstVar.pleaseEnterValidIFSCCode.tr;
     }else {
       return null;
     }

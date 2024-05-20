@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kalam_news_publication/app/api/api_intrigation/api_intrigation.dart';
+import 'package:kalam_news_publication/app/api/api_res_modals/package_modal.dart';
+import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/modules/achievements/controllers/achievements_controller.dart';
 import 'package:kalam_news_publication/app/modules/achievements/controllers/achievements_controller.dart';
 import 'package:kalam_news_publication/app/modules/achievements/controllers/achievements_controller.dart';
@@ -24,9 +27,13 @@ import 'package:kalam_news_publication/app/modules/wallet/views/wallet_view.dart
 class BottomBarController extends GetxController {
   final count = 0.obs;
 
+  final packageModal = Rxn<PackageModal>();
+  int? isUserPackage;
+
   @override
-  void onInit() {
+  Future<void> onInit() async {
     super.onInit();
+    await callingPackageApi();
   }
 
   @override
@@ -86,4 +93,18 @@ class BottomBarController extends GetxController {
         return const SizedBox();
     }
   }
+
+  Future<void> callingPackageApi() async {
+    try {
+      packageModal.value = await ApiIntrigation.getPackageApi();
+      if (packageModal.value != null) {
+        isUserPackage = packageModal.value?.isUserPackage;
+        print('isUserPackage::::: $isUserPackage');
+      }
+    } catch (e) {
+      print('callingPackageApi::::  ERROR::::: $e');
+      KNPMethods.error();
+    }
+  }
+
 }

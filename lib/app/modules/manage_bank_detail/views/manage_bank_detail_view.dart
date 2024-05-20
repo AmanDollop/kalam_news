@@ -3,6 +3,7 @@ import 'package:flutter_dash/flutter_dash.dart';
 import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/common/common_padding_size/common_padding_size.dart';
 import 'package:kalam_news_publication/app/common/packages/model_progress_bar.dart';
+import 'package:kalam_news_publication/app/common/page_const_var/page_const_var.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
 import 'package:kalam_news_publication/app/get_material_controller/ac.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -18,7 +19,7 @@ class ManageBankDetailView extends GetView<ManageBankDetailController> {
         controller.count.value;
         if (AC.isConnect.value) {
           return KNPWidgets.scaffoldBackgroundImageViewWithAppBar(
-            appBarTitle: 'Manage bank',
+            appBarTitle: PageConstVar.manageBank.tr,
             child2: KNPWidgets.commonRefreshIndicator(
               onRefresh: () async => await controller.onInit(),
               child: ModalProgress(
@@ -87,31 +88,31 @@ class ManageBankDetailView extends GetView<ManageBankDetailController> {
                                                         crossAxisAlignment: CrossAxisAlignment.start,
                                                         children: [
                                                           commonRowForDetailView(
-                                                              text1: 'Account Holder Name', text2: controller.bankAccountsList?[index].customerName != null && controller.bankAccountsList![index].customerName!.isNotEmpty
+                                                              text1: PageConstVar.accountHolderName.tr, text2: controller.bankAccountsList?[index].customerName != null && controller.bankAccountsList![index].customerName!.isNotEmpty
                                                               ? '${controller.bankAccountsList?[index].customerName}'
                                                               : '?',
                                                           ),
                                                           SizedBox(height: 5.px),
                                                           commonRowForDetailView(
-                                                              text1: 'Account Number', text2: controller.bankAccountsList?[index].accountNo != null && controller.bankAccountsList![index].accountNo!.isNotEmpty
+                                                              text1: PageConstVar.accountNumber.tr, text2: controller.bankAccountsList?[index].accountNo != null && controller.bankAccountsList![index].accountNo!.isNotEmpty
                                                               ? '${controller.bankAccountsList?[index].accountNo}'
                                                               : '?',
                                                           ),
                                                           SizedBox(height: 5.px),
                                                           commonRowForDetailView(
-                                                              text1: 'Account Type', text2: controller.bankAccountsList?[index].accountType != null && controller.bankAccountsList![index].accountType!.isNotEmpty
+                                                              text1: PageConstVar.accountType.tr, text2: controller.bankAccountsList?[index].accountType != null && controller.bankAccountsList![index].accountType!.isNotEmpty
                                                               ? '${controller.bankAccountsList?[index].accountType}'
                                                               : '?',
                                                           ),
                                                           SizedBox(height: 5.px),
                                                           commonRowForDetailView(
-                                                              text1: 'IFSC Code', text2: controller.bankAccountsList?[index].ifscCode != null && controller.bankAccountsList![index].ifscCode!.isNotEmpty
+                                                              text1: PageConstVar.iFSCCode.tr, text2: controller.bankAccountsList?[index].ifscCode != null && controller.bankAccountsList![index].ifscCode!.isNotEmpty
                                                               ? '${controller.bankAccountsList?[index].ifscCode}'
                                                               : '?',
                                                           ),
                                                           SizedBox(height: 5.px),
                                                           commonRowForDetailView(
-                                                              text1: 'Branch', text2: controller.bankAccountsList?[index].bankBranch != null && controller.bankAccountsList![index].bankBranch!.isNotEmpty
+                                                              text1: PageConstVar.branch.tr, text2: controller.bankAccountsList?[index].bankBranch != null && controller.bankAccountsList![index].bankBranch!.isNotEmpty
                                                               ? '${controller.bankAccountsList?[index].bankBranch}'
                                                               : '?',
                                                           ),
@@ -164,7 +165,7 @@ class ManageBankDetailView extends GetView<ManageBankDetailController> {
         ),
         child: Center(
           child: Text(
-            'Primary',
+            PageConstVar.primary.tr,
             style: Theme.of(Get.context!).textTheme.titleSmall?.copyWith(color: Theme.of(Get.context!).colorScheme.primary),
           ),
         ),
@@ -204,7 +205,7 @@ class ManageBankDetailView extends GetView<ManageBankDetailController> {
         textAlign: textAlign,
       );
 
-  Widget viewAccountDetailsTextView() => cardHeadlineTextView(text: 'View Account Details');
+  Widget viewAccountDetailsTextView() => cardHeadlineTextView(text: PageConstVar.viewAccountDetails.tr);
 
   Widget downAndUpArrowButtonView({required int index}) => KNPWidgets.commonIconButton(
         onPressed: () => controller.clickOnDropDownButton(index: index),
@@ -235,6 +236,6 @@ class ManageBankDetailView extends GetView<ManageBankDetailController> {
 
   Widget addBankButtonView() => KNPWidgets.commonElevatedButton(
         onPressed: () => controller.clickOnAddBankButton(),
-        buttonText: 'Add Bank',
+        buttonText: PageConstVar.addBank.tr,
       );
 }

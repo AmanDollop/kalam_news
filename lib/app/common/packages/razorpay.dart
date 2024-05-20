@@ -8,6 +8,7 @@ import 'package:kalam_news_publication/app/api/api_res_modals/user_data_modal.da
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/db/data_base_constant/data_base_constant.dart';
 import 'package:kalam_news_publication/app/db/data_base_helper/data_base_helper.dart';
+import 'package:kalam_news_publication/app/routes/app_pages.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:http/http.dart' as http;
 
@@ -98,7 +99,7 @@ class KNPRazorpayMethods{
     try{
       http.Response? res = await ApiIntrigation.purchasePackageApi(bodyParams: bodyParams);
       if(res != null && res.statusCode == 200){
-
+        Get.offAllNamed(Routes.BOTTOM_BAR);
       }
     }catch(e){
       print('callingPurchasePackageApi::: ERROR::::  $e');

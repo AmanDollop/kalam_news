@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/common/common_padding_size/common_padding_size.dart';
 import 'package:kalam_news_publication/app/common/packages/common_methods_for_date_time.dart';
 import 'package:kalam_news_publication/app/common/packages/model_progress_bar.dart';
+import 'package:kalam_news_publication/app/common/page_const_var/page_const_var.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
 import 'package:kalam_news_publication/app/get_material_controller/ac.dart';
 import 'package:kalam_news_publication/app/validation/v.dart';
@@ -21,7 +22,7 @@ class WalletView extends GetView<WalletController> {
           return WillPopScope(
             onWillPop: () => controller.onWillPop(),
             child: KNPWidgets.scaffoldBackgroundImageViewWithAppBar(
-              appBarTitle: 'Wallet',
+              appBarTitle: PageConstVar.wallet.tr,
               onTapForBackButton: () => controller.onWillPop(),
               child2: KNPWidgets.commonRefreshIndicator(
                 onRefresh: () async => controller.onInit(),
@@ -35,7 +36,7 @@ class WalletView extends GetView<WalletController> {
                           children: [
                             totalIncomeView(),
                             SizedBox(height: CommonPaddingAndSize.size16()),
-                            textFiledTitleTextView(text: 'Withdrawal amount'),
+                            textFiledTitleTextView(text: PageConstVar.withdrawalAmount.tr),
                             SizedBox(height: CommonPaddingAndSize.size10()),
                             withdrawAmountTextFieldView(),
                             SizedBox(height: CommonPaddingAndSize.size16()),
@@ -74,7 +75,7 @@ class WalletView extends GetView<WalletController> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          totalIncomeTextView(text: 'Total income',flex: 3),
+          totalIncomeTextView(text: PageConstVar.totalIncome.tr,flex: 3),
           totalIncomeTextView(text: controller.withdrawHistoryModal.value?.totalCommission != null
               ? '₹${controller.withdrawHistoryModal.value?.totalCommission}'
               : '₹00'),
@@ -91,7 +92,7 @@ class WalletView extends GetView<WalletController> {
 
   Widget withdrawAmountTextFieldView() => KNPWidgets.commonTextFormField(
     title: '',
-    hintText: '₹ Enter amount',
+    hintText: '₹ ${PageConstVar.enterAmount.tr}',
     controller: controller.withdrawAmountController,
     focusNode: controller.withdrawAmountFocusNode,
     keyboardType: TextInputType.number,
@@ -103,7 +104,7 @@ class WalletView extends GetView<WalletController> {
       onPressed: controller.withdrawNowButtonValue.value
           ? () => null
           : () => controller.clickOnWithdrawNowButton(),
-      buttonText: 'Withdraw now',
+      buttonText: PageConstVar.withdrawNow.tr,
       isLoading: controller.withdrawNowButtonValue.value,
   );
 
@@ -138,7 +139,7 @@ class WalletView extends GetView<WalletController> {
               topRight: Radius.circular(8.px),
             ),
           ),
-          child: cardHeadlineTextView(text: 'History'),
+          child: cardHeadlineTextView(text:PageConstVar.history.tr),
         ),
         KNPWidgets.commonDividerView(
           height: 0,
@@ -176,8 +177,8 @@ class WalletView extends GetView<WalletController> {
                         cardSubTitleTextView(
                           text:
                           controller.walletHistory?[index].transactionType == 'income'
-                          ? 'Credit on ${CMForDateTime.dateFormatForDateMonthYearHourMinSec(dateAndTime: '${controller.walletHistory?[index].createdAt}')}'
-                          : 'Deposit on ${CMForDateTime.dateFormatForDateMonthYearHourMinSec(dateAndTime: '${controller.walletHistory?[index].createdAt}')}',
+                          ? '${PageConstVar.creditOn.tr} ${CMForDateTime.dateFormatForDateMonthYearHourMinSec(dateAndTime: '${controller.walletHistory?[index].createdAt}')}'
+                          : '${PageConstVar.depositOn.tr} ${CMForDateTime.dateFormatForDateMonthYearHourMinSec(dateAndTime: '${controller.walletHistory?[index].createdAt}')}',
                         ),
                       ],
                     ),

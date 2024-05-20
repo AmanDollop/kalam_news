@@ -6,6 +6,7 @@ import 'package:kalam_news_publication/app/common/common_padding_size/common_pad
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/common/packages/model_progress_bar.dart';
 import 'package:kalam_news_publication/app/common/packages/my_drop_down.dart';
+import 'package:kalam_news_publication/app/common/page_const_var/page_const_var.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
 import 'package:kalam_news_publication/app/validation/v.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -56,7 +57,7 @@ class EditProfileView extends GetView<EditProfileController> {
                                     Row(
                                       children: [
                                         checkBoxView(),
-                                        sameAsMobileNumberTextView(text: 'Same as phone number')
+                                        sameAsMobileNumberTextView(text: PageConstVar.sameAsPhoneNumber.tr)
                                       ],
                                     ).paddingSymmetric(vertical: CommonPaddingAndSize.size10()),
                                     completeAddressTextFieldView(),
@@ -142,11 +143,11 @@ class EditProfileView extends GetView<EditProfileController> {
       );
 
   Widget mrAndMrsTextFieldView() => MyDropdown(
-        title: 'Initials*',
+        title: '${PageConstVar.initials.tr}*',
         items: controller.initialsList,
         nameList: controller.initialsList,
         selectedItem: controller.selectedInitialsValue.value,
-        hintText: 'Select Initials',
+        hintText: '${PageConstVar.select.tr} ${PageConstVar.initials.tr}',
         focusNode: controller.initialsFocusNode,
         textEditingController: controller.initialsController,
         isOpenValue: controller.isInitialsDropDownValue.value,
@@ -158,45 +159,45 @@ class EditProfileView extends GetView<EditProfileController> {
           controller.count.value++;
         },
         clickOnListOfDropDown: (value) => controller.clickOnInitialsListOfDropDown(value: value),
-        validator: (value) => V.isValid(value: value, title: 'Please select initials'),
+        validator: (value) => V.isValid(value: value, title: PageConstVar.pleaseSelectInitials.tr),
       );
 
   Widget firstNameTextFieldView() => KNPWidgets.commonTextFormField(
-        title: 'First name*',
-        hintText: 'First name',
+        title: '${PageConstVar.firstName.tr}*',
+        hintText: PageConstVar.firstName.tr,
         controller: controller.firstNameController,
         focusNode: controller.firstNameFocusNode,
-        validator: (value) => V.isValid(value: value, title: 'Please enter first name'),
+        validator: (value) => V.isValid(value: value, title: PageConstVar.pleaseEnterFirsName.tr),
       );
 
   Widget lastNameTextFieldView() => KNPWidgets.commonTextFormField(
-        title: 'Last name*',
-        hintText: 'Last name',
+        title: '${PageConstVar.lastName.tr}*',
+        hintText: PageConstVar.lastName.tr,
         controller: controller.lastNameController,
         focusNode: controller.lastNameFocusNode,
-        validator: (value) => V.isValid(value: value, title: 'Please enter last name'),
+        validator: (value) => V.isValid(value: value, title: PageConstVar.pleaseEnterLastName.tr),
       );
 
   Widget middleNameTextFieldView() => KNPWidgets.commonTextFormField(
-        title: 'Middle name ( Optional )',
-        hintText: 'Middle name',
+        title: '${PageConstVar.middleName.tr} ( ${PageConstVar.optional.tr} )',
+        hintText: PageConstVar.middleName.tr,
         controller: controller.middleNameController,
         focusNode: controller.middleNameFocusNode,
       );
 
   Widget dobTextFieldView() => KNPWidgets.commonTextFormField(
-      title: 'DOB*',
-      hintText: 'DOB',
+      title: '${PageConstVar.dob.tr}*',
+      hintText: PageConstVar.dob.tr,
       controller: controller.dobController,
       focusNode: controller.dobFocusNode,
       readOnly: true,
-      validator: (value) => V.isValid(value: value, title: 'Please enter dob'),
+      validator: (value) => V.isValid(value: value, title: PageConstVar.pleaseEnterDob.tr),
       suffixIcon: lockIconView(),
   );
 
   Widget emailTextFieldView() => KNPWidgets.commonTextFormField(
-      title: 'Email Id*',
-      hintText: 'Email Id',
+      title: '${PageConstVar.emailID.tr}*',
+      hintText: PageConstVar.emailID.tr,
       controller: controller.emailController,
       focusNode: controller.emailFocusNode,
       keyboardType: TextInputType.emailAddress,
@@ -207,8 +208,8 @@ class EditProfileView extends GetView<EditProfileController> {
   );
 
   Widget phoneNumberFieldView() => KNPWidgets.commonTextFormField(
-      title: 'Phone number*',
-      hintText: 'Phone number',
+      title: '${PageConstVar.phoneNumber.tr}*',
+      hintText: PageConstVar.phoneNumber.tr,
       controller: controller.mobileNumberController,
       focusNode: controller.mobileNumberFocusNode,
       keyboardType: TextInputType.number,
@@ -219,8 +220,8 @@ class EditProfileView extends GetView<EditProfileController> {
   );
 
   Widget whatsappNumberFieldView() => KNPWidgets.commonTextFormField(
-        title: 'WhatsApp number ( Optional )',
-        hintText: 'WhatsApp number',
+        title: '${PageConstVar.whatsAppNumber.tr} ( ${PageConstVar.optional.tr} )',
+        hintText: PageConstVar.whatsAppNumber.tr,
         controller: controller.whatsappNumberController,
         focusNode: controller.whatsappNumberFocusNode,
         keyboardType: TextInputType.number,
@@ -249,41 +250,41 @@ class EditProfileView extends GetView<EditProfileController> {
       );
 
   Widget completeAddressTextFieldView() => KNPWidgets.commonTextFormField(
-        title: 'Complete address*',
-        hintText: 'Complete address',
+        title: '${PageConstVar.completeAddress.tr}*',
+        hintText: PageConstVar.completeAddress.tr,
         controller: controller.completeAddressController,
         focusNode: controller.completeAddressFocusNode,
-        validator: (value) => V.isValid(value: value, title: 'Please enter complete address'),
+        validator: (value) => V.isValid(value: value, title: PageConstVar.pleaseEnterCompleteAddress.tr),
       );
 
   Widget stateTextFieldView() => KNPWidgets.commonTextFormField(
-        title: 'State*',
-        hintText: 'Select state',
+        title: '${PageConstVar.state.tr}*',
+        hintText: '${PageConstVar.select.tr} ${PageConstVar.state.tr}',
         controller: controller.stateController,
         focusNode: controller.stateFocusNode,
         readOnly: true,
         suffixIcon: lockIconView(),
-        validator: (value) => V.isValid(value: value, title: 'Please select state'),
+        validator: (value) => V.isValid(value: value, title: PageConstVar.pleaseSelectState.tr),
       );
 
   Widget cityTextFieldView() => KNPWidgets.commonTextFormField(
-        title: 'City*',
-        hintText: 'Select city',
+        title: '${PageConstVar.city.tr}*',
+        hintText: '${PageConstVar.select.tr} ${PageConstVar.city.tr}',
         controller: controller.cityController,
         focusNode: controller.cityFocusNode,
         readOnly: true,
         suffixIcon: lockIconView(),
-        validator: (value) => V.isValid(value: value, title: 'Please select city'),
+        validator: (value) => V.isValid(value: value, title: PageConstVar.pleaseSelectCity.tr),
       );
 
   Widget pinCodeTextFieldView() => KNPWidgets.commonTextFormField(
-      title: 'Pin code*',
-      hintText: 'Pin code',
+      title: '${PageConstVar.pinCode.tr}*',
+      hintText: PageConstVar.pinCode.tr,
       controller: controller.pinCodeController,
       focusNode: controller.pinCodeFocusNode,
       keyboardType: TextInputType.number,
       maxLength: 6,
-      validator: (value) => V.isValid(value: value, title: 'Please enter pin code'),
+      validator: (value) => V.isValid(value: value, title: PageConstVar.pleaseEnterPinCode.tr),
   );
 
   Widget upDateButtonView() => KNPWidgets.commonElevatedButton(
@@ -291,7 +292,7 @@ class EditProfileView extends GetView<EditProfileController> {
         onPressed: controller.saveButtonValue.value
             ? () => null
             : () => controller.clickOnUpdateButton(),
-        buttonText: 'Update',
+        buttonText: PageConstVar.update.tr,
       );
 
 }

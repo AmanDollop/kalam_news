@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/common/common_padding_size/common_padding_size.dart';
 import 'package:kalam_news_publication/app/common/packages/model_progress_bar.dart';
+import 'package:kalam_news_publication/app/common/page_const_var/page_const_var.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
 import 'package:kalam_news_publication/app/validation/v.dart';
-
 import '../controllers/add_bank_detail_controller.dart';
 
 class AddBankDetailView extends GetView<AddBankDetailController> {
@@ -41,19 +40,19 @@ class AddBankDetailView extends GetView<AddBankDetailController> {
                                   Row(
                                     children: [
                                       KNPWidgets.commonRadioButtonWithTitle(
-                                        title: 'Current',
+                                        title: PageConstVar.current.tr,
                                         value: controller.accountType.value,
                                         onTap: () {
-                                          controller.accountType.value = "Current";
+                                          controller.accountType.value = PageConstVar.current.tr;
                                           controller.count.value++;
                                         },
                                       ),
                                       SizedBox(width: CommonPaddingAndSize.size16()),
                                       KNPWidgets.commonRadioButtonWithTitle(
-                                        title: 'Saving',
+                                        title: PageConstVar.saving.tr,
                                         value: controller.accountType.value,
                                         onTap: () {
-                                          controller.accountType.value = "Saving";
+                                          controller.accountType.value = PageConstVar.saving.tr;
                                           controller.count.value++;
                                         },
                                       ),
@@ -75,33 +74,33 @@ class AddBankDetailView extends GetView<AddBankDetailController> {
   }
 
   Widget bankNameTextFieldView() => KNPWidgets.commonTextFormField(
-    title: 'Bank name*',
-    hintText: 'Bank name',
+    title: '${PageConstVar.bankName.tr}*',
+    hintText: PageConstVar.bankName.tr,
     controller: controller.bankNameController,
     focusNode: controller.bankNameFocusNode,
-    validator: (value) => V.isValid(value: value, title: 'Please enter bank name'),
+    validator: (value) => V.isValid(value: value, title: PageConstVar.pleaseEnterBankName.tr),
   );
 
   Widget bankBranchNameTextFieldView() => KNPWidgets.commonTextFormField(
-    title: 'Bank branch name*',
-    hintText: 'Bank branch name',
+    title: '${PageConstVar.bankBranchName.tr}*',
+    hintText: PageConstVar.bankBranchName.tr,
     controller: controller.bankBranchController,
     focusNode: controller.bankBranchFocusNode,
-    validator: (value) => V.isValid(value: value, title: 'Please enter bank branch name'),
+    validator: (value) => V.isValid(value: value, title: PageConstVar.pleaseEnterBankBranchName.tr),
   );
 
   Widget accountNumberTextFieldView() => KNPWidgets.commonTextFormField(
-    title: 'Account number*',
-    hintText: 'Account number',
+    title: '${PageConstVar.accountNumber.tr}*',
+    hintText: PageConstVar.accountNumber.tr,
     controller: controller.accountNumberController,
     focusNode: controller.accountNumberFocusNode,
     keyboardType: TextInputType.number,
-    validator: (value) => V.isValid(value: value, title: 'Please enter account number'),
+    validator: (value) => V.isValid(value: value, title: PageConstVar.pleaseEnterAccountNumber.tr),
   );
 
   Widget reAccountNumberTextFieldView() => KNPWidgets.commonTextFormField(
-    title: 'Re-account number*',
-    hintText: 'Re-account number',
+    title: '${PageConstVar.reAccountNumber.tr}*',
+    hintText: PageConstVar.reAccountNumber.tr,
     controller: controller.reAccountNumberController,
     focusNode: controller.reAccountNumberFocusNode,
     keyboardType: TextInputType.number,
@@ -109,16 +108,16 @@ class AddBankDetailView extends GetView<AddBankDetailController> {
   );
 
   Widget customerNameTextFieldView() => KNPWidgets.commonTextFormField(
-    title: 'Customer name*',
-    hintText: 'Customer name',
+    title: '${PageConstVar.customerName.tr}*',
+    hintText: PageConstVar.customerName.tr,
     controller: controller.customerNameController,
     focusNode: controller.customerNameFocusNode,
-    validator: (value) => V.isValid(value: value, title: 'Please enter customer name'),
+    validator: (value) => V.isValid(value: value, title: PageConstVar.pleaseEnterCustomerName.tr),
   );
 
   Widget ifscCodeTextFieldView() => KNPWidgets.commonTextFormField(
-    title: 'IFSC code*',
-    hintText: 'IFSC code',
+    title: '${PageConstVar.iFSCCode.tr}*',
+    hintText: PageConstVar.iFSCCode.tr,
     controller: controller.ifscCodeController,
     focusNode: controller.ifscCodeFocusNode,
     validator: (value) => V.isIfscCodeValid(value: value),
@@ -129,9 +128,9 @@ class AddBankDetailView extends GetView<AddBankDetailController> {
         ? () => null
         : () => controller.clickOnAddBankButton(),
     isLoading: controller.addButtonValue.value,
-    buttonText: controller.pageName.value == "Update bank detail"
-        ? 'Update Bank'
-        : 'Add Bank',
+    buttonText: controller.pageName.value == PageConstVar.updateBankDetail.tr
+        ? PageConstVar.updateBank.tr
+        : PageConstVar.addBank.tr,
   );
 
 }

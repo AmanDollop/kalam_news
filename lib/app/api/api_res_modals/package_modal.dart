@@ -1,11 +1,13 @@
 class PackageModal {
   String? message;
+  int? isUserPackage;
   List<PackageList>? packageList;
 
-  PackageModal({this.message, this.packageList});
+  PackageModal({this.message, this.packageList,this.isUserPackage});
 
   PackageModal.fromJson(Map<String, dynamic> json) {
     message = json['message'];
+    isUserPackage = json['is_user_package'];
     if (json['package_list'] != null) {
       packageList = <PackageList>[];
       json['package_list'].forEach((v) {
@@ -17,6 +19,7 @@ class PackageModal {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['message'] = message;
+    data['is_user_package'] = isUserPackage;
     if (packageList != null) {
       data['package_list'] = packageList!.map((v) => v.toJson()).toList();
     }

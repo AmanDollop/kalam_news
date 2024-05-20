@@ -4,7 +4,6 @@ import 'package:kalam_news_publication/app/api/api_constant_var/api_constant_var
 import 'package:kalam_news_publication/app/api/api_intrigation/api_intrigation.dart';
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/common/page_const_var/page_const_var.dart';
-import 'package:kalam_news_publication/app/common/page_const_var/page_const_var.dart';
 import 'package:kalam_news_publication/app/routes/app_pages.dart';
 import 'package:http/http.dart' as http;
 

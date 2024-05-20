@@ -33,9 +33,9 @@ void main() {
         enabled: false,
         builder: (context) => ResponsiveSizer(
           builder: (buildContext, orientation, screenType) => GestureDetector(
-            onTap: () {
+            onTap: () async {
               KNPMethods.unFocsKeyBoard();
-              Fluttertoast.cancel();
+              await Fluttertoast.cancel();
             },
             child: GetMaterialApp(
               title: "Application",
@@ -55,6 +55,3 @@ void main() {
   });
 
 }
-
-
-

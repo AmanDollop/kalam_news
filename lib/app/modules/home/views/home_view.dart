@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/common/common_padding_size/common_padding_size.dart';
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/common/packages/model_progress_bar.dart';
+import 'package:kalam_news_publication/app/common/page_const_var/page_const_var.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
 import 'package:kalam_news_publication/app/get_material_controller/ac.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -66,7 +67,7 @@ class HomeView extends GetView<HomeController> {
                                ],
                              ),
                            ),*/
-                            cardTitleTextView(text: 'Packages'),
+                            cardTitleTextView(text: PageConstVar.packages.tr),
                             SizedBox(height: CommonPaddingAndSize.size10()),
                             packagesListView(),
                             SizedBox(height: CommonPaddingAndSize.size12()),
@@ -90,7 +91,7 @@ class HomeView extends GetView<HomeController> {
   }
 
   Widget welcomeTextView() => Text(
-        'Welcome, ${controller.userData?.userDetails?.initials}. ${controller.userData?.userDetails?.firstName} ${controller.userData?.userDetails?.lastName}',
+        '${PageConstVar.welcome.tr}, ${controller.userData?.userDetails?.initials}. ${controller.userData?.userDetails?.firstName} ${controller.userData?.userDetails?.lastName}',
         style: Theme.of(Get.context!).textTheme.displayLarge,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
@@ -112,7 +113,7 @@ class HomeView extends GetView<HomeController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            cardSubTitleTextView(text: 'Your profile progress'),
+            cardSubTitleTextView(text: PageConstVar.yourProfileProgress.tr),
             SizedBox(height: CommonPaddingAndSize.size10()),
             Row(
               children: [
@@ -262,27 +263,27 @@ class HomeView extends GetView<HomeController> {
       );
 
   Widget nodeCountView() => commonCard(
-        title: 'Node count',
+        title: PageConstVar.nodeCount.tr,
         text1: KNPMethods.checkStringIsNullOrEmpty(string: controller.userDashboardBVCount?.lUserNodeCount,blankText: '00'),
-        text2: 'Left Bv',
+        text2: PageConstVar.leftBv.tr,
         text3:  KNPMethods.checkStringIsNullOrEmpty(string: controller.userDashboardBVCount?.rUserNodeCount,blankText: '00'),
-        text4: 'Right Bv',
+        text4: PageConstVar.rightBv.tr,
       );
 
   Widget commissionView() => commonCard(
-        title: 'Commission',
+        title: PageConstVar.commission.tr,
         text1:  KNPMethods.checkStringIsNullOrEmpty(string: controller.userDashboardBVCount?.leftCommission,blankText: '00'),
-        text2: 'Left Bv',
+        text2: PageConstVar.leftBv.tr,
         text3:  KNPMethods.checkStringIsNullOrEmpty(string: controller.userDashboardBVCount?.rightCommission,blankText: '00'),
-        text4: 'Right Bv',
+        text4: PageConstVar.rightBv.tr,
       );
 
   Widget yourSalesView() => commonCard(
-        title: 'Your sales',
+        title: PageConstVar.yourSales.tr,
         text1:  '₹${KNPMethods.checkStringIsNullOrEmpty(string: controller.userDashboardBVCount?.totalWalletBalance,blankText: '00')}',
-        text2: 'Wallet balance',
+        text2: PageConstVar.walletBalance.tr,
         text3:  '₹${KNPMethods.checkStringIsNullOrEmpty(string: controller.userDashboardBVCount?.totalWithdrawal,blankText: '00')}',
-        text4: 'Withdrawal balance',
+        text4: PageConstVar.withdrawalBalance.tr,
       );
 
 }

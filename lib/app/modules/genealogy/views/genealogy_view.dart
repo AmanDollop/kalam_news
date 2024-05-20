@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/common/common_padding_size/common_padding_size.dart';
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/common/packages/model_progress_bar.dart';
+import 'package:kalam_news_publication/app/common/page_const_var/page_const_var.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
 import 'package:kalam_news_publication/app/get_material_controller/ac.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -22,7 +23,7 @@ class GenealogyView extends GetView<GenealogyController> {
           return WillPopScope(
             onWillPop: () => controller.onWillPop(),
             child: KNPWidgets.scaffoldBackgroundImageViewWithAppBar(
-              appBarTitle: 'Genealogy',
+              appBarTitle: PageConstVar.genealogy.tr,
               onTapForBackButton: () => controller.onWillPop(),
               child2: KNPWidgets.commonRefreshIndicator(
                 onRefresh: () async => controller.onInit(),
@@ -42,7 +43,7 @@ class GenealogyView extends GetView<GenealogyController> {
                               borderColor: Theme.of(Get.context!).colorScheme.primary.withOpacity(.2),
                               padding: EdgeInsets.symmetric(horizontal: 18.px, vertical: CommonPaddingAndSize.size10()),
                               child: cardHeadlineTextView(
-                                text: 'Total business value',
+                                text: PageConstVar.totalBusinessValue.tr,
                               ),
                             ),
                             SizedBox(height: CommonPaddingAndSize.size10() * 3),
@@ -107,7 +108,7 @@ class GenealogyView extends GetView<GenealogyController> {
               children: [
                 userNameTextView(text: '${controller.userData?.userDetails?.initials}. ${controller.userData?.userDetails?.firstName} ${controller.userData?.userDetails?.lastName}'),
                 commonRowForProfileSection(
-                  text1: 'Referred By - ',
+                  text1: '${PageConstVar.referredBy.tr} - ',
                   text2: controller.userData?.userDetails?.referredBy != null
                       ? '${controller.userData?.userDetails?.referredBy}'
                       : '?',
@@ -117,7 +118,7 @@ class GenealogyView extends GetView<GenealogyController> {
                       ? () async => await Clipboard.setData(ClipboardData(text: "${controller.userData?.userDetails?.referralCode}"))
                       : () => null,
                   child: commonRowForProfileSection(
-                    text1: 'Referral code - ',
+                    text1: '${PageConstVar.referralCode.tr} - ',
                     text2: controller.userData?.userDetails?.referralCode != null
                         ? '${controller.userData?.userDetails?.referralCode}'
                         : '?',
@@ -269,12 +270,12 @@ class GenealogyView extends GetView<GenealogyController> {
       );
 
   Widget totalBusinessValueView() => commonCard(
-        title: 'Total business value',
+        title: PageConstVar.totalBusinessValue.tr,
         totalCountText:  KNPMethods.checkStringIsNullOrEmpty(string: '${controller.userBVCount?.totalBvCount}',blankText: '00'),
         text1:  KNPMethods.checkStringIsNullOrEmpty(string: '${controller.userBVCount?.lBvCount}',blankText: '00'),
-        text2: 'Left Bv',
+        text2: PageConstVar.leftBv.tr,
         text3:  KNPMethods.checkStringIsNullOrEmpty(string: '${controller.userBVCount?.rBvCount}',blankText: '00'),
-        text4: 'Right Bv',
+        text4: PageConstVar.rightBv.tr,
       );
 
   Widget commonLevelConnection({required String profile, required int isPaidUser, required String userName, required String leftBVCount, required String rightBVCount, GestureTapCallback? onTap}) => InkWell(
@@ -336,7 +337,7 @@ class GenealogyView extends GetView<GenealogyController> {
                 children: [
                   commonColumnForLevelCard(
                     text1: leftBVCount,
-                    text2: 'Left BV',
+                    text2: PageConstVar.leftBv.tr,
                     textColor: isPaidUser == 0
                       ? Theme.of(Get.context!).colorScheme.error
                       : Theme.of(Get.context!).colorScheme.onTertiary,
@@ -353,7 +354,7 @@ class GenealogyView extends GetView<GenealogyController> {
                   ),
                   commonColumnForLevelCard(
                     text1: rightBVCount,
-                    text2: 'Right BV',
+                    text2: PageConstVar.rightBv.tr,
                     textColor: isPaidUser == 0
                       ? Theme.of(Get.context!).colorScheme.error
                       : Theme.of(Get.context!).colorScheme.onTertiary,
@@ -431,12 +432,12 @@ class GenealogyView extends GetView<GenealogyController> {
   Widget levelCountAndGoBackView ()=> RichText(
     text: TextSpan(
       text: controller.userDetailsForUserTree?.userLevel != null && controller.userDetailsForUserTree?.userLevel != 0
-          ? '${controller.userDetailsForUserTree?.userLevel} Level below '
+          ? '${controller.userDetailsForUserTree?.userLevel} ${PageConstVar.levelBelow.tr} '
           : ' ',
       style: Theme.of(Get.context!).textTheme.titleSmall,
       children: [
         TextSpan(
-          text: 'Go back',
+          text: PageConstVar.goBack.tr,
           style: Theme.of(Get.context!).textTheme.titleSmall?.copyWith(
             decoration: TextDecoration.underline,
             decorationColor: Theme.of(Get.context!).colorScheme.primary,
@@ -491,9 +492,9 @@ class GenealogyView extends GetView<GenealogyController> {
 
   Widget paidAndUnPaidView() => Column(
     children: [
-      commonRowForPaidAndUnPaidView(text: 'Paid users', color: Theme.of(Get.context!).colorScheme.onTertiary),
+      commonRowForPaidAndUnPaidView(text: PageConstVar.paidUsers.tr, color: Theme.of(Get.context!).colorScheme.onTertiary),
       SizedBox(height: CommonPaddingAndSize.size10() - 2),
-      commonRowForPaidAndUnPaidView(text: 'Paid users', color: Theme.of(Get.context!).colorScheme.error)
+      commonRowForPaidAndUnPaidView(text: PageConstVar.unpaidUsers.tr, color: Theme.of(Get.context!).colorScheme.error)
     ],
   );
 

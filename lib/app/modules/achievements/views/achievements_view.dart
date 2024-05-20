@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/common/common_padding_size/common_padding_size.dart';
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/common/packages/model_progress_bar.dart';
+import 'package:kalam_news_publication/app/common/page_const_var/page_const_var.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
 import 'package:kalam_news_publication/app/get_material_controller/ac.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -20,7 +21,7 @@ class AchievementsView extends GetView<AchievementsController> {
           return WillPopScope(
             onWillPop: () => controller.onWillPop(),
             child: KNPWidgets.scaffoldBackgroundImageViewWithAppBar(
-              appBarTitle: 'Achievements',
+              appBarTitle: PageConstVar.achievements.tr,
               onTapForBackButton: () => controller.onWillPop(),
               child2: KNPWidgets.commonRefreshIndicator(
                 onRefresh: () async => controller.onInit(),
@@ -132,7 +133,7 @@ class AchievementsView extends GetView<AchievementsController> {
   );
 
   Widget contactSupportView() => commonContainerView(
-    title: 'Contact support',
+    title: PageConstVar.contactSupport.tr,
     child: Column(
       children: [
         if(controller.contacts?.callingNumber != null && controller.contacts!.callingNumber!.isNotEmpty)
@@ -157,7 +158,7 @@ class AchievementsView extends GetView<AchievementsController> {
     if(controller.appSettingModal.value != null){
       if(controller.followUsList != null && controller.followUsList!.isNotEmpty){
         return  commonContainerView(
-          title: 'Follow social links',
+          title: PageConstVar.followSocialLinks.tr,
           child: SizedBox(
             height: 40.px,
             child: ListView.builder(

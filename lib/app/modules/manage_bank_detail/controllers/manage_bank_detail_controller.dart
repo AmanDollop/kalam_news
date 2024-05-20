@@ -7,6 +7,7 @@ import 'package:kalam_news_publication/app/common/common_padding_size/common_pad
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/common/packages/cbs.dart';
 import 'package:kalam_news_publication/app/common/packages/cd.dart';
+import 'package:kalam_news_publication/app/common/page_const_var/page_const_var.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
 import 'package:kalam_news_publication/app/modules/manage_bank_detail/views/manage_bank_detail_view.dart';
 import 'package:kalam_news_publication/app/routes/app_pages.dart';
@@ -66,12 +67,12 @@ class ManageBankDetailController extends GetxController with GetTickerProviderSt
       isDismissible: false,
       children: [
         Center(
-          child: Text('Choose Action', style: Theme.of(Get.context!).textTheme.displayMedium),
+          child: Text(PageConstVar.chooseAction.tr, style: Theme.of(Get.context!).textTheme.displayMedium),
         ),
         SizedBox(height: 16.px),
         commonRowForBottomSheet(
           imagePath: 'assets/icon/edit_pen_icon.png',
-          text: 'Edit',
+          text: PageConstVar.edit.tr,
           onTap: () => clickOnEditButton(index: index),
         ),
         if(bankAccountsList?[index].primaryBank != 1)
@@ -98,7 +99,7 @@ class ManageBankDetailController extends GetxController with GetTickerProviderSt
                   ),
                   SizedBox(width: 12.px),
                   Text(
-                    'Set as Primary',
+                    PageConstVar.setAsPrimary.tr,
                     style: Theme.of(Get.context!).textTheme.displaySmall?.copyWith(fontSize: 14.px),
                   ),
                 ],
@@ -111,7 +112,7 @@ class ManageBankDetailController extends GetxController with GetTickerProviderSt
         if(bankAccountsList?[index].primaryBank != 1)
         commonRowForBottomSheet(
           imagePath: 'assets/icon/delete_icon.png',
-          text: 'Remove',
+          text: PageConstVar.remove.tr,
           onTap: () => clickOnRemove(index: index),
         ),
         SizedBox(height: 10.px),
@@ -157,12 +158,12 @@ class ManageBankDetailController extends GetxController with GetTickerProviderSt
 
   Future<void> clickOnEditButton({required int index}) async {
     Get.back();
-    await Get.toNamed(Routes.ADD_BANK_DETAIL,arguments: ['Update bank detail',bankAccountsList?[index]]);
+    await Get.toNamed(Routes.ADD_BANK_DETAIL,arguments: [PageConstVar.updateBankDetail.tr,bankAccountsList?[index]]);
     onInit();
   }
 
   Future<void> clickOnAddBankButton() async {
-    await Get.toNamed(Routes.ADD_BANK_DETAIL,arguments: ['Add bank detail']);
+    await Get.toNamed(Routes.ADD_BANK_DETAIL,arguments: [PageConstVar.addBankDetail.tr]);
     onInit();
   }
 
