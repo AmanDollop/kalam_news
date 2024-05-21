@@ -146,9 +146,10 @@ class PersonalDetailsController extends GetxController {
       context: Get.context!,
       dateController: dobController,
       initialDate: dobController.text.isNotEmpty
-          ? DateFormat('dd MMM yyyy').parse(dobController.text).subtract(const Duration(days: 365*18))
-          : DateTime.now().subtract(const Duration(days: 365*18)),
-      lastDate: DateTime.now().subtract(const Duration(days: 365*18))
+          ? DateFormat('dd MMM yyyy').parse(dobController.text)
+          : DateTime(DateTime.now().year - 18),
+      lastDate: DateTime(DateTime.now().year - 18),
+        maximumYear: DateTime.now().year - 18
     );
   }
 

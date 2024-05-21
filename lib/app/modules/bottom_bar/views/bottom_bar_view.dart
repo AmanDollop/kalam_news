@@ -92,7 +92,7 @@ class BottomBarView extends GetView<BottomBarController> {
               selectedIndex: selectedBottomNavigationIndex.value,
               onTabChange: (index) {
                 if(controller.isUserPackage == 0){
-                  KNPMethods.showSnackBar(message: 'Buy package.');
+                  KNPMethods.showSnackBar(message: 'Purchase package.');
                 }else{
                   selectedBottomNavigationIndex.value = index;
                 }

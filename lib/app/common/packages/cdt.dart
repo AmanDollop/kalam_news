@@ -155,7 +155,7 @@ class CDT {
       if (mode == CupertinoDatePickerMode.time) {
         formattedDate = CMForDateTime.timeFormatForHourMinuetAmPm(dateAndTime: '${DateTime.now()}');
       } else {
-        formattedDate = CMForDateTime.dateFormatForDateMonthYear(date: '${DateTime.now()}');
+        formattedDate = CMForDateTime.dateFormatForDateMonthYear(date: '$lastDate');
       }
     }
     await CBS.commonBottomSheet(
@@ -191,7 +191,7 @@ class CDT {
                         }
                         // dateController?.text = formattedDate;
                       },
-                      minimumYear: minimumYear ?? DateTime.now().year - 123,
+                      minimumYear: minimumYear ?? DateTime.now().year - 150,
                       maximumYear: maximumYear ?? DateTime.now().year,
                       showDayOfWeek: showDayOfWeek,
                       use24hFormat: use24hFormat,

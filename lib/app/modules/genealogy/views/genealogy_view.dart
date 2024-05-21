@@ -33,6 +33,7 @@ class GenealogyView extends GetView<GenealogyController> {
                       ? KNPWidgets.myLoaderView()
                       : ListView(
                           padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
+                          shrinkWrap: true,
                           children: [
                             userProfileView(),
                             KNPWidgets.commonDividerView(height: 20.px),
@@ -282,7 +283,7 @@ class GenealogyView extends GetView<GenealogyController> {
         onTap: onTap,
         borderRadius: BorderRadius.circular(10.px),
         child: Container(
-          height: 12.h,
+          // height: 12.h,
           width: 38.w,
           padding: EdgeInsets.symmetric(horizontal: 14.px, vertical: 6.px),
           decoration: BoxDecoration(
@@ -379,11 +380,11 @@ class GenealogyView extends GetView<GenealogyController> {
       );
 
   Widget borderView({bool isLeftBorder = true}) => Container(
-    height: 100.px,
+    height: 86.px,
     width: isLeftBorder
         ? 36.px
         : 34.px,
-    margin: EdgeInsets.only(top: 30.px),
+    margin: EdgeInsets.only(top: 6.h),
     decoration: BoxDecoration(
       border: isLeftBorder
           ? Border(

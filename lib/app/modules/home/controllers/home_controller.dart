@@ -34,6 +34,7 @@ class HomeController extends GetxController {
 
   final packageModal = Rxn<PackageModal>();
   List<PackageList>? packageList;
+  int? isPackagePurchase;
 
   final packageDetailModal = Rxn<PackageDetailModal>();
   List<PackageDetails>? packageDetails;
@@ -295,6 +296,7 @@ class HomeController extends GetxController {
     try {
       packageModal.value = await ApiIntrigation.getPackageApi();
       if (packageModal.value != null) {
+        isPackagePurchase = packageModal.value?.isUserPackage;
         packageList = packageModal.value?.packageList;
       }
     } catch (e) {
