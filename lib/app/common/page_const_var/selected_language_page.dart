@@ -8,7 +8,7 @@ import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class SelectedLanguagePage extends StatelessWidget {
-  final String isEn;
+  String? isEn;
   final Function(String value) changeLanguage;
   final VoidCallback onPressed;
   final count = 0.obs;
@@ -68,7 +68,7 @@ class SelectedLanguagePage extends StatelessWidget {
     textTitle: PageConstVar.english.tr,
     onPressed: () {
       changeLanguage("en");
-    }, //showImage: false,
+    },
   );
 
   Widget hindiCardView() => SelectedCard(
@@ -78,7 +78,7 @@ class SelectedLanguagePage extends StatelessWidget {
     textTitle: PageConstVar.hindi.tr,
     onPressed: () {
       changeLanguage("hi");
-    }, //showImage: false,
+    },
   );
 
   Widget backButtonView() => KNPWidgets.commonOutlineButton(

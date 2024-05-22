@@ -38,6 +38,7 @@ class V {
     else {
       return null;
     }
+    return null;
   }
 
   static String? isPasswordValid({required String? value, String? password = "Not"}) {
@@ -115,7 +116,6 @@ class V {
     return "";
   }
 
-
   static String? isValidateAadhar({required String? value}) {
 
     // Regular expression for Aadhar card number (12 digits)
@@ -131,21 +131,19 @@ class V {
   }
 
   static String? isValidatePAN({required String? value}) {
-
-    // Regular expression for PAN card number (AAAAA1234A format)
-    RegExp panRegExp = RegExp(r'^[A-Z]{5}[0-9]{4}[A-Z]{1}$');
+    String pattern = r'^[A-Z]{5}[0-9]{4}[A-Z]{1}$';
+    RegExp panRegExp = RegExp(pattern);
 
     if (value == null ||value.isEmpty) {
       return 'Please enter PAN card number';
     } else if (!panRegExp.hasMatch(value)) {
-      return 'Invalid PAN card number';
+      return 'Please enter valid pan card number';
     }else {
       return null;
     }
   }
 
-  static String? isIfscCodeValid({required String? value})
-  {
+  static String? isIfscCodeValid({required String? value}) {
     RegExp ifscRegExp = RegExp(r'^[A-Z]{4}[0][A-Z0-9]{6}$');
 
     if (value == null ||value.isEmpty) {

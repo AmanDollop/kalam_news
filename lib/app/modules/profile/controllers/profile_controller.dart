@@ -138,6 +138,13 @@ class ProfileController extends GetxController {
   }
 
   void clickOnChangeLanguage() {
+
+    if(Get.locale?.languageCode == 'hi'){
+      isEN.value = 'hi';
+    }else{
+      isEN.value = 'en';
+    }
+
     showModalBottomSheet(
       context: Get.context!,
       isDismissible: false,
