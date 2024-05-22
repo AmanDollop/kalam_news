@@ -39,7 +39,11 @@ dev_dependencies:
   flutter_test: 
     sdk: flutter
 
-flutter: 
+event_id:
+
+event_data:
+
+flutter:
   uses-material-design: true
 
   assets:

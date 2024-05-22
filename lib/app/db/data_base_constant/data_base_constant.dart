@@ -5,18 +5,14 @@ class DataBaseConstant {
   static String columnId = 'COLUMN_ID';
   static String version = 'VERSION_CODE';
 
-
   ///TODO Table Name's
   static String tableNameForUserDetail = 'USER_DETAIL';
-
 
   ///TODO Table Name User_Token for key
   static String userToken = 'token';
 
-
-  ///TODO Table Name User_Token for key
+  ///TODO Table Name User_Detail for key
   static String userDetail = 'user_detail';
-
 
 }
 
