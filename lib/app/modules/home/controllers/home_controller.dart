@@ -299,7 +299,7 @@ class HomeController extends GetxController {
     );
   }
 
-  Widget commonRowForTermsAndConditions()   {
+  Widget commonRowForTermsAndConditions() {
     return Obx(() {
       count.value;
       return Row(
