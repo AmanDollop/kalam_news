@@ -81,10 +81,10 @@ class GenealogyView extends GetView<GenealogyController> {
                                 )
                               ],
                             ),
-                            if(controller.lUser != null && controller.rUser != null || controller.lUser?.userId != null && controller.rUser?.userId != null)
-                            KNPWidgets.commonDividerView(height: CommonPaddingAndSize.size20() * 2),
-                            if(controller.lUser != null && controller.rUser != null || controller.lUser?.userId != null && controller.rUser?.userId != null)
-                            paidAndUnPaidView(),
+                            // if(controller.lUser != null && controller.rUser != null || controller.lUser?.userId != null && controller.rUser?.userId != null)
+                            // KNPWidgets.commonDividerView(height: CommonPaddingAndSize.size20() * 2),
+                            // if(controller.lUser != null && controller.rUser != null || controller.lUser?.userId != null && controller.rUser?.userId != null)
+                            // paidAndUnPaidView(),
                             SizedBox(height: CommonPaddingAndSize.size20() * 4),
                           ],
                         ),
@@ -423,6 +423,7 @@ class GenealogyView extends GetView<GenealogyController> {
   );
 
   Widget topUserView() => commonLevelConnection(
+      onTap: () => controller.clickOnTopUser(),
       isPaidUser: controller.userDetailsForUserTree?.isPaidUser ?? 0,
       userName: '${controller.userDetailsForUserTree?.firstName} ${controller.userDetailsForUserTree?.lastName}',
       leftBVCount: KNPMethods.checkStringIsNullOrEmpty(string: '${controller.userDetailsForUserTree?.lBvCount}',blankText: '00'),

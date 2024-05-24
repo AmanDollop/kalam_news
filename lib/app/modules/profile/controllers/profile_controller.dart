@@ -95,20 +95,11 @@ class ProfileController extends GetxController {
     onInit();
   }
 
-  void clickOnReferralAFriends() {
-   if(AC.isConnect.value){
-     referralAFriendsValue.value = true;
-     String msg = KNPWidgets.extractTextFromHtml(appSettingModal.value?.inviteMessage ??'');
-     try{
-       Share.share(msg,);
-     }catch(e){
-       referralAFriendsValue.value = false;
-     }
-     referralAFriendsValue.value = false;
-     count.value++;
-   }else{
-     KNPMethods.noInternet();
-   }
+  Future<void> clickOnReferralAFriends() async {
+    referralAFriendsValue.value = true;
+    count.value++;
+    await Share.share(KNPWidgets.extractTextFromHtml(appSettingModal.value?.inviteMessage ??''),);
+    Future.delayed(const Duration(seconds: 1),() => referralAFriendsValue.value = false,);
   }
 
   Future<void> clickOnLogOutButton() async {

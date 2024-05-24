@@ -26,9 +26,8 @@ import 'package:kalam_news_publication/app/modules/wallet/views/wallet_view.dart
 
 class BottomBarController extends GetxController {
   final count = 0.obs;
-
+  final apiResValue = true.obs;
   final packageModal = Rxn<PackageModal>();
-  int? isUserPackage;
 
   @override
   Future<void> onInit() async {
@@ -95,16 +94,18 @@ class BottomBarController extends GetxController {
   }
 
   Future<void> callingPackageApi() async {
+    apiResValue.value = true;
     try {
       packageModal.value = await ApiIntrigation.getPackageApi();
       if (packageModal.value != null) {
-        isUserPackage = packageModal.value?.isUserPackage;
-        print('isUserPackage::::: $isUserPackage');
+        print('Bottom Bar::::::isUserPackage::::: ${packageModal.value?.isUserPackage}');
       }
     } catch (e) {
-      print('callingPackageApi::::  ERROR::::: $e');
+      print('Bottom Bar:::::::::callingPackageApi::::  ERROR::::: $e');
       KNPMethods.error();
+      apiResValue.value = false;
     }
+    apiResValue.value = false;
   }
 
 }

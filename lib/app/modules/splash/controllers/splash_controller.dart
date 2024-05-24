@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:get/get.dart';
+import 'package:kalam_news_publication/app/common/packages/razorpay.dart';
 import 'package:kalam_news_publication/app/db/data_base_constant/data_base_constant.dart';
 import 'package:kalam_news_publication/app/db/data_base_helper/data_base_helper.dart';
 import 'package:kalam_news_publication/app/routes/app_pages.dart';
@@ -46,11 +47,7 @@ class SplashController extends GetxController {
     database = await DataBaseHelper().openDataBase();
     if (database != null) {
       await DataBaseHelper().createTableInDataBaseForUserDetail(db: database!);
-      userDataFromLocalDataBaseValue.value = await DataBaseHelper().isDatabaseHaveData(db: DataBaseHelper.dataBaseHelper, tableName: DataBaseConstant.tableNameForUserDetail);
-      if (!userDataFromLocalDataBaseValue.value) {
-        userDataFromLocalDataBase.value = await DataBaseHelper().getParticularData(key:DataBaseConstant.userDetail,tableName: DataBaseConstant.tableNameForUserDetail);
-        userData = UserDataModal.fromJson(jsonDecode(userDataFromLocalDataBase.value));
-      }
+      userData = await KNPRazorpayMethods.getUserDataDataBaseCalling();
     }
   }
 

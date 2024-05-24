@@ -159,6 +159,13 @@ class LanguageTranslations extends Translations {
       PageConstVar.yourSales: PageConstVar.yourSales,
       PageConstVar.walletBalance: PageConstVar.walletBalance,
       PageConstVar.withdrawalBalance: PageConstVar.withdrawalBalance,
+      PageConstVar.upgrade: PageConstVar.upgrade,
+      PageConstVar.purchased: PageConstVar.purchased,
+      PageConstVar.purchaseNow: PageConstVar.purchaseNow,
+      PageConstVar.upgradeNow: PageConstVar.upgradeNow,
+      PageConstVar.alreadyPurchased: PageConstVar.alreadyPurchased,
+      PageConstVar.iAccept: PageConstVar.iAccept,
+      PageConstVar.termsAndConditions: PageConstVar.termsAndConditions,
 
       ///TODO Profile Page:English
 
@@ -395,6 +402,13 @@ class LanguageTranslations extends Translations {
       PageConstVar.yourSales: 'आपकी बिक्री',
       PageConstVar.walletBalance: 'बटुआ शेष',
       PageConstVar.withdrawalBalance: 'निकासी शेष',
+      PageConstVar.upgrade: 'उन्नत',
+      PageConstVar.purchased: 'खरीदी',
+      PageConstVar.purchaseNow: 'अब खरीदे',
+      PageConstVar.upgradeNow: 'अभी अपग्रेड करें',
+      PageConstVar.alreadyPurchased: 'पहले से ही खरीदा',
+      PageConstVar.iAccept: 'मुझे स्वीकार है',
+      PageConstVar.termsAndConditions: 'नियम एवं शर्तें',
 
       ///TODO Profile Page:Hindi
 

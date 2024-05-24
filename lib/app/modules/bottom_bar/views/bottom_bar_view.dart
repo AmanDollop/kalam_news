@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/common/packages/bottom_bar/GButton.dart';
 import 'package:kalam_news_publication/app/common/packages/bottom_bar/GnavStyle.dart';
+import 'package:kalam_news_publication/app/common/packages/model_progress_bar.dart';
 import 'package:kalam_news_publication/app/common/page_const_var/page_const_var.dart';
 import 'package:kalam_news_publication/app/common/page_const_var/page_const_var.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -26,8 +27,8 @@ class BottomBarView extends GetView<BottomBarController> {
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.tertiary,
             borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(12.px),
-                topRight: Radius.circular(12.px),
+              topLeft: Radius.circular(12.px),
+              topRight: Radius.circular(12.px),
             ),
             boxShadow: [
               BoxShadow(
@@ -46,26 +47,26 @@ class BottomBarView extends GetView<BottomBarController> {
                 GButton(
                   icon: selectedBottomNavigationIndex.value == 0
                       ? selectedCommonButtonView(
-                        imagePath: 'assets/bottom_bar_icon/d_home_icon.png',
-                        title: PageConstVar.home.tr)
+                      imagePath: 'assets/bottom_bar_icon/d_home_icon.png',
+                      title: PageConstVar.home.tr)
                       : unSelectedCommonButtonView(
-                         imagePath: 'assets/bottom_bar_icon/l_home_icon.png',
-                        title: PageConstVar.home.tr),
+                      imagePath: 'assets/bottom_bar_icon/l_home_icon.png',
+                      title: PageConstVar.home.tr),
                 ),
                 GButton(
                   icon: selectedBottomNavigationIndex.value == 1
                       ? selectedCommonButtonView(
-                        imagePath: 'assets/bottom_bar_icon/d_profile_icon.png',
-                        title: PageConstVar.profile.tr)
+                      imagePath: 'assets/bottom_bar_icon/d_profile_icon.png',
+                      title: PageConstVar.profile.tr)
                       : unSelectedCommonButtonView(
-                        imagePath: 'assets/bottom_bar_icon/l_profile_icon.png',
-                        title: PageConstVar.profile.tr),
+                      imagePath: 'assets/bottom_bar_icon/l_profile_icon.png',
+                      title: PageConstVar.profile.tr),
                 ),
                 GButton(
                   icon: selectedBottomNavigationIndex.value == 2
                       ? selectedCommonButtonView(
-                        imagePath: 'assets/bottom_bar_icon/d_genealogy_icon.png',
-                        title: PageConstVar.genealogy.tr)
+                      imagePath: 'assets/bottom_bar_icon/d_genealogy_icon.png',
+                      title: PageConstVar.genealogy.tr)
                       : unSelectedCommonButtonView(
                       imagePath: 'assets/bottom_bar_icon/l_genealogy_icon.png',
                       title: PageConstVar.genealogy.tr),
@@ -73,17 +74,17 @@ class BottomBarView extends GetView<BottomBarController> {
                 GButton(
                   icon: selectedBottomNavigationIndex.value == 3
                       ? selectedCommonButtonView(
-                         imagePath: 'assets/bottom_bar_icon/d_wallet_icon.png',
-                         title: PageConstVar.wallet.tr)
+                      imagePath: 'assets/bottom_bar_icon/d_wallet_icon.png',
+                      title: PageConstVar.wallet.tr)
                       : unSelectedCommonButtonView(
-                         imagePath: 'assets/bottom_bar_icon/l_wallet_icon.png',
-                         title: PageConstVar.wallet.tr),
+                      imagePath: 'assets/bottom_bar_icon/l_wallet_icon.png',
+                      title: PageConstVar.wallet.tr),
                 ),
                 GButton(
                   icon: selectedBottomNavigationIndex.value == 4
                       ? selectedCommonButtonView(
-                        imagePath: 'assets/bottom_bar_icon/d_achievements_icon.png',
-                        title: PageConstVar.achievements.tr)
+                      imagePath: 'assets/bottom_bar_icon/d_achievements_icon.png',
+                      title: PageConstVar.achievements.tr)
                       : unSelectedCommonButtonView(
                       imagePath: 'assets/bottom_bar_icon/l_achievements_icon.png',
                       title: PageConstVar.achievements.tr),
@@ -91,7 +92,8 @@ class BottomBarView extends GetView<BottomBarController> {
               ],
               selectedIndex: selectedBottomNavigationIndex.value,
               onTabChange: (index) {
-                if(controller.isUserPackage == 0){
+                print('${controller.packageModal.value?.isUserPackage ?? 0}');
+                if(controller.packageModal.value?.isUserPackage == 0){
                   KNPMethods.showSnackBar(message: 'Purchase package.');
                 }else{
                   selectedBottomNavigationIndex.value = index;

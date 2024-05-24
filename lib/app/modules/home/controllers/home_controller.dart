@@ -15,26 +15,29 @@ import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/common/packages/cbs.dart';
 import 'package:kalam_news_publication/app/common/packages/cd.dart';
 import 'package:kalam_news_publication/app/common/packages/razorpay.dart';
+import 'package:kalam_news_publication/app/common/page_const_var/page_const_var.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
+import 'package:kalam_news_publication/app/modules/bottom_bar/controllers/bottom_bar_controller.dart';
 import 'package:kalam_news_publication/app/routes/app_pages.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/user_data_modal.dart';
 
 class HomeController extends GetxController {
+
+  BottomBarController bottomBarController = BottomBarController();
+
   final count = 0.obs;
   final apiResValue = true.obs;
   final termsAndConditionsValue = false.obs;
 
-  final userDataFromLocalDataBaseValue = false.obs;
-  final userDataFromLocalDataBase = ''.obs;
-
   UserDataModal? userData;
+  List<ProfilePercentageArr>? profilePercentageArr;
 
   final packageClickValue = false.obs;
 
   final packageModal = Rxn<PackageModal>();
   List<PackageList>? packageList;
-  int? isPackagePurchase;
+  int isPackagePurchase = 0;
 
   final packageDetailModal = Rxn<PackageDetailModal>();
   List<PackageDetails>? packageDetails;
@@ -74,6 +77,11 @@ class HomeController extends GetxController {
 
   void increment() => count.value++;
 
+  Future<void> onRefresh() async {
+    await bottomBarController.onInit();
+    await onInit();
+  }
+
   Future<void> apisCallingMethod() async {
     await dataBaseCalling();
     await callingPackageApi();
@@ -95,18 +103,99 @@ class HomeController extends GetxController {
   Future<void> dataBaseCalling() async {
     try {
       userData = await KNPRazorpayMethods.getUserDataDataBaseCalling();
+      profilePercentageArr = userData?.profilePercentageArr;
     } catch (e) {
       print('dataBaseCalling:::: ERROR::::::  $e');
       apiResValue.value = false;
     }
   }
 
+  Future<void> clickOnProfileProgressView() async {
+    if(profilePercentageArr != null && profilePercentageArr!.isNotEmpty) {
+      await showDialog(
+      context: Get.context!,
+      useSafeArea: true,
+      barrierDismissible: true,
+      builder: (context) {
+        return Dialog(
+          // insetPadding: EdgeInsets.all(12.px),
+          elevation: 0,
+          backgroundColor: Theme.of(Get.context!).colorScheme.inversePrimary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.px),
+            side: BorderSide(
+              width: 2.px,
+              color: Theme.of(Get.context!).colorScheme.primary.withOpacity(.2),
+            ),
+          ),
+          child: SizedBox(
+            height: 400.px,
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: profilePercentageArr?.length,
+              padding: EdgeInsets.all(16.px),
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: EdgeInsets.only(bottom: index == 1 ? 0.px : 6.px),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          commonSubTitleTextView(
+                              text: profilePercentageArr?[index].title != null && profilePercentageArr![index].title!.isNotEmpty
+                                    ? '${profilePercentageArr?[index].title}'
+                                    :  '?',
+                          ),
+                          commonContForProfileDialog(
+                            isValueField: profilePercentageArr?[index].isEmpty == 0 ? false : true
+                          )
+                        ],
+                      ),
+                      if(index != profilePercentageArr!.length - 1)
+                      SizedBox(height: 6.px),
+                      if(index != profilePercentageArr!.length - 1)
+                      KNPWidgets.commonDividerView(wight: 1.px,color: Theme.of(Get.context!).colorScheme.primary.withOpacity(.2)),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        );
+      },
+     );
+    }else{
+      KNPMethods.error();
+    }
+  }
+
+  Widget commonContForProfileDialog({bool isValueField = true}) => Container(
+    height: 18.px,
+    width: 18.px,
+    decoration: BoxDecoration(
+        color: isValueField
+            ? Theme.of(Get.context!).colorScheme.onTertiary
+            : Theme.of(Get.context!).colorScheme.error,
+        shape: BoxShape.circle
+    ),
+    child: Center(
+      child: Icon(
+            isValueField
+             ? Icons.check
+             : Icons.cancel,
+        size: 10.px,
+        color: Theme.of(Get.context!).colorScheme.inversePrimary,
+      ),
+    ),
+  );
+
   Future<void> clickOnPackage({required int index}) async {
     packageClickValue.value = true;
     count.value++;
     try {
       await callingPackageDetailApi(packageId: '${packageList?[index].packageId}');
-      if (packageDetailModal.value?.isUserPackage == 1) {
+      if (packageList?[index].isPackagePurchased == 1) {
         termsAndConditionsValue.value = true;
       }
       await CBS.commonDraggableBottomSheet(
@@ -141,49 +230,21 @@ class HomeController extends GetxController {
                   '${packageDetailModal.value?.packageName}',
                   style: Theme.of(Get.context!).textTheme.labelLarge?.copyWith(fontSize: 20.px),
                 ),
-                // if (packageDetailModal.value?.packageDescription != null && packageDetailModal.value!.packageDescription!.isNotEmpty)
-                // SizedBox(height: CommonPaddingAndSize.size10()),
-                /*if (packageDetails != null && packageDetails!.isNotEmpty)
-                KNPWidgets.commonContainerView(
-                    child: Column(
-                      children: [
-                        commonRowForBottomSheet(
-                            titleValue: true,
-                            text1: 'Stage',
-                            text2: 'Member',
-                            text3: 'Commission',
-                        ),
-                        SizedBox(height: CommonPaddingAndSize.size10()),
-                        KNPWidgets.commonDividerView(),
-                        SizedBox(height: CommonPaddingAndSize.size10()),
-                        ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: packageDetails?.length,
-                          itemBuilder: (context, index) {
-                            return commonRowForBottomSheet(
-                                text1: '${packageDetails?[index].stageNumber}',
-                                text2: '${packageDetails?[index].numberOfMembers}',
-                                text3: '${packageDetails?[index].commission}',
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  ),*/
                 KNPWidgets.removeHtmlTagsProductAndSellerDescription(string: packageDetailModal.value?.packageDescription ?? ''),
-                if (packageDetailModal.value?.isUserPackage == 0)
+                if (packageList?[index].isPackagePurchased == 0)
                   SizedBox(height: CommonPaddingAndSize.size10()),
-                if (packageDetailModal.value?.isUserPackage == 0)
+                if (packageList?[index].isPackagePurchased == 0)
                   commonRowForTermsAndConditions(),
                 if (termsAndConditionsValue.value)
                   SizedBox(height: CommonPaddingAndSize.size10()),
                 if (termsAndConditionsValue.value)
                   KNPWidgets.commonElevatedButton(
                     onPressed: () => clickOnPurchaseNow(index: index),
-                    buttonText: packageDetailModal.value?.isUserPackage == 0
-                        ? 'Purchase now'
-                        : 'Already purchased',
+                    buttonText: isPackagePurchase == 0
+                        ? PageConstVar.purchaseNow.tr
+                        : packageList?[index].isPackagePurchased == 0
+                        ? PageConstVar.upgradeNow.tr
+                        : PageConstVar.alreadyPurchased.tr,
                   ),
                 SizedBox(height: CommonPaddingAndSize.size20()),
               ],
@@ -238,7 +299,7 @@ class HomeController extends GetxController {
     );
   }
 
-  Widget commonRowForTermsAndConditions() {
+  Widget commonRowForTermsAndConditions()   {
     return Obx(() {
       count.value;
       return Row(
@@ -253,15 +314,16 @@ class HomeController extends GetxController {
           ),
           RichText(
             text: TextSpan(
-              text: 'I accept ',
+              text: '${PageConstVar.iAccept.tr} ',
               style: Theme.of(Get.context!).textTheme.titleMedium,
               children: [
                 TextSpan(
-                  text: 'Term & Conditions',
+                  text: PageConstVar.termsAndConditions.tr,
                   style: Theme.of(Get.context!).textTheme.labelSmall,
-                  recognizer: TapGestureRecognizer()..onTap = () {
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
                       Get.toNamed(Routes.WELCOME_MASSAGE, arguments: [
-                        'Term & Conditions',
+                        PageConstVar.termsAndConditions.tr,
                         termCondition.value
                       ]);
                     },
@@ -275,15 +337,15 @@ class HomeController extends GetxController {
   }
 
   Future<void> clickOnPurchaseNow({required int index}) async {
-    if (packageDetailModal.value?.isUserPackage == 1) {
+    if (packageList?[index].isPackagePurchased == 1) {
       KNPMethods.showSnackBar(message: 'Already purchased');
       Get.back();
     } else {
       try {
         await KNPRazorpayMethods.clickOnMakePaymentButton(
-                purchaseAmount: double.parse('${packageDetailModal.value?.packageAmount}').toInt(),
-                traTypeValue: 'Online',
-                packageDetails: packageDetails ?? [],
+          purchaseAmount: double.parse('${packageDetailModal.value?.packageAmount}').toInt(),
+          traTypeValue: 'Online',
+          packageDetails: packageDetails ?? [],
         ).whenComplete(() => Get.back());
       } catch (e) {
         print('clickOnPurchaseNow:::: ERROR::::::: $e');
@@ -296,7 +358,7 @@ class HomeController extends GetxController {
     try {
       packageModal.value = await ApiIntrigation.getPackageApi();
       if (packageModal.value != null) {
-        isPackagePurchase = packageModal.value?.isUserPackage;
+        isPackagePurchase = packageModal.value?.isUserPackage ?? 0;
         packageList = packageModal.value?.packageList;
       }
     } catch (e) {
@@ -370,4 +432,5 @@ class HomeController extends GetxController {
     }
     apiResValue.value = false;
   }
+
 }

@@ -85,7 +85,9 @@ class KNPWidgets {
                   width: width,
                   color: color,
                   fit: fit,
-                  loadingBuilder: loadingBuilder ?? (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                  loadingBuilder: loadingBuilder ??
+                      (BuildContext context, Widget child,
+                          ImageChunkEvent? loadingProgress) {
                         if (loadingProgress == null) return child;
                         return SizedBox(
                           height: height,
@@ -93,7 +95,8 @@ class KNPWidgets {
                           child: Center(
                             child: commonProgressBarView(
                               value: loadingProgress.expectedTotalBytes != null
-                                  ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
+                                  ? loadingProgress.cumulativeBytesLoaded /
+                                      loadingProgress.expectedTotalBytes!
                                   : null,
                             ),
                           ),
@@ -112,7 +115,13 @@ class KNPWidgets {
         ),
       );
 
-  static commonContainerView({EdgeInsetsGeometry? padding, required Widget child, double? width, double? height, Color? color, Color? borderColor}) => Container(
+  static commonContainerView(
+          {EdgeInsetsGeometry? padding,
+          required Widget child,
+          double? width,
+          double? height,
+          Color? color,
+          Color? borderColor}) => Container(
         height: height,
         width: width,
         padding: padding ?? EdgeInsets.all(16.px),
@@ -121,15 +130,15 @@ class KNPWidgets {
           borderRadius: BorderRadius.circular(8.px),
           boxShadow: [
             BoxShadow(
-                color: Theme.of(Get.context!).colorScheme.surface.withOpacity(.2),
-                spreadRadius: 2.px,
-                blurRadius: 1.px,
+              color: Theme.of(Get.context!).colorScheme.surface.withOpacity(.2),
+              spreadRadius: 2.px,
+              blurRadius: 1.px,
             )
           ],
           border: Border.all(
-            color: borderColor ?? Theme.of(Get.context!).colorScheme.onSecondary,
-            width: 1.px
-          ),
+              color:
+                  borderColor ?? Theme.of(Get.context!).colorScheme.onSecondary,
+              width: 1.px),
         ),
         child: child,
       );
@@ -153,7 +162,13 @@ class KNPWidgets {
     );
   }
 
-  static Widget scaffoldBackgroundImageViewWithAppBar({required Widget child2, bool appBarValue = true, bool isHomeAppBarValue = false, String? appBarTitle, Widget? child1, GestureTapCallback? onTapForBackButton}) {
+  static Widget scaffoldBackgroundImageViewWithAppBar(
+      {required Widget child2,
+      bool appBarValue = true,
+      bool isHomeAppBarValue = false,
+      String? appBarTitle,
+      Widget? child1,
+      GestureTapCallback? onTapForBackButton}) {
     const SystemUiOverlayStyle(
         statusBarBrightness: Brightness.light,
         // For iOS: (dark icons)
@@ -179,21 +194,50 @@ class KNPWidgets {
                   if (appBarValue)
                     isHomeAppBarValue
                         ? Padding(
-                            padding: CommonPaddingAndSize
-                                .commonScaffoldBodyPadding(),
+                            padding: EdgeInsets.symmetric(horizontal: 12.px,vertical: 20.px),//8889153844
                             child: commonNetworkImageView(
-                                path: 'assets/image/logoipsum_image.png',
-                                height: 24.px,
-                                width: 115.px,
-                                isAssetImage: true),
+                                path: 'assets/image/home_app_bar_logo.png',
+                                height: 40.px,
+                                width: 150.px,
+                                isAssetImage: true,
+                            )
+                              /*Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    commonNetworkImageView(
+                                      path: 'assets/image/app_logo.png',
+                                      height: 48.px,
+                                      width: 48.px,
+                                      isAssetImage: true,
+                                    ),
+                                    SizedBox(width: 4.px),
+                                    Flexible(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'KALAM NEWS',
+                                            style: Theme.of(Get.context!).textTheme.headlineSmall,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          Text(
+                                            'PUBLICATION',
+                                            style: Theme.of(Get.context!).textTheme.headlineSmall?.copyWith(fontSize: 12.px),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                )*/,
                           )
-                        : appBarView(
-                            title: appBarTitle, onTap: onTapForBackButton),
+                        : appBarView(title: appBarTitle, onTap: onTapForBackButton),
                   if (child1 != null)
                     SizedBox(height: appBarValue ? 3.h : 10.h),
                   if (child1 != null) child1,
-                  if (child1 != null)
-                    SizedBox(height: appBarValue ? 9.h : 12.h),
+                  if (child1 != null) SizedBox(height: appBarValue ? 9.h : 6.h),
                   Expanded(
                     child: Container(
                       width: double.infinity,
@@ -203,8 +247,7 @@ class KNPWidgets {
                           topRight: Radius.circular(16.px),
                           topLeft: Radius.circular(16.px),
                         ),
-                        color:
-                            Theme.of(Get.context!).colorScheme.inversePrimary,
+                        color: Theme.of(Get.context!).colorScheme.inversePrimary,
                       ),
                       child: child2,
                     ),
@@ -250,15 +293,17 @@ class KNPWidgets {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if(title.isNotEmpty)
-              Text(
-                title,
-                style: Theme.of(Get.context!).textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.w700,
-                    color: focusNode?.hasFocus == true
-                        ? Theme.of(Get.context!).colorScheme.primary
-                        : Theme.of(Get.context!).colorScheme.onInverseSurface),
-              ),
+              if (title.isNotEmpty)
+                Text(
+                  title,
+                  style: Theme.of(Get.context!).textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.w700,
+                      color: focusNode?.hasFocus == true
+                          ? Theme.of(Get.context!).colorScheme.primary
+                          : Theme.of(Get.context!)
+                              .colorScheme
+                              .onInverseSurface),
+                ),
               SizedBox(height: 4.px),
               TextFormField(
                 onTap: onTap,
@@ -272,7 +317,8 @@ class KNPWidgets {
                     : inputFormatters,
                 onChanged: keyboardType == TextInputType.number
                     ? (value) {}
-                    : onChanged ?? (value) {
+                    : onChanged ??
+                        (value) {
                           value = value.trim();
                           if (value.isEmpty ||
                               value.replaceAll(" ", "").isEmpty) {
@@ -291,11 +337,20 @@ class KNPWidgets {
                   counterText: '',
                   hintText: hintText,
                   fillColor: focusNode?.hasFocus == true
-                      ? Theme.of(Get.context!).colorScheme.primary.withOpacity(.05)
+                      ? Theme.of(Get.context!)
+                          .colorScheme
+                          .primary
+                          .withOpacity(.05)
                       : Theme.of(Get.context!).colorScheme.surface,
                   filled: filled,
-                  contentPadding: contentPadding ?? EdgeInsets.symmetric(horizontal: 12.px),
-                  hintStyle: Theme.of(Get.context!).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w400, color: Theme.of(Get.context!).colorScheme.onSurface),
+                  contentPadding:
+                      contentPadding ?? EdgeInsets.symmetric(horizontal: 12.px),
+                  hintStyle: Theme.of(Get.context!)
+                      .textTheme
+                      .titleMedium
+                      ?.copyWith(
+                          fontWeight: FontWeight.w400,
+                          color: Theme.of(Get.context!).colorScheme.onSurface),
                   suffixIcon: suffixIcon != null
                       ? Padding(
                           padding: suffixPadding ?? EdgeInsets.zero,
@@ -353,20 +408,35 @@ class KNPWidgets {
     );
   }
 
-  static Widget commonCheckBoxView({required bool changeValue, required ValueChanged<bool?>? onChanged, OutlinedBorder? shape, Color? activeFillColor, Color? checkColor, Color? borderColor, VisualDensity? visualDensity}) => Checkbox(
+  static Widget commonCheckBoxView(
+          {required bool changeValue,
+          required ValueChanged<bool?>? onChanged,
+          OutlinedBorder? shape,
+          Color? activeFillColor,
+          Color? checkColor,
+          Color? borderColor,
+          VisualDensity? visualDensity}) => Checkbox(
         visualDensity: visualDensity,
         value: changeValue,
         onChanged: onChanged,
-        activeColor: activeFillColor ?? Theme.of(Get.context!).colorScheme.primary,
-        checkColor: checkColor ?? Theme.of(Get.context!).colorScheme.inversePrimary,
+        activeColor:
+            activeFillColor ?? Theme.of(Get.context!).colorScheme.primary,
+        checkColor:
+            checkColor ?? Theme.of(Get.context!).colorScheme.inversePrimary,
         splashRadius: 24.px,
         side: BorderSide(
             color: borderColor ?? Theme.of(Get.context!).colorScheme.onSurface,
             width: 1.px),
-        shape: shape ?? RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.px)),
+        shape: shape ??
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.px)),
       );
 
-  static Widget commonDividerView({Color? color, double? height, double? wight, double? leftPadding, double? rightPadding}) => Divider(
+  static Widget commonDividerView(
+          {Color? color,
+          double? height,
+          double? wight,
+          double? leftPadding,
+          double? rightPadding}) => Divider(
         color: color ?? Theme.of(Get.context!).colorScheme.onSecondary,
         height: height ?? 10.px,
         thickness: wight ?? .5.px,
@@ -493,7 +563,12 @@ class KNPWidgets {
   }
 
   /* --------------------------Progress Bar View--------------------------*/
-  static commonProgressBarView({Color? color, Color? backgroundColor, double? value, double? strokeWidth}) => Center(
+  static commonProgressBarView(
+          {Color? color,
+          Color? backgroundColor,
+          double? value,
+          double? strokeWidth}) =>
+      Center(
         child: CircularProgressIndicator(
           backgroundColor: backgroundColor ??
               Theme.of(Get.context!).colorScheme.primary.withOpacity(.2),
@@ -504,27 +579,42 @@ class KNPWidgets {
         ),
       );
 
-  static myLoaderView({double? height,double? width,double? imageHeight,double? imageWidth,Color? color}) => Center(
-    child: SizedBox(
-      height: height ?? 260.px,
-      width: width ?? 260.px,
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          ColorFiltered(
-            colorFilter: ColorFilter.mode(
-              color ?? Theme.of(Get.context!).colorScheme.primary,
-              BlendMode.srcIn,
-            ),
-            child: Lottie.asset('assets/animations/lod.json',),
+  static myLoaderView(
+          {double? height,
+          double? width,
+          double? imageHeight,
+          double? imageWidth,
+          Color? color}) => Center(
+        child: SizedBox(
+          height: height ?? 260.px,
+          width: width ?? 260.px,
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              ColorFiltered(
+                colorFilter: ColorFilter.mode(
+                  color ?? Theme.of(Get.context!).colorScheme.primary,
+                  BlendMode.srcIn,
+                ),
+                child: Lottie.asset(
+                  'assets/animations/lod.json',
+                ),
+              ),
+              KNPWidgets.commonNetworkImageView(
+                  path: 'assets/image/app_logo.png',
+                  height: imageHeight ?? 100.px,
+                  width: imageWidth ?? 100.px,
+                  isAssetImage: true)
+            ],
           ),
-          KNPWidgets.commonNetworkImageView(path: 'assets/image/app_logo.png',height:imageHeight ?? 100.px,width: imageWidth ?? 100.px,isAssetImage: true)
-        ],
-      ),
-    ),
-  );
+        ),
+      );
 
-  static Widget commonLinearProgressBar({required double value, double? height, Color? color, Color? backgroundColor}) => ClipRRect(
+  static Widget commonLinearProgressBar(
+          {required double value,
+          double? height,
+          Color? color,
+          Color? backgroundColor}) => ClipRRect(
         borderRadius: BorderRadius.circular(20.px),
         child: LinearProgressIndicator(
           color: color ?? Theme.of(Get.context!).colorScheme.primary,
@@ -637,7 +727,8 @@ class KNPWidgets {
                     color: Theme.of(Get.context!).colorScheme.inversePrimary),
               ),
             )
-          : child ?? Text(
+          : child ??
+              Text(
                 buttonText ?? '',
                 style: Theme.of(Get.context!)
                     .textTheme
@@ -647,7 +738,11 @@ class KNPWidgets {
     );
   }
 
-  static Widget commonTextButton({required VoidCallback onPressed, required String buttonText, double? fontSize, Color? buttonTextColor}) {
+  static Widget commonTextButton(
+      {required VoidCallback onPressed,
+      required String buttonText,
+      double? fontSize,
+      Color? buttonTextColor}) {
     return TextButton(
       onPressed: onPressed,
       style: TextButton.styleFrom(
@@ -702,7 +797,7 @@ class KNPWidgets {
     required List<String> imageList,
     required int selectedIndex,
     EdgeInsetsGeometry? padding,
-    required Function(int index, CarouselPageChangedReason reason)? onPageChanged,
+    required Function(int index, CarouselPageChangedReason reason)?onPageChanged,
     CarouselController? carouselController,
     double? height,
     double? borderRadius,
@@ -732,7 +827,7 @@ class KNPWidgets {
                           child: commonNetworkImageView(
                               path: image,
                               // fit: BoxFit.cover,
-                              fit: BoxFit.fill,
+                              fit: BoxFit.contain,
                               width: double.infinity,
                               height: height ?? 150.px),
                         ),
@@ -750,18 +845,18 @@ class KNPWidgets {
             ),
           ),
           if (isIndicator)
-            if(imageList.isNotEmpty)
-            commonBannerIndicatorView(
-                selectedIndex: selectedIndex,
-                length: imageList.length,
-                height: indicatorHeight,
-                width: indicatorWidth,
-                activeColor: indicatorActiveColor,
-                inactiveColor: indicatorInactiveColor,
-                bottomPadding: indicatorBottomPadding,
-                animationDuration: indicatorAnimationDuration,
-                cornerRadius: indicatorCornerRadius,
-                space: indicatorSpace),
+            if (imageList.isNotEmpty)
+              commonBannerIndicatorView(
+                  selectedIndex: selectedIndex,
+                  length: imageList.length,
+                  height: indicatorHeight,
+                  width: indicatorWidth,
+                  activeColor: indicatorActiveColor,
+                  inactiveColor: indicatorInactiveColor,
+                  bottomPadding: indicatorBottomPadding,
+                  animationDuration: indicatorAnimationDuration,
+                  cornerRadius: indicatorCornerRadius,
+                  space: indicatorSpace),
         ],
       );
 
@@ -785,9 +880,11 @@ class KNPWidgets {
           count: length,
           index: selectedIndex,
           height: height ?? 6.px,
-          color: inactiveColor ?? Theme.of(Get.context!).colorScheme.inversePrimary,
+          color: inactiveColor ??
+              Theme.of(Get.context!).colorScheme.inversePrimary,
           width: width ?? 20.px,
-          activeColor: activeColor ?? Theme.of(Get.context!).colorScheme.primary,
+          activeColor:
+              activeColor ?? Theme.of(Get.context!).colorScheme.primary,
           cornerRadius: cornerRadius ?? 6.px,
           space: space ?? 4.px,
           animationDuration: animationDuration,
@@ -796,7 +893,10 @@ class KNPWidgets {
 
 /* --------------------------Radio Button View--------------------------*/
 
-  static Widget commonRadioButtonWithTitle({required String title, required String value, GestureTapCallback? onTap}) {
+  static Widget commonRadioButtonWithTitle(
+      {required String title,
+      required String value,
+      GestureTapCallback? onTap}) {
     return InkWell(
       onTap: onTap,
       child: Row(
@@ -846,12 +946,14 @@ class KNPWidgets {
         "body": Style(
           fontSize: FontSize(12.px),
           fontWeight: FontWeight.w500,
-          color: Theme.of(Get.context!).colorScheme.secondary,margin: Margins.zero, padding: HtmlPaddings.zero,),
+          color: Theme.of(Get.context!).colorScheme.secondary,
+          margin: Margins.zero,
+          padding: HtmlPaddings.zero,
+        ),
         "li": Style(
             listStyleType: ListStyleType.circle,
             margin: Margins.zero,
-            padding: HtmlPaddings.zero
-        ),
+            padding: HtmlPaddings.zero),
       },
     );
   }
@@ -860,5 +962,4 @@ class KNPWidgets {
     final htmlDocument = parse(htmlString);
     return parse(htmlDocument.body!.text).documentElement!.text;
   }
-
 }

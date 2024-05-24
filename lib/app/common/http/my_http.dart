@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
+import 'package:kalam_news_publication/app/db/data_base_constant/data_base_constant.dart';
+import 'package:kalam_news_publication/app/db/data_base_helper/data_base_helper.dart';
 import 'package:kalam_news_publication/app/routes/app_pages.dart';
 
 class MyHttp {
@@ -25,6 +27,10 @@ class MyHttp {
         if (kDebugMode) print("statusCode:: ${response.statusCode}");
         // if (kDebugMode) print("response.headers:: :: ${response.headers}");
         //MyLogger.logger.w("CALLING:: ${response.body}");
+        if(response.statusCode == 401){
+          await DataBaseHelper().deleteDataBase(tableName: DataBaseConstant.tableNameForUserDetail);
+          Get.offAllNamed(Routes.LOG_IN);
+        }
         return response;
       } catch (e) {
          if (kDebugMode) print("CALLING:: Server Down");
@@ -113,12 +119,8 @@ class MyHttp {
         if (res != null) {
           if (kDebugMode) print("CALLING:: ${res.body}");
           if(res.statusCode == 401){
-            // await DataBaseHelper().deleteDataBase(tableName: DataBaseConstant.tableNameForUserDetail);
-            // await DataBaseHelper().deleteDataBase(tableName: DataBaseConstant.tableNameForProfileMenu);
-            // await DataBaseHelper().deleteDataBase(tableName: DataBaseConstant.tableNameForShiftDetail);
-            // await DataBaseHelper().deleteDataBase(tableName: DataBaseConstant.tableNameForAppMenu);
-            // await KNPMethods.setString(key: AK.baseUrl, value: '');
-            // Get.offAllNamed(Routes.SEARCH_COMPANY);
+            await DataBaseHelper().deleteDataBase(tableName: DataBaseConstant.tableNameForUserDetail);
+            Get.offAllNamed(Routes.LOG_IN);
           }
           return res;
         } else {
@@ -180,6 +182,10 @@ class MyHttp {
         // if (kDebugMode) print("response.headers:: ${response.headers}");
         // ignore: unnecessary_null_comparison
         if (response != null) {
+          if(response.statusCode == 401){
+            await DataBaseHelper().deleteDataBase(tableName: DataBaseConstant.tableNameForUserDetail);
+            Get.offAllNamed(Routes.LOG_IN);
+          }
           return response;
         } else {
           return null;
@@ -240,6 +246,7 @@ class MyHttp {
           KNPMethods.showSnackBar(message: mapRes['message']);
           if(res.statusCode == 401){
             // await DataBaseHelper().deleteDataBase(tableName: DataBaseConstant.tableNameForUserDetail);
+            Get.offAllNamed(Routes.LOG_IN);
             // await DataBaseHelper().deleteDataBase(tableName: DataBaseConstant.tableNameForProfileMenu);
             // await DataBaseHelper().deleteDataBase(tableName: DataBaseConstant.tableNameForShiftDetail);
             // await DataBaseHelper().deleteDataBase(tableName: DataBaseConstant.tableNameForAppMenu);
@@ -359,9 +366,12 @@ class MyHttp {
     if (kDebugMode) print("BODYPARAMS:: $bodyParams");
     if (await KNPMethods.internetConnectionCheckerMethod()) {
       try {
-        http.Response? response =
-            await http.delete(Uri.parse(url), body: bodyParams, headers: token);
+        http.Response? response = await http.delete(Uri.parse(url), body: bodyParams, headers: token);
         if (kDebugMode) print("CALLING:: ${response.body}");
+        if(response.statusCode == 401){
+          await DataBaseHelper().deleteDataBase(tableName: DataBaseConstant.tableNameForUserDetail);
+          Get.offAllNamed(Routes.LOG_IN);
+        }
         return response;
       } catch (e) {
         if (kDebugMode) print("ERROR:: $e");

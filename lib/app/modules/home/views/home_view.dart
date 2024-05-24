@@ -24,38 +24,56 @@ class HomeView extends GetView<HomeController> {
             return KNPWidgets.scaffoldBackgroundImageViewWithAppBar(
               isHomeAppBarValue: true,
               child2: KNPWidgets.commonRefreshIndicator(
-                onRefresh: () async => await controller.onInit(),
+                onRefresh: () async => controller.onRefresh(),
                 child: ModalProgress(
                   inAsyncCall: controller.apiResValue.value,
                   child: controller.apiResValue.value
                       ? KNPWidgets.myLoaderView()
                       : controller.isPackagePurchase == 0
-                      ? packagesPurchaseGridView()
-                      : ListView(
-                          padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
-                          shrinkWrap: true,
-                          children: [
-                            welcomeTextView(),
-                            SizedBox(height: CommonPaddingAndSize.size12()),
-                            if(controller.bannerList.isNotEmpty)
-                            bannerView(),
-                            if(controller.userData?.profilePercentage != null)
-                            SizedBox(height: CommonPaddingAndSize.size12()),
-                            if(controller.userData?.profilePercentage != null)
-                            profileProgressContainerView(),
-                            SizedBox(height: CommonPaddingAndSize.size12()),
-                            cardTitleTextView(text: PageConstVar.packages.tr),
-                            SizedBox(height: CommonPaddingAndSize.size10()),
-                            packagesListView(),
-                            SizedBox(height: CommonPaddingAndSize.size12()),
-                            nodeCountView(),
-                            SizedBox(height: CommonPaddingAndSize.size12()),
-                            commissionView(),
-                            SizedBox(height: CommonPaddingAndSize.size12()),
-                            yourSalesView(),
-                            SizedBox(height: CommonPaddingAndSize.size20() * 4)
-                          ],
-                        ),
+                          ? controller.packageList != null && controller.packageList!.isNotEmpty
+                              ? Column(
+                                children: [
+                                  Expanded(
+                                    child: packagesPurchaseGridView(),
+                                  ),
+                                  SizedBox(height: CommonPaddingAndSize.size20() * 4)
+                                ],
+                              )
+                              : ListView(
+                                  children: [
+                                    SizedBox(
+                                      height: MediaQuery.of(context).size.height / 1.5,
+                                      child: Center(
+                                          child: KNPWidgets.noDataFoundView(),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                          : ListView(
+                              padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
+                              shrinkWrap: true,
+                              children: [
+                                welcomeTextView(),
+                                SizedBox(height: CommonPaddingAndSize.size12()),
+                                if (controller.bannerList.isNotEmpty)
+                                  bannerView(),
+                                if (controller.userData?.profilePercentage != null)
+                                  SizedBox(height: CommonPaddingAndSize.size12()),
+                                if (controller.userData?.profilePercentage != null)
+                                  profileProgressContainerView(),
+                                SizedBox(height: CommonPaddingAndSize.size12()),
+                                cardTitleTextView(text: PageConstVar.packages.tr),
+                                SizedBox(height: CommonPaddingAndSize.size10()),
+                                packagesListView(),
+                                SizedBox(height: CommonPaddingAndSize.size12()),
+                                nodeCountView(),
+                                SizedBox(height: CommonPaddingAndSize.size12()),
+                                commissionView(),
+                                SizedBox(height: CommonPaddingAndSize.size12()),
+                                yourSalesView(),
+                                SizedBox(height: CommonPaddingAndSize.size20() * 4)
+                              ],
+                            ),
                 ),
               ),
             );
@@ -86,25 +104,29 @@ class HomeView extends GetView<HomeController> {
         indicatorCornerRadius: 4.px,
       );
 
-  Widget profileProgressContainerView() => KNPWidgets.commonContainerView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            cardSubTitleTextView(text: PageConstVar.yourProfileProgress.tr),
-            SizedBox(height: CommonPaddingAndSize.size10()),
-            Row(
-              children: [
-                Expanded(
-                  child: KNPWidgets.commonLinearProgressBar(
-                      value: controller.userData!.profilePercentage != null
-                          ? controller.userData!.profilePercentage!.toDouble() / 100
-                          : 0.0),
-                ),
-                SizedBox(width: CommonPaddingAndSize.size10()),
-                cardSubTitleTextView(text: '${controller.userData?.profilePercentage}%'),
-              ],
-            )
-          ],
+  Widget profileProgressContainerView() => InkWell(
+        onTap: () => controller.clickOnProfileProgressView(),
+        child: KNPWidgets.commonContainerView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              cardSubTitleTextView(text: PageConstVar.yourProfileProgress.tr),
+              SizedBox(height: CommonPaddingAndSize.size10()),
+              Row(
+                children: [
+                  Expanded(
+                    child: KNPWidgets.commonLinearProgressBar(
+                        value: controller.userData!.profilePercentage != null
+                            ? controller.userData!.profilePercentage!.toDouble() / 100
+                            : 0.0,
+                    ),
+                  ),
+                  SizedBox(width: CommonPaddingAndSize.size10()),
+                  cardSubTitleTextView(text: '${controller.userData?.profilePercentage}%'),
+                ],
+              )
+            ],
+          ),
         ),
       );
 
@@ -138,7 +160,7 @@ class HomeView extends GetView<HomeController> {
             itemCount: controller.packageList?.length,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
-             return packages(index:index);
+              return packages(index: index);
             },
           ),
         );
@@ -151,33 +173,57 @@ class HomeView extends GetView<HomeController> {
   }
 
   Widget packages({required int index, bool isCrossAxisAlignment = false}) => Padding(
-    padding: EdgeInsets.only(right: 8.px, top: 2.px, bottom: 2.px, left: 2.px),
-    child: InkWell(
-      onTap: controller.packageClickValue.value
-          ? () => null
-          : () => controller.clickOnPackage(index: index),
-      child: KNPWidgets.commonContainerView(
-        width: 124.px,
-        padding: EdgeInsets.all(4.px),
-        child: Column(
-          crossAxisAlignment: isCrossAxisAlignment
-              ? CrossAxisAlignment.center
-              : CrossAxisAlignment.start,
-          children: [
-            KNPWidgets.commonNetworkImageView(
-              path: KNPMethods.baseUrlForNetworkImage(imagePath: '${controller.packageList?[index].packageImage}'),
-              width: double.infinity.px,
-              height: 108.px,
-              radius: 4.px,
+        padding: EdgeInsets.only(right: 8.px, top: 2.px, bottom: 2.px, left: 2.px),
+        child: InkWell(
+          onTap: controller.packageClickValue.value
+              ? () => null
+              : () => controller.clickOnPackage(index: index),
+          child: KNPWidgets.commonContainerView(
+            width: 134.px,
+            borderColor: controller.packageList?[index].isPackagePurchased == 1
+                ? Theme.of(Get.context!).colorScheme.primary
+                : Theme.of(Get.context!).colorScheme.onSecondary,
+            color: controller.packageList?[index].isPackagePurchased == 1
+                ? Theme.of(Get.context!).colorScheme.primary.withOpacity(.1)
+                : Theme.of(Get.context!).colorScheme.surface.withOpacity(.2),
+            padding: EdgeInsets.all(4.px),
+            child: Column(
+              crossAxisAlignment: isCrossAxisAlignment
+                  ? CrossAxisAlignment.center
+                  : CrossAxisAlignment.start,
+              children: [
+                Stack(
+                  children: [
+                    KNPWidgets.commonNetworkImageView(
+                      path: KNPMethods.baseUrlForNetworkImage(imagePath: '${controller.packageList?[index].packageImage}'),
+                      width: double.infinity.px,
+                      height: 108.px,
+                      radius: 4.px,
+                    ),
+                    if (controller.isPackagePurchase == 1)
+                    Container(
+                        padding: EdgeInsets.symmetric(horizontal: 6.px, vertical: 4.px),
+                        decoration: BoxDecoration(
+                            color: Theme.of(Get.context!).colorScheme.primary,
+                            borderRadius: BorderRadius.only(topRight: Radius.circular(6.px), bottomRight: Radius.circular(6.px)),
+                        ),
+                        child: Text(
+                          controller.packageList?[index].isPackagePurchased == 1
+                              ? PageConstVar.purchased.tr
+                              : PageConstVar.upgrade.tr,
+                          style: Theme.of(Get.context!).textTheme.headlineSmall?.copyWith(fontSize: 6.px),
+                        ),
+                      ),
+                  ],
+                ),
+                SizedBox(height: 8.px),
+                cardSubTitleTextView(text: '${controller.packageList?[index].packageName}'),
+                cardDescriptionTextView(text: '${controller.packageList?[index].packagePrice}'),
+              ],
             ),
-            SizedBox(height: 8.px),
-            cardSubTitleTextView(text: '${controller.packageList?[index].packageName}'),
-            cardDescriptionTextView(text: '${controller.packageList?[index].packagePrice}'),
-          ],
+          ),
         ),
-      ),
-    ),
-  );
+      );
 
   Widget commonColumnForCardView({required String text1, required String text2}) => Expanded(
         child: Column(
@@ -200,7 +246,7 @@ class HomeView extends GetView<HomeController> {
       );
 
   Widget commonCard({required String title, required String text1, required String text2, required String text3, required String text4}) => KNPWidgets.commonContainerView(
-    borderColor: Theme.of(Get.context!).colorScheme.primary.withOpacity(.2),
+        borderColor: Theme.of(Get.context!).colorScheme.primary.withOpacity(.2),
         padding: EdgeInsets.zero,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -245,63 +291,74 @@ class HomeView extends GetView<HomeController> {
 
   Widget nodeCountView() => commonCard(
         title: PageConstVar.nodeCount.tr,
-        text1: KNPMethods.checkStringIsNullOrEmpty(string: controller.userDashboardBVCount?.lUserNodeCount,blankText: '00'),
+        text1: KNPMethods.checkStringIsNullOrEmpty(
+            string: controller.userDashboardBVCount?.lUserNodeCount,
+            blankText: '00',
+        ),
         text2: PageConstVar.leftBv.tr,
-        text3:  KNPMethods.checkStringIsNullOrEmpty(string: controller.userDashboardBVCount?.rUserNodeCount,blankText: '00'),
+        text3: KNPMethods.checkStringIsNullOrEmpty(
+            string: controller.userDashboardBVCount?.rUserNodeCount,
+            blankText: '00',
+        ),
         text4: PageConstVar.rightBv.tr,
       );
 
   Widget commissionView() => commonCard(
         title: PageConstVar.commission.tr,
-        text1:  KNPMethods.checkStringIsNullOrEmpty(string: controller.userDashboardBVCount?.leftCommission,blankText: '00'),
+        text1: KNPMethods.checkStringIsNullOrEmpty(
+            string: controller.userDashboardBVCount?.leftCommission,
+            blankText: '00',
+        ),
         text2: PageConstVar.leftBv.tr,
-        text3:  KNPMethods.checkStringIsNullOrEmpty(string: controller.userDashboardBVCount?.rightCommission,blankText: '00'),
+        text3: KNPMethods.checkStringIsNullOrEmpty(
+            string: controller.userDashboardBVCount?.rightCommission,
+            blankText: '00',
+        ),
         text4: PageConstVar.rightBv.tr,
       );
 
   Widget yourSalesView() => commonCard(
         title: PageConstVar.yourSales.tr,
-        text1:  '₹${KNPMethods.checkStringIsNullOrEmpty(string: controller.userDashboardBVCount?.totalWalletBalance,blankText: '00')}',
+        text1: '₹${KNPMethods.checkStringIsNullOrEmpty(string: controller.userDashboardBVCount?.totalWalletBalance, blankText: '00')}',
         text2: PageConstVar.walletBalance.tr,
-        text3:  '₹${KNPMethods.checkStringIsNullOrEmpty(string: controller.userDashboardBVCount?.totalWithdrawal,blankText: '00')}',
+        text3: '₹${KNPMethods.checkStringIsNullOrEmpty(string: controller.userDashboardBVCount?.totalWithdrawal, blankText: '00')}',
         text4: PageConstVar.withdrawalBalance.tr,
       );
 
   Widget packagesPurchaseGridView() => KNPWidgets.commonContainerView(
-    borderColor: Theme.of(Get.context!).colorScheme.primary.withOpacity(.2),
-    padding: EdgeInsets.zero,
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 18.px, vertical: CommonPaddingAndSize.size10()),
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: Theme.of(Get.context!).colorScheme.primary.withOpacity(.05),
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(8.px),
-              topRight: Radius.circular(8.px),
+        borderColor: Theme.of(Get.context!).colorScheme.primary.withOpacity(.2),
+        padding: EdgeInsets.zero,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 18.px, vertical: CommonPaddingAndSize.size10()),
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: Theme.of(Get.context!).colorScheme.primary.withOpacity(.05),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(8.px),
+                  topRight: Radius.circular(8.px),
+                ),
+              ),
+              child: cardTitleTextView(text: 'Purchase package'),
             ),
-          ),
-          child: cardTitleTextView(text: 'Purchase package'),
+            KNPWidgets.commonDividerView(
+              height: 0,
+              wight: 1.px,
+              color: Theme.of(Get.context!).colorScheme.primary.withOpacity(.2),
+            ),
+            Expanded(
+              child: GridView.builder(
+                padding: EdgeInsets.all(8.px),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                itemCount: controller.packageList?.length,
+                itemBuilder: (context, index) {
+                  return packages(index: index, isCrossAxisAlignment: true);
+                },
+              ),
+            ),
+          ],
         ),
-        KNPWidgets.commonDividerView(
-          height: 0,
-          wight: 1.px,
-          color: Theme.of(Get.context!).colorScheme.primary.withOpacity(.2),
-        ),
-        Expanded(
-          child: GridView.builder(
-              padding: EdgeInsets.all(8.px),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-              itemCount: controller.packageList?.length,
-              itemBuilder: (context, index) {
-                return packages(index: index,isCrossAxisAlignment : true);
-              },
-          ),
-        ),
-      ],
-    ),
-  );
-
+      );
 }

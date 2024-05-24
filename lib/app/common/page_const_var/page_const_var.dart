@@ -157,6 +157,13 @@ class PageConstVar{
   static const yourSales = "Your sales";
   static const walletBalance = "Wallet balance";
   static const withdrawalBalance = "Withdrawal balance";
+  static const iAccept = "I accept";
+  static const termsAndConditions = "Terms & Conditions";
+  static const upgrade = "Upgrade";
+  static const purchased = "Purchased";
+  static const purchaseNow = "Purchase now";
+  static const upgradeNow = "Upgrade now";
+  static const alreadyPurchased = "Already purchased";
 
   /// TODO<-----------------✔✔✔✔✔✔✔-----------------Profile Page Const-----------------✔✔✔✔✔✔✔----------------->
 

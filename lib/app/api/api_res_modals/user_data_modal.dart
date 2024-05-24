@@ -3,8 +3,9 @@ class UserDataModal {
   String? accessToken;
   int? profilePercentage;
   UserDetails? userDetails;
+  List<ProfilePercentageArr>? profilePercentageArr;
 
-  UserDataModal({this.message, this.accessToken, this.userDetails});
+  UserDataModal({this.message, this.accessToken, this.userDetails,this.profilePercentageArr});
 
   UserDataModal.fromJson(Map<String, dynamic> json) {
     message = json['message'];
@@ -13,6 +14,13 @@ class UserDataModal {
     userDetails = json['user_details'] != null
         ? UserDetails.fromJson(json['user_details'])
         : null;
+    profilePercentage = json['profile_percentage'];
+    if (json['profile_percentage_arr'] != null) {
+      profilePercentageArr = <ProfilePercentageArr>[];
+      json['profile_percentage_arr'].forEach((v) {
+        profilePercentageArr!.add(ProfilePercentageArr.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -22,6 +30,10 @@ class UserDataModal {
     data['profile_percentage'] = profilePercentage;
     if (userDetails != null) {
       data['user_details'] = userDetails!.toJson();
+    }
+    if (profilePercentageArr != null) {
+      data['profile_percentage_arr'] =
+          profilePercentageArr!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -140,6 +152,25 @@ class UserDetails {
     data['updated_at'] = updatedAt;
     data['city_name'] = cityName;
     data['state_name'] = stateName;
+    return data;
+  }
+}
+
+class ProfilePercentageArr {
+  String? title;
+  int? isEmpty;
+
+  ProfilePercentageArr({this.title, this.isEmpty});
+
+  ProfilePercentageArr.fromJson(Map<String, dynamic> json) {
+    title = json['title'];
+    isEmpty = json['isEmpty'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['title'] = title;
+    data['isEmpty'] = isEmpty;
     return data;
   }
 }

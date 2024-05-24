@@ -25,6 +25,8 @@ class LogInView extends GetView<LogInController> {
               child1: Center(
                 child: Column(
                   children: [
+                    appLogo(),
+                    SizedBox(height: 14.px),
                     loginTextView(),
                     SizedBox(height: 4.px),
                     signInUpTextView(),
@@ -70,6 +72,8 @@ class LogInView extends GetView<LogInController> {
       ),
     );
   }
+
+  Widget appLogo() => KNPWidgets.commonNetworkImageView(path: 'assets/image/app_logo.png',height: 100.px,width: 100.px,isAssetImage: true);
 
   Widget loginTextView() => Text(PageConstVar.logIn.tr, style: Theme.of(Get.context!).textTheme.headlineLarge);
 

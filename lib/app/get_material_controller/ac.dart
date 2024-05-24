@@ -5,11 +5,13 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/common/packages/cd.dart';
+import 'package:kalam_news_publication/app/modules/bottom_bar/views/bottom_bar_view.dart';
+import 'package:kalam_news_publication/app/routes/app_pages.dart';
 
 class AC extends GetxController {
 
   static final isConnect = false.obs;
-  int isDialogShow = 0;
+  static int isDialogShow = 0;
   static bool isFakeLocation = false;
 
   final Connectivity connectivity = Connectivity();
@@ -30,8 +32,9 @@ class AC extends GetxController {
       networkConnection.value = await KNPMethods.internetConnectionCheckerMethod();
       if (networkConnection.value) {
         isConnect.value = true;
-        if (isDialogShow == 1) {
-          // Get.back();
+        if(isDialogShow == 1){
+          selectedBottomNavigationIndex.value = 0;
+          await Get.offAllNamed(Routes.BOTTOM_BAR);
         }
       } else {
         isConnect.value = false;

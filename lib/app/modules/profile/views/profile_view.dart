@@ -5,6 +5,7 @@ import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/common/packages/model_progress_bar.dart';
 import 'package:kalam_news_publication/app/common/page_const_var/page_const_var.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
+import 'package:kalam_news_publication/app/get_material_controller/ac.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import '../controllers/profile_controller.dart';
 
@@ -14,7 +15,7 @@ class ProfileView extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
     Get.lazyPut<ProfileController>(
-          () => ProfileController(),
+      () => ProfileController(),
     );
     ProfileController profileController = Get.find();
     return Scaffold(
@@ -41,15 +42,15 @@ class ProfileView extends GetView<ProfileController> {
                           cardHeadlineTextView(text: PageConstVar.accountSetting.tr).paddingOnly(bottom: CommonPaddingAndSize.size10()),
                           accountSettingCardView().paddingOnly(bottom: CommonPaddingAndSize.size20()),
                           // changeLanguageView().paddingOnly(bottom: CommonPaddingAndSize.size20()),
-                   ],
-                 ),
-               ),
-             ),
-           ),
-         );
-       }),
-     );
-   }
+                        ],
+                      ),
+              ),
+            ),
+          ),
+        );
+      }),
+    );
+  }
 
   Widget userProfileView() => Row(
         children: [
@@ -113,7 +114,8 @@ class ProfileView extends GetView<ProfileController> {
             color: Theme.of(Get.context!).colorScheme.inversePrimary,
             shape: BoxShape.circle,
           ),
-          child: KNPWidgets.commonNetworkImageView(path: 'assets/icon/edit_icon.png', isAssetImage: true),
+          child: KNPWidgets.commonNetworkImageView(
+              path: 'assets/icon/edit_icon.png', isAssetImage: true),
         ),
       );
 
@@ -148,7 +150,9 @@ class ProfileView extends GetView<ProfileController> {
       );
 
   Widget commonRowForCard({required String text1, String? text2, bool buttonValue = true, GestureTapCallback? onTap}) => Padding(
-        padding: EdgeInsets.symmetric(horizontal: CommonPaddingAndSize.size20(), vertical: CommonPaddingAndSize.size14()),
+        padding: EdgeInsets.symmetric(
+            horizontal: CommonPaddingAndSize.size20(),
+            vertical: CommonPaddingAndSize.size14()),
         child: InkWell(
           onTap: onTap,
           child: Row(
@@ -156,7 +160,8 @@ class ProfileView extends GetView<ProfileController> {
             children: [
               Flexible(
                 flex: 2,
-                child: cardTitleTextView(text: text1, textAlign: TextAlign.start),
+                child:
+                    cardTitleTextView(text: text1, textAlign: TextAlign.start),
               ),
               SizedBox(width: CommonPaddingAndSize.size10()),
               buttonValue
@@ -178,21 +183,21 @@ class ProfileView extends GetView<ProfileController> {
       );
 
   Widget welcomeCardView() => KNPWidgets.commonContainerView(
-    padding: EdgeInsets.zero,
-    child: Column(
-      children: [
-        commonRowForCard(
-            text1: '${PageConstVar.welcome.tr} ${PageConstVar.message.tr}',
-            onTap: () => controller.clickOnWelcomeMessage(),
+        padding: EdgeInsets.zero,
+        child: Column(
+          children: [
+            commonRowForCard(
+              text1: '${PageConstVar.welcome.tr} ${PageConstVar.message.tr}',
+              onTap: () => controller.clickOnWelcomeMessage(),
+            ),
+            KNPWidgets.commonDividerView(height: 0),
+            commonRowForCard(
+              text1: PageConstVar.kycApplication.tr,
+              onTap: () => controller.clickOnKYCApplication(),
+            ),
+          ],
         ),
-        KNPWidgets.commonDividerView(height: 0),
-        commonRowForCard(
-            text1: PageConstVar.kycApplication.tr,
-            onTap: () => controller.clickOnKYCApplication(),
-        ),
-      ],
-    ),
-  );
+      );
 
   Widget accountSettingCardView() => KNPWidgets.commonContainerView(
         padding: EdgeInsets.zero,
@@ -215,9 +220,11 @@ class ProfileView extends GetView<ProfileController> {
             KNPWidgets.commonDividerView(height: 0),
             commonRowForCard(
               text1: PageConstVar.referralAFriends.tr,
-              onTap: controller.referralAFriendsValue.value
-                  ? () => KNPMethods.showSnackBar(message: PageConstVar.waitForResponse.tr)
-                  : () => controller.clickOnReferralAFriends(),
+              onTap: AC.isConnect.value
+                  ? controller.referralAFriendsValue.value
+                      ? () => KNPMethods.showSnackBar(message: PageConstVar.waitForResponse.tr)
+                      : () => controller.clickOnReferralAFriends()
+                  : () => KNPMethods.noInternet(),
             ),
             KNPWidgets.commonDividerView(height: 0),
             commonRowForCard(
@@ -237,5 +244,4 @@ class ProfileView extends GetView<ProfileController> {
       ),
     );
   }
-
 }

@@ -29,15 +29,16 @@ class PackageModal {
 
 class PackageList {
   int? packageId;
+  int? isPackagePurchased;
   String? packageName;
   String? packagePrice;
   String? packageImage;
 
-  PackageList(
-      {this.packageId, this.packageName, this.packagePrice, this.packageImage});
+  PackageList({this.packageId,this.isPackagePurchased, this.packageName, this.packagePrice, this.packageImage});
 
   PackageList.fromJson(Map<String, dynamic> json) {
     packageId = json['package_id'];
+    isPackagePurchased = json['is_package_purchage'];
     packageName = json['package_name'];
     packagePrice = json['package_price'];
     packageImage = json['package_image'];
@@ -46,6 +47,7 @@ class PackageList {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['package_id'] = packageId;
+    data['is_package_purchage'] = isPackagePurchased;
     data['package_name'] = packageName;
     data['package_price'] = packagePrice;
     data['package_image'] = packageImage;
