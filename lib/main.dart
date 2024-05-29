@@ -40,7 +40,7 @@ void main() {
               await Fluttertoast.cancel();
             },
             child: GetMaterialApp(
-              title: "Application",
+              title: "Kalam News",
               translations: LanguageTranslations(),
               locale: const Locale("en", "US"),
               theme: AppThemeData.kNPThemeData(fontFamily: 'HelveticaNeue'),

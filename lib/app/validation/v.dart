@@ -2,6 +2,7 @@ import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:kalam_news_publication/app/common/page_const_var/page_const_var.dart';
 
 class V {
+
   static String? isEmailValid({required String? value}) {
     if (value == null || value.trim().isEmpty) {
       return PageConstVar.pleaseEnterEmail.tr;
@@ -105,21 +106,20 @@ class V {
     }
   }
 
-  static String isPanCardValid(String value) {
+  static String? isPanCardValid({required String? value}) {
     String pattern = r'^[A-Z]{5}[0-9]{4}[A-Z]{1}$';
     RegExp regExp = RegExp(pattern);
-    if (value.isEmpty) {
-      return 'Please Enter Pan Card Number';
+    if (value == null || value.isEmpty) {
+      return PageConstVar.pleaseEnterPanCardNumber.tr;
     } else if (!regExp.hasMatch(value)) {
-      return 'Please Enter Valid Pan Card Number';
+      return PageConstVar.pleaseEnterValidPanCardNumber.tr;
     }
-    return "";
+    return null;
   }
 
   static String? isValidateAadhar({required String? value}) {
-
-    // Regular expression for Aadhar card number (12 digits)
-    RegExp aadharRegExp = RegExp(r'^\d{12}$');
+    String pattern = r'^\d{12}$';
+    RegExp aadharRegExp = RegExp(pattern);
 
     if (value == null  || value.isEmpty) {
       return PageConstVar.pleaseEnterAadharNumber.tr;
@@ -130,21 +130,9 @@ class V {
     }
   }
 
-  static String? isValidatePAN({required String? value}) {
-    String pattern = r'^[A-Z]{5}[0-9]{4}[A-Z]{1}$';
-    RegExp panRegExp = RegExp(pattern);
-
-    if (value == null ||value.isEmpty) {
-      return 'Please enter PAN card number';
-    } else if (!panRegExp.hasMatch(value)) {
-      return 'Please enter valid pan card number';
-    }else {
-      return null;
-    }
-  }
-
   static String? isIfscCodeValid({required String? value}) {
-    RegExp ifscRegExp = RegExp(r'^[A-Z]{4}[0][A-Z0-9]{6}$');
+    String pattern = r'^[A-Z]{4}[0][A-Z0-9]{6}$';
+    RegExp ifscRegExp = RegExp(pattern);
 
     if (value == null ||value.isEmpty) {
       return PageConstVar.pleaseEnterIFSCCode.tr;

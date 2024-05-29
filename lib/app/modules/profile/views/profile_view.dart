@@ -150,9 +150,7 @@ class ProfileView extends GetView<ProfileController> {
       );
 
   Widget commonRowForCard({required String text1, String? text2, bool buttonValue = true, GestureTapCallback? onTap}) => Padding(
-        padding: EdgeInsets.symmetric(
-            horizontal: CommonPaddingAndSize.size20(),
-            vertical: CommonPaddingAndSize.size14()),
+        padding: EdgeInsets.symmetric(horizontal: CommonPaddingAndSize.size20(), vertical: CommonPaddingAndSize.size14()),
         child: InkWell(
           onTap: onTap,
           child: Row(
@@ -207,6 +205,11 @@ class ProfileView extends GetView<ProfileController> {
               text1: PageConstVar.editProfile.tr,
               onTap: () => controller.clickOnEditProfile(),
             ),
+            // KNPWidgets.commonDividerView(height: 0),
+            // commonRowForCard(
+            //   text1: PageConstVar.changeLanguage.tr,
+            //   onTap: () => controller.clickOnChangeLanguage(),
+            // ),
             KNPWidgets.commonDividerView(height: 0),
             commonRowForCard(
               text1: PageConstVar.changePassword.tr,
@@ -235,13 +238,12 @@ class ProfileView extends GetView<ProfileController> {
         ),
       );
 
-  Widget changeLanguageView() {
-    return KNPWidgets.commonContainerView(
-      padding: EdgeInsets.zero,
-      child: commonRowForCard(
-        text1: PageConstVar.changeLanguage.tr,
-        onTap: () => controller.clickOnChangeLanguage(),
-      ),
-    );
-  }
+  Widget changeLanguageView() => KNPWidgets.commonContainerView(
+    padding: EdgeInsets.zero,
+    child: commonRowForCard(
+      text1: PageConstVar.changeLanguage.tr,
+      onTap: () => controller.clickOnChangeLanguage(),
+    ),
+  );
+
 }

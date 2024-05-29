@@ -22,11 +22,11 @@ class WelcomeMassageView extends GetView<WelcomeMassageController> {
               child: controller.apiResValue.value
                   ? KNPWidgets.myLoaderView()
                   : ListView(
-                padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
-                children: [
-                  KNPWidgets.removeHtmlTagsProductAndSellerDescription(string: controller.welcomeMessage.value),
-                ],
-              ),
+                      padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
+                      children: [
+                        KNPWidgets.removeHtmlTagsProductAndSellerDescription(string: controller.welcomeMessage.value),
+                      ],
+                    ),
             ),
           );
         } else {
@@ -35,5 +35,4 @@ class WelcomeMassageView extends GetView<WelcomeMassageController> {
       }),
     );
   }
-
 }

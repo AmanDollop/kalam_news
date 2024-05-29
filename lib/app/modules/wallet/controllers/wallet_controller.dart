@@ -9,6 +9,7 @@ class WalletController extends GetxController {
   final count = 0.obs;
 
   final apiResValue = true.obs;
+  final hideShowWithdrawFieldValue = false.obs;
 
   final withdrawAmountController = TextEditingController();
   FocusNode withdrawAmountFocusNode = FocusNode();
@@ -20,6 +21,7 @@ class WalletController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
+    hideShowWithdrawFieldValue.value = false;
     apiResValue.value = true;
     await callingGetWithdrawHistoryApi();
   }

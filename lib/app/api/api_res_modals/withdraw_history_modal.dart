@@ -3,17 +3,26 @@ class WithdrawHistoryModal {
   String? totalWithdrawal;
   String? totalCommission;
   List<WalletHistory>? walletHistory;
+  String? limitBalance;
+  String? availableBalance;
+  String? maxEarning;
 
   WithdrawHistoryModal(
       {this.success,
         this.totalWithdrawal,
         this.totalCommission,
-        this.walletHistory});
+        this.availableBalance,
+        this.maxEarning,
+        this.walletHistory,
+        this.limitBalance});
 
   WithdrawHistoryModal.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     totalWithdrawal = json['total_withdrawal'];
     totalCommission = json['total_commission'];
+    availableBalance = json['available_balance'];
+    maxEarning = json['max_earning'];
+    limitBalance = json['limit_balance'];
     if (json['wallet_history'] != null) {
       walletHistory = <WalletHistory>[];
       json['wallet_history'].forEach((v) {
@@ -27,6 +36,9 @@ class WithdrawHistoryModal {
     data['success'] = success;
     data['total_withdrawal'] = totalWithdrawal;
     data['total_commission'] = totalCommission;
+    data['available_balance'] = availableBalance;
+    data['max_earning'] = maxEarning;
+    data['limit_balance'] = limitBalance;
     if (walletHistory != null) {
       data['wallet_history'] =
           walletHistory!.map((v) => v.toJson()).toList();

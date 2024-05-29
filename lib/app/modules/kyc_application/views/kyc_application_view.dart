@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/common/common_padding_size/common_padding_size.dart';
 import 'package:kalam_news_publication/app/common/packages/common_methods_for_date_time.dart';
 import 'package:kalam_news_publication/app/common/packages/model_progress_bar.dart';
+import 'package:kalam_news_publication/app/common/page_const_var/page_const_var.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
 import 'package:kalam_news_publication/app/validation/v.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -20,33 +21,36 @@ class KycApplicationView extends GetView<KycApplicationController> {
         controller.count.value;
         return SingleChildScrollView(
           child: KNPWidgets.scaffoldBackgroundImageViewWithAppBar(
-            appBarTitle: 'KYC application',
+            appBarTitle: PageConstVar.kycApplication.tr,
             child2: ModalProgress(
               inAsyncCall: controller.apiResValue.value,
               child: controller.apiResValue.value
                   ? KNPWidgets.myLoaderView()
                   : Padding(
                     padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: ListView(
-                              padding: EdgeInsets.zero,
-                              children: [
-                                cardHeadlineTextView(text: 'Personal information').paddingOnly(bottom: CommonPaddingAndSize.size10()),
-                                personalInformationCardView().paddingOnly(bottom: CommonPaddingAndSize.size20()),
-                                cardHeadlineTextView(text: 'Profile photo').paddingOnly(bottom: CommonPaddingAndSize.size10()),
-                                profilePhotoCard().paddingOnly(bottom: CommonPaddingAndSize.size20()),
-                                cardHeadlineTextView(text: 'Aadhar card details').paddingOnly(bottom: CommonPaddingAndSize.size10()),
-                                aadharCardDetailsCard().paddingOnly(bottom: CommonPaddingAndSize.size20()),
-                                cardHeadlineTextView(text: 'Pan card details').paddingOnly(bottom: CommonPaddingAndSize.size10()),
-                                panCardDetailsCard(),
-                                updateBankDetailsView().paddingSymmetric(vertical: CommonPaddingAndSize.size20()),
-                              ],
-                            ),
-                        ),
-                        submitButtonView()
-                      ],
+                    child: Form(
+                      key: controller.key,
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: ListView(
+                                padding: EdgeInsets.zero,
+                                children: [
+                                  cardHeadlineTextView(text: PageConstVar.personalInformation.tr).paddingOnly(bottom: CommonPaddingAndSize.size10()),
+                                  personalInformationCardView().paddingOnly(bottom: CommonPaddingAndSize.size20()),
+                                  cardHeadlineTextView(text: PageConstVar.profilePhoto.tr).paddingOnly(bottom: CommonPaddingAndSize.size10()),
+                                  profilePhotoCard().paddingOnly(bottom: CommonPaddingAndSize.size20()),
+                                  cardHeadlineTextView(text: PageConstVar.aadharCardDetails.tr).paddingOnly(bottom: CommonPaddingAndSize.size10()),
+                                  aadharCardDetailsCard().paddingOnly(bottom: CommonPaddingAndSize.size20()),
+                                  cardHeadlineTextView(text: PageConstVar.panCardDetails.tr).paddingOnly(bottom: CommonPaddingAndSize.size10()),
+                                  panCardDetailsCard().paddingOnly(bottom: CommonPaddingAndSize.size20()),
+                                  // updateBankDetailsView().paddingSymmetric(vertical: CommonPaddingAndSize.size20()),
+                                ],
+                              ),
+                          ),
+                          submitButtonView()
+                        ],
+                      ),
                     ),
                   ),
             ),
@@ -115,19 +119,19 @@ class KycApplicationView extends GetView<KycApplicationController> {
         child: Column(
           children: [
             commonRowForCard(
-              text1: 'Name',
+              text1: PageConstVar.name.tr,
               text2: '${controller.userData?.userDetails?.initials}. ${controller.userData?.userDetails?.firstName} ${controller.userData?.userDetails?.lastName}',
             ),
             KNPWidgets.commonDividerView(height: 0),
             commonRowForCard(
-              text1: 'User id',
+              text1: PageConstVar.userId.tr,
               text2: controller.userData?.userDetails?.userId != null
                   ? '${controller.userData?.userDetails?.userId}'
                   : '?',
             ),
             KNPWidgets.commonDividerView(height: 0),
             commonRowForCard(
-              text1: 'Referral code',
+              text1: PageConstVar.referralCode.tr,
               text2: controller.userData?.userDetails?.referralCode != null &&
                       controller.userData!.userDetails!.referralCode!.isNotEmpty
                   ? '${controller.userData?.userDetails?.referralCode}'
@@ -135,7 +139,7 @@ class KycApplicationView extends GetView<KycApplicationController> {
             ),
             KNPWidgets.commonDividerView(height: 0),
             commonRowForCard(
-              text1: 'City',
+              text1: PageConstVar.city.tr,
               text2: controller.userData?.userDetails?.cityName != null &&
                       controller.userData!.userDetails!.cityName!.isNotEmpty
                   ? '${controller.userData?.userDetails?.cityName}'
@@ -143,7 +147,7 @@ class KycApplicationView extends GetView<KycApplicationController> {
             ),
             KNPWidgets.commonDividerView(height: 0),
             commonRowForCard(
-              text1: 'Date of birth',
+              text1: PageConstVar.dob.tr,
               text2: controller.userData?.userDetails?.dob != null &&
                       controller.userData!.userDetails!.dob!.isNotEmpty
                   ? CMForDateTime.dateFormatForDateMonthYear(
@@ -203,7 +207,7 @@ class KycApplicationView extends GetView<KycApplicationController> {
                   ),
                 ),
               ),
-              cardTitleTextView(text: 'Add file'),
+              cardTitleTextView(text: PageConstVar.addFile.tr),
             ],
           ),
         ),
@@ -213,7 +217,7 @@ class KycApplicationView extends GetView<KycApplicationController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            cardTitleTextView(text: 'Upload profile picture').paddingOnly(bottom: 4.px),
+            cardTitleTextView(text: PageConstVar.uploadProfilePicture.tr).paddingOnly(bottom: 4.px),
             // commonAddFileButtonView(
             //   onTap: () => controller.clickOnUploadProfilePicture(),
             // ),
@@ -226,12 +230,12 @@ class KycApplicationView extends GetView<KycApplicationController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            aAadharCardNumberTextFieldView().paddingOnly(bottom: CommonPaddingAndSize.size14()),
-            cardTitleTextView(text: 'Aadhar card photo (Front side)').paddingOnly(bottom: 4.px),
+            aadharCardNumberTextFieldView().paddingOnly(bottom: CommonPaddingAndSize.size14()),
+            cardTitleTextView(text: '${PageConstVar.aadharCardPhoto.tr} (${PageConstVar.frontSide.tr})').paddingOnly(bottom: 4.px),
             commonAddFileButtonView(
               onTap: () => controller.clickOnAadharCardFrontSide(),
             ).paddingOnly(bottom: CommonPaddingAndSize.size14()),
-            cardTitleTextView(text: 'Aadhar card photo (Back side)').paddingOnly(bottom: 4.px),
+            cardTitleTextView(text: '${PageConstVar.aadharCardPhoto.tr} (${PageConstVar.backSide.tr})').paddingOnly(bottom: 4.px),
             commonAddFileButtonView(
               onTap: () => controller.clickOnAadharCardBackSide(),
             ),
@@ -239,11 +243,13 @@ class KycApplicationView extends GetView<KycApplicationController> {
         ),
       );
 
-  Widget aAadharCardNumberTextFieldView() => KNPWidgets.commonTextFormField(
-        title: 'Aadhar card number*',
-        hintText: 'Aadhar card number',
+  Widget aadharCardNumberTextFieldView() => KNPWidgets.commonTextFormField(
+        title: '${PageConstVar.aadharNumber.tr}*',
+        hintText: PageConstVar.aadharNumber.tr,
         controller: controller.aadharCardNumberController,
         focusNode: controller.aadharCardNumberFocusNode,
+        keyboardType: TextInputType.number,
+        maxLength: 12,
         validator: (value) => V.isValidateAadhar(value: value),
       );
 
@@ -252,7 +258,7 @@ class KycApplicationView extends GetView<KycApplicationController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             panCardNumberTextFieldView().paddingOnly(bottom: CommonPaddingAndSize.size14()),
-            cardTitleTextView(text: 'Pan card photo').paddingOnly(bottom: 4.px),
+            cardTitleTextView(text: PageConstVar.panCardPhoto.tr).paddingOnly(bottom: 4.px),
             commonAddFileButtonView(
               onTap: () => controller.clickOnPanCardPhoto(),
             ),
@@ -261,17 +267,18 @@ class KycApplicationView extends GetView<KycApplicationController> {
       );
 
   Widget panCardNumberTextFieldView() => KNPWidgets.commonTextFormField(
-        title: 'Pan card number*',
-        hintText: 'Pan card number',
+        title: '${PageConstVar.panCardNumber.tr}*',
+        hintText: PageConstVar.panCardNumber.tr,
         controller: controller.panCardNumberController,
         focusNode: controller.panCardNumberFocusNode,
-        validator: (value) => V.isValidateAadhar(value: value),
+        textCapitalization: TextCapitalization.characters,
+        validator: (value) => V.isPanCardValid(value: value),
       );
 
   Widget updateBankDetailsView() => KNPWidgets.commonContainerView(
         padding: EdgeInsets.zero,
         child: commonRowForCard(
-          text1: 'Update bank details',
+          text1: PageConstVar.updateBankDetail.tr,
           buttonValue: true,
           onTap: () => controller.clickOnUpdateBankDetails(),
         ),
@@ -279,7 +286,7 @@ class KycApplicationView extends GetView<KycApplicationController> {
 
   Widget submitButtonView() => KNPWidgets.commonElevatedButton(
     onPressed: () => controller.clickOnSubmitButton(),
-    buttonText: 'Submit',
+    buttonText: PageConstVar.submit.tr,
   );
 
 }

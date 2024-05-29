@@ -83,6 +83,8 @@ class PageConstVar{
   static const pleaseEnterCompleteAddress = "Please enter complete address";
   static const pleaseEnterAadharNumber= "Please enter aadhar number";
   static const pleaseEnterValidAadharNumber = "Please enter valid aadhar number";
+  static const pleaseEnterPanCardNumber= "Please enter pan card number";
+  static const pleaseEnterValidPanCardNumber = "Please enter valid pan card number";
   static const pleaseSelectState = "Please select state";
   static const pleaseSelectCity = "Please select city";
   static const pleaseEnterPinCode = "Please enter pin code";
@@ -150,6 +152,7 @@ class PageConstVar{
   static const welcome = "Welcome";
   static const yourProfileProgress = "Your profile progress";
   static const packages = "Packages";
+  static const purchasePackages = "Purchase package";
   static const nodeCount = "Node count";
   static const leftBv = "Left Bv";
   static const rightBv = "Right Bv";
@@ -177,6 +180,22 @@ class PageConstVar{
   static const referralAFriends = "Referral a friends";
   static const waitForResponse = "Wait for response";
   static const logOut = "Log out";
+
+  /// TODO<-----------------✔✔✔✔✔✔✔-----------------KYC Application Const-----------------✔✔✔✔✔✔✔----------------->
+
+  static const personalInformation = "Personal information";
+  static const profilePhoto = "Profile photo";
+  static const aadharCardDetails = "Aadhar card details";
+  static const panCardDetails = "Pan card details";
+  static const userId = "User id";
+  static const uploadProfilePicture = "Upload profile picture";
+  static const aadharCardPhoto = "Aadhar card photo";
+  static const frontSide = "Front side";
+  static const backSide = "Back side";
+  static const panCardPhoto = "Pan card photo";
+  static const panCardNumber = "Pan card number";
+  static const addFile = "Add file";
+  static const submit = "Submit";
 
   /// TODO<-----------------✔✔✔✔✔✔✔-----------------Manage bank Page Const-----------------✔✔✔✔✔✔✔----------------->
 
@@ -217,6 +236,8 @@ class PageConstVar{
   /// TODO<-----------------✔✔✔✔✔✔✔-----------------Wallet Page Const-----------------✔✔✔✔✔✔✔----------------->
 
   static const totalIncome = "Total income";
+  static const totalCommission = "Total commission";
+  static const availableWithdrawBlance = "Available withdraw balance";
   static const withdrawalAmount = "Withdrawal amount";
   static const enterAmount = "Enter amount";
   static const withdrawNow = "Withdraw now";

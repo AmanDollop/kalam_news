@@ -73,7 +73,7 @@ class AddDocumentView extends GetView<AddDocumentController> {
         hintText: 'Pan card number',
         controller: controller.aadharAndPanCardNumberController,
         focusNode: controller.aadharAndPanCardNumberFocusNode,
-        validator: (value) =>  V.isValidatePAN(value: value),
+        validator: (value) =>  V.isPanCardValid(value: value),
         textCapitalization: TextCapitalization.characters,
         maxLength: 10
       );

@@ -5,6 +5,9 @@ import 'package:kalam_news_publication/app/api/api_res_modals/user_data_modal.da
 class KycApplicationController extends GetxController {
 
   final count = 0.obs;
+
+  final key = GlobalKey<FormState>();
+
   final apiResValue = true.obs;
 
   UserDataModal? userData;
@@ -45,5 +48,10 @@ class KycApplicationController extends GetxController {
 
   void clickOnUpdateBankDetails() {}
 
-  void clickOnSubmitButton() {}
+  void clickOnSubmitButton() {
+    if(key.currentState!.validate()){
+      Get.back();
+    }
+  }
+
 }

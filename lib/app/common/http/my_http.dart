@@ -44,6 +44,8 @@ class MyHttp {
     }
   }
 
+  
+
   static Future<http.Response?> postMethod(
       {required String url,
       required Object bodyParams, Map<String, String>? token,
@@ -51,8 +53,8 @@ class MyHttp {
     if (kDebugMode) print("CALLING:: $url");
     if (kDebugMode) log("Log:::   BODYPARAMS:: $bodyParams");
     if (await KNPMethods.internetConnectionCheckerMethod()) {
-      try {
-        http.Response? response = await http.post(Uri.parse(url), body: bodyParams, headers: token,);
+      try { final body = jsonEncode(bodyParams);
+        http.Response? response = await http.post(Uri.parse(url), body: body,encoding: Encoding.getByName('utf8'), headers: token,);
         print('headers::token::::  $token');
         if (kDebugMode) print("CALLING:: ${response.body}");
         if(showSnackBar) {
@@ -62,9 +64,10 @@ class MyHttp {
           KNPMethods.showSnackBar(message: mapRes['message']);
         }
         print('response.statusCode::::  ${response.statusCode}');
-        // if(response.statusCode == 401){
-        //   Get.offAllNamed(Routes.SEARCH_COMPANY);
-        // }
+         if(response.statusCode == 401){
+           await DataBaseHelper().deleteDataBase(tableName: DataBaseConstant.tableNameForUserDetail);
+           Get.offAllNamed(Routes.LOG_IN);
+         }
         return response;
       } catch (e) {
         if (kDebugMode) print("ERROR:: $e");

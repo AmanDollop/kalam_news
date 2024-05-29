@@ -85,9 +85,7 @@ class KNPWidgets {
                   width: width,
                   color: color,
                   fit: fit,
-                  loadingBuilder: loadingBuilder ??
-                      (BuildContext context, Widget child,
-                          ImageChunkEvent? loadingProgress) {
+                  loadingBuilder: loadingBuilder ?? (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
                         if (loadingProgress == null) return child;
                         return SizedBox(
                           height: height,
@@ -95,8 +93,7 @@ class KNPWidgets {
                           child: Center(
                             child: commonProgressBarView(
                               value: loadingProgress.expectedTotalBytes != null
-                                  ? loadingProgress.cumulativeBytesLoaded /
-                                      loadingProgress.expectedTotalBytes!
+                                  ? loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes!
                                   : null,
                             ),
                           ),
@@ -115,32 +112,25 @@ class KNPWidgets {
         ),
       );
 
-  static commonContainerView(
-          {EdgeInsetsGeometry? padding,
-          required Widget child,
-          double? width,
-          double? height,
-          Color? color,
-          Color? borderColor}) => Container(
-        height: height,
-        width: width,
-        padding: padding ?? EdgeInsets.all(16.px),
-        decoration: BoxDecoration(
-          color: color ?? Theme.of(Get.context!).colorScheme.inversePrimary,
-          borderRadius: BorderRadius.circular(8.px),
-          boxShadow: [
-            BoxShadow(
-              color: Theme.of(Get.context!).colorScheme.surface.withOpacity(.2),
-              spreadRadius: 2.px,
-              blurRadius: 1.px,
-            )
-          ],
-          border: Border.all(
-              color:
-                  borderColor ?? Theme.of(Get.context!).colorScheme.onSecondary,
-              width: 1.px),
-        ),
-        child: child,
+  static commonContainerView({EdgeInsetsGeometry? padding, required Widget child, double? width, double? height, Color? color, Color? borderColor}) => Container(
+           height: height,
+           width: width,
+           padding: padding ?? EdgeInsets.all(16.px),
+           decoration: BoxDecoration(
+             color: color ?? Theme.of(Get.context!).colorScheme.inversePrimary,
+             borderRadius: BorderRadius.circular(8.px),
+             boxShadow: [
+               BoxShadow(
+                 color: Theme.of(Get.context!).colorScheme.surface.withOpacity(.2),
+                 spreadRadius: 2.px,
+                 blurRadius: 1.px,
+               )
+             ],
+             border: Border.all(
+                 color: borderColor ?? Theme.of(Get.context!).colorScheme.onSecondary,
+                 width: 1.px),
+           ),
+           child: child,
       );
 
   static Widget scaffoldBackgroundImageView({required Widget child}) {
@@ -294,15 +284,13 @@ class KNPWidgets {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (title.isNotEmpty)
-                Text(
+              Text(
                   title,
                   style: Theme.of(Get.context!).textTheme.titleSmall?.copyWith(
                       fontWeight: FontWeight.w700,
                       color: focusNode?.hasFocus == true
                           ? Theme.of(Get.context!).colorScheme.primary
-                          : Theme.of(Get.context!)
-                              .colorScheme
-                              .onInverseSurface),
+                          : Theme.of(Get.context!).colorScheme.onInverseSurface),
                 ),
               SizedBox(height: 4.px),
               TextFormField(
@@ -317,8 +305,7 @@ class KNPWidgets {
                     : inputFormatters,
                 onChanged: keyboardType == TextInputType.number
                     ? (value) {}
-                    : onChanged ??
-                        (value) {
+                    : onChanged ?? (value) {
                           value = value.trim();
                           if (value.isEmpty ||
                               value.replaceAll(" ", "").isEmpty) {
@@ -567,15 +554,28 @@ class KNPWidgets {
           {Color? color,
           Color? backgroundColor,
           double? value,
-          double? strokeWidth}) =>
-      Center(
-        child: CircularProgressIndicator(
-          backgroundColor: backgroundColor ??
-              Theme.of(Get.context!).colorScheme.primary.withOpacity(.2),
-          color: color ?? Theme.of(Get.context!).colorScheme.primary,
-          value: value,
-          strokeWidth: strokeWidth ?? 3,
-          strokeCap: StrokeCap.round,
+          double? strokeWidth,
+          double? width,
+          double? height,
+          String? progressTextValue
+          }) => Center(
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            SizedBox(
+              width: width,
+              height: height,
+              child: CircularProgressIndicator(
+                backgroundColor: backgroundColor ??
+                    Theme.of(Get.context!).colorScheme.primary.withOpacity(.2),
+                color: color ?? Theme.of(Get.context!).colorScheme.primary,
+                value: value,
+                strokeWidth: strokeWidth ?? 3,
+                strokeCap: StrokeCap.round,
+              ),
+            ),
+            Text(progressTextValue ?? '' ,style: Theme.of(Get.context!).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.bold),)
+          ],
         ),
       );
 
@@ -585,45 +585,46 @@ class KNPWidgets {
           double? imageHeight,
           double? imageWidth,
           Color? color}) => Center(
-        child: SizedBox(
-          height: height ?? 260.px,
-          width: width ?? 260.px,
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              ColorFiltered(
-                colorFilter: ColorFilter.mode(
-                  color ?? Theme.of(Get.context!).colorScheme.primary,
-                  BlendMode.srcIn,
-                ),
-                child: Lottie.asset(
-                  'assets/animations/lod.json',
-                ),
-              ),
-              KNPWidgets.commonNetworkImageView(
-                  path: 'assets/image/app_logo.png',
-                  height: imageHeight ?? 100.px,
-                  width: imageWidth ?? 100.px,
-                  isAssetImage: true)
-            ],
-          ),
-        ),
-      );
+           child: SizedBox(
+             height: height ?? 260.px,
+             width: width ?? 260.px,
+             child: Stack(
+               alignment: Alignment.center,
+               children: [
+                 ColorFiltered(
+                   colorFilter: ColorFilter.mode(
+                     color ?? Theme.of(Get.context!).colorScheme.primary,
+                     BlendMode.srcIn,
+                   ),
+                   child: Lottie.asset(
+                     'assets/animations/lod.json',
+                   ),
+                 ),
+                 KNPWidgets.commonNetworkImageView(
+                     path: 'assets/image/app_logo.png',
+                     height: imageHeight ?? 100.px,
+                     width: imageWidth ?? 100.px,
+                     isAssetImage: true,
+                 )
+               ],
+             ),
+           ),
+         );
 
   static Widget commonLinearProgressBar(
           {required double value,
           double? height,
           Color? color,
           Color? backgroundColor}) => ClipRRect(
-        borderRadius: BorderRadius.circular(20.px),
-        child: LinearProgressIndicator(
-          color: color ?? Theme.of(Get.context!).colorScheme.primary,
-          backgroundColor: backgroundColor ??
-              Theme.of(Get.context!).colorScheme.primary.withOpacity(.2),
-          value: value,
-          minHeight: height ?? 10.px,
-        ),
-      );
+           borderRadius: BorderRadius.circular(20.px),
+           child: LinearProgressIndicator(
+             color: color ?? Theme.of(Get.context!).colorScheme.primary,
+             backgroundColor: backgroundColor ??
+                 Theme.of(Get.context!).colorScheme.primary.withOpacity(.2),
+             value: value,
+             minHeight: height ?? 10.px,
+           ),
+         );
 
   /* --------------------------Buttons View--------------------------*/
   static Widget commonElevatedButton(
@@ -668,8 +669,7 @@ class KNPWidgets {
                     color: Theme.of(Get.context!).colorScheme.inversePrimary),
               ),
             )
-          : child ??
-              Text(
+          : child ?? Text(
                 buttonText ?? '',
                 style: Theme.of(Get.context!)
                     .textTheme
@@ -727,22 +727,14 @@ class KNPWidgets {
                     color: Theme.of(Get.context!).colorScheme.inversePrimary),
               ),
             )
-          : child ??
-              Text(
+          : child ?? Text(
                 buttonText ?? '',
-                style: Theme.of(Get.context!)
-                    .textTheme
-                    .headlineSmall
-                    ?.copyWith(fontSize: fontSize, color: buttonTextColor),
+                style: Theme.of(Get.context!).textTheme.headlineSmall?.copyWith(fontSize: fontSize, color: buttonTextColor),
               ),
     );
   }
 
-  static Widget commonTextButton(
-      {required VoidCallback onPressed,
-      required String buttonText,
-      double? fontSize,
-      Color? buttonTextColor}) {
+  static Widget commonTextButton({required VoidCallback onPressed, required String buttonText, double? fontSize, Color? buttonTextColor}) {
     return TextButton(
       onPressed: onPressed,
       style: TextButton.styleFrom(
@@ -751,10 +743,7 @@ class KNPWidgets {
       ),
       child: Text(
         buttonText,
-        style: Theme.of(Get.context!)
-            .textTheme
-            .labelSmall
-            ?.copyWith(fontSize: fontSize, color: buttonTextColor),
+        style: Theme.of(Get.context!).textTheme.labelSmall?.copyWith(fontSize: fontSize, color: buttonTextColor),
       ),
     );
   }
@@ -820,8 +809,7 @@ class KNPWidgets {
               items: imageList.isNotEmpty
                   ? imageList.map((image) {
                       return ClipRRect(
-                        borderRadius:
-                            BorderRadius.circular(borderRadius ?? 12.px),
+                        borderRadius: BorderRadius.circular(borderRadius ?? 12.px),
                         child: Material(
                           color: Theme.of(Get.context!).colorScheme.surface,
                           child: commonNetworkImageView(
@@ -856,7 +844,8 @@ class KNPWidgets {
                   bottomPadding: indicatorBottomPadding,
                   animationDuration: indicatorAnimationDuration,
                   cornerRadius: indicatorCornerRadius,
-                  space: indicatorSpace),
+                  space: indicatorSpace,
+              ),
         ],
       );
 

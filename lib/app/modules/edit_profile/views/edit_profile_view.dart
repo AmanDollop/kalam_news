@@ -26,7 +26,7 @@ class EditProfileView extends GetView<EditProfileController> {
           },
           child: SingleChildScrollView(
             child: KNPWidgets.scaffoldBackgroundImageViewWithAppBar(
-              appBarTitle: 'Edit Profile',
+              appBarTitle: PageConstVar.editProfile.tr,
               child2: Form(
                 key: controller.key,
                 child: ModalProgress(

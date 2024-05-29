@@ -32,17 +32,17 @@ class HomeController extends GetxController {
 
   UserDataModal? userData;
   List<ProfilePercentageArr>? profilePercentageArr;
+  final profilePercentageArrEmptyCount = 0.obs;
 
   final packageClickValue = false.obs;
-
   final packageModal = Rxn<PackageModal>();
   List<PackageList>? packageList;
-  int isPackagePurchase = 0;
 
+  int isPackagePurchase = 0;
   final packageDetailModal = Rxn<PackageDetailModal>();
   List<PackageDetails>? packageDetails;
-  Map<String, dynamic> bodyParamsForPackageDetailApi = {};
 
+  Map<String, dynamic> bodyParamsForPackageDetailApi = {};
   final bannerIndex = 0.obs;
   final bannerModal = Rxn<BannerModal>();
   List<BannerList>? banner;
@@ -102,8 +102,14 @@ class HomeController extends GetxController {
 
   Future<void> dataBaseCalling() async {
     try {
+      profilePercentageArrEmptyCount.value = 0;
       userData = await KNPRazorpayMethods.getUserDataDataBaseCalling();
       profilePercentageArr = userData?.profilePercentageArr;
+      profilePercentageArr?.forEach((element) {
+        if(element.isEmpty == 1){
+          profilePercentageArrEmptyCount.value++;
+        }
+      });
     } catch (e) {
       print('dataBaseCalling:::: ERROR::::::  $e');
       apiResValue.value = false;

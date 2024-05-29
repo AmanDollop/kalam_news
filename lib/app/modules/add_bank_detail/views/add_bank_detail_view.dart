@@ -120,6 +120,7 @@ class AddBankDetailView extends GetView<AddBankDetailController> {
     hintText: PageConstVar.iFSCCode.tr,
     controller: controller.ifscCodeController,
     focusNode: controller.ifscCodeFocusNode,
+    textCapitalization: TextCapitalization.characters,
     validator: (value) => V.isIfscCodeValid(value: value),
   );
 

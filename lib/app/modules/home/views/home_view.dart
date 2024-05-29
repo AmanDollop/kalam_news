@@ -56,11 +56,11 @@ class HomeView extends GetView<HomeController> {
                                 welcomeTextView(),
                                 SizedBox(height: CommonPaddingAndSize.size12()),
                                 if (controller.bannerList.isNotEmpty)
-                                  bannerView(),
+                                bannerView(),
                                 if (controller.userData?.profilePercentage != null)
-                                  SizedBox(height: CommonPaddingAndSize.size12()),
+                                SizedBox(height: CommonPaddingAndSize.size12()),
                                 if (controller.userData?.profilePercentage != null)
-                                  profileProgressContainerView(),
+                                profileProgressContainerView(),
                                 SizedBox(height: CommonPaddingAndSize.size12()),
                                 cardTitleTextView(text: PageConstVar.packages.tr),
                                 SizedBox(height: CommonPaddingAndSize.size10()),
@@ -110,7 +110,7 @@ class HomeView extends GetView<HomeController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              cardSubTitleTextView(text: PageConstVar.yourProfileProgress.tr),
+              cardSubTitleTextView(text: '${PageConstVar.yourProfileProgress.tr} (${controller.profilePercentageArrEmptyCount.value}/${controller.userData?.profilePercentageArr?.length})'),
               SizedBox(height: CommonPaddingAndSize.size10()),
               Row(
                 children: [
@@ -341,7 +341,7 @@ class HomeView extends GetView<HomeController> {
                   topRight: Radius.circular(8.px),
                 ),
               ),
-              child: cardTitleTextView(text: 'Purchase package'),
+              child: cardTitleTextView(text: PageConstVar.purchasePackages.tr),
             ),
             KNPWidgets.commonDividerView(
               height: 0,

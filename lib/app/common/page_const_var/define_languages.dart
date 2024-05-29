@@ -88,6 +88,8 @@ class LanguageTranslations extends Translations {
       PageConstVar.pleaseEnterCompleteAddress: PageConstVar.pleaseEnterCompleteAddress,
       PageConstVar.pleaseEnterAadharNumber: PageConstVar.pleaseEnterAadharNumber,
       PageConstVar.pleaseEnterValidAadharNumber: PageConstVar.pleaseEnterValidAadharNumber,
+      PageConstVar.pleaseEnterPanCardNumber: PageConstVar.pleaseEnterPanCardNumber,
+      PageConstVar.pleaseEnterValidPanCardNumber: PageConstVar.pleaseEnterValidPanCardNumber,
       PageConstVar.pleaseSelectState: PageConstVar.pleaseSelectState,
       PageConstVar.pleaseSelectCity: PageConstVar.pleaseSelectCity,
       PageConstVar.pleaseEnterPinCode: PageConstVar.pleaseEnterPinCode,
@@ -152,6 +154,7 @@ class LanguageTranslations extends Translations {
       PageConstVar.welcome: PageConstVar.welcome,
       PageConstVar.yourProfileProgress: PageConstVar.yourProfileProgress,
       PageConstVar.packages: PageConstVar.packages,
+      PageConstVar.purchasePackages: PageConstVar.purchasePackages,
       PageConstVar.nodeCount: PageConstVar.nodeCount,
       PageConstVar.leftBv: PageConstVar.leftBv,
       PageConstVar.rightBv: PageConstVar.rightBv,
@@ -179,6 +182,22 @@ class LanguageTranslations extends Translations {
       PageConstVar.referralAFriends: PageConstVar.referralAFriends,
       PageConstVar.waitForResponse: PageConstVar.waitForResponse,
       PageConstVar.logOut: PageConstVar.logOut,
+
+      ///TODO KYC Application Page:English
+
+      PageConstVar.personalInformation: PageConstVar.personalInformation,
+      PageConstVar.profilePhoto: PageConstVar.profilePhoto,
+      PageConstVar.aadharCardDetails: PageConstVar.aadharCardDetails,
+      PageConstVar.panCardDetails: PageConstVar.panCardDetails,
+      PageConstVar.userId: PageConstVar.userId,
+      PageConstVar.uploadProfilePicture: PageConstVar.uploadProfilePicture,
+      PageConstVar.aadharCardPhoto: PageConstVar.aadharCardPhoto,
+      PageConstVar.frontSide: PageConstVar.frontSide,
+      PageConstVar.backSide: PageConstVar.backSide,
+      PageConstVar.panCardPhoto: PageConstVar.panCardPhoto,
+      PageConstVar.panCardNumber: PageConstVar.panCardNumber,
+      PageConstVar.addFile: PageConstVar.addFile,
+      PageConstVar.submit: PageConstVar.submit,
 
       ///TODO Manage bank Page:English
 
@@ -232,6 +251,8 @@ class LanguageTranslations extends Translations {
       ///TODO Wallet Page:English
 
       PageConstVar.totalIncome: PageConstVar.totalIncome,
+      PageConstVar.totalCommission: PageConstVar.totalCommission,
+      PageConstVar.availableWithdrawBlance: PageConstVar.availableWithdrawBlance,
       PageConstVar.withdrawalAmount: PageConstVar.withdrawalAmount,
       PageConstVar.enterAmount: PageConstVar.enterAmount,
       PageConstVar.withdrawNow: PageConstVar.withdrawNow,
@@ -330,6 +351,8 @@ class LanguageTranslations extends Translations {
       PageConstVar.pleaseEnterCompleteAddress: 'कृपया पूरा पता दर्ज करें',
       PageConstVar.pleaseEnterAadharNumber: 'कृपया आधार नंबर दर्ज करें',
       PageConstVar.pleaseEnterValidAadharNumber: 'कृपया वैध आधार नंबर दर्ज करें',
+      PageConstVar.pleaseEnterPanCardNumber: 'कृपया पैन कार्ड नंबर दर्ज करें',
+      PageConstVar.pleaseEnterValidPanCardNumber: 'कृपया वैध पैन कार्ड नंबर दर्ज करें',
       PageConstVar.pleaseSelectState: 'कृपया राज्य का चयन करें',
       PageConstVar.pleaseSelectCity: 'कृपया शहर चुनें',
       PageConstVar.pleaseEnterPinCode: 'कृपया पिन कोड दर्ज करें',
@@ -395,6 +418,7 @@ class LanguageTranslations extends Translations {
       PageConstVar.welcome: 'स्वागत',
       PageConstVar.yourProfileProgress: 'आपकी प्रोफ़ाइल प्रगति कर रही है',
       PageConstVar.packages: 'संकुल',
+      PageConstVar.purchasePackages: 'पैकेज खरीदें',
       PageConstVar.nodeCount: 'नोड गिनती',
       PageConstVar.leftBv: 'बाएं बी.वी',
       PageConstVar.rightBv: 'दाएँ बी.वी',
@@ -422,6 +446,22 @@ class LanguageTranslations extends Translations {
       PageConstVar.referralAFriends: 'मित्रों को रेफर करें',
       PageConstVar.waitForResponse: 'प्रतिक्रिया की प्रतीक्षा करें',
       PageConstVar.logOut: 'लॉग आउट',
+
+      ///TODO KYC Application Page:English
+
+      PageConstVar.personalInformation: 'व्यक्तिगत जानकारी',
+      PageConstVar.profilePhoto: 'प्रोफ़ाइल फोटो',
+      PageConstVar.aadharCardDetails: 'आधार कार्ड विवरण',
+      PageConstVar.panCardDetails: 'पैन काड की जानकारीयां',
+      PageConstVar.userId: 'उपयोगकर्ता पहचान',
+      PageConstVar.uploadProfilePicture: 'प्रोफ़ाइल फोटो अपलोड करें',
+      PageConstVar.aadharCardPhoto: 'आधार कार्ड फोटो',
+      PageConstVar.frontSide: 'सामने की ओर',
+      PageConstVar.backSide: 'पीछे की ओर',
+      PageConstVar.panCardPhoto: 'पैन कार्ड फोटो',
+      PageConstVar.panCardNumber: 'पैन कार्ड नंबर',
+      PageConstVar.addFile: 'फ़ाइल जोड़ेंं',
+      PageConstVar.submit: 'जमा करें',
 
       ///TODO Manage bank Page:Hindi
 
@@ -475,6 +515,8 @@ class LanguageTranslations extends Translations {
       ///TODO Wallet Page:Hindi
 
       PageConstVar.totalIncome: 'कुल आय',
+      PageConstVar.totalCommission: 'कुल कमीशन',
+      PageConstVar.availableWithdrawBlance: 'उपलब्ध निकासी शेष',
       PageConstVar.withdrawalAmount: 'निकाली गयी राशि',
       PageConstVar.enterAmount: 'राशि डालें',
       PageConstVar.withdrawNow: 'अभी वापस ले लो',

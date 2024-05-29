@@ -31,13 +31,13 @@ class RegistrationVerificationView extends GetView<RegistrationVerificationContr
                     youAreRegisteringTextView(text: PageConstVar.youAreRegisteringANewMemberUnder.tr),
                     SizedBox(height: CommonPaddingAndSize.size20()),
                     commonRowView(
-                      text1: PageConstVar.referralCode.tr,
-                      text2: 'AB1234567980AB123456798 0AB123456798 0AB12345679 80AB1 234567980AB123 4567980',
+                      text1: PageConstVar.name.tr,
+                      text2: '${controller.referralUserData?.name}',
                     ),
                     SizedBox(height: CommonPaddingAndSize.size10()),
                     commonRowView(
-                      text1: PageConstVar.name.tr,
-                      text2: '${controller.referralUserData?.name}',
+                      text1: PageConstVar.referralCode.tr,
+                      text2: '${controller.referralUserData?.referralCode}',
                     ),
                     SizedBox(height: CommonPaddingAndSize.size10()),
                     commonRowView(

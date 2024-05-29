@@ -31,7 +31,7 @@ class PersonalDetailsView extends GetView<PersonalDetailsController> {
           controller.count.value;
           return SingleChildScrollView(
             child: KNPWidgets.scaffoldBackgroundImageViewWithAppBar(
-              appBarTitle: 'Personal Details',
+              appBarTitle: PageConstVar.personalDetails.tr,
               child2: Form(
                 key: controller.key,
                 child: ModalProgress(
