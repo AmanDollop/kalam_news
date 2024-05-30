@@ -251,14 +251,16 @@ class LanguageTranslations extends Translations {
       ///TODO Wallet Page:English
 
       PageConstVar.totalIncome: PageConstVar.totalIncome,
-      PageConstVar.totalCommission: PageConstVar.totalCommission,
+      PageConstVar.totalWithdrawal: PageConstVar.totalWithdrawal,
       PageConstVar.availableWithdrawBlance: PageConstVar.availableWithdrawBlance,
       PageConstVar.withdrawalAmount: PageConstVar.withdrawalAmount,
+      PageConstVar.withdrawal: PageConstVar.withdrawal,
       PageConstVar.enterAmount: PageConstVar.enterAmount,
       PageConstVar.withdrawNow: PageConstVar.withdrawNow,
       PageConstVar.history: PageConstVar.history,
       PageConstVar.creditOn: PageConstVar.creditOn,
       PageConstVar.depositOn: PageConstVar.depositOn,
+      PageConstVar.maximumCommission: PageConstVar.maximumCommission,
 
       ///TODO Achievements Page:English
 
@@ -515,14 +517,16 @@ class LanguageTranslations extends Translations {
       ///TODO Wallet Page:Hindi
 
       PageConstVar.totalIncome: 'कुल आय',
-      PageConstVar.totalCommission: 'कुल कमीशन',
+      PageConstVar.totalWithdrawal: 'कुल निकासी',
       PageConstVar.availableWithdrawBlance: 'उपलब्ध निकासी शेष',
       PageConstVar.withdrawalAmount: 'निकाली गयी राशि',
+      PageConstVar.withdrawal: 'निकासी',
       PageConstVar.enterAmount: 'राशि डालें',
       PageConstVar.withdrawNow: 'अभी वापस ले लो',
       PageConstVar.history: 'इतिहास',
       PageConstVar.creditOn: 'क्रेडिट',
       PageConstVar.depositOn: 'जमा करें',
+      PageConstVar.maximumCommission: 'अधिकतम कमीशन',
 
       ///TODO Achievements Page:Hindi
 

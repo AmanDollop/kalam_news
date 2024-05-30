@@ -48,14 +48,20 @@ class MyHttp {
 
   static Future<http.Response?> postMethod(
       {required String url,
-      required Object bodyParams, Map<String, String>? token,
+      required Object bodyParams, Map<String, String> token = const{},
       required BuildContext context,bool showSnackBar = true}) async {
     if (kDebugMode) print("CALLING:: $url");
     if (kDebugMode) log("Log:::   BODYPARAMS:: $bodyParams");
     if (await KNPMethods.internetConnectionCheckerMethod()) {
-      try { final body = jsonEncode(bodyParams);
-        http.Response? response = await http.post(Uri.parse(url), body: body,encoding: Encoding.getByName('utf8'), headers: token,);
-        print('headers::token::::  $token');
+      try {
+        final body = jsonEncode(bodyParams);
+        Map<String,String> map = {};
+        map['Accept']='application/json';
+        map['Content-Type']='application/json';
+        map.addAll(token);
+        http.Response? response = await http.post(Uri.parse(url), body: body,encoding: Encoding.getByName('utf8'), headers: map,);
+
+        print('map::::: $map');
         if (kDebugMode) print("CALLING:: ${response.body}");
         if(showSnackBar) {
           Map<String,dynamic> mapRes = {};

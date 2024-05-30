@@ -11,7 +11,6 @@ import 'package:http/http.dart' as http;
 
 class KNPMethods{
 
-
   static String checkStringIsNullOrEmpty({String? string,String? blankText}){
     // print('string:::: $string');
     // print('blankText:::: $blankText');
@@ -30,13 +29,13 @@ class KNPMethods{
     FocusManager.instance.primaryFocus?.unfocus();
   }
 
-  static void showSnackBar({required String message, Duration? duration, bool isFloating = true, Color? backgroundColor, bool showCloseIcon = false}) {backgroundColor = Theme.of(Get.context!).colorScheme.primary;
+  static void showSnackBar({required String message, Duration? duration, bool isFloating = true, Color? backgroundColor, bool showCloseIcon = false}) {
     if (isFloating) {
       Fluttertoast.cancel();
       Fluttertoast.showToast(
           msg: message,
           toastLength: Toast.LENGTH_LONG,
-          backgroundColor: Theme.of(Get.context!).colorScheme.primary,
+          backgroundColor: backgroundColor ?? Theme.of(Get.context!).colorScheme.primary,
           gravity: ToastGravity.TOP,
           timeInSecForIosWeb: 1,
           textColor: Theme.of(Get.context!).colorScheme.inversePrimary,
@@ -46,7 +45,7 @@ class KNPMethods{
       Fluttertoast.cancel();
       Fluttertoast.showToast(
           msg: message,
-          backgroundColor: Theme.of(Get.context!).colorScheme.primary,
+          backgroundColor: backgroundColor ?? Theme.of(Get.context!).colorScheme.primary,
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.TOP,
           timeInSecForIosWeb: 1,
@@ -100,21 +99,30 @@ class KNPMethods{
           showSnackBar(message: responseMap[ApiConstantVar.message]);
         }
         return true;
-      } else if (response.statusCode == StatusCodeConstant.BAD_REQUEST) {
+      }
+      else if (response.statusCode == StatusCodeConstant.BAD_REQUEST) {
         if (wantShowFailResponse) {
           showSnackBar(message: responseMap[ApiConstantVar.message]);
         }
         return false;
-      } else if (response.statusCode == StatusCodeConstant.BAD_GATEWAY) {
-        return false;
-      } else if (response.statusCode == StatusCodeConstant.REQUEST_TIMEOUT) {
-        return false;
-      }else if (response.statusCode == StatusCodeConstant.CREATED) {
-        return true;
-      } else {
+      }
+      else if (response.statusCode == StatusCodeConstant.BAD_GATEWAY) {
         return false;
       }
-    } else {
+      else if (response.statusCode == StatusCodeConstant.NOT_FOUND) {
+        return false;
+      }
+      else if (response.statusCode == StatusCodeConstant.REQUEST_TIMEOUT) {
+        return false;
+      }
+      else if (response.statusCode == StatusCodeConstant.CREATED) {
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+    else {
       return false;
     }
   }

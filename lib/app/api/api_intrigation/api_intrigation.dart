@@ -506,4 +506,25 @@ class ApiIntrigation{
     }
   }
 
+  static Future<http.Response?> withdrawAmountApi({required Map<String, dynamic> bodyParams}) async {
+
+    Map<String, String> authorization = await userToken();
+
+    http.Response? response = await MyHttp.postMethod(
+        url: '${ApiUrls.baseUrl}${ApiUrls.apiEndPointWithdrawCommission}',
+        bodyParams: bodyParams,
+        context: Get.context!,
+        token: authorization
+    );
+    if (response != null) {
+      if (await KNPMethods.checkResponse(response: response, wantInternetFailResponse: true, wantShowFailResponse: true,wantShowSuccessResponse: true)) {
+        return response;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  }
+
 }

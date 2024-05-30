@@ -304,7 +304,7 @@ class KNPWidgets {
                       ]
                     : inputFormatters,
                 onChanged: keyboardType == TextInputType.number
-                    ? (value) {}
+                    ? onChanged ?? (value) {}
                     : onChanged ?? (value) {
                           value = value.trim();
                           if (value.isEmpty ||
@@ -654,6 +654,7 @@ class KNPWidgets {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(borderRadius ?? 32.px),
         ),
+        backgroundColor: buttonColor,
         minimumSize: Size(
           width ?? /*312.px*/ double.infinity,
           height ?? 50.px,

@@ -236,14 +236,16 @@ class PageConstVar{
   /// TODO<-----------------✔✔✔✔✔✔✔-----------------Wallet Page Const-----------------✔✔✔✔✔✔✔----------------->
 
   static const totalIncome = "Total income";
-  static const totalCommission = "Total commission";
+  static const totalWithdrawal = "Total withdrawal";
   static const availableWithdrawBlance = "Available withdraw balance";
   static const withdrawalAmount = "Withdrawal amount";
+  static const withdrawal = "Withdrawal";
   static const enterAmount = "Enter amount";
   static const withdrawNow = "Withdraw now";
   static const history = "History";
   static const creditOn = "Credit on";
   static const depositOn = "Deposit on";
+  static const maximumCommission = "Maximum commission";
 
   /// TODO<-----------------✔✔✔✔✔✔✔-----------------Achievements Page Const-----------------✔✔✔✔✔✔✔----------------->
 

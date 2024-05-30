@@ -84,6 +84,8 @@ class ApiConstantVar{
 
   static const bankId = "bank_id";
 
+  static const amount = "amount";
+
 }
 
 class ApiUrls{
@@ -151,5 +153,7 @@ class ApiUrls{
   static const apiEndPointGetUserDashboardBVCount = "getUserDashboardBVCount";
 
   static const apiEndPointGetWalletHistory = "getWalletHistory";
+
+  static const apiEndPointWithdrawCommission = "withdrawCommission";
 
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dash/flutter_dash.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/common/common_padding_size/common_padding_size.dart';
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
@@ -8,6 +9,7 @@ import 'package:kalam_news_publication/app/common/packages/model_progress_bar.da
 import 'package:kalam_news_publication/app/common/page_const_var/page_const_var.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
 import 'package:kalam_news_publication/app/get_material_controller/ac.dart';
+import 'package:lottie/lottie.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import '../controllers/wallet_controller.dart';
 
@@ -41,6 +43,7 @@ class WalletView extends GetView<WalletController> {
                                     textFiledTitleTextView(text: PageConstVar.withdrawalAmount.tr),
                                     InkWell(
                                       onTap: () {
+                                        controller.withdrawAmountController.clear();
                                         controller.hideShowWithdrawFieldValue.value = !controller.hideShowWithdrawFieldValue.value;
                                         controller.count.value++;
                                       },
@@ -100,19 +103,29 @@ class WalletView extends GetView<WalletController> {
 
   Widget totalIncomeView() => KNPWidgets.commonContainerView(
         padding: EdgeInsets.all(12.px),
-        // color: Theme.of(Get.context!).colorScheme.primary.withOpacity(.05),
-        // borderColor: Theme.of(Get.context!).colorScheme.primary,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            totalIncomeTextView(text: PageConstVar.totalIncome.tr),
-            totalIncomeTextView(
-              text: controller.withdrawHistoryModal.value?.totalCommission != null
-                  ? '₹${controller.withdrawHistoryModal.value?.totalCommission}'
-                  : '₹00',
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  totalIncomeTextView(text: PageConstVar.totalIncome.tr),
+                  totalIncomeTextView(
+                    text: controller.withdrawHistoryModal.value?.totalCommission != null
+                        ? '₹${controller.withdrawHistoryModal.value?.totalCommission}'
+                        : '₹00',
+                  ),
+                ],
+              ),
+                depositAndUnWithdrawalView()
+              ],
             ),
-            KNPWidgets.commonDividerView(height: CommonPaddingAndSize.size12() * 2),
+            KNPWidgets.commonDividerView(
+                height: CommonPaddingAndSize.size12() * 2),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -121,12 +134,23 @@ class WalletView extends GetView<WalletController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       cardHeadlineTextView(
-                        text: controller.withdrawHistoryModal.value?.totalCommission != null
-                            ? '₹${controller.withdrawHistoryModal.value?.totalCommission}'
+                        text: controller.withdrawHistoryModal.value?.walletBalance != null
+                            ? '₹${controller.withdrawHistoryModal.value?.walletBalance}'
                             : '₹00',
                       ),
-                      cardSubTitleTextView(text: PageConstVar.totalCommission.tr),
+                      cardSubTitleTextView(text: PageConstVar.walletBalance.tr),
+
                       commonDividerView().paddingSymmetric(vertical: CommonPaddingAndSize.size10()),
+
+                      cardHeadlineTextView(
+                        text: controller.withdrawHistoryModal.value?.totalWithdrawal != null
+                            ? '₹${controller.withdrawHistoryModal.value?.totalWithdrawal}'
+                            : '₹00',
+                      ),
+                      cardSubTitleTextView(text: PageConstVar.totalWithdrawal.tr),
+
+                      commonDividerView().paddingSymmetric(vertical: CommonPaddingAndSize.size10()),
+
                       cardHeadlineTextView(
                         text: controller.withdrawHistoryModal.value?.availableBalance != null
                             ? '₹${controller.withdrawHistoryModal.value?.availableBalance}'
@@ -138,14 +162,17 @@ class WalletView extends GetView<WalletController> {
                 ),
                 SizedBox(width: 10.px),
                 KNPWidgets.commonProgressBarView(
-                  strokeWidth: 14.px,
-                  value: .7,
-                  height: 80.px,
-                  width: 80.px,
-                  progressTextValue: '70%'
-                )
+                    strokeWidth: 14.px,
+                    value: controller.withdrawHistoryModal.value?.percentage != null && controller.withdrawHistoryModal.value!.percentage != 0
+                        ? controller.withdrawHistoryModal.value!.percentage! / 100
+                        : 0,
+                    height: 120.px,
+                    width: 120.px,
+                    progressTextValue: controller.withdrawHistoryModal.value?.percentage != null && controller.withdrawHistoryModal.value!.percentage != 0
+                        ? '${controller.withdrawHistoryModal.value?.percentage}%'
+                        : '0%')
               ],
-            )
+            ),
           ],
         ),
       );
@@ -173,25 +200,42 @@ class WalletView extends GetView<WalletController> {
         focusNode: controller.withdrawAmountFocusNode,
         keyboardType: TextInputType.number,
         maxLength: 7,
-        // onChanged: (value) {
-        //   print('value::::::$value');
-        //   if(int.parse(controller.withdrawHistoryModal.value?.availableBalance ?? '0') >= int.parse(value)){
-        //
-        //   }else{
-        //     KNPMethods.showSnackBar(message: 'Insufficient balance.');
-        //   }
-        //   controller.count.value++;
-        // },
+        onChanged: (value) async {
+          if (value.isNotEmpty && int.parse(value) > 0) {
+            if (int.parse(controller.withdrawHistoryModal.value?.availableBalance ?? '0') >= int.parse(value)) {
+              if (int.parse(controller.withdrawHistoryModal.value?.limitBalance ?? '0') >= int.parse(value)) {
+                  controller.disableWithdrawButton.value = true;
+                  await Fluttertoast.cancel();
+              } else {
+                controller.disableWithdrawButton.value = false;
+                await Fluttertoast.cancel();
+                KNPMethods.showSnackBar(message: 'Your withdrawal limit has been exceeded.');
+              }
+            } else {
+              controller.disableWithdrawButton.value = false;
+              await Fluttertoast.cancel();
+              KNPMethods.showSnackBar(message: 'You have insufficient balance.');
+            }
+          } else {
+            controller.disableWithdrawButton.value = false;
+            await Fluttertoast.cancel();
+          }
+        },
         // validator: (value) => V.isValid(value: value, title: 'Please enter withdraw amount'),
       );
 
   Widget withdrawNowButtonView() => KNPWidgets.commonElevatedButton(
-        onPressed: controller.withdrawNowButtonValue.value
-            ? () => null
-            : () => controller.clickOnWithdrawNowButton(),
-        buttonText: PageConstVar.withdrawNow.tr,
-        isLoading: controller.withdrawNowButtonValue.value,
-      );
+      onPressed: controller.disableWithdrawButton.value
+          ? controller.withdrawNowButtonValue.value
+              ? () => null
+              : () => controller.clickOnWithdrawNowButton()
+          : () => null,
+      buttonText: PageConstVar.withdrawNow.tr,
+      isLoading: controller.withdrawNowButtonValue.value,
+      buttonColor: controller.disableWithdrawButton.value
+          ? Theme.of(Get.context!).colorScheme.primary
+          : Theme.of(Get.context!).colorScheme.primary.withOpacity(.6),
+  );
 
   Widget cardHeadlineTextView({required String text}) => Text(
         text,
@@ -274,19 +318,20 @@ class WalletView extends GetView<WalletController> {
                         text: controller.walletHistory?[index].transactionType == 'income'
                             ? '+ ₹${controller.walletHistory?[index].amount}'
                             : '- ₹${controller.walletHistory?[index].amount}',
-                        textColor: controller.walletHistory?[index].transactionType == 'income'
+                        textColor:
+                            controller.walletHistory?[index].transactionType == 'income'
                                 ? Theme.of(context).colorScheme.primary
                                 : Theme.of(context).colorScheme.error),
                   ),
                 ],
               ),
               if (controller.walletHistory?.length != null && controller.walletHistory!.isNotEmpty)
-              if (index != controller.walletHistory!.length - 1)
-              KNPWidgets.commonDividerView(
-               height: CommonPaddingAndSize.size12() * 2,
-               leftPadding: 0,
-               rightPadding: 0,
-              ),
+                if (index != controller.walletHistory!.length - 1)
+                  KNPWidgets.commonDividerView(
+                    height: CommonPaddingAndSize.size12() * 2,
+                    leftPadding: 0,
+                    rightPadding: 0,
+                  ),
             ],
           );
         },
@@ -295,5 +340,26 @@ class WalletView extends GetView<WalletController> {
       return KNPWidgets.noDataFoundView();
     }
   }
+
+  Widget commonRowForDepositAndUnWithdrawalView({required String text, required Color color}) => Row(
+    mainAxisAlignment: MainAxisAlignment.end,
+    children: [
+      cardSubTitleTextView(text: text),
+      Container(
+        height: 12.px,
+        width: 12.px,
+        margin: EdgeInsets.only(left: 8.px),
+        decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+      ),
+    ],
+  );
+
+  Widget depositAndUnWithdrawalView() => Column(
+    crossAxisAlignment: CrossAxisAlignment.end,
+    children: [
+      commonRowForDepositAndUnWithdrawalView(text: PageConstVar.maximumCommission.tr, color: Theme.of(Get.context!).colorScheme.primary.withOpacity(.2)),
+      commonRowForDepositAndUnWithdrawalView(text: PageConstVar.totalWithdrawal.tr, color: Theme.of(Get.context!).colorScheme.primary),
+    ],
+  );
 
 }
