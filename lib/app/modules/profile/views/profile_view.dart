@@ -41,7 +41,6 @@ class ProfileView extends GetView<ProfileController> {
                           welcomeCardView().paddingOnly(bottom: CommonPaddingAndSize.size20()),
                           cardHeadlineTextView(text: PageConstVar.accountSetting.tr).paddingOnly(bottom: CommonPaddingAndSize.size10()),
                           accountSettingCardView().paddingOnly(bottom: CommonPaddingAndSize.size20()),
-                          // changeLanguageView().paddingOnly(bottom: CommonPaddingAndSize.size20()),
                         ],
                       ),
               ),
@@ -238,12 +237,5 @@ class ProfileView extends GetView<ProfileController> {
         ),
       );
 
-  Widget changeLanguageView() => KNPWidgets.commonContainerView(
-    padding: EdgeInsets.zero,
-    child: commonRowForCard(
-      text1: PageConstVar.changeLanguage.tr,
-      onTap: () => controller.clickOnChangeLanguage(),
-    ),
-  );
 
 }

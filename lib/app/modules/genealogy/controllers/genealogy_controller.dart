@@ -132,6 +132,7 @@ class GenealogyController extends GetxController {
             color: Theme.of(Get.context!).colorScheme.primary.withOpacity(.2),
           ),
         ),
+        insetPadding: EdgeInsets.symmetric(horizontal: 30.px),
         child: Padding(
           padding: EdgeInsets.all(20.px),
           child: Column(
@@ -203,7 +204,7 @@ class GenealogyController extends GetxController {
         ),
       ),
       Flexible(
-        flex: 3,
+        flex: 4,
         child: Text(
           text2,
           style: Theme.of(Get.context!).textTheme.bodySmall,

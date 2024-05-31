@@ -101,7 +101,7 @@ class ManageBankDetailView extends GetView<ManageBankDetailController> {
                                                           SizedBox(height: 5.px),
                                                           commonRowForDetailView(
                                                               text1: PageConstVar.accountType.tr, text2: controller.bankAccountsList?[index].accountType != null && controller.bankAccountsList![index].accountType!.isNotEmpty
-                                                              ? '${controller.bankAccountsList?[index].accountType}'
+                                                              ? capitalize(string: '${controller.bankAccountsList?[index].accountType}')
                                                               : '?',
                                                           ),
                                                           SizedBox(height: 5.px),
@@ -139,7 +139,7 @@ class ManageBankDetailView extends GetView<ManageBankDetailController> {
                                     )
                                   : KNPWidgets.noDataFoundView()
                                   : KNPWidgets.noDataFoundView(),
-                            ),
+                             ),
                             addBankButtonView()
                           ],
                         ),
@@ -189,6 +189,8 @@ class ManageBankDetailView extends GetView<ManageBankDetailController> {
         dashThickness: .5.px,
         dashColor: Theme.of(Get.context!).colorScheme.inverseSurface,
       );
+
+  String capitalize({required String string}) => string[0].toUpperCase() + string.substring(1);
 
   Widget cardHeadlineTextView({required String text}) => Text(
         text,

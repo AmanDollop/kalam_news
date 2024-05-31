@@ -87,7 +87,6 @@ class KNPMethods{
   ///  flutter pub add internet_connection_checker -- For Check Internet
   static Future<bool> internetConnectionCheckerMethod() async {
     bool result = await InternetConnectionChecker().hasConnection;
-    print('result::::: $result');
     return result;
   }
 

@@ -47,14 +47,38 @@ class WalletView extends GetView<WalletController> {
                                         controller.hideShowWithdrawFieldValue.value = !controller.hideShowWithdrawFieldValue.value;
                                         controller.count.value++;
                                       },
-                                      child: Icon(
-                                        controller.hideShowWithdrawFieldValue.value
-                                            ? Icons.arrow_drop_up
-                                            : Icons.arrow_drop_down,
-                                        color: controller.hideShowWithdrawFieldValue.value
-                                            ? Theme.of(context).colorScheme.primary
-                                            : Theme.of(context).colorScheme.secondary,
-                                        size: 26.px,
+                                      child: /*Row(
+                                        children: [
+                                          cardHeadlineTextView(text: controller.hideShowWithdrawFieldValue.value ? 'Hide':'Show'),
+                                          Icon(
+                                            controller.hideShowWithdrawFieldValue.value
+                                                ? Icons.arrow_drop_up
+                                                : Icons.arrow_drop_down,
+                                            color: Theme.of(context).colorScheme.secondary,
+                                            size: 26.px,
+                                          ),
+                                        ],
+                                      )*/
+                                      Row(
+                                        children: [
+                                          Lottie.asset(
+                                            controller.hideShowWithdrawFieldValue.value
+                                              ? 'assets/animations/left_arrow.json'
+                                              :'assets/animations/right_arrow.json',
+                                            height: 30.px,
+                                            width: 20.px,
+                                            fit: BoxFit.cover,
+                                          ),
+                                          SizedBox(width: 10.px),
+                                          if(!controller.hideShowWithdrawFieldValue.value)
+                                          Lottie.asset(
+                                            'assets/animations/withdraw_money.json',
+                                            height: 24.px,
+                                            width: 24.px,
+                                            fit: BoxFit.cover,
+                                          ),
+                                          SizedBox(width: 10.px),
+                                        ],
                                       ),
                                     )
                                   ],
@@ -124,8 +148,7 @@ class WalletView extends GetView<WalletController> {
                 depositAndUnWithdrawalView()
               ],
             ),
-            KNPWidgets.commonDividerView(
-                height: CommonPaddingAndSize.size12() * 2),
+            KNPWidgets.commonDividerView(height: CommonPaddingAndSize.size12() * 2),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -326,8 +349,8 @@ class WalletView extends GetView<WalletController> {
                 ],
               ),
               if (controller.walletHistory?.length != null && controller.walletHistory!.isNotEmpty)
-                if (index != controller.walletHistory!.length - 1)
-                  KNPWidgets.commonDividerView(
+              if (index != controller.walletHistory!.length - 1)
+              KNPWidgets.commonDividerView(
                     height: CommonPaddingAndSize.size12() * 2,
                     leftPadding: 0,
                     rightPadding: 0,

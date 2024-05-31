@@ -8,6 +8,7 @@ import 'package:kalam_news_publication/app/modules/bottom_bar/views/bottom_bar_v
 import 'package:http/http.dart' as http;
 
 class WalletController extends GetxController {
+
   final count = 0.obs;
 
   final apiResValue = true.obs;
