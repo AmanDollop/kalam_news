@@ -157,8 +157,7 @@ class ProfileView extends GetView<ProfileController> {
             children: [
               Flexible(
                 flex: 2,
-                child:
-                    cardTitleTextView(text: text1, textAlign: TextAlign.start),
+                child: cardTitleTextView(text: text1, textAlign: TextAlign.start),
               ),
               SizedBox(width: CommonPaddingAndSize.size10()),
               buttonValue

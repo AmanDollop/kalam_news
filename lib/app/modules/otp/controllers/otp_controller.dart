@@ -38,7 +38,6 @@ class OtpController extends GetxController {
     pageName.value = Get.arguments[0];
     mobileNumber.value = Get.arguments[1];
     otpController.text = Get.arguments[2];
-    print('pageName:::::  ${pageName.value}');
   }
 
   @override

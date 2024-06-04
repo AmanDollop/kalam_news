@@ -45,6 +45,7 @@ void main() {
               initialRoute: AppPages.INITIAL,
               getPages: AppPages.routes,
               defaultTransition: Transition.rightToLeft,
+              transitionDuration: const Duration(milliseconds: 400),
               debugShowCheckedModeBanner: false,
               scrollBehavior: ListScrollBehavior(),
             ),

@@ -161,14 +161,12 @@ class PersonalDetailsController extends GetxController {
       };
       statesModal.value = await ApiIntrigation.getStateApi(bodyParams: bodyParamsState);
       if (statesModal.value != null) {
-        print('statesModal.value::::: ${statesModal.value?.states?.length}');
         if (statesModal.value?.states != null && statesModal.value!.states!.isNotEmpty) {
           statesList.addAll(statesModal.value?.states ?? []);
         } else {
           isLastPageForState.value = true;
         }
         apiResValue.value = false;
-        print('statesList::::: ${statesList.length}');
       }
     } catch (e) {
       KNPMethods.error();

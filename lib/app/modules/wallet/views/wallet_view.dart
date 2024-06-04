@@ -103,7 +103,7 @@ class WalletView extends GetView<WalletController> {
                                 totalIncomeView(),
                                 SizedBox(height: CommonPaddingAndSize.size16()),
                                 historyView(),
-                                SizedBox(height: CommonPaddingAndSize.size20() * 4)
+                                SizedBox(height: CommonPaddingAndSize.size20() * 4),
                               ],
                             )
                           : KNPWidgets.noDataFoundView(),
@@ -229,17 +229,20 @@ class WalletView extends GetView<WalletController> {
               if (int.parse(controller.withdrawHistoryModal.value?.limitBalance ?? '0') >= int.parse(value)) {
                   controller.disableWithdrawButton.value = true;
                   await Fluttertoast.cancel();
-              } else {
+              }
+              else {
                 controller.disableWithdrawButton.value = false;
                 await Fluttertoast.cancel();
                 KNPMethods.showSnackBar(message: 'Your withdrawal limit has been exceeded.');
               }
-            } else {
+            }
+            else {
               controller.disableWithdrawButton.value = false;
               await Fluttertoast.cancel();
               KNPMethods.showSnackBar(message: 'You have insufficient balance.');
             }
-          } else {
+          }
+          else {
             controller.disableWithdrawButton.value = false;
             await Fluttertoast.cancel();
           }
@@ -359,7 +362,8 @@ class WalletView extends GetView<WalletController> {
           );
         },
       );
-    } else {
+    }
+    else {
       return KNPWidgets.noDataFoundView();
     }
   }

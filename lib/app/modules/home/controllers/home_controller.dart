@@ -399,7 +399,6 @@ class HomeController extends GetxController {
         banner?.forEach((element) {
           bannerList.add(KNPMethods.baseUrlForNetworkImage(imagePath: '${element.bannerImage}'));
         });
-        print('bannerList:::: ${bannerList[0]}');
       }
     } catch (e) {
       print('callingBannerApi::::  ERROR::::: $e');
