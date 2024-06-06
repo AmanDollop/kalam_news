@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -27,19 +29,19 @@ class KycApplicationView extends GetView<KycApplicationController> {
               child: controller.apiResValue.value
                   ? KNPWidgets.myLoaderView()
                   : Padding(
-                    padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
-                    child: Form(
-                      key: controller.key,
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: ListView(
+                      padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
+                      child: Form(
+                        key: controller.key,
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: ListView(
                                 padding: EdgeInsets.zero,
                                 children: [
                                   cardHeadlineTextView(text: PageConstVar.personalInformation.tr).paddingOnly(bottom: CommonPaddingAndSize.size10()),
                                   personalInformationCardView().paddingOnly(bottom: CommonPaddingAndSize.size20()),
-                                  cardHeadlineTextView(text: PageConstVar.profilePhoto.tr).paddingOnly(bottom: CommonPaddingAndSize.size10()),
-                                  profilePhotoCard().paddingOnly(bottom: CommonPaddingAndSize.size20()),
+                                  // cardHeadlineTextView(text: PageConstVar.profilePhoto.tr).paddingOnly(bottom: CommonPaddingAndSize.size10()),
+                                  // profilePhotoCard().paddingOnly(bottom: CommonPaddingAndSize.size20()),
                                   cardHeadlineTextView(text: PageConstVar.aadharCardDetails.tr).paddingOnly(bottom: CommonPaddingAndSize.size10()),
                                   aadharCardDetailsCard().paddingOnly(bottom: CommonPaddingAndSize.size20()),
                                   cardHeadlineTextView(text: PageConstVar.panCardDetails.tr).paddingOnly(bottom: CommonPaddingAndSize.size10()),
@@ -47,12 +49,12 @@ class KycApplicationView extends GetView<KycApplicationController> {
                                   // updateBankDetailsView().paddingSymmetric(vertical: CommonPaddingAndSize.size20()),
                                 ],
                               ),
-                          ),
-                          submitButtonView()
-                        ],
+                            ),
+                            submitButtonView()
+                          ],
+                        ),
                       ),
                     ),
-                  ),
             ),
           ),
         );
@@ -120,7 +122,8 @@ class KycApplicationView extends GetView<KycApplicationController> {
           children: [
             commonRowForCard(
               text1: PageConstVar.name.tr,
-              text2: '${controller.userData?.userDetails?.initials}. ${controller.userData?.userDetails?.firstName} ${controller.userData?.userDetails?.lastName}',
+              text2:
+                  '${controller.userData?.userDetails?.initials}. ${controller.userData?.userDetails?.firstName} ${controller.userData?.userDetails?.lastName}',
             ),
             KNPWidgets.commonDividerView(height: 0),
             commonRowForCard(
@@ -180,7 +183,7 @@ class KycApplicationView extends GetView<KycApplicationController> {
         ],
       );
 
-  Widget commonAddFileButtonView({GestureTapCallback? onTap}) => InkWell(
+  Widget commonAddFileButtonView({GestureTapCallback? onTap, File? file}) => InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(8.px),
         child: KNPWidgets.commonContainerView(
@@ -188,27 +191,43 @@ class KycApplicationView extends GetView<KycApplicationController> {
           height: 70.px,
           padding: EdgeInsets.zero,
           color: Theme.of(Get.context!).colorScheme.surface,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                height: 20.px,
-                width: 20.px,
-                margin: EdgeInsets.only(bottom: 4.px),
-                decoration: BoxDecoration(
-                  color: Theme.of(Get.context!).colorScheme.primary,
-                  shape: BoxShape.circle,
-                ),
-                child: Center(
-                  child: Icon(
-                    Icons.add,
-                    color: Theme.of(Get.context!).colorScheme.inversePrimary,
-                    size: 16.px,
+          child: file != null
+              ? Center(
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Image.file(
+                        File(file.path ?? ''),
+                        height: 110.px,
+                        width: 110.px,
+                      ),
+                      commonIconButton(icon: Icons.cancel)
+                    ],
                   ),
+                )
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    commonIconButton(icon: Icons.add),
+                    cardTitleTextView(text: PageConstVar.addFile.tr),
+                  ],
                 ),
-              ),
-              cardTitleTextView(text: PageConstVar.addFile.tr),
-            ],
+        ),
+      );
+
+  Widget commonIconButton({required IconData icon}) => Container(
+        height: 20.px,
+        width: 20.px,
+        margin: EdgeInsets.only(bottom: 4.px),
+        decoration: BoxDecoration(
+          color: Theme.of(Get.context!).colorScheme.primary,
+          shape: BoxShape.circle,
+        ),
+        child: Center(
+          child: Icon(
+            icon,
+            color: Theme.of(Get.context!).colorScheme.inversePrimary,
+            size: 16.px,
           ),
         ),
       );
@@ -217,11 +236,12 @@ class KycApplicationView extends GetView<KycApplicationController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            cardTitleTextView(text: PageConstVar.uploadProfilePicture.tr).paddingOnly(bottom: 4.px),
-            // commonAddFileButtonView(
-            //   onTap: () => controller.clickOnUploadProfilePicture(),
-            // ),
-            commonImageView()
+            cardTitleTextView(text: PageConstVar.uploadProfilePicture.tr)
+                .paddingOnly(bottom: 4.px),
+            commonAddFileButtonView(
+                onTap: () => controller.clickOnUploadProfilePicture(),
+                file: controller.profilePic.value),
+            // commonImageView()
           ],
         ),
       );
@@ -231,13 +251,15 @@ class KycApplicationView extends GetView<KycApplicationController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             aadharCardNumberTextFieldView().paddingOnly(bottom: CommonPaddingAndSize.size14()),
-            cardTitleTextView(text: '${PageConstVar.aadharCardPhoto.tr} (${PageConstVar.frontSide.tr})').paddingOnly(bottom: 4.px),
+            cardTitleTextView(text: '${PageConstVar.aadharCardPhoto.tr} (${PageConstVar.frontSide.tr})*').paddingOnly(bottom: 4.px),
             commonAddFileButtonView(
-              onTap: () => controller.clickOnAadharCardFrontSide(),
+                onTap: () => controller.clickOnAadharCardFrontSide(),
+                file: controller.aadharFrontImage.value,
             ).paddingOnly(bottom: CommonPaddingAndSize.size14()),
-            cardTitleTextView(text: '${PageConstVar.aadharCardPhoto.tr} (${PageConstVar.backSide.tr})').paddingOnly(bottom: 4.px),
+            cardTitleTextView(text: '${PageConstVar.aadharCardPhoto.tr} (${PageConstVar.backSide.tr})*').paddingOnly(bottom: 4.px),
             commonAddFileButtonView(
-              onTap: () => controller.clickOnAadharCardBackSide(),
+                onTap: () => controller.clickOnAadharCardBackSide(),
+                file: controller.aadharBackImage.value,
             ),
           ],
         ),
@@ -258,9 +280,10 @@ class KycApplicationView extends GetView<KycApplicationController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             panCardNumberTextFieldView().paddingOnly(bottom: CommonPaddingAndSize.size14()),
-            cardTitleTextView(text: PageConstVar.panCardPhoto.tr).paddingOnly(bottom: 4.px),
+            cardTitleTextView(text: '${PageConstVar.panCardPhoto}*'.tr).paddingOnly(bottom: 4.px),
             commonAddFileButtonView(
-              onTap: () => controller.clickOnPanCardPhoto(),
+                onTap: () => controller.clickOnPanCardPhoto(),
+                file: controller.panCardImage.value,
             ),
           ],
         ),
@@ -285,8 +308,7 @@ class KycApplicationView extends GetView<KycApplicationController> {
       );
 
   Widget submitButtonView() => KNPWidgets.commonElevatedButton(
-    onPressed: () => controller.clickOnSubmitButton(),
-    buttonText: PageConstVar.submit.tr,
-  );
-
+        onPressed: () => controller.clickOnSubmitButton(),
+        buttonText: PageConstVar.submit.tr,
+      );
 }

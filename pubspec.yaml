@@ -33,6 +33,8 @@ dependencies:
   url_launcher: ^6.1.9
   flutter_html:
   flutter_linkify:
+  webview_flutter:
+  cc_avenue:
 
 
 dev_dependencies: 

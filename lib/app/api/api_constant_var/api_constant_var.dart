@@ -85,6 +85,11 @@ class ApiConstantVar{
   static const bankId = "bank_id";
 
   static const amount = "amount";
+  static const aadharCardNo = "aadhar_card_no";
+  static const panCardNo = "pan_card_no";
+  static const aadharCardPhotoFront = "aadhar_card_photo_front";
+  static const aadharCardPhotoBack = "aadhar_card_photo_back";
+  static const panCardPhoto = "pan_card_photo";
 
 }
 
@@ -155,5 +160,7 @@ class ApiUrls{
   static const apiEndPointGetWalletHistory = "getWalletHistory";
 
   static const apiEndPointWithdrawCommission = "withdrawCommission";
+
+  static const apiEndPointUserKycDocument = "userKycDocument";
 
 }

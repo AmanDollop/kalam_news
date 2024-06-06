@@ -527,4 +527,31 @@ class ApiIntrigation{
     }
   }
 
+  static Future<http.Response?> addEKycApi({
+    required Map<String, dynamic> bodyParams,
+    Map<String, List<File>>? imageMap,
+  }) async {
+
+    String? token = await userToken(stringToken: true);
+
+    http.Response? response = await MyHttp.uploadMultipleImagesWithBody(
+        uri: '${ApiUrls.baseUrl}${ApiUrls.apiEndPointUserKycDocument}',
+        bodyParams: bodyParams,
+        context: Get.context!,
+        imageMap: imageMap,
+        multipartRequestType: 'POST',
+        token: '$token'
+    );
+
+    if (response != null) {
+      if (await KNPMethods.checkResponse(response: response, wantInternetFailResponse: true, wantShowFailResponse: true,wantShowSuccessResponse: true)) {
+        return response;
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
+  }
+
 }
