@@ -308,7 +308,10 @@ class KycApplicationView extends GetView<KycApplicationController> {
       );
 
   Widget submitButtonView() => KNPWidgets.commonElevatedButton(
-        onPressed: () => controller.clickOnSubmitButton(),
-        buttonText: PageConstVar.submit.tr,
-      );
+      onPressed: controller.submitButtonValue.value
+          ? () => null
+          : () => controller.clickOnSubmitButton(),
+      buttonText: PageConstVar.submit.tr,
+      isLoading: controller.submitButtonValue.value
+  );
 }

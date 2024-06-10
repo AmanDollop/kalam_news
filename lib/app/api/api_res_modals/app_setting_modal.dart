@@ -5,6 +5,8 @@ class AppSettingModal {
   String? termCondition;
   String? welcomeMessage;
   String? inviteMessage;
+  String? kycAddOrNot;
+  KycDocument? kycDocument;
 
   AppSettingModal(
       {this.message,
@@ -13,10 +15,13 @@ class AppSettingModal {
         this.termCondition,
         this.welcomeMessage,
         this.inviteMessage,
+        this.kycAddOrNot,
+        this.kycDocument,
       });
 
   AppSettingModal.fromJson(Map<String, dynamic> json) {
     message = json['message'];
+    kycAddOrNot = json['kyc_add_or_not'];
     contacts = json['contacts'] != null
         ? Contacts.fromJson(json['contacts'])
         : null;
@@ -26,6 +31,9 @@ class AppSettingModal {
         followUs!.add(FollowUs.fromJson(v));
       });
     }
+    kycDocument = json['kycDocument'] != null
+        ? KycDocument.fromJson(json['kycDocument'])
+        : null;
     termCondition = json['termCondition'];
     welcomeMessage = json['welcomeMessage'];
     inviteMessage = json['inviteMessage'];
@@ -34,11 +42,15 @@ class AppSettingModal {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['message'] = message;
+    data['kyc_add_or_not'] = kycAddOrNot;
     if (contacts != null) {
       data['contacts'] = contacts!.toJson();
     }
     if (followUs != null) {
       data['followUs'] = followUs!.map((v) => v.toJson()).toList();
+    }
+    if (kycDocument != null) {
+      data['kycDocument'] = kycDocument!.toJson();
     }
     data['termCondition'] = termCondition;
     data['welcomeMessage'] = welcomeMessage;
@@ -107,4 +119,62 @@ class FollowUs {
     data['icon'] = icon;
     return data;
   }
+}
+
+class KycDocument {
+  int? docsId;
+  int? userId;
+  String? aadharCardNo;
+  String? aadharCardPhotoFront;
+  String? aadharCardPhotoBack;
+  String? panCardNo;
+  String? panCardPhoto;
+  int? isAadharVerified;
+  int? isPanVerified;
+  String? createdAt;
+  String? updatedAt;
+
+  KycDocument(
+      {this.docsId,
+        this.userId,
+        this.aadharCardNo,
+        this.aadharCardPhotoFront,
+        this.aadharCardPhotoBack,
+        this.panCardNo,
+        this.panCardPhoto,
+        this.isAadharVerified,
+        this.isPanVerified,
+        this.createdAt,
+        this.updatedAt});
+
+  KycDocument.fromJson(Map<String, dynamic> json) {
+    docsId = json['docs_id'];
+    userId = json['user_id'];
+    aadharCardNo = json['aadhar_card_no'];
+    aadharCardPhotoFront = json['aadhar_card_photo_front'];
+    aadharCardPhotoBack = json['aadhar_card_photo_back'];
+    panCardNo = json['pan_card_no'];
+    panCardPhoto = json['pan_card_photo'];
+    isAadharVerified = json['is_aadhar_verified'];
+    isPanVerified = json['is_pan_verified'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['docs_id'] = docsId;
+    data['user_id'] = userId;
+    data['aadhar_card_no'] = aadharCardNo;
+    data['aadhar_card_photo_front'] = aadharCardPhotoFront;
+    data['aadhar_card_photo_back'] = aadharCardPhotoBack;
+    data['pan_card_no'] = panCardNo;
+    data['pan_card_photo'] = panCardPhoto;
+    data['is_aadhar_verified'] = isAadharVerified;
+    data['is_pan_verified'] = isPanVerified;
+    data['created_at'] = createdAt;
+    data['updated_at'] = updatedAt;
+    return data;
+  }
+
 }

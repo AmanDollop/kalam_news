@@ -11,7 +11,6 @@ import 'package:kalam_news_publication/app/common/page_const_var/selected_langua
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
 import 'package:kalam_news_publication/app/db/data_base_constant/data_base_constant.dart';
 import 'package:kalam_news_publication/app/db/data_base_helper/data_base_helper.dart';
-import 'package:kalam_news_publication/app/get_material_controller/ac.dart';
 import 'package:kalam_news_publication/app/modules/bottom_bar/views/bottom_bar_view.dart';
 import 'package:kalam_news_publication/app/routes/app_pages.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -51,7 +50,6 @@ class ProfileController extends GetxController {
     super.onClose();
   }
 
-  // void increment() => count.value++;
   void increment(String value) => isEN.value = value;
 
   onWillPop() {
@@ -69,30 +67,40 @@ class ProfileController extends GetxController {
     apiResValue.value = false;
   }
 
-  void clickOnWelcomeMessage() {
-    Get.toNamed(Routes.WELCOME_MASSAGE,arguments: ['${PageConstVar.welcome.tr} ${PageConstVar.message.tr}',welcomeMessage.value]);
+  Future<void> cMethod({required String page,dynamic arguments}) async {
+    await Get.toNamed(page, arguments: arguments);
+    Get.lazyPut(()=>ProfileController());
+    onInit();
   }
 
-  void clickOnKYCApplication() {
-    Get.toNamed(Routes.KYC_APPLICATION, arguments: [userData]);
+  Future<void> clickOnWelcomeMessage() async {
+    if(welcomeMessage.value.isNotEmpty){
+      await cMethod(page: Routes.WELCOME_MASSAGE,arguments: ['${PageConstVar.welcome.tr} ${PageConstVar.message.tr}',welcomeMessage.value]);
+    }
+    else{
+      KNPMethods.error();
+    }
+  }
+
+  Future<void> clickOnKYCApplication() async {
+    if(appSettingModal.value?.kycAddOrNot != null && appSettingModal.value!.kycAddOrNot!.isNotEmpty){
+      await cMethod(page: Routes.KYC_APPLICATION, arguments: [userData,appSettingModal.value?.kycAddOrNot]);
+    }
+    else{
+      KNPMethods.error();
+    }
   }
 
   Future<void> clickOnEditProfile() async {
-    await Get.toNamed(Routes.EDIT_PROFILE, arguments: [userData]);
-    Get.lazyPut(()=>ProfileController());
-    onInit();
+    await cMethod(page: Routes.EDIT_PROFILE, arguments: [userData]);
   }
 
   Future<void> clickOnChangePassword() async {
-    await Get.toNamed(Routes.NEW_PASSWORD, arguments: [PageConstVar.changePassword.tr]);
-    Get.lazyPut(()=>ProfileController());
-    onInit();
+    await cMethod(page: Routes.NEW_PASSWORD, arguments: [PageConstVar.changePassword.tr]);
   }
 
   Future<void> clickOnManageBankDetails() async {
-    await Get.toNamed(Routes.MANAGE_BANK_DETAIL);
-    Get.lazyPut(()=>ProfileController());
-    onInit();
+    await cMethod(page: Routes.MANAGE_BANK_DETAIL);
   }
 
   Future<void> clickOnReferralAFriends() async {
@@ -103,14 +111,16 @@ class ProfileController extends GetxController {
   }
 
   Future<void> clickOnLogOutButton() async {
-    CD.commonIosLogoutDialog(
-      isDismiss: false,
-      clickOnCancel: () => Get.back(),
-      clickOnLogout: () async {
-        await DataBaseHelper().deleteDataBase(tableName: DataBaseConstant.tableNameForUserDetail);
-        Get.offAllNamed(Routes.LOG_IN);
-      },
-    );
+    await CD.commonIosLogoutDialog(
+           isDismiss: false,
+           clickOnCancel: () => Get.back(),
+           clickOnLogout: () => clickOnLogout(),
+         );
+  }
+
+  Future<void> clickOnLogout() async {
+    await DataBaseHelper().deleteDataBase(tableName: DataBaseConstant.tableNameForUserDetail);
+    Get.offAllNamed(Routes.LOG_IN);
   }
 
   Future<void> callingGetAppSettingApi() async {
@@ -132,7 +142,8 @@ class ProfileController extends GetxController {
 
     if(Get.locale?.languageCode == 'hi'){
       isEN.value = 'hi';
-    }else{
+    }
+    else{
       isEN.value = 'en';
     }
 

@@ -529,7 +529,7 @@ class ApiIntrigation{
 
   static Future<http.Response?> addEKycApi({
     required Map<String, dynamic> bodyParams,
-    Map<String, List<File>>? imageMap,
+    Map<String, File>? imageMap,
   }) async {
 
     String? token = await userToken(stringToken: true);

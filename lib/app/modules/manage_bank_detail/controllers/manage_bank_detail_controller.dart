@@ -173,7 +173,6 @@ class ManageBankDetailController extends GetxController with GetTickerProviderSt
       bankAccountsModal.value = await ApiIntrigation.getBankAccountsApi();
       if(bankAccountsModal.value != null){
         bankAccountsList = bankAccountsModal.value?.bankAccounts;
-        print('bankAccountsList::::: ${bankAccountsList?.length}');
       }
     }catch(e){
       KNPMethods.error();

@@ -17,8 +17,12 @@ class KNPRazorpayMethods{
   // static String razorpayKeyName = "rzp_test_sBIiiURrNWQRTc";
   // static String razorpayKeyPassword = "UeGbEmzqYSb3tBjT7Mcphb2V";
 
-  static String razorpayKeyName = "rzp_test_jk0xGqxJWDAXMD";
-  static String razorpayKeyPassword = "fQyNNa1s8r7eA0btP6daWQlP";
+  // static String razorpayKeyName = "rzp_test_jk0xGqxJWDAXMD";
+  // static String razorpayKeyPassword = "fQyNNa1s8r7eA0btP6daWQlP";
+
+  static String razorpayKeyName = "rzp_live_fJThF6pqzqAxrt";
+  static String razorpayKeyPassword = "Cp9iqqBFdBXkMIw2KneHRn10";
+
 
   static final userDataFromLocalDataBaseValue = false.obs;
   static final userDataFromLocalDataBase = ''.obs;
@@ -67,7 +71,7 @@ class KNPRazorpayMethods{
 
   static _handlePaymentErrorResponse(PaymentSuccessResponse response) {
     if (kDebugMode) {
-      print('Payment Failed');
+      print('Payment Failed::::::  ');
     }
     KNPMethods.showSnackBar(message: 'Payment Failed');
   }

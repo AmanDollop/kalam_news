@@ -296,7 +296,7 @@ class MyHttp {
     }
   }
 
-  static Future<http.Response?> uploadMultipleImagesWithBody(
+  /*static Future<http.Response?> uploadMultipleImagesWithBody(
       {List<File>? images,
        Map<String, List<File>>? imageMap,
       required String uri,
@@ -359,6 +359,78 @@ class MyHttp {
           //MyCommonMethods.serverDownShowSnackBar(context: context);
           return null;
         }
+
+    } else {
+      // KNPMethods.noInternet();
+      return null;
+    }
+  }*/
+
+  static Future<http.Response?> uploadMultipleImagesWithBody(
+      {List<File>? images,
+        Map<String, File>? imageMap,
+        // Map<String, List<File>>? imageMap,
+        required String uri,
+        String? token,
+        String? imageKey,
+        required String multipartRequestType, // POST or GET
+        required Map<String, dynamic> bodyParams,
+        required BuildContext context}) async {
+    if (await KNPMethods.internetConnectionCheckerMethod()) {
+      try {
+        http.Response res;
+        var request = http.MultipartRequest(multipartRequestType, Uri.parse(uri));
+        request.headers.addAll({'Content-Type': 'multipart/form-data'});
+        if (kDebugMode) print("CALLING:: $uri");
+        if(imageMap!=null)
+        {
+          imageMap.forEach((key, value) {
+            request.files.add(getUserProfileImageFile(userProfileImageKey: key,image: value));
+            // value.forEach((element) {
+            //   request.files.add(getUserProfileImageFile(userProfileImageKey: key,image: element));
+            // });
+          });
+        }else{
+          if(images != null && images.isNotEmpty){
+            for (int i = 0; i < images.length; i++) {
+              var stream = http.ByteStream(images[i].openRead());
+              var length = await images[i].length();
+              var multipartFile = http.MultipartFile(imageKey ??'', stream, length, filename: images[i].path);
+              request.files.add(multipartFile);
+            }
+          }
+        }
+
+        print('token::::token::::: $token');
+        print('bodyParams::::keys::::: ${bodyParams.keys}');
+        print('bodyParams::::values::::: ${bodyParams.values}');
+
+
+        bodyParams.forEach((key, value) {
+          request.fields[key] = value;
+        });
+        request.headers['Authorization'] = token ?? '';
+        var response = await request.send();
+
+        print('check response:::   ${response.request}');
+        print('check response:::   ${response.reasonPhrase}');
+
+        res = await http.Response.fromStream(response);
+        if (kDebugMode) print("res.body:: ${res.body}");
+        // ignore: unnecessary_null_comparison
+        if (res != null) {
+          return res;
+        } else {
+          return null;
+        }
+      } catch (e) {
+        if (kDebugMode) print("ERROR:: $e");
+        if (kDebugMode) print("CALLING:: Server Down");
+        // MyLogger.logger.e("CALLING:: Server Down");
+        KNPMethods.error();
+        //MyCommonMethods.serverDownShowSnackBar(context: context);
+        return null;
+      }
 
     } else {
       // KNPMethods.noInternet();

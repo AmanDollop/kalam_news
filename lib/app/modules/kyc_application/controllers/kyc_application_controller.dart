@@ -1,9 +1,9 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/api/api_constant_var/api_constant_var.dart';
 import 'package:kalam_news_publication/app/api/api_intrigation/api_intrigation.dart';
+import 'package:kalam_news_publication/app/api/api_res_modals/app_setting_modal.dart';
 import 'package:kalam_news_publication/app/api/api_res_modals/user_data_modal.dart';
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/common/packages/cd.dart';
@@ -19,13 +19,14 @@ class KycApplicationController extends GetxController {
   final apiResValue = true.obs;
 
   UserDataModal? userData;
+  final kycAddOrNot = ''.obs;
+  KycDocument? kycDocument;
 
   final aadharCardNumberController = TextEditingController();
   FocusNode aadharCardNumberFocusNode = FocusNode();
 
   final panCardNumberController = TextEditingController();
   FocusNode panCardNumberFocusNode = FocusNode();
-
 
   final profilePic = Rxn<File?>();
   final aadharFrontImage = Rxn<File?>();
@@ -36,12 +37,11 @@ class KycApplicationController extends GetxController {
 
   final submitButtonValue = false.obs;
 
-
-
   @override
   void onInit() {
     super.onInit();
     userData = Get.arguments[0];
+    kycAddOrNot.value = Get.arguments[1];
     apiResValue.value = false;
   }
 
@@ -126,9 +126,10 @@ class KycApplicationController extends GetxController {
 
   void clickOnUpdateBankDetails() {}
 
-  void clickOnSubmitButton() {
+  Future<void> clickOnSubmitButton() async {
     if(key.currentState!.validate() && aadharFrontImage.value != null && aadharBackImage.value != null && panCardImage.value != null){
-      Get.back();
+      submitButtonValue.value = true;
+      await callingAddEKycApi();
     }else{
       KNPMethods.showSnackBar(message: 'All filed are required');
     }
@@ -136,19 +137,16 @@ class KycApplicationController extends GetxController {
 
   Future<void> callingAddEKycApi() async {
     try{
-
       bodyParamsForEKyc = {
-        ApiConstantVar.aadharCardNo:aadharCardNumberController.text.trim().toString(),
-        ApiConstantVar.panCardNo:panCardNumberController.text.trim().toString(),
+        ApiConstantVar.aadharCardNo: aadharCardNumberController.text.trim().toString(),
+        ApiConstantVar.panCardNo: panCardNumberController.text.trim().toString(),
       };
 
-      Map<String, List<File>> imageMap = {
-        ApiConstantVar.aadharCardPhotoFront : aadharFrontImage.value[0] ?? File(''),
-        ApiConstantVar.aadharCardPhotoBack : aadharBackImage.value[1] ?? File(''),
-        ApiConstantVar.panCardPhoto : panCardImage.value[2] ?? File(''),
+      Map<String, File> imageMap = {
+        ApiConstantVar.aadharCardPhotoFront : aadharFrontImage.value ?? File(''),
+        ApiConstantVar.aadharCardPhotoBack : aadharBackImage.value ?? File(''),
+        ApiConstantVar.panCardPhoto : panCardImage.value ?? File(''),
       };
-
-
 
       http.Response? response = await ApiIntrigation.addEKycApi(bodyParams: bodyParamsForEKyc, imageMap: imageMap);
       if(response != null && response.statusCode == 200){

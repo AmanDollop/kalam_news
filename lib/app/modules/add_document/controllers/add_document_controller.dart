@@ -29,7 +29,7 @@ class AddDocumentController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    pageName.value = Get.arguments[0];
+    // pageName.value = Get.arguments[0];
   }
 
   @override
