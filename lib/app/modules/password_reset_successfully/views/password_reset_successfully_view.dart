@@ -1,0 +1,73 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import 'package:get/get.dart';
+import 'package:kalam_news_publication/app/common/common_padding_size/common_padding_size.dart';
+import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
+import 'package:kalam_news_publication/app/common/page_const_var/page_const_var.dart';
+import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
+import 'package:lottie/lottie.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
+
+import '../controllers/password_reset_successfully_controller.dart';
+
+class PasswordResetSuccessfullyView extends GetView<PasswordResetSuccessfullyController> {
+  const PasswordResetSuccessfullyView({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+
+    return GestureDetector(
+      onTap: () => KNPMethods.unFocsKeyBoard(),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Obx(() {
+          controller.count.value;
+          return Stack(
+            children: [
+              KNPWidgets.scaffoldBackgroundImageView(
+                child: Center(
+                  child: Padding(
+                    padding: CommonPaddingAndSize.commonScaffoldBodyPadding(),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(height: CommonPaddingAndSize.size20()*6.5),
+                        successTextView(),
+                        SizedBox(height: 4.px),
+                        signInUpTextView(),
+                        SizedBox(height: CommonPaddingAndSize.size20()*2),
+                        ColorFiltered(
+                          colorFilter: ColorFilter.mode(
+                            Theme.of(context).colorScheme.primary,
+                            BlendMode.srcIn,
+                          ),
+                          child: Lottie.asset('assets/animations/check_animation.json'),
+                        ),
+                        const Spacer(),
+                        loginButtonView(),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        }),
+      ),
+    );
+  }
+
+  Widget successTextView() => Text(PageConstVar.success.tr, style: Theme.of(Get.context!).textTheme.headlineLarge);
+
+  Widget signInUpTextView() => Text(
+    PageConstVar.yourPasswordHasBeenSuccessfullyReset.tr,
+    style: Theme.of(Get.context!).textTheme.titleLarge?.copyWith(color: Theme.of(Get.context!).colorScheme.onPrimary),
+  );
+
+  Widget loginButtonView() => KNPWidgets.commonElevatedButton(
+    onPressed: () => controller.clickOnLogInButtonView(),
+    buttonText:PageConstVar.logIn.tr,
+  );
+
+}
