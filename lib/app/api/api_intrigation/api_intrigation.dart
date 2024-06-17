@@ -548,13 +548,14 @@ class ApiIntrigation{
 
   static Future<http.Response?> addEKycApi({
     required Map<String, dynamic> bodyParams,
+    required String endPoint,
     Map<String, File>? imageMap,
   }) async {
 
     String? token = await userToken(stringToken: true);
 
     http.Response? response = await MyHttp.uploadMultipleImagesWithBody(
-        uri: '${ApiUrls.baseUrl}${ApiUrls.apiEndPointUserKycDocument}',
+        uri: '${ApiUrls.baseUrl}$endPoint',
         bodyParams: bodyParams,
         context: Get.context!,
         imageMap: imageMap,

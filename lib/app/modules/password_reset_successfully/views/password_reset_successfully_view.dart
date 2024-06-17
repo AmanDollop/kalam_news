@@ -39,7 +39,7 @@ class PasswordResetSuccessfullyView extends GetView<PasswordResetSuccessfullyCon
                         SizedBox(height: CommonPaddingAndSize.size20()*2),
                         ColorFiltered(
                           colorFilter: ColorFilter.mode(
-                            Theme.of(context).colorScheme.primary,
+                            Theme.of(context).colorScheme.inversePrimary,
                             BlendMode.srcIn,
                           ),
                           child: Lottie.asset('assets/animations/check_animation.json'),

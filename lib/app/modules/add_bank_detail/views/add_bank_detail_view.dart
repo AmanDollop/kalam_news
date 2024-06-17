@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/common/common_padding_size/common_padding_size.dart';
+import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
 import 'package:kalam_news_publication/app/common/packages/model_progress_bar.dart';
 import 'package:kalam_news_publication/app/common/page_const_var/page_const_var.dart';
 import 'package:kalam_news_publication/app/common/widgets/knp_widgets.dart';
@@ -40,32 +41,42 @@ class AddBankDetailView extends GetView<AddBankDetailController> {
                                   reAccountNumberTextFieldView().paddingSymmetric(vertical: CommonPaddingAndSize.size20()),
                                   customerNameTextFieldView(),
                                   ifscCodeTextFieldView().paddingSymmetric(vertical: CommonPaddingAndSize.size20()),
-                                  KNPWidgets.commonContainerView(child:
-                                  SizedBox(
+                                  Text(
+                                    'Upload passbook*',
+                                    style: Theme.of(Get.context!).textTheme.titleSmall?.copyWith(
+                                        fontWeight: FontWeight.w700,
+                                        color: Theme.of(Get.context!).colorScheme.onInverseSurface),
+                                  ),
+                                  SizedBox(height: 4.px),
+                                  KNPWidgets.commonContainerView(
+                                    child: SizedBox(
                                     height: 100.px,
                                     child: InkWell(
                                       onTap: () => controller.clickOnAddBankPassbookButton(),
                                       child: Center(
-                                          child: controller.bankPassbook.value != null
-                                              ? Stack(
+                                          child: Stack(
                                                  alignment: Alignment.center,
                                                  children: [
-                                                   Image.file(
-                                                     File(controller.bankPassbook.value?.path ?? ''),
-                                                     // height: 110.px,
-                                                     width: double.infinity,
-                                                   ),
-                                                   commonIconButton(icon: Icons.cancel)
+                                                   controller.bankPassbook.value != null
+                                                       ? Image.file(
+                                                          File(controller.bankPassbook.value?.path ?? ''),
+                                                          // height: 110.px,
+                                                          width: double.infinity,
+                                                        )
+                                                       : controller.pageName.value == PageConstVar.updateBankDetail.tr
+                                                       ? KNPWidgets.commonNetworkImageView(
+                                                          path: KNPMethods.baseUrlForNetworkImage(
+                                                          imagePath: controller.bankAccounts?.bankPassbook ?? '',
+                                                         ),
+                                                   )
+                                                       : const SizedBox(),
+                                                   commonIconButton(
+                                                       icon: controller.bankPassbook.value != null
+                                                       ? Icons.cancel
+                                                       : Icons.add,
+                                                   )
                                                  ],
-                                               )
-                                              : KNPWidgets.commonElevatedButton(
-                                                  onPressed: ()=> controller.clickOnAddBankPassbookButton(),
-                                                  buttonText: 'Add bank passbook',
-                                                  height: 30.px,
-                                                  width: 200.px,
-                                                  borderRadius: 5.px,
-                                                  fontSize: 12.px,
-                                              ),
+                                               ),
                                        ),
                                     ),
                                    ),

@@ -17,7 +17,7 @@ dependencies:
   fluttertoast: ^8.2.4
   http: ^1.1.2
   internet_connection_checker: ^1.0.0+1
-  connectivity_plus: ^5.0.2
+  connectivity_plus:
   sqflite: ^2.3.0
   intl: ^0.18.1
   carousel_slider: ^4.2.1

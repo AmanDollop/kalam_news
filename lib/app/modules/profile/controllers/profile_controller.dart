@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/api/api_intrigation/api_intrigation.dart';
@@ -26,7 +28,8 @@ class ProfileController extends GetxController {
 
   final userDataFromLocalDataBaseValue = false.obs;
   final userDataFromLocalDataBase = ''.obs;
-  UserDataModal? userData;
+  final userData = Rxn<UserDataModal>();
+  UserDetails? userDetails;
 
   final appSettingModal = Rxn<AppSettingModal>();
   final welcomeMessage = ''.obs;
@@ -35,8 +38,14 @@ class ProfileController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
     apiResValue.value = true;
-    await dataBaseCalling();
-    await callingGetAppSettingApi();
+    try{
+      await dataBaseCalling();
+      await callingGetAppSettingApi();
+      await callingGetUserDataApi();
+    }catch(e){
+      apiResValue.value = false;
+    }
+    apiResValue.value = false;
   }
 
   @override
@@ -58,7 +67,7 @@ class ProfileController extends GetxController {
 
   Future<void> dataBaseCalling() async {
     try {
-      userData = await KNPRazorpayMethods.getUserDataDataBaseCalling();
+      userData.value = await KNPRazorpayMethods.getUserDataDataBaseCalling();
     } catch (e) {
       print('dataBaseCalling:::: ERROR::::::  $e');
       apiResValue.value = false;
@@ -83,7 +92,7 @@ class ProfileController extends GetxController {
 
   Future<void> clickOnKYCApplication() async {
     if (appSettingModal.value?.kycAddOrNot != null && appSettingModal.value!.kycAddOrNot!.isNotEmpty) {
-      await cMethod(page: Routes.KYC_APPLICATION, arguments: [userData, appSettingModal.value?.kycAddOrNot,appSettingModal.value?.kycDocument]);
+      await cMethod(page: Routes.KYC_APPLICATION, arguments: [userData.value, appSettingModal.value?.kycAddOrNot,appSettingModal.value?.kycDocument]);
     }
     else {
       KNPMethods.error();
@@ -91,7 +100,7 @@ class ProfileController extends GetxController {
   }
 
   Future<void> clickOnEditProfile() async {
-    await cMethod(page: Routes.EDIT_PROFILE, arguments: [userData]);
+    await cMethod(page: Routes.EDIT_PROFILE, arguments: [userData.value]);
   }
 
   Future<void> clickOnChangePassword() async {
@@ -170,6 +179,25 @@ class ProfileController extends GetxController {
         );
       },
     );
+  }
+
+  Future<void> callingGetUserDataApi() async {
+    final userDataFromLocalDataBase = ''.obs;
+    try {
+      userData.value = await ApiIntrigation.getUserDataApi();
+      if (userData.value != null) {
+        userDetails = userData.value?.userDetails;
+
+        userDataFromLocalDataBase.value = await DataBaseHelper().getParticularData(key: DataBaseConstant.userDetail, tableName: DataBaseConstant.tableNameForUserDetail);
+
+        String? token = UserDataModal.fromJson(jsonDecode(userDataFromLocalDataBase.value)).accessToken;
+        userData.value?.accessToken = token;
+
+        await DataBaseHelper().upDateDataBase(data: {DataBaseConstant.userDetail: json.encode(userData.value)}, tableName: DataBaseConstant.tableNameForUserDetail);
+      }
+    } catch (e) {
+      KNPMethods.error();
+    }
   }
 
 }

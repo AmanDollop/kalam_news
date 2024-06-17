@@ -129,6 +129,7 @@ class KycDocument {
   String? aadharCardPhotoBack;
   String? panCardNo;
   String? panCardPhoto;
+  String? userKycPhoto;
   int? isAadharVerified;
   int? isPanVerified;
   String? createdAt;
@@ -142,6 +143,7 @@ class KycDocument {
         this.aadharCardPhotoBack,
         this.panCardNo,
         this.panCardPhoto,
+        this.userKycPhoto,
         this.isAadharVerified,
         this.isPanVerified,
         this.createdAt,
@@ -155,6 +157,7 @@ class KycDocument {
     aadharCardPhotoBack = json['aadhar_card_photo_back'];
     panCardNo = json['pan_card_no'];
     panCardPhoto = json['pan_card_photo'];
+    userKycPhoto = json['user_kyc_photo'];
     isAadharVerified = json['is_aadhar_verified'];
     isPanVerified = json['is_pan_verified'];
     createdAt = json['created_at'];
@@ -162,19 +165,19 @@ class KycDocument {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['docs_id'] = docsId;
-    data['user_id'] = userId;
-    data['aadhar_card_no'] = aadharCardNo;
-    data['aadhar_card_photo_front'] = aadharCardPhotoFront;
-    data['aadhar_card_photo_back'] = aadharCardPhotoBack;
-    data['pan_card_no'] = panCardNo;
-    data['pan_card_photo'] = panCardPhoto;
-    data['is_aadhar_verified'] = isAadharVerified;
-    data['is_pan_verified'] = isPanVerified;
-    data['created_at'] = createdAt;
-    data['updated_at'] = updatedAt;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['docs_id'] = this.docsId;
+    data['user_id'] = this.userId;
+    data['aadhar_card_no'] = this.aadharCardNo;
+    data['aadhar_card_photo_front'] = this.aadharCardPhotoFront;
+    data['aadhar_card_photo_back'] = this.aadharCardPhotoBack;
+    data['pan_card_no'] = this.panCardNo;
+    data['pan_card_photo'] = this.panCardPhoto;
+    data['user_kyc_photo'] = this.userKycPhoto;
+    data['is_aadhar_verified'] = this.isAadharVerified;
+    data['is_pan_verified'] = this.isPanVerified;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
     return data;
   }
-
 }

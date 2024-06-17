@@ -100,6 +100,10 @@ class ApiConstantVar{
 
   static const bankPassbook = "bank_passbook";
 
+  static const kycUpdateType = "kyc_update_type";
+
+  static const docsId = "docs_id";
+
 }
 
 class ApiUrls{
@@ -173,5 +177,7 @@ class ApiUrls{
   static const apiEndPointWithdrawCommission = "withdrawCommission";
 
   static const apiEndPointUserKycDocument = "userKycDocument";
+
+  static const apiEndPointUpdateKycDocument = "updateKycDocument";
 
 }

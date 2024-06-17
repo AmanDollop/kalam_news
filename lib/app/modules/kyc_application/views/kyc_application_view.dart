@@ -1,8 +1,6 @@
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/common/common_padding_size/common_padding_size.dart';
 import 'package:kalam_news_publication/app/common/methods/knp_methods.dart';
@@ -41,7 +39,7 @@ class KycApplicationView extends GetView<KycApplicationController> {
                                 children: [
                                   cardHeadlineTextView(text: PageConstVar.personalInformation.tr,verifiedStatusValue: false).paddingOnly(bottom: CommonPaddingAndSize.size10()),
                                   personalInformationCardView().paddingOnly(bottom: CommonPaddingAndSize.size20()),
-                                  cardHeadlineTextView(text: PageConstVar.profilePhoto.tr).paddingOnly(bottom: CommonPaddingAndSize.size10()),
+                                  cardHeadlineTextView(text: PageConstVar.profilePhoto.tr,verifiedStatusValue: false).paddingOnly(bottom: CommonPaddingAndSize.size10()),
                                   profilePhotoCard().paddingOnly(bottom: CommonPaddingAndSize.size20()),
                                   cardHeadlineTextView(text: PageConstVar.aadharCardDetails.tr,statusValue: controller.kycDocument?.isAadharVerified ?? 0).paddingOnly(bottom: CommonPaddingAndSize.size10()),
                                   aadharCardDetailsCard().paddingOnly(bottom: CommonPaddingAndSize.size20()),
@@ -51,7 +49,7 @@ class KycApplicationView extends GetView<KycApplicationController> {
                                 ],
                               ),
                             ),
-                            if(controller.kycAddOrNot.value == '0')
+                            if(controller.kycAddOrNot.value == '0' || controller.kycDocument?.isAadharVerified == 2 || controller.kycDocument?.isPanVerified == 2)
                             submitButtonView()
                           ],
                         ),
@@ -82,12 +80,16 @@ class KycApplicationView extends GetView<KycApplicationController> {
               ? Icon(CupertinoIcons.question_circle,color: Theme.of(Get.context!).colorScheme.scrim,size: 16.px)
               : statusValue == 1
               ? Icon(Icons.verified,color: Theme.of(Get.context!).colorScheme.onTertiary,size: 16.px)
-              : Icon(Icons.cancel,color: Theme.of(Get.context!).colorScheme.error,size: 16.px),
+              : statusValue == 2
+              ? Icon(Icons.cancel,color: Theme.of(Get.context!).colorScheme.error,size: 16.px)
+              : const SizedBox(),
           statusValue == 0
               ? cardSubTitleTextView(text: ' Pending',color: Theme.of(Get.context!).colorScheme.scrim)
               : statusValue == 1
               ? cardSubTitleTextView(text: ' Verified',color: Theme.of(Get.context!).colorScheme.onTertiary)
-              : cardSubTitleTextView(text: ' Rejected',color: Theme.of(Get.context!).colorScheme.error)
+              : statusValue == 2
+              ? cardSubTitleTextView(text: ' Rejected',color: Theme.of(Get.context!).colorScheme.error)
+              : const SizedBox()
         ],
       ),
     ],
@@ -144,8 +146,7 @@ class KycApplicationView extends GetView<KycApplicationController> {
           children: [
             commonRowForCard(
               text1: PageConstVar.name.tr,
-              text2:
-                  '${controller.userData?.userDetails?.initials}. ${controller.userData?.userDetails?.firstName} ${controller.userData?.userDetails?.lastName}',
+              text2: '${controller.userData?.userDetails?.initials}. ${controller.userData?.userDetails?.firstName} ${controller.userData?.userDetails?.lastName}',
             ),
             KNPWidgets.commonDividerView(height: 0),
             commonRowForCard(
@@ -181,7 +182,7 @@ class KycApplicationView extends GetView<KycApplicationController> {
         ),
       );
 
-  Widget commonAddFileButtonView({GestureTapCallback? onTap, File? file,String? path}) => InkWell(
+  Widget commonAddFileButtonView({GestureTapCallback? onTap, File? file,String? path,int? statusValue}) => InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(8.px),
         child: KNPWidgets.commonContainerView(
@@ -189,10 +190,10 @@ class KycApplicationView extends GetView<KycApplicationController> {
           height: 70.px,
           padding: EdgeInsets.zero,
           color: Theme.of(Get.context!).colorScheme.surface,
-          child: controller.kycAddOrNot.value == '1'  && (controller.kycDocument?.isAadharVerified != 2 || controller.kycDocument?.isPanVerified != 2)
+          child: controller.kycAddOrNot.value == '1' && statusValue != 2
               ? Padding(
                  padding:  EdgeInsets.all(2.px),
-                 child: KNPWidgets.commonNetworkImageView(path: path ?? '',isAssetImage: false,radius: 6.px),
+                 child: KNPWidgets.commonNetworkImageView(path: path ?? '',isAssetImage: false,radius: 6.px,fit: BoxFit.contain),
                )
               : file != null
               ? Center(
@@ -212,7 +213,7 @@ class KycApplicationView extends GetView<KycApplicationController> {
               : Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    if(controller.kycAddOrNot.value == '0')
+                    if(controller.kycAddOrNot.value == '0' || controller.kycDocument?.isAadharVerified == 2 || controller.kycDocument?.isPanVerified == 2)
                     commonIconButton(icon: Icons.add),
                     cardTitleTextView(text: PageConstVar.addFile.tr),
                   ],
@@ -245,7 +246,7 @@ class KycApplicationView extends GetView<KycApplicationController> {
             commonAddFileButtonView(
                 onTap: () => controller.clickOnUploadProfilePicture(),
                 file: controller.profilePic.value,
-                path: KNPMethods.baseUrlForNetworkImage(imagePath: controller.kycDocument?.aadharCardPhotoFront ?? '')
+                path: KNPMethods.baseUrlForNetworkImage(imagePath: controller.kycDocument?.userKycPhoto ?? '')
             ),
             // commonImageView()
           ],
@@ -261,13 +262,15 @@ class KycApplicationView extends GetView<KycApplicationController> {
             commonAddFileButtonView(
                 onTap: () => controller.clickOnAadharCardFrontSide(),
                 file: controller.aadharFrontImage.value,
-                path: KNPMethods.baseUrlForNetworkImage(imagePath: controller.kycDocument?.aadharCardPhotoFront ?? '')
+                path: KNPMethods.baseUrlForNetworkImage(imagePath: controller.kycDocument?.aadharCardPhotoFront ?? ''),
+                statusValue: controller.kycDocument?.isAadharVerified ?? 0
             ).paddingOnly(bottom: CommonPaddingAndSize.size14()),
             cardTitleTextView(text: '${PageConstVar.aadharCardPhoto.tr} (${PageConstVar.backSide.tr})*').paddingOnly(bottom: 4.px),
             commonAddFileButtonView(
                 onTap: () => controller.clickOnAadharCardBackSide(),
                 file: controller.aadharBackImage.value,
-                path: KNPMethods.baseUrlForNetworkImage(imagePath: controller.kycDocument?.aadharCardPhotoBack ?? '')
+                path: KNPMethods.baseUrlForNetworkImage(imagePath: controller.kycDocument?.aadharCardPhotoBack ?? ''),
+                statusValue: controller.kycDocument?.isAadharVerified ?? 0
             ),
           ],
         ),
@@ -293,7 +296,8 @@ class KycApplicationView extends GetView<KycApplicationController> {
             commonAddFileButtonView(
                 onTap: () => controller.clickOnPanCardPhoto(),
                 file: controller.panCardImage.value,
-                path: KNPMethods.baseUrlForNetworkImage(imagePath: controller.kycDocument?.panCardPhoto ?? '')
+                path: KNPMethods.baseUrlForNetworkImage(imagePath: controller.kycDocument?.panCardPhoto ?? ''),
+                statusValue: controller.kycDocument?.isPanVerified ?? 0
             ),
           ],
         ),

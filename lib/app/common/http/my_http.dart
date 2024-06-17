@@ -382,6 +382,7 @@ class MyHttp {
         var request = http.MultipartRequest(multipartRequestType, Uri.parse(uri));
         request.headers.addAll({'Content-Type': 'multipart/form-data'});
         if (kDebugMode) print("CALLING:: $uri");
+        if (kDebugMode) print("BODYPARAMS:: $bodyParams");
         if(imageMap!=null)
         {
           imageMap.forEach((key, value) {

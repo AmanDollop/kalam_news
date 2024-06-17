@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/common/common_padding_size/common_padding_size.dart';
@@ -71,8 +73,8 @@ class ProfileView extends GetView<ProfileController> {
                     cardTitleTextView(text: '${PageConstVar.referredBy.tr} - '),
                     Flexible(
                       child: cardSubTitleTextView(
-                        text: controller.userData?.userDetails?.referredBy != null
-                            ? '${controller.userData?.userDetails?.referredBy}'
+                        text: controller.userData.value?.userDetails?.referredBy != null
+                            ? '${controller.userData.value?.userDetails?.referredBy}'
                             : '?',
                       ),
                     ),
@@ -93,7 +95,7 @@ class ProfileView extends GetView<ProfileController> {
         ),
         child: Center(
           child: KNPWidgets.commonNetworkImageView(
-            path: KNPMethods.baseUrlForNetworkImage(imagePath: '${controller.userData?.userDetails?.profile}'),
+            path: KNPMethods.baseUrlForNetworkImage(imagePath: '${controller.userData.value?.userDetails?.profile}'),
             radius: 55.px,
             height: 110.px,
             width: 110.px,
@@ -119,7 +121,7 @@ class ProfileView extends GetView<ProfileController> {
       );
 
   Widget userNameTextView() => Text(
-        '${controller.userData?.userDetails?.initials}. ${controller.userData?.userDetails?.firstName} ${controller.userData?.userDetails?.lastName}',
+        '${controller.userData.value?.userDetails?.initials}. ${controller.userData.value?.userDetails?.firstName} ${controller.userData.value?.userDetails?.lastName}',
         style: Theme.of(Get.context!).textTheme.displayMedium,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,

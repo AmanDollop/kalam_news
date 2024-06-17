@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dash/flutter_dash.dart';
 import 'package:get/get.dart';
@@ -116,6 +117,20 @@ class ManageBankDetailView extends GetView<ManageBankDetailController> {
                                                               ? '${controller.bankAccountsList?[index].bankBranch}'
                                                               : '?',
                                                           ),
+                                                          SizedBox(height: 5.px),
+                                                          commonRowForDetailView(
+                                                              text1: 'Bank verification status',
+                                                               text2: controller.bankAccountsList?[index].isBankAccountVerify == 0
+                                                                ? 'Pending'
+                                                                : controller.bankAccountsList?[index].isBankAccountVerify == 1
+                                                                ? 'Verified'
+                                                                : 'Rejected',
+                                                            text2Color: controller.bankAccountsList?[index].isBankAccountVerify == 0
+                                                                ? Theme.of(Get.context!).colorScheme.scrim
+                                                                : controller.bankAccountsList?[index].isBankAccountVerify == 1
+                                                                ? Theme.of(Get.context!).colorScheme.onTertiary
+                                                                : Theme.of(Get.context!).colorScheme.error,
+                                                          ),
                                                         ],
                                                       ).paddingOnly(
                                                         right: CommonPaddingAndSize.size12(),
@@ -140,6 +155,7 @@ class ManageBankDetailView extends GetView<ManageBankDetailController> {
                                   : KNPWidgets.noDataFoundView()
                                   : KNPWidgets.noDataFoundView(),
                              ),
+                            if(controller.bankAccountsList!.length < 2)
                             addBankButtonView()
                           ],
                         ),
@@ -199,9 +215,9 @@ class ManageBankDetailView extends GetView<ManageBankDetailController> {
         overflow: TextOverflow.ellipsis,
       );
 
-  Widget cardSubTitleTextView({required String text, TextAlign? textAlign, FontWeight? fontWeight}) => Text(
+  Widget cardSubTitleTextView({required String text, TextAlign? textAlign, FontWeight? fontWeight,Color? color}) => Text(
         text,
-        style: Theme.of(Get.context!).textTheme.bodySmall?.copyWith(fontWeight: fontWeight),
+        style: Theme.of(Get.context!).textTheme.bodySmall?.copyWith(fontWeight: fontWeight,color: color),
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
         textAlign: textAlign,
@@ -218,7 +234,7 @@ class ManageBankDetailView extends GetView<ManageBankDetailController> {
         color: Theme.of(Get.context!).colorScheme.inverseSurface,
       );
 
-  Widget commonRowForDetailView({required String text1, required String text2}) => Row(
+  Widget commonRowForDetailView({required String text1, required String text2,Color? text2Color}) => Row(
         children: [
           Expanded(
             child: cardSubTitleTextView(text: text1),
@@ -231,6 +247,7 @@ class ManageBankDetailView extends GetView<ManageBankDetailController> {
                 text: text2,
                 textAlign: TextAlign.end,
                 fontWeight: FontWeight.w700,
+                color: text2Color
             ),
           ),
         ],
