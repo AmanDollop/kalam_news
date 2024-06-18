@@ -67,8 +67,10 @@ class LogInView extends GetView<LogInController> {
                     ),
                   ],
                 ),
-              ));
-        }),
+              ),
+            );
+          },
+        ),
       ),
     );
   }
@@ -125,10 +127,7 @@ class LogInView extends GetView<LogInController> {
 
   Widget rememberMeTextView({required String text}) => Text(
         text,
-        style: Theme.of(Get.context!)
-            .textTheme
-            .titleMedium
-            ?.copyWith(color: Theme.of(Get.context!).colorScheme.onSurface),
+        style: Theme.of(Get.context!).textTheme.titleMedium?.copyWith(color: Theme.of(Get.context!).colorScheme.onSurface),
       );
 
   Widget forgetPasswordTextButtonView() => KNPWidgets.commonTextButton(
