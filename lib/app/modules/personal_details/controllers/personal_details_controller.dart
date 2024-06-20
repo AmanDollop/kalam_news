@@ -137,7 +137,7 @@ class PersonalDetailsController extends GetxController {
     initialsController.text = value ?? '';
   }
 
-  Future<void> clickOnDObTextField() async {
+  Future<void> clickOnDobTextField() async {
     KNPMethods.unFocsKeyBoard();
     await CDT.iosPicker1(
       context: Get.context!,
@@ -148,6 +148,18 @@ class PersonalDetailsController extends GetxController {
       lastDate: DateTime(DateTime.now().year - 18),
         maximumYear: DateTime.now().year - 18
     );
+  }
+
+  void clickOnSameAsPhoneNumber() {
+    if(mobileNumberController.text.isNotEmpty){
+      sameAsMobileNumberValue.value = !sameAsMobileNumberValue.value;
+      if(sameAsMobileNumberValue.value){
+        whatsappNumberController.text = mobileNumberController.text;
+      }else{
+        whatsappNumberController.clear();
+      }
+    }
+    count.value++;
   }
 
   Future<void> callingGetStateApi() async {

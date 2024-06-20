@@ -402,19 +402,25 @@ class KNPWidgets {
           Color? activeFillColor,
           Color? checkColor,
           Color? borderColor,
-          VisualDensity? visualDensity}) => Checkbox(
-        visualDensity: visualDensity,
-        value: changeValue,
-        onChanged: onChanged,
-        activeColor: activeFillColor ?? Theme.of(Get.context!).colorScheme.primary,
-        checkColor: checkColor ?? Theme.of(Get.context!).colorScheme.inversePrimary,
-        splashRadius: 24.px,
-        side: BorderSide(
-            color: borderColor ?? Theme.of(Get.context!).colorScheme.onSurface,
-            width: 1.px,
-        ),
-        shape: shape ?? RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.px)),
-      );
+          double? height,
+          double? width,
+          VisualDensity? visualDensity}) => SizedBox(
+            height: height,
+            width: width,
+            child: Checkbox(
+                    visualDensity: visualDensity,
+                    value: changeValue,
+                    onChanged: onChanged,
+                    activeColor: activeFillColor ?? Theme.of(Get.context!).colorScheme.primary,
+                    checkColor: checkColor ?? Theme.of(Get.context!).colorScheme.inversePrimary,
+                    splashRadius: 24.px,
+                    side: BorderSide(
+              color: borderColor ?? Theme.of(Get.context!).colorScheme.onSurface,
+              width: 1.px,
+                    ),
+                    shape: shape ?? RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.px)),
+                  ),
+          );
 
   static Widget commonDividerView(
           {Color? color,

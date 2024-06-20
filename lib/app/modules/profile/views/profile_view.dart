@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kalam_news_publication/app/common/common_padding_size/common_padding_size.dart';
@@ -68,14 +66,17 @@ class ProfileView extends GetView<ProfileController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 userNameTextView(),
+                SizedBox(height: 4.px),
                 Row(
                   children: [
-                    cardTitleTextView(text: '${PageConstVar.referredBy.tr} - '),
+                    cardTitleTextView(text: controller.userData.value?.userDetails?.referredBy != null && controller.userData.value!.userDetails!.referredBy!.isNotEmpty
+                      ? '${PageConstVar.referredBy.tr} - '
+                      :  '${PageConstVar.mobile.tr} - '),
                     Flexible(
                       child: cardSubTitleTextView(
-                        text: controller.userData.value?.userDetails?.referredBy != null
+                        text: controller.userData.value?.userDetails?.referredBy != null && controller.userData.value!.userDetails!.referredBy!.isNotEmpty
                             ? '${controller.userData.value?.userDetails?.referredBy}'
-                            : '?',
+                            : '${controller.userData.value?.userDetails?.mobileNumber}',
                       ),
                     ),
                   ],
@@ -115,8 +116,7 @@ class ProfileView extends GetView<ProfileController> {
             color: Theme.of(Get.context!).colorScheme.inversePrimary,
             shape: BoxShape.circle,
           ),
-          child: KNPWidgets.commonNetworkImageView(
-              path: 'assets/icon/edit_icon.png', isAssetImage: true),
+          child: KNPWidgets.commonNetworkImageView(path: 'assets/icon/edit_icon.png', isAssetImage: true),
         ),
       );
 
@@ -237,6 +237,5 @@ class ProfileView extends GetView<ProfileController> {
           ],
         ),
       );
-
 
 }

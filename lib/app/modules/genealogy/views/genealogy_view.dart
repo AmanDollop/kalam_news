@@ -108,14 +108,14 @@ class GenealogyView extends GetView<GenealogyController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 userNameTextView(text: '${controller.userData?.userDetails?.initials}. ${controller.userData?.userDetails?.firstName} ${controller.userData?.userDetails?.lastName}'),
+                if(controller.userData?.userDetails?.referredBy != null && controller.userData!.userDetails!.referredBy!.isNotEmpty)
                 commonRowForProfileSection(
                   text1: '${PageConstVar.referredBy.tr} - ',
-                  text2: controller.userData?.userDetails?.referredBy != null
-                      ? '${controller.userData?.userDetails?.referredBy}'
-                      : '?',
-                ),
+                  text2:'${controller.userData?.userDetails?.referredBy}',
+                )
+                else SizedBox(height: 4.px),
                 InkWell(
-                  onTap: controller.userData?.userDetails?.referralCode != null
+                  onTap: controller.userData?.userDetails?.referralCode != null && controller.userData!.userDetails!.referralCode!.isNotEmpty
                       ? () async => await Clipboard.setData(ClipboardData(text: "${controller.userData?.userDetails?.referralCode}"))
                       : () => null,
                   child: commonRowForProfileSection(
@@ -270,14 +270,16 @@ class GenealogyView extends GetView<GenealogyController> {
         ),
       );
 
-  Widget totalBusinessValueView() => commonCard(
-        title: PageConstVar.totalBusinessValue.tr,
-        totalCountText:  KNPMethods.checkStringIsNullOrEmpty(string: '${controller.userBVCount?.totalBvCount}',blankText: '00'),
-        text1:  KNPMethods.checkStringIsNullOrEmpty(string: '${controller.userBVCount?.lBvCount}',blankText: '00'),
-        text2: PageConstVar.leftBv.tr,
-        text3:  KNPMethods.checkStringIsNullOrEmpty(string: '${controller.userBVCount?.rBvCount}',blankText: '00'),
-        text4: PageConstVar.rightBv.tr,
-      );
+  Widget totalBusinessValueView() {
+    return commonCard(
+      title: PageConstVar.totalBusinessValue.tr,
+      totalCountText:  KNPMethods.checkStringIsNullOrEmpty(string: '${controller.userBVCount?.totalBvCount}',blankText: '00'),
+      text1:  KNPMethods.checkStringIsNullOrEmpty(string: '${controller.userBVCount?.lBvCount}',blankText: '00'),
+      text2: PageConstVar.leftBv.tr,
+      text3:  KNPMethods.checkStringIsNullOrEmpty(string: '${controller.userBVCount?.rBvCount}',blankText: '00'),
+      text4: PageConstVar.rightBv.tr,
+    );
+  }
 
   Widget commonLevelConnection({required String profile, required int isPaidUser, required String userName, required String leftBVCount, required String rightBVCount, GestureTapCallback? onTap}) => InkWell(
         onTap: onTap,
@@ -367,17 +369,28 @@ class GenealogyView extends GetView<GenealogyController> {
         ),
       );
 
-  Widget commonRowForPaidAndUnPaidView({required String text, required Color color}) => Row(
-        children: [
-          Container(
-            height: 12.px,
-            width: 12.px,
-            margin: EdgeInsets.only(right: 8.px),
-            decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-          ),
-          cardSubTitleTextView(text: text)
-        ],
-      );
+  Widget commonColumnForLevelCard({required String text1, required String text2, required Color textColor}) => Column(
+    children: [
+      Text(
+        text1,
+        style: Theme.of(Get.context!).textTheme.titleSmall?.copyWith(
+          color: Theme.of(Get.context!).colorScheme.secondary,
+          fontWeight: FontWeight.w700,
+        ),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+      ),
+      Text(
+        text2,
+        style: Theme.of(Get.context!).textTheme.titleSmall?.copyWith(
+            color: Theme.of(Get.context!).colorScheme.secondary, //textColor,
+            fontSize: 8.px,
+        ),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+      ),
+    ],
+  );
 
   Widget borderView({bool isLeftBorder = true}) => Container(
     height: 86.px,
@@ -422,14 +435,16 @@ class GenealogyView extends GetView<GenealogyController> {
     ),
   );
 
-  Widget topUserView() => commonLevelConnection(
-      onTap: () => controller.clickOnTopUser(),
-      isPaidUser: controller.userDetailsForUserTree?.isPaidUser ?? 0,
-      userName: '${controller.userDetailsForUserTree?.firstName} ${controller.userDetailsForUserTree?.lastName}',
-      leftBVCount: KNPMethods.checkStringIsNullOrEmpty(string: '${controller.userDetailsForUserTree?.lBvCount}',blankText: '00'),
-      rightBVCount: KNPMethods.checkStringIsNullOrEmpty(string: '${controller.userDetailsForUserTree?.rBvCount}',blankText: '00'),
-      profile: KNPMethods.baseUrlForNetworkImage(imagePath: '${controller.userDetailsForUserTree?.profile}')
-  );
+  Widget topUserView() {
+    return commonLevelConnection(
+        onTap: () => controller.clickOnTopUser(),
+        isPaidUser: controller.userDetailsForUserTree?.isPaidUser ?? 0,
+        userName: '${controller.userDetailsForUserTree?.firstName} ${controller.userDetailsForUserTree?.lastName}',
+        leftBVCount: KNPMethods.checkStringIsNullOrEmpty(string: '${controller.userDetailsForUserTree?.lBvCount}',blankText: '00'),
+        rightBVCount: KNPMethods.checkStringIsNullOrEmpty(string: '${controller.userDetailsForUserTree?.rBvCount}',blankText: '00'),
+        profile: KNPMethods.baseUrlForNetworkImage(imagePath: '${controller.userDetailsForUserTree?.profile}')
+    );
+  }
 
   Widget levelCountAndGoBackView ()=> RichText(
     text: TextSpan(
@@ -451,46 +466,39 @@ class GenealogyView extends GetView<GenealogyController> {
     ),
   );
 
-  Widget leftUserView() => commonLevelConnection(
-      isPaidUser: controller.lUser?.isPaidUser ?? 0,
-      userName: '${controller.lUser?.firstName} ${controller.lUser?.lastName}',
-      leftBVCount:  KNPMethods.checkStringIsNullOrEmpty(string: '${controller.lUser?.lBvCount}',blankText: '00'),
-      rightBVCount: KNPMethods.checkStringIsNullOrEmpty(string: '${controller.lUser?.rBvCount}',blankText: '00'),
-      onTap: () => controller.clickOnLeftUser(),
-      profile: KNPMethods.baseUrlForNetworkImage(imagePath: '${controller.lUser?.profile}')
-  );
+  Widget leftUserView() {
+    return commonLevelConnection(
+        isPaidUser: controller.lUser?.isPaidUser ?? 0,
+        userName: '${controller.lUser?.firstName} ${controller.lUser?.lastName}',
+        leftBVCount:  KNPMethods.checkStringIsNullOrEmpty(string: '${controller.lUser?.lBvCount}',blankText: '00'),
+        rightBVCount: KNPMethods.checkStringIsNullOrEmpty(string: '${controller.lUser?.rBvCount}',blankText: '00'),
+        onTap: () => controller.clickOnLeftUser(),
+        profile: KNPMethods.baseUrlForNetworkImage(imagePath: '${controller.lUser?.profile}')
+    );
+  }
 
-  Widget rightUserView() => commonLevelConnection(
-      isPaidUser: controller.rUser?.isPaidUser?? 0,
-      userName: '${controller.rUser?.firstName} ${controller.rUser?.lastName}',
-      leftBVCount:  KNPMethods.checkStringIsNullOrEmpty(string: '${controller.rUser?.lBvCount}',blankText: '00'),
-      rightBVCount: KNPMethods.checkStringIsNullOrEmpty(string: '${controller.rUser?.rBvCount}',blankText: '00'),
-      onTap: () => controller.clickOnRightUser(),
-      profile: KNPMethods.baseUrlForNetworkImage(imagePath: '${controller.rUser?.profile}')
-  );
+  Widget rightUserView() {
+    return commonLevelConnection(
+        isPaidUser: controller.rUser?.isPaidUser?? 0,
+        userName: '${controller.rUser?.firstName} ${controller.rUser?.lastName}',
+        leftBVCount:  KNPMethods.checkStringIsNullOrEmpty(string: '${controller.rUser?.lBvCount}',blankText: '00'),
+        rightBVCount: KNPMethods.checkStringIsNullOrEmpty(string: '${controller.rUser?.rBvCount}',blankText: '00'),
+        onTap: () => controller.clickOnRightUser(),
+        profile: KNPMethods.baseUrlForNetworkImage(imagePath: '${controller.rUser?.profile}')
+    );
+  }
 
-  Widget commonColumnForLevelCard({required String text1, required String text2, required Color textColor}) => Column(
-    children: [
-      Text(
-        text1,
-        style: Theme.of(Get.context!).textTheme.titleSmall?.copyWith(
-          color: Theme.of(Get.context!).colorScheme.secondary,
-          fontWeight: FontWeight.w700,
-        ),
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-      ),
-      Text(
-        text2,
-        style: Theme.of(Get.context!).textTheme.titleSmall?.copyWith(
-            color: Theme.of(Get.context!).colorScheme.secondary, //textColor,
-            fontSize: 8.px,
-        ),
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-      ),
-    ],
-  );
+  Widget commonRowForPaidAndUnPaidView({required String text, required Color color}) => Row(
+        children: [
+          Container(
+            height: 12.px,
+            width: 12.px,
+            margin: EdgeInsets.only(right: 8.px),
+            decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+          ),
+          cardSubTitleTextView(text: text)
+        ],
+      );
 
   Widget paidAndUnPaidView() => Column(
     children: [

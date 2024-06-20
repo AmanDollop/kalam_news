@@ -52,13 +52,22 @@ class EditProfileView extends GetView<EditProfileController> {
                                     dobTextFieldView().paddingSymmetric(vertical: CommonPaddingAndSize.size20()),
                                     phoneNumberFieldView(),
                                     whatsappNumberFieldView().paddingSymmetric(vertical: CommonPaddingAndSize.size20()),
-                                    emailTextFieldView(),
                                     Row(
                                       children: [
-                                        checkBoxView(),
-                                        sameAsMobileNumberTextView(text: PageConstVar.sameAsPhoneNumber.tr)
+                                        InkWell(
+                                          onTap: () => controller.clickOnSameAsPhoneNumber(),
+                                          child: Row(
+                                            children: [
+                                              checkBoxView(),
+                                              SizedBox(width: 6.px),
+                                              sameAsMobileNumberTextView(text: PageConstVar.sameAsPhoneNumber.tr)
+                                            ],
+                                          ),
+                                        ),
+                                        const Spacer()
                                       ],
-                                    ).paddingSymmetric(vertical: CommonPaddingAndSize.size10()),
+                                    ),
+                                    emailTextFieldView().paddingSymmetric(vertical: CommonPaddingAndSize.size20()),
                                     completeAddressTextFieldView(),
                                     stateTextFieldView().paddingSymmetric(vertical: CommonPaddingAndSize.size20()),
                                     cityTextFieldView(),
@@ -227,18 +236,10 @@ class EditProfileView extends GetView<EditProfileController> {
       );
 
   Widget checkBoxView() => KNPWidgets.commonCheckBoxView(
+        width: 20.px,
+        height: 20.px,
         changeValue: controller.sameAsMobileNumberValue.value,
-        onChanged: (value) {
-          if (controller.mobileNumberController.text.isNotEmpty) {
-            controller.sameAsMobileNumberValue.value = !controller.sameAsMobileNumberValue.value;
-            if (controller.sameAsMobileNumberValue.value) {
-              controller.whatsappNumberController.text = controller.mobileNumberController.text;
-            } else {
-              controller.whatsappNumberController.clear();
-            }
-          }
-          controller.count.value++;
-        },
+        onChanged: (value) => controller.clickOnSameAsPhoneNumber(),
         visualDensity: VisualDensity(horizontal: -4.px, vertical: -4.px),
       );
 

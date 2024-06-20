@@ -60,14 +60,23 @@ class PersonalDetailsView extends GetView<PersonalDetailsController> {
                                phoneNumberFieldView(),
                                SizedBox(height: CommonPaddingAndSize.size20()),
                                whatsappNumberFieldView(),
-                               SizedBox(height: CommonPaddingAndSize.size10()),
+                               SizedBox(height: CommonPaddingAndSize.size20()),
                                Row(
                                  children: [
-                                   checkBoxView(),
-                                   sameAsMobileNumberTextView(text: PageConstVar.sameAsPhoneNumber.tr)
+                                   InkWell(
+                                     onTap: () => controller.clickOnSameAsPhoneNumber(),
+                                     child: Row(
+                                       children: [
+                                         checkBoxView(),
+                                         SizedBox(width: 6.px),
+                                         sameAsMobileNumberTextView(text: PageConstVar.sameAsPhoneNumber.tr)
+                                       ],
+                                     ),
+                                   ),
+                                   const Spacer()
                                  ],
                                ),
-                               SizedBox(height: CommonPaddingAndSize.size10()),
+                               SizedBox(height: CommonPaddingAndSize.size20()),
                                completeAddressTextFieldView(),
                                SizedBox(height: CommonPaddingAndSize.size20()),
                                stateTextFieldView(),
@@ -151,7 +160,7 @@ class PersonalDetailsView extends GetView<PersonalDetailsController> {
         controller: controller.dobController,
         focusNode: controller.dobFocusNode,
         readOnly: true,
-        onTap: () => controller.clickOnDObTextField(),
+        onTap: () => controller.clickOnDobTextField(),
         validator: (value) => V.isValid(value: value, title: PageConstVar.pleaseEnterDob.tr),
       );
 
@@ -171,6 +180,9 @@ class PersonalDetailsView extends GetView<PersonalDetailsController> {
         focusNode: controller.mobileNumberFocusNode,
         keyboardType: TextInputType.number,
         maxLength: 10,
+        onChanged: (value) {
+          controller.sameAsMobileNumberValue.value = false;
+        },
         validator: (value) => V.isNumberValid(value: value),
       );
 
@@ -184,18 +196,10 @@ class PersonalDetailsView extends GetView<PersonalDetailsController> {
       );
 
   Widget checkBoxView() => KNPWidgets.commonCheckBoxView(
+        width: 20.px,
+        height: 20.px,
         changeValue: controller.sameAsMobileNumberValue.value,
-        onChanged: (value) {
-          if(controller.mobileNumberController.text.isNotEmpty){
-             controller.sameAsMobileNumberValue.value = !controller.sameAsMobileNumberValue.value;
-             if(controller.sameAsMobileNumberValue.value){
-               controller.whatsappNumberController.text = controller.mobileNumberController.text;
-             }else{
-               controller.whatsappNumberController.clear();
-             }
-           }
-          controller.count.value++;
-        },
+        onChanged: (value) => controller.clickOnSameAsPhoneNumber(),
         visualDensity: VisualDensity(horizontal: -4.px, vertical: -4.px),
       );
 

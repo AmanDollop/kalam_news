@@ -165,9 +165,13 @@ class GenealogyController extends GetxController {
                   KNPWidgets.commonDividerView(wight: 1.px),
                   SizedBox(height: 4.px),
                   commonRowForDialog(text1: PageConstVar.referralCode.tr, text2: '${userDetailsForUserTree?.referralCode}'),
+                  if (userDetailsForUserTree?.email != null && userDetailsForUserTree!.email!.isNotEmpty)
                   SizedBox(height: 4.px),
+                  if (userDetailsForUserTree?.email != null && userDetailsForUserTree!.email!.isNotEmpty)
                   KNPWidgets.commonDividerView(wight: 1.px),
+                  if (userDetailsForUserTree?.email != null && userDetailsForUserTree!.email!.isNotEmpty)
                   SizedBox(height: 4.px),
+                  if (userDetailsForUserTree?.email != null && userDetailsForUserTree!.email!.isNotEmpty)
                   commonRowForDialog(text1: PageConstVar.emailID.tr, text2: '${userDetailsForUserTree?.email}'),
                   SizedBox(height: 4.px),
                   KNPWidgets.commonDividerView(wight: 1.px),

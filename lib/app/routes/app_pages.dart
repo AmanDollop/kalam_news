@@ -4,8 +4,6 @@ import '../modules/achievements/bindings/achievements_binding.dart';
 import '../modules/achievements/views/achievements_view.dart';
 import '../modules/add_bank_detail/bindings/add_bank_detail_binding.dart';
 import '../modules/add_bank_detail/views/add_bank_detail_view.dart';
-import '../modules/add_document/bindings/add_document_binding.dart';
-import '../modules/add_document/views/add_document_view.dart';
 import '../modules/bottom_bar/bindings/bottom_bar_binding.dart';
 import '../modules/bottom_bar/views/bottom_bar_view.dart';
 import '../modules/edit_profile/bindings/edit_profile_binding.dart';
@@ -115,11 +113,6 @@ class AppPages {
       name: _Paths.WALLET,
       page: () => const WalletView(),
       binding: WalletBinding(),
-    ),
-    GetPage(
-      name: _Paths.ADD_DOCUMENT,
-      page: () => const AddDocumentView(),
-      binding: AddDocumentBinding(),
     ),
     GetPage(
       name: _Paths.EDIT_PROFILE,

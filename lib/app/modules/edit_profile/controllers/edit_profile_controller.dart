@@ -114,6 +114,11 @@ class EditProfileController extends GetxController {
       emailController.text = userDetails?.email ?? '';
       mobileNumberController.text = userDetails?.mobileNumber ?? '';
       whatsappNumberController.text = userDetails?.whatsappNumber ?? '';
+
+      if(whatsappNumberController.text.contains(mobileNumberController.text)){
+        sameAsMobileNumberValue.value = true;
+      }
+
       completeAddressController.text = userDetails?.address ?? '';
       stateController.text = userDetails?.stateName.toString() ?? '';
       cityController.text = userDetails?.cityName.toString() ?? '';
@@ -209,6 +214,18 @@ class EditProfileController extends GetxController {
       KNPMethods.error();
       saveButtonValue.value = false;
     }
+  }
+
+  void clickOnSameAsPhoneNumber() {
+    if (mobileNumberController.text.isNotEmpty) {
+      sameAsMobileNumberValue.value = !sameAsMobileNumberValue.value;
+      if (sameAsMobileNumberValue.value) {
+        whatsappNumberController.text = mobileNumberController.text;
+      } else {
+        whatsappNumberController.clear();
+      }
+    }
+    count.value++;
   }
 
 }

@@ -98,7 +98,7 @@ class BottomBarController extends GetxController {
     try {
       packageModal.value = await ApiIntrigation.getPackageApi();
       if (packageModal.value != null) {
-        print('Bottom Bar::::::isUserPackage::::: ${packageModal.value?.isUserPackage}');
+        // print('Bottom Bar::::::isUserPackage::::: ${packageModal.value?.isUserPackage}');
       }
     } catch (e) {
       print('Bottom Bar:::::::::callingPackageApi::::  ERROR::::: $e');
